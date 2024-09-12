@@ -1,0 +1,79 @@
+deck:
+  name: 'Language::Germanic::German::Vocabulary'
+
+model:
+  name: 'German Vocabulary'
+  kind: 'normal'
+  style:
+    css: ../_model/latn.css
+  templates:
+    - name: Recognize
+      qfmt: ../_model/recognize-qfmt.html
+      afmt: ../_model/recognize-afmt.html
+    - name: Recall
+      qfmt: ../_model/recall-qfmt.html
+      afmt: ../_model/recall-afmt.html
+  fields:
+    - name: Phrase
+      template: ../_template/Phrase.txt
+      index: true
+      description: Phrase
+    - name: Grammar
+      template: ../_template/Grammar.txt
+      index: true
+      description: Grammar
+    - name: Transcription
+      template: ../_template/Transcription.txt
+      description: Transcription
+    - name: Translation
+      template: ../_template/Translation.txt
+      merge: true
+      description: Translation
+    - name: Notes
+      template: ../_template/Notes.txt
+      format: markdown
+      description: Notes
+
+audio: []
+video: []
+image: []
+
+data:
+  - filename: ./gute-reise-1982/01.csv
+    tags: ['GuteReise-01']
+  - filename: ./gute-reise-1982/02.csv
+    tags: ['GuteReise-02']
+  - filename: ./gute-reise-1982/03.csv
+    tags: ['GuteReise-03']
+  - filename: ./gute-reise-1982/04.csv
+    tags: ['GuteReise-04']
+  - filename: ./gute-reise-1982/05.csv
+    tags: ['GuteReise-05']
+  - filename: ./gute-reise-1982/06.csv
+    tags: ['GuteReise-06']
+  - filename: ./gute-reise-1982/07.csv
+    tags: ['GuteReise-07']
+  - filename: ./gute-reise-1982/08.csv
+    tags: ['GuteReise-08']
+  - filename: ./gute-reise-1982/09.csv
+    tags: ['GuteReise-09']
+  - filename: ./gute-reise-1982/10.csv
+    tags: ['GuteReise-10']
+  - filename: ./gute-reise-1982/11.csv
+    tags: ['GuteReise-11']
+  - filename: ./gute-reise-1982/12.csv
+    tags: ['GuteReise-12']
+  - filename: ./gute-reise-1982/13.csv
+    tags: ['GuteReise-13']
+  - filename: ./gute-reise-1982/14.csv
+    tags: ['GuteReise-14']
+  - filename: ./gute-reise-1982/15.csv
+    tags: ['GuteReise-15']
+  - filename: ./gute-reise-1982/16.csv
+    tags: ['GuteReise-16']
+  - filename: ./gute-reise-1982/17.csv
+    tags: ['GuteReise-17']
+  - filename: ./gute-reise-1982/18.csv
+    tags: ['GuteReise-18']
+  - filename: ./gute-reise-1982/19.csv
+    tags: ['GuteReise-19']
