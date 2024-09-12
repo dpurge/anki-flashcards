@@ -38,4 +38,15 @@ model:
 audio: []
 video: []
 image: []
-data: []
+
+data:
+  - filename: ./fietz-2007/00.csv
+    tags: ['Fietz-00']
+  - filename: ./fietz-2007/01.csv
+    tags: ['Fietz-01']
+  - filename: ./kurowski-1973/01.csv
+    tags: ['Kurowski-01']
+  - filename: ./kurowski-1973/02.csv
+    tags: ['Kurowski-02']
+  - filename: ./kurowski-1973/03.csv
+    tags: ['Kurowski-03']
