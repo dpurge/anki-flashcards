@@ -1,0 +1,113 @@
+deck:
+  name: 'Language::Sino-Tibetan::Mandarin::Vocabulary (Simplified)'
+
+model:
+  name: 'Mandarin Vocabulary (Simplified)'
+  kind: 'normal'
+  style:
+    css: ../_model/hans.css
+  templates:
+    - name: Recognize
+      qfmt: ../_model/recognize-qfmt.html
+      afmt: ../_model/recognize-afmt.html
+    - name: Recall
+      qfmt: ../_model/recall-qfmt.html
+      afmt: ../_model/recall-afmt.html
+  fields:
+    - name: Phrase
+      template: ../_template/Phrase.txt
+      index: true
+      description: Phrase
+    - name: Grammar
+      template: ../_template/Grammar.txt
+      index: true
+      description: Grammar
+    - name: Transcription
+      template: ../_template/Transcription.txt
+      description: Transcription
+    - name: Translation
+      template: ../_template/Translation.txt
+      merge: true
+      description: Translation
+    - name: Notes
+      template: ../_template/Notes.txt
+      format: markdown
+      description: Notes
+
+audio: []
+video: []
+image: []
+
+data:
+  - filename: ./short-term/threshold/01.csv
+    tags: ['Threshold-01']
+  - filename: ./short-term/threshold/02.csv
+    tags: ['Threshold-02']
+  - filename: ./short-term/threshold/03.csv
+    tags: ['Threshold-03']
+  - filename: ./short-term/threshold/04.csv
+    tags: ['Threshold-04']
+  - filename: ./short-term/threshold/05.csv
+    tags: ['Threshold-05']
+  - filename: ./short-term/threshold/06.csv
+    tags: ['Threshold-06']
+  - filename: ./short-term/threshold/07.csv
+    tags: ['Threshold-07']
+  - filename: ./short-term/threshold/08.csv
+    tags: ['Threshold-08']
+  - filename: ./short-term/threshold/09.csv
+    tags: ['Threshold-09']
+  - filename: ./short-term/threshold/10.csv
+    tags: ['Threshold-10']
+  - filename: ./short-term/threshold/11.csv
+    tags: ['Threshold-11']
+  - filename: ./short-term/threshold/12.csv
+    tags: ['Threshold-12']
+  - filename: ./short-term/threshold/13.csv
+    tags: ['Threshold-13']
+  - filename: ./short-term/threshold/14.csv
+    tags: ['Threshold-14']
+  - filename: ./short-term/threshold/15.csv
+    tags: ['Threshold-15']
+  - filename: ./short-term/threshold/16.csv
+    tags: ['Threshold-16']
+  - filename: ./short-term/threshold/17.csv
+    tags: ['Threshold-17']
+  - filename: ./short-term/threshold/18.csv
+    tags: ['Threshold-18']
+  - filename: ./short-term/threshold/19.csv
+    tags: ['Threshold-19']
+  - filename: ./short-term/threshold/20.csv
+    tags: ['Threshold-20']
+  - filename: ./short-term/threshold/21.csv
+    tags: ['Threshold-21']
+  - filename: ./short-term/threshold/22.csv
+    tags: ['Threshold-22']
+  - filename: ./short-term/threshold/23.csv
+    tags: ['Threshold-23']
+  - filename: ./short-term/threshold/24.csv
+    tags: ['Threshold-24']
+  - filename: ./short-term/threshold/25.csv
+    tags: ['Threshold-25']
+  - filename: ./short-term/threshold/26.csv
+    tags: ['Threshold-26']
+  - filename: ./short-term/threshold/27.csv
+    tags: ['Threshold-27']
+  - filename: ./short-term/threshold/28.csv
+    tags: ['Threshold-28']
+  - filename: ./short-term/threshold/29.csv
+    tags: ['Threshold-29']
+  - filename: ./short-term/threshold/30.csv
+    tags: ['Threshold-30']
+  - filename: ./short-term/elementary/00.csv
+    tags: ['Elementary-00']
+  - filename: ./short-term/elementary/01.csv
+    tags: ['Elementary-01']
+  - filename: ./short-term/elementary/02.csv
+    tags: ['Elementary-02']
+  - filename: ./short-term/elementary/03.csv
+    tags: ['Elementary-03']
+  - filename: ./short-term/elementary/04.csv
+    tags: ['Elementary-04']
+  - filename: ./short-term/elementary/05.csv
+    tags: ['Elementary-05']

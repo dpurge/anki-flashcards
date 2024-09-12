@@ -1,0 +1,49 @@
+deck:
+  name: 'Language::Sino-Tibetan::Mandarin::Vocabulary (Traditional)'
+
+model:
+  name: 'Mandarin Vocabulary (Traditional)'
+  kind: 'normal'
+  style:
+    css: ../_model/hant.css
+  templates:
+    - name: Recognize
+      qfmt: ../_model/recognize-qfmt.html
+      afmt: ../_model/recognize-afmt.html
+    - name: Recall
+      qfmt: ../_model/recall-qfmt.html
+      afmt: ../_model/recall-afmt.html
+  fields:
+    - name: Phrase
+      template: ../_template/Phrase.txt
+      index: true
+      description: Phrase
+    - name: Grammar
+      template: ../_template/Grammar.txt
+      index: true
+      description: Grammar
+    - name: Transcription
+      template: ../_template/Transcription.txt
+      description: Transcription
+    - name: Translation
+      template: ../_template/Translation.txt
+      merge: true
+      description: Translation
+    - name: Notes
+      template: ../_template/Notes.txt
+      format: markdown
+      description: Notes
+
+audio: []
+video: []
+image: []
+
+data:
+  - filename: ./isaenko-1954/01.csv
+    tags: ['Isaenko-01']
+  - filename: ./lingshailo-1955/01.csv
+    tags: ['LingShaiLo-01']
+  - filename: ./lingshailo-1955/02.csv
+    tags: ['LingShaiLo-02']
+  - filename: ./lingshailo-1955/03.csv
+    tags: ['LingShaiLo-03']

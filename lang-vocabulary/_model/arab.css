@@ -1,0 +1,26 @@
+.card {
+    font-family: arial;
+    font-size: 20px;
+    text-align: center;
+}
+
+.phrase {
+    direction: rtl;
+    font-size: 160%;
+}
+
+.transcription {
+    font-style: italic;
+}
+
+.grammar {
+    font-style: bold;
+}
+
+.translation {
+    font-size: 110%;
+}
+
+.notes {
+    font-style: italic;
+}

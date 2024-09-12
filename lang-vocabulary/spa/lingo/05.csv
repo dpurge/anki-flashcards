@@ -1,0 +1,412 @@
+Phrase	Grammar	Transcription	Translation	Notes
+el alcaparra	N		kapary	
+la col	N		kapusta	
+la alcachofa	N		karczoch	
+el maíz	N		kukurydza	
+la mandarina	N		mandarynka	
+el mango	N		mango	
+la zanahoria	N		marchewka	
+la menta	N		mięta	
+el albaricoque	N		morela	
+la nectarina	N		nektarynka	
+el pepino	N		ogórek	
+la aceituna	N		oliwka	
+la nuez	N		orzech	
+la avellana	N		orzech laskowy	
+el pimientón	N		papryka	
+el champiñón	N		pieczarka	
+la pimienta	N		pieprz	
+la naranja	N		pomarańcza	
+el tomate	N		pomidor	
+el puero	N		por	
+el ruibarbo	N		rabarbar	
+las uvas pasas	N		rodzynki	
+el romero	N		rozmaryn	
+la lechuga	N		sałata	
+el apio	N		seler	
+la cebolleta	N		szczypiorek	
+el espárrago	N		szparag	
+la espinaca	N		szpinak	
+la ciruela	N		śliwka	
+la ciruela pasa	N		śliwka suszona	
+el tomillo	N		tymianek	
+la patata	N		ziemniak	
+la carne de cordero	NP		baranina	
+el bistec	N		befsztyk	
+el tocino	N		bekon	
+la ternera	N		cielęcina	
+la carne de caza	NP		dziczyzna	
+la oca	N		gęś	
+el pavo	N		indyk	
+la carne de cordero	NP		jagnięcina	
+el pato	N		kaczka	
+el pollo	N		kurczak	
+la codorniz	N		przepiórka	
+el jamón	N		szynka	
+la carne de cerdo	NP		wieprzowina	
+la carne de puerco	NP		wieprzowina	
+la carne de vaca	NP		wołowina	
+la carne de res	NP		wołowina	
+las anchoas	N		anchois	
+el bacalao	N		dorsz	
+la langosta	N		homar	
+la carpa	N		karp	
+los langostinos	N		krewetki	
+las gambas	N		krewetki	
+el salmón	N		łosoś	
+la caballa	N		makrela	
+las almejas	N		małże	
+la perca	N		okoń	
+la ostra	N		ostryga	
+el pulpo	N		ośmiornica	
+la trucha	N		pstrąg	
+el cangrejo	N		rak	
+la lucioperca	N		sandacz	
+las sardinas	N		sardynki	
+el siluro	N		sum	
+el lucio	N		szczupak	
+el espadín	N		szprot	
+el arenque	N		śledź	
+el caracol	N		ślimak	
+el atún	N		tuńczyk	
+la anguila	N		węgorz	
+el chocolate caliente	NP		gorąca czekolada	
+el té negro	NP		herbata czarna	
+el té con azúcar	NP		herbata z cukrem	
+el té con limón	NP		herbata z cytryną	
+el té verde	NP		herbata zielona	
+el yogur	N		jogurt	
+el cacao	N		kakao	
+el decafeinado	N		kawa bezkofeinowa	
+el café con leche	NP		kawa biała	
+el café solo	NP		kawa czarna	
+el cortado	N		kawa z bardzo matą ilością mleka	
+el cóctel	N		koktajl	
+la limonada	N		lemoniada	
+la leche	N		mleko	
+el refresco	N		napój	
+la horchata	N		napój z cibory (roślina strączkowa)	
+la cerveza	N		piwo	
+la cerveza oscura	NP		piwo ciemne	
+la cerveza ligera	NP		piwo jasne	
+el lager	N		piwo jasne	
+la cerveza de barril	NP		piwo z beczki	
+la caña	N		piwo z beczki	
+la manzanilla	N		rumianek	
+el jugo	N		sok	
+el zumo	N		sok	
+el champán	N		szampan	
+el whisky	N		whisky	
+el güisqui	N		whisky	
+el vino blanco	NP		wino białe	
+el vino tinto	NP		wino czerwone	
+el vino semiseco	NP		wino półwytrawne	
+el vino dulce	NP		wino słodkie	
+el vino de mesa	NP		wino stołowe	
+el vino de casa	NP		wino stołowe	
+el vino seco	NP		wino wytrawne	
+el agua con gas	NP		woda gazowana	
+el agua mineral	NP		woda mineralna	
+el agua natural	NP		woda niegazowana	
+la vodka	N		wódka	
+la aguardiente	N		wódka	
+el pan blanco	NP		białe pieczywo	
+el panecillo	N		bułka	
+el pan	N		chleb	
+el pan de centeno	NP		chleb razowy	
+el azúcar	N		cukier	
+los terrones de azúcar	NP		cukier w kostkach	
+el bollo	N		drożdżówka	
+el huevo	N		jajko	
+la salsa de tomate	NP		keczup	
+la mantequilla	N		masło	
+el suero de la leche	NP		maślanka	
+la leche cortada	NP		maślanka	
+la leche	N		mleko	
+la mostaza	N		musztarda	
+el vinagre	N		ocet	
+el aceite de oliva	NP		oliwa z oliwek	
+el afrecho	N		otręby	
+el salvado	N		otręby	
+los condimentos	N		przyprawy	
+las especias	N		przyprawy	
+el queso	N		ser	
+el requesón	N		ser biały; twaróg	
+el queso manchego	NP		ser z regionu La Mancha	
+la salsa	N		sos	
+el aliño	N		sos do sałatek	
+el aderezo	N		sos do sałatek	
+la salsa de soya	NP		sos sojowy	
+la nata	N		śmietana	
+el desayuno	N		śniadanie	
+la marmelada	N		dżem	
+el pan tumaca	NP		grzanka z pomidorem i oliwą	
+la hamburgesa	N		hamburger	
+el perrito caliente	NP		hot dog	
+los huevos revueltos	NP		jajecznica	
+el huevo pasado por agua	NP		jajko na miękko	
+el huevo duro	NP		jajko na twardo	
+el bocadillo	N		kanapka	
+la miel	N		miód	
+los crepes	N		naleśniki	
+la tortilla francesa	NP		omlet z jajek	
+la tortilla española	NP		omlet z ziemniaków	
+la salchicha	N		parówka; kiełbaska	
+paté	N		pasztet	
+la tortilla de maíz	NP		placek kukurydziany	
+el cereal	N		płatki zbożowe	
+el croissant	N		rogalik	
+el primer plato	NP		pierwsze danie	
+el segundo plato	NP		drugie danie	
+el guisado de col blanca fermentada	NP		bigos	
+la carne de caza	NP		dziczyzna	
+las tripas	N		flaki	
+los callos	N		flaki	
+las patatas fritas	NP		frytki	
+la chuleta	N		kotlet	
+la chuleta de ternera	NP		kotlet cielęcy	
+la chuleta de cerdo	NP		kotlet wieprzowy	
+el filete	N		kotlet; filet	
+las gambas al ajillo	NP		krewetki w sosie czosnkowym	
+el pollo asado	NP		kurczak pieczony	
+la lasaña	N		lazania	
+la pasta	N		makaron	
+los fideos	N		makaron cienki	
+la carne picada	NP		mięso mielone	
+las patatas bravas	NP		pieczone ziemniaki z pikantnym sosem	
+las empanadillas cocidas	NP		pierogi	
+las empanadillas	N		pierożki pieczone	
+la pechuga de pollo	NP		pierś z kurczaka	
+las albóndigas	N		pulpety	
+el caldo	N		rosół	
+el cocido	N		rosół z mięsem i warzywami	
+el arroz	N		ryż	
+la paella	N		ryż z owocami morza lub mięsem	
+la ensalada	N		sałatka	
+calamares a la romana	NP		smażone krążki z kalmarów	
+las lentejas	N		soczewica	
+las verduras de barbacoa	NP		warzywa z grilla	
+el hígado	N		wątróbka	
+la sopa de tomate	NP		zupa pomidorowa	
+la sopa de queso	NP		zupa serowa	
+la sopa de verdura	NP		zupa warzywna	
+el gazpacho	N		zupa-chłodnik z pomidorów	
+el postre	N		deser	
+el meringue	N		beza	
+el bizcocho	N		biszkopt	
+la nata batida	NP		bita śmietana	
+el flan	N		budyń	
+la galleta	N		ciasteczko	
+la napoletana	N		ciastko francuskie z czekoladą	
+el pastel	N		ciastko; ciasto	
+la tarta de santiago	NP		ciasto z migdałów	
+el dulce	N		cukierek	
+el bombón	N		cukierek	
+el chocolate	N		czekolada	
+la gelatina	N		galaretka	
+la galleta	N		herbatnik	
+el yogur congelado	NP		jogurt mrożony	
+las natillas	N		krem śmietankowy	
+los helados	N		lody	
+el mazapán	N		marcepan	
+la madalena	N		mufin	
+la berlina	N		pączek	
+el buñuelo	N		pączek	
+el pastel	N		placek; ciasto	
+el arroz con leche	NP		gęsty ryż z mlekiem na słodko	
+la ensalada de fruta	NP		sałatka owocowa	
+la macedonia	N		sałatka z owoców	
+la tarta de manzana	NP		szarlotka w syropie	
+la tarta	N		tarta	
+sin sabor			bez smaku	
+pesado	Adj		ciężkostrawny	
+dietético	Adj		dietetyczny	
+casero			domowej roboty	
+hecho en casa			domowej roboty	
+excelente	Adj		doskonały	
+guisar	V		dusić	
+orgánico	Adj		ekologiczny	
+ecológico	Adj		ekologiczny	
+prensar	V		gnieść; tłuc	
+amasar	V		gnieść; tłuc	
+cocinar	V		gotować	
+hervir	V		gotować (się)	
+cocer al vapor	VP		gotować na parze	
+calórico	Adj		kaloryczny	
+cortar	V		kroić	
+cortar en rodajas	VP		kroić na plasterki	
+ácido	Adj		kwaśny	
+ligero	Adj		lekkostrawny	
+blando	Adj		łagodny; miękki	
+marinar	V		marynować	
+escabechar	V		marynować	
+mezclar	V		mieszać	
+llenar (la copa, el vaso)			nalewać (do kieliszka, szklanki)	
+engrasar	V		natłuszczać	
+malo	Adj		niesmaczny	
+insano	Adj		niezdrowy	
+pelar	V		obierać	
+picante	Adj		ostry	
+hacer en horno	VP		piec (ciasto)	
+cocer en horno	VP		piec (ciasto)	
+hacer la carne al horno	VP		piec mięso	
+asar	V		piec na rożnie	
+servir	V		podawać	
+calentar	V		podgrzewać	
+añadir sal	VP		posolić	
+salpimentar	V		posolić i popieprzyć	
+nutritivo	Adj		pożywny	
+simple	Adj		proste	
+probar	V		próbować; kosztować	
+quemar	V		przypalać	
+condimentar	V		przyprawiać	
+sazonar	V		przyprawiać	
+fermentar	V		skwaśnieć	
+agriarse	V		skwaśnieć	
+dulce	Adj		słodki	
+echar azúcar	VP		słodzić	
+tomar con azúcar	VP		słodzić	
+sabroso	Adj		smaczny	
+rico	Adj		smaczny	
+freír	V		smażyć	
+enfriar	V		studzić	
+crudo	Adj		surowy	
+fresco	Adj		świeży	
+grasiento	Adj		tłusty	
+derretir	V		topić	
+fundir	V		topić	
+rallar	V		ucierać	
+vegano	Adj		wegański	
+vegetariano	Adj		wegetariański	
+ahumar	V		wędzić	
+exprimir	V		wyciskać	
+sofisitcado	Adj		wyrafinowany	
+amasar	V		zagniatać ciasto	
+congelar	V		zamrozić	
+sano	Adj		zdrowy	
+podrido	Adj		zepsuty	
+malo	Adj		zepsuty	
+el plato	N		danie	
+el plato principal	NP		danie główne	
+el plato con carne	NP		danie mięsne	
+el plato vegetariano	NP		danie wegetariańskie	
+el postre	N		deser	
+las guarniciones	N		dodatki	
+las aves del corral	NP		drób	
+la cena	N		kolacja	
+el almuerzo	N		lunch	
+las bebidas alcohólicas	NP		napoje alkoholowe	
+los refrescos	N		napoje bezalkoholowe	
+las bebidas calientes	NP		napoje gorące	
+la comida	N		obiad	
+los mariscos	N		owoce morza	
+la merienda	N		podwieczorek	
+la tapa	N		przekąska	
+el aperitivo	N		przekąska	
+el entremés	N		przystawka	
+el pescado	N		ryby	
+el desayuno	N		śniadanie	
+el menú del día	NP		zestaw dnia (obiad)	
+la sopa	N		zupa	
+el bar	N		bar	
+el bar de comidas lácteas	N		bar mleczny	
+el chiringuito	N		bar przy plaży ze stolikami na zewnątrz	
+el fast food	N		bar szybkiej obsługi	
+la sidrería	N		bar z cydrem	
+el bar de tapas	NP		bar z przekąskami	
+la pulpería	N		bar z potrawami z ośmiornicy; restauracja z potrawami z ośmiornicy	
+el bistrot	N		bistro	
+el buffet de ensaladas	NP		bufet sałatkowy	
+el plato del día	NP		danie dnia	
+el hostel	N		hostel	
+el bocadillo	N		kanapka	
+la carta de vinos	NP		karta win	
+la clase	N		kategoria	
+la cafetería	N		kawiarnia	
+el café	N		kawiarnia	
+el camarero	N		kelner	
+la camarera	N		kelnerka	
+el menú	N		menu	
+para llevar			na wynos	
+la propina	N		napiwek	
+el servicio	N		obsługa	
+la pizzeria	N		pizzeria	
+pagar por separado	VP		płacić oddzielnie	
+recomendar	V		polecić	
+la comida	N		posiłek	
+la cuenta	N		rachunek	
+el restaurante	N		restauracja	
+el autoservicio	N		samoobsługa	
+servir	V		serwować; podawać	
+hacer una queja	VP		składać reklamację	
+la especialiad de la casa	NP		specjalność lokalu	
+el plato de la casa	NP		specjalność lokalu	
+la cantina	N		stołówka	
+la taberna	N		tawerna	
+la cocina española tradicional	NP		tradycyjna kuchnia hiszpańska	
+la cocina polaca tradicional	NP		tradycyjna kuchnia polska	
+la bodega	N		winiarnia	
+la mesa libre	NP		wolny stolik	
+elegir	V		wybierać	
+ocupar el asiento	VP		zająć miejsce	
+pedir	V		zamawiać	
+el pedido	N		zamówienie	
+invitar	V		zaprosić	
+reservar una mesa	VP		zarezerwować stolik	
+la autobiografia	N		autobiografia	
+el cuento de hadas	NP		bajka	
+la balada	N		ballada	
+la ficción	N		beletrystyka	
+el bestseller	N		bestseller	
+la biografia	N		biografia	
+la citación	N		cytat	
+el lector	N		czytelnik	
+el drama	N		dramat	
+la película de suspense	NP		dreszczowiec	
+la obra completa	NP		dzieła zebrane	
+el trama	N		fabuła	
+el género	N		gatunek literacki	
+la comedia	N		komedia	
+el tebeo	N		komiks	
+la crónica	N		kronika	
+la novela policiaca	NP		kryminał	
+el libro	N		książka	
+el libro de bolsillo	NP		książka w wydaniu kieszonkowym	
+la leyenda	N		legenda	
+la literatura	N		literatura	
+la no ficción	N		literatura faktu	
+la literatura juvenil	NP		literatura młodzieżowa	
+la literatura clásica	NP		literatura piękna	
+la literatura contermporánea	NP		literatura współczesna	
+el melodrama	N		melodramat	
+el ratón de biblioteca	NP		mól książkowy	
+el cuento	N		nowela; opowiadanie	
+la cubierta	N		okładka	
+publicar	V		opublikować; wydać	
+el diario	N		pamiętnik	
+la canción	N		pieśń	
+escribir un libro	VP		pisać książkę	
+la poesía	N		poezja	
+la novela	N		powieść	
+la novela de fantasía	NP		powieść fantastyczna	
+la novela histórica	NP		powieść historyczna	
+la reseña	N		recenzja	
+la novela romántica	NP		romans	
+la novela rosa	NP		romans	
+el volumen	N		tom	
+la tragedia	N		tragedia	
+la obra épica	NP		utwór epicki	
+el poema	N		wiersz	
+la editorial	N		wydawnictwo	
+la agencia de prensa	NP		agencja prasowa	
+el artículo	N		artykuł	
+la censura	N		cenzura	
+imprimir	V		drukować	
+el periódico	N		gazeta	
+el periódico	N		gazeta codzienna	
+el periódico nacional	NP		gazeta krajowa	
+el periódico local	NP		gazeta lokalna	
+los comentarios	N		komentarze	
+la revista	N		magazyn	
+el titular	N		nagłówek	
+los obituarios	N		nekrologi	

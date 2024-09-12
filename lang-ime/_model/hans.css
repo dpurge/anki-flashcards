@@ -1,0 +1,17 @@
+.card {
+    font-family: arial;
+    font-size: 20px;
+    text-align: center;
+}
+
+.text {
+    font-size: 220%;
+}
+
+.transcription {
+    font-size: 120%;
+}
+
+.notes {
+    font-style: italic;
+}

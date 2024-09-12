@@ -1,0 +1,74 @@
+deck:
+  name: 'IME::Mandarin::Shuangpin'
+
+model:
+  name: 'Chinese (Simplified) IME'
+  kind: 'normal'
+  style:
+    css: ../_model/hans.css
+  templates:
+    - name: Recognize
+      qfmt: ../_model/recognize-qfmt.html
+      afmt: ../_model/recognize-afmt.html
+  fields:
+    - name: Text
+      template: ../_template/Text.txt
+      index: true
+      description: IME text
+    - name: Transcription
+      template: ../_template/Transcription.txt
+      description: Transcription to get the IME text
+    - name: Notes
+      template: ../_template/Notes.txt
+      format: markdown
+      description: Additional notes
+
+data:
+  - filename: ./shuangpin/b.csv
+    tags: ['ShuangPin-B']
+  - filename: ./shuangpin/c.csv
+    tags: ['ShuangPin-C']
+  - filename: ./shuangpin/ch.csv
+    tags: ['ShuangPin-CH']
+  - filename: ./shuangpin/d.csv
+    tags: ['ShuangPin-D']
+  - filename: ./shuangpin/f.csv
+    tags: ['ShuangPin-F']
+  - filename: ./shuangpin/g.csv
+    tags: ['ShuangPin-G']
+  - filename: ./shuangpin/h.csv
+    tags: ['ShuangPin-H']
+  - filename: ./shuangpin/j.csv
+    tags: ['ShuangPin-J']
+  - filename: ./shuangpin/k.csv
+    tags: ['ShuangPin-K']
+  - filename: ./shuangpin/l.csv
+    tags: ['ShuangPin-L']
+  - filename: ./shuangpin/m.csv
+    tags: ['ShuangPin-M']
+  - filename: ./shuangpin/n.csv
+    tags: ['ShuangPin-N']
+  - filename: ./shuangpin/o.csv
+    tags: ['ShuangPin-O']
+  - filename: ./shuangpin/p.csv
+    tags: ['ShuangPin-P']
+  - filename: ./shuangpin/q.csv
+    tags: ['ShuangPin-Q']
+  - filename: ./shuangpin/r.csv
+    tags: ['ShuangPin-R']
+  - filename: ./shuangpin/s.csv
+    tags: ['ShuangPin-S']
+  - filename: ./shuangpin/sh.csv
+    tags: ['ShuangPin-SH']
+  - filename: ./shuangpin/t.csv
+    tags: ['ShuangPin-T']
+  - filename: ./shuangpin/w.csv
+    tags: ['ShuangPin-W']
+  - filename: ./shuangpin/x.csv
+    tags: ['ShuangPin-X']
+  - filename: ./shuangpin/y.csv
+    tags: ['ShuangPin-Y']
+  - filename: ./shuangpin/z.csv
+    tags: ['ShuangPin-Z']
+  - filename: ./shuangpin/zh.csv
+    tags: ['ShuangPin-ZH']
