@@ -1,0 +1,74 @@
+deck:
+  name: 'Language::Iranian::Farsi::Vocabulary'
+
+model:
+  name: 'Farsi Vocabulary'
+  kind: 'normal'
+  style:
+    css: ../_model/arab.css
+  templates:
+    - name: Recognize
+      qfmt: ../_model/recognize-qfmt.html
+      afmt: ../_model/recognize-afmt.html
+    - name: Recall
+      qfmt: ../_model/recall-qfmt.html
+      afmt: ../_model/recall-afmt.html
+  fields:
+    - name: Phrase
+      template: ../_template/Phrase.txt
+      index: true
+      rtl: true
+      description: Phrase
+    - name: Grammar
+      template: ../_template/Grammar.txt
+      index: true
+      description: Grammar
+    - name: Transcription
+      template: ../_template/Transcription.txt
+      description: Transcription
+    - name: Translation
+      template: ../_template/Translation.txt
+      merge: true
+      description: Translation
+    - name: Notes
+      template: ../_template/Notes.txt
+      format: markdown
+      description: Notes
+
+audio: []
+video: []
+image: []
+
+data:
+  - filename: ./ovchinnikova-2002/a01.csv
+    tags: ['Ovchinnikova-A01']
+  - filename: ./ovchinnikova-2002/a02.csv
+    tags: ['Ovchinnikova-A02']
+  - filename: ./ovchinnikova-2002/a03.csv
+    tags: ['Ovchinnikova-A03']
+  - filename: ./ovchinnikova-2002/a04.csv
+    tags: ['Ovchinnikova-A04']
+  - filename: ./ovchinnikova-2002/a05.csv
+    tags: ['Ovchinnikova-A05']
+  - filename: ./ovchinnikova-2002/a06.csv
+    tags: ['Ovchinnikova-A06']
+  - filename: ./ovchinnikova-2002/a07.csv
+    tags: ['Ovchinnikova-A07']
+  - filename: ./ovchinnikova-2002/a08.csv
+    tags: ['Ovchinnikova-A08']
+  - filename: ./ovchinnikova-2002/a09.csv
+    tags: ['Ovchinnikova-A09']
+  - filename: ./ovchinnikova-2002/a10.csv
+    tags: ['Ovchinnikova-A10']
+  - filename: ./ovchinnikova-2002/a11.csv
+    tags: ['Ovchinnikova-A11']
+  - filename: ./thackston-2009/01.csv
+    tags: ['Thackston-01']
+  - filename: ./thackston-2009/02.csv
+    tags: ['Thackston-02']
+  - filename: ./thackston-2009/03.csv
+    tags: ['Thackston-03']
+  - filename: ./thackston-2009/04.csv
+    tags: ['Thackston-04']
+  - filename: ./thackston-2009/05.csv
+    tags: ['Thackston-05']
