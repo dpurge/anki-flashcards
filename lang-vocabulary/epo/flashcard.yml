@@ -1,0 +1,53 @@
+deck:
+  name: 'Language::Constructed::Esperanto::Vocabulary'
+
+model:
+  name: 'Esperanto Vocabulary'
+  kind: 'normal'
+  style:
+    css: ../_model/latn.css
+  templates:
+    - name: Recognize
+      qfmt: ../_model/recognize-qfmt.html
+      afmt: ../_model/recognize-afmt.html
+    - name: Recall
+      qfmt: ../_model/recall-qfmt.html
+      afmt: ../_model/recall-afmt.html
+  fields:
+    - name: Phrase
+      template: ../_template/Phrase.txt
+      index: true
+      description: Phrase
+    - name: Grammar
+      template: ../_template/Grammar.txt
+      index: true
+      description: Grammar
+    - name: Transcription
+      template: ../_template/Transcription.txt
+      description: Transcription
+    - name: Translation
+      template: ../_template/Translation.txt
+      merge: true
+      description: Translation
+    - name: Notes
+      template: ../_template/Notes.txt
+      format: markdown
+      description: Notes
+
+audio: []
+video: []
+image: []
+
+data:
+  - filename: ./sygnarski-1947/01.csv
+    tags: ['Sygnarski-01']
+  - filename: ./sygnarski-1947/02.csv
+    tags: ['Sygnarski-02']
+  - filename: ./sygnarski-1947/03.csv
+    tags: ['Sygnarski-03']
+  - filename: ./sygnarski-1947/04.csv
+    tags: ['Sygnarski-04']
+  - filename: ./sygnarski-1947/05.csv
+    tags: ['Sygnarski-05']
+  - filename: ./sygnarski-1947/06.csv
+    tags: ['Sygnarski-06']
