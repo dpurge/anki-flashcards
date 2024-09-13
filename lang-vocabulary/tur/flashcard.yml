@@ -1,0 +1,83 @@
+deck:
+  name: 'Language::Turkic::Turkish::Vocabulary'
+
+model:
+  name: 'Turkish Vocabulary'
+  kind: 'normal'
+  style:
+    css: ../_model/latn.css
+  templates:
+    - name: Recognize
+      qfmt: ../_model/recognize-qfmt.html
+      afmt: ../_model/recognize-afmt.html
+    - name: Recall
+      qfmt: ../_model/recall-qfmt.html
+      afmt: ../_model/recall-afmt.html
+  fields:
+    - name: Phrase
+      template: ../_template/Phrase.txt
+      index: true
+      description: Phrase
+    - name: Grammar
+      template: ../_template/Grammar.txt
+      index: true
+      description: Grammar
+    - name: Transcription
+      template: ../_template/Transcription.txt
+      description: Transcription
+    - name: Translation
+      template: ../_template/Translation.txt
+      merge: true
+      description: Translation
+    - name: Notes
+      template: ../_template/Notes.txt
+      format: markdown
+      description: Notes
+
+audio: []
+video: []
+image: []
+
+data:
+  - filename: ./arovina-1971/01.csv
+    tags: ['Arovina-01']
+  - filename: ./arovina-1971/02.csv
+    tags: ['Arovina-02']
+  - filename: ./arovina-1971/03.csv
+    tags: ['Arovina-03']
+  - filename: ./arovina-1971/04.csv
+    tags: ['Arovina-04']
+  - filename: ./aylarov-1958/01.csv
+    tags: ['Aylarov-01']
+  - filename: ./dudina-2005/01.csv
+    tags: ['Dudina-01']
+  - filename: ./dudina-2005/02.csv
+    tags: ['Dudina-02']
+  - filename: ./dudina-2005/03.csv
+    tags: ['Dudina-03']
+  - filename: ./dudina-2005/04.csv
+    tags: ['Dudina-04']
+  - filename: ./dudina-2005/05.csv
+    tags: ['Dudina-05']
+  - filename: ./guzev-2006/01.csv
+    tags: ['Guzev-01']
+  - filename: ./guzev-2006/02.csv
+    tags: ['Guzev-02']
+  - filename: ./guzev-2006/03.csv
+    tags: ['Guzev-03']
+  - filename: ./guzev-2006/04.csv
+    tags: ['Guzev-04']
+  - filename: ./guzev-2006/05.csv
+    tags: ['Guzev-05']
+  - filename: ./guzev-2006/06.csv
+    tags: ['Guzev-06']
+  - filename: ./guzev-2006/07.csv
+    tags: ['Guzev-07']
+  - filename: ./istanbul/a1-01.csv
+    tags: ['Istanbul-A101']
+  - filename: ./kabardin-2016/01.csv
+    tags: ['Kabardin-01']
+  - filename: ./kabardin-2016/02.csv
+    tags: ['Kabardin-02']
+  - filename: ./yedi-2015/a1-01.csv
+    tags: ['Yedi-A101']

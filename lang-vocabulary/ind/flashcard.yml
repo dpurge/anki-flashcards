@@ -1,0 +1,107 @@
+deck:
+  name: 'Language::Austronesian::Indonesian::Vocabulary'
+
+model:
+  name: 'Indonesian Vocabulary'
+  kind: 'normal'
+  style:
+    css: ../_model/latn.css
+  templates:
+    - name: Recognize
+      qfmt: ../_model/recognize-qfmt.html
+      afmt: ../_model/recognize-afmt.html
+    - name: Recall
+      qfmt: ../_model/recall-qfmt.html
+      afmt: ../_model/recall-afmt.html
+  fields:
+    - name: Phrase
+      template: ../_template/Phrase.txt
+      index: true
+      description: Phrase
+    - name: Grammar
+      template: ../_template/Grammar.txt
+      index: true
+      description: Grammar
+    - name: Transcription
+      template: ../_template/Transcription.txt
+      description: Transcription
+    - name: Translation
+      template: ../_template/Translation.txt
+      merge: true
+      description: Translation
+    - name: Notes
+      template: ../_template/Notes.txt
+      format: markdown
+      description: Notes
+
+audio: []
+video: []
+image: []
+
+data:
+  - filename: ./colloquial-2002/01.csv
+    tags: ['Colloquial-01']
+  - filename: ./colloquial-2002/02.csv
+    tags: ['Colloquial-02']
+  - filename: ./demidyuk-2013/00a.csv
+    tags: ['Demidyuk-00a']
+  - filename: ./demidyuk-2013/00b.csv
+    tags: ['Demidyuk-00b']
+  - filename: ./demidyuk-2013/00c.csv
+    tags: ['Demidyuk-00c']
+  - filename: ./demidyuk-2013/00d.csv
+    tags: ['Demidyuk-00d']
+  - filename: ./demidyuk-2013/00e.csv
+    tags: ['Demidyuk-00e']
+  - filename: ./indonesian-way/01.csv
+    tags: ['IndoWay-01']
+  - filename: ./indonesian-way/02.csv
+    tags: ['IndoWay-02']
+  - filename: ./indonesian-way/03.csv
+    tags: ['IndoWay-03']
+  - filename: ./indonesian-way/04.csv
+    tags: ['IndoWay-04']
+  - filename: ./indonesian-way/05.csv
+    tags: ['IndoWay-05']
+  - filename: ./indonesian-way/06.csv
+    tags: ['IndoWay-06']
+  - filename: ./indonesian-way/07.csv
+    tags: ['IndoWay-07']
+  - filename: ./indonesian-way/08.csv
+    tags: ['IndoWay-08']
+  - filename: ./indonesian-way/09.csv
+    tags: ['IndoWay-09']
+  - filename: ./indonesian-way/10.csv
+    tags: ['IndoWay-10']
+  - filename: ./indonesian-way/11.csv
+    tags: ['IndoWay-11']
+  - filename: ./indonesian-way/14.csv
+    tags: ['IndoWay-14']
+  - filename: ./indonesian-way/15.csv
+    tags: ['IndoWay-15']
+  - filename: ./indonesian-way/16.csv
+    tags: ['IndoWay-16']
+  - filename: ./indonesian-way/22.csv
+    tags: ['IndoWay-22']
+  - filename: ./indonesian-way/23.csv
+    tags: ['IndoWay-23']
+  - filename: ./indonesian-way/24.csv
+    tags: ['IndoWay-24']
+  - filename: ./indonesian-way/25.csv
+    tags: ['IndoWay-25']
+  - filename: ./indonesian-way/28.csv
+    tags: ['IndoWay-28']
+  - filename: ./linguaphone/01.csv
+    tags: ['Linguaphone-01']
+  - filename: ./linguaphone/02.csv
+    tags: ['Linguaphone-02']
+  - filename: ./linguaphone/03.csv
+    tags: ['Linguaphone-03']
+  - filename: ./linguaphone/04.csv
+    tags: ['Linguaphone-04']
+  - filename: ./soravia-2002/00.csv
+    tags: ['Soravia-00']
+  - filename: ./soravia-2002/01.csv
+    tags: ['Soravia-01']
+  - filename: ./soravia-2002/02.csv
+    tags: ['Soravia-02']

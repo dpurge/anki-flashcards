@@ -1,0 +1,53 @@
+deck:
+  name: 'Language::Romance::Romanian::Vocabulary'
+
+model:
+  name: 'Romanian Vocabulary'
+  kind: 'normal'
+  style:
+    css: ../_model/latn.css
+  templates:
+    - name: Recognize
+      qfmt: ../_model/recognize-qfmt.html
+      afmt: ../_model/recognize-afmt.html
+    - name: Recall
+      qfmt: ../_model/recall-qfmt.html
+      afmt: ../_model/recall-afmt.html
+  fields:
+    - name: Phrase
+      template: ../_template/Phrase.txt
+      index: true
+      description: Phrase
+    - name: Grammar
+      template: ../_template/Grammar.txt
+      index: true
+      description: Grammar
+    - name: Transcription
+      template: ../_template/Transcription.txt
+      description: Transcription
+    - name: Translation
+      template: ../_template/Translation.txt
+      merge: true
+      description: Translation
+    - name: Notes
+      template: ../_template/Notes.txt
+      format: markdown
+      description: Notes
+
+audio: []
+video: []
+image: []
+
+data:
+  - filename: ./murell-1987/01.csv
+    tags: ['Murell-01']
+  - filename: ./murell-1987/02.csv
+    tags: ['Murell-02']
+  - filename: ./ryzhova-2017/02.csv
+    tags: ['Ryzhova-02']
+  - filename: ./ryzhova-2017/03.csv
+    tags: ['Ryzhova-03']
+  - filename: ./ryzhova-2017/04.csv
+    tags: ['Ryzhova-04']
+  - filename: ./zajunchkovskij-1982/01.csv
+    tags: ['Zajunchkovskij-01']

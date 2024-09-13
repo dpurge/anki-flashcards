@@ -1,0 +1,81 @@
+deck:
+  name: 'Language::Romance::French::Vocabulary'
+
+model:
+  name: 'French Vocabulary'
+  kind: 'normal'
+  style:
+    css: ../_model/latn.css
+  templates:
+    - name: Recognize
+      qfmt: ../_model/recognize-qfmt.html
+      afmt: ../_model/recognize-afmt.html
+    - name: Recall
+      qfmt: ../_model/recall-qfmt.html
+      afmt: ../_model/recall-afmt.html
+  fields:
+    - name: Phrase
+      template: ../_template/Phrase.txt
+      index: true
+      description: Phrase
+    - name: Grammar
+      template: ../_template/Grammar.txt
+      index: true
+      description: Grammar
+    - name: Transcription
+      template: ../_template/Transcription.txt
+      description: Transcription
+    - name: Translation
+      template: ../_template/Translation.txt
+      merge: true
+      description: Translation
+    - name: Notes
+      template: ../_template/Notes.txt
+      format: markdown
+      description: Notes
+
+audio: []
+video: []
+image: []
+
+data:
+  - filename: ./leblanc/00.csv
+    tags: ['Leblanc-00']
+  - filename: ./mauger/A01.csv
+    tags: ['Mauger-A01']
+  - filename: ./mauger/A02.csv
+    tags: ['Mauger-A02']
+  - filename: ./mauger/A03.csv
+    tags: ['Mauger-A03']
+  - filename: ./mauger/A04.csv
+    tags: ['Mauger-A04']
+  - filename: ./mauger/A05.csv
+    tags: ['Mauger-A05']
+  - filename: ./mauger/A06.csv
+    tags: ['Mauger-A06']
+  - filename: ./mauger/A07.csv
+    tags: ['Mauger-A07']
+  - filename: ./mauger/A08.csv
+    tags: ['Mauger-A08']
+  - filename: ./mauger/A09.csv
+    tags: ['Mauger-A09']
+  - filename: ./szypowska-1963/01.csv
+    tags: ['Szypowska-01']
+  - filename: ./szypowska-1963/02.csv
+    tags: ['Szypowska-02']
+  - filename: ./szypowska-1963/03.csv
+    tags: ['Szypowska-03']
+  - filename: ./szypowska-1963/04.csv
+    tags: ['Szypowska-04']
+  - filename: ./szypowska-1963/05.csv
+    tags: ['Szypowska-05']
+  - filename: ./szypowska-1963/06.csv
+    tags: ['Szypowska-06']
+  - filename: ./szypowska-1963/07.csv
+    tags: ['Szypowska-07']
+  - filename: ./szypowska-1963/08.csv
+    tags: ['Szypowska-08']
+  - filename: ./szypowska-1963/09.csv
+    tags: ['Szypowska-09']
+  - filename: ./szypowska-1963/10.csv
+    tags: ['Szypowska-10']

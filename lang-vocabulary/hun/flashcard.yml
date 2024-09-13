@@ -1,0 +1,63 @@
+deck:
+  name: 'Language::Uralic::Hungarian::Vocabulary'
+
+model:
+  name: 'Hungarian Vocabulary'
+  kind: 'normal'
+  style:
+    css: ../_model/latn.css
+  templates:
+    - name: Recognize
+      qfmt: ../_model/recognize-qfmt.html
+      afmt: ../_model/recognize-afmt.html
+    - name: Recall
+      qfmt: ../_model/recall-qfmt.html
+      afmt: ../_model/recall-afmt.html
+  fields:
+    - name: Phrase
+      template: ../_template/Phrase.txt
+      index: true
+      description: Phrase
+    - name: Grammar
+      template: ../_template/Grammar.txt
+      index: true
+      description: Grammar
+    - name: Transcription
+      template: ../_template/Transcription.txt
+      description: Transcription
+    - name: Translation
+      template: ../_template/Translation.txt
+      merge: true
+      description: Translation
+    - name: Notes
+      template: ../_template/Notes.txt
+      format: markdown
+      description: Notes
+
+audio: []
+video: []
+image: []
+
+data:
+  - filename: ./mroczko-1982/01.csv
+    tags: ['Mroczko-01']
+  - filename: ./mroczko-1982/02.csv
+    tags: ['Mroczko-02']
+  - filename: ./mroczko-1982/03.csv
+    tags: ['Mroczko-03']
+  - filename: ./mroczko-1982/04.csv
+    tags: ['Mroczko-04']
+  - filename: ./nagy-2015/01.csv
+    tags: ['Nagy-01']
+  - filename: ./sandor-1961/01.csv
+    tags: ['Sandor-01']
+  - filename: ./sandor-1961/02.csv
+    tags: ['Sandor-02']
+  - filename: ./sandor-1961/03.csv
+    tags: ['Sandor-03']
+  - filename: ./sandor-1961/04.csv
+    tags: ['Sandor-04']
+  - filename: ./sandor-1961/05.csv
+    tags: ['Sandor-05']
+  - filename: ./sandor-1961/06.csv
+    tags: ['Sandor-06']

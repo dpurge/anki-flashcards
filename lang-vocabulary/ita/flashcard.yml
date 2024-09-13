@@ -1,0 +1,59 @@
+deck:
+  name: 'Language::Romance::Italian::Vocabulary'
+
+model:
+  name: 'Italian Vocabulary'
+  kind: 'normal'
+  style:
+    css: ../_model/latn.css
+  templates:
+    - name: Recognize
+      qfmt: ../_model/recognize-qfmt.html
+      afmt: ../_model/recognize-afmt.html
+    - name: Recall
+      qfmt: ../_model/recall-qfmt.html
+      afmt: ../_model/recall-afmt.html
+  fields:
+    - name: Phrase
+      template: ../_template/Phrase.txt
+      index: true
+      description: Phrase
+    - name: Grammar
+      template: ../_template/Grammar.txt
+      index: true
+      description: Grammar
+    - name: Transcription
+      template: ../_template/Transcription.txt
+      description: Transcription
+    - name: Translation
+      template: ../_template/Translation.txt
+      merge: true
+      description: Translation
+    - name: Notes
+      template: ../_template/Notes.txt
+      format: markdown
+      description: Notes
+
+audio: []
+video: []
+image: []
+
+data:
+  - filename: ./anson/01.csv
+    tags: ['Anson-01']
+  - filename: ./anson/02.csv
+    tags: ['Anson-02']
+  - filename: ./anson/03.csv
+    tags: ['Anson-03']
+  - filename: ./anson/04.csv
+    tags: ['Anson-04']
+  - filename: ./anson/05.csv
+    tags: ['Anson-05']
+  - filename: ./anson/06.csv
+    tags: ['Anson-06']
+  - filename: ./anson/07.csv
+    tags: ['Anson-07']
+  - filename: ./zawadzka-1973/01.csv
+    tags: ['Zawadzka-01']
+  - filename: ./zawadzka-1973/02.csv
+    tags: ['Zawadzka-02']

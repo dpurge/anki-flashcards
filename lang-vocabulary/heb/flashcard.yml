@@ -1,0 +1,112 @@
+deck:
+  name: 'Language::Semitic::Hebrew::Vocabulary'
+
+model:
+  name: 'Hebrew Vocabulary'
+  kind: 'normal'
+  style:
+    css: ../_model/hebr.css
+  templates:
+    - name: Recognize
+      qfmt: ../_model/recognize-qfmt.html
+      afmt: ../_model/recognize-afmt.html
+    - name: Recall
+      qfmt: ../_model/recall-qfmt.html
+      afmt: ../_model/recall-afmt.html
+  fields:
+    - name: Phrase
+      template: ../_template/Phrase.txt
+      index: true
+      rtl: true
+      description: Phrase
+    - name: Grammar
+      template: ../_template/Grammar.txt
+      index: true
+      description: Grammar
+    - name: Transcription
+      template: ../_template/Transcription.txt
+      description: Transcription
+    - name: Translation
+      template: ../_template/Translation.txt
+      merge: true
+      description: Translation
+    - name: Notes
+      template: ../_template/Notes.txt
+      format: markdown
+      description: Notes
+
+audio: []
+video: []
+image: []
+
+data:
+  - filename: ./kostenko-2014/01.csv
+    tags: ['Kostenko-01']
+  - filename: ./kostenko-2014/01a.csv
+    tags: ['Kostenko-01a']
+  - filename: ./kostenko-2014/02.csv
+    tags: ['Kostenko-02']
+  - filename: ./kostenko-2014/03.csv
+    tags: ['Kostenko-03']
+  - filename: ./kostenko-2014/04.csv
+    tags: ['Kostenko-04']
+  - filename: ./rath-1918/001.csv
+    tags: ['Rath-001']
+  - filename: ./rath-1918/002.csv
+    tags: ['Rath-002']
+  - filename: ./rath-1918/003.csv
+    tags: ['Rath-003']
+  - filename: ./rath-1918/004.csv
+    tags: ['Rath-004']
+  - filename: ./rath-1918/005.csv
+    tags: ['Rath-005']
+  - filename: ./rath-1918/006.csv
+    tags: ['Rath-006']
+  - filename: ./rath-1918/007.csv
+    tags: ['Rath-007']
+  - filename: ./rath-1918/008.csv
+    tags: ['Rath-008']
+  - filename: ./rath-1918/009.csv
+    tags: ['Rath-009']
+  - filename: ./rath-1918/010.csv
+    tags: ['Rath-010']
+  - filename: ./rath-1918/011.csv
+    tags: ['Rath-011']
+  - filename: ./rath-1918/012.csv
+    tags: ['Rath-012']
+  - filename: ./rath-1918/013.csv
+    tags: ['Rath-013']
+  - filename: ./rath-1918/014.csv
+    tags: ['Rath-014']
+  - filename: ./rath-1918/015.csv
+    tags: ['Rath-015']
+  - filename: ./rath-1918/016.csv
+    tags: ['Rath-016']
+  - filename: ./rath-1918/017.csv
+    tags: ['Rath-017']
+  - filename: ./rath-1918/018.csv
+    tags: ['Rath-018']
+  - filename: ./rath-1918/019.csv
+    tags: ['Rath-019']
+  - filename: ./rath-1918/020.csv
+    tags: ['Rath-020']
+  - filename: ./rath-1918/021.csv
+    tags: ['Rath-021']
+  - filename: ./rath-1918/022.csv
+    tags: ['Rath-022']
+  - filename: ./rath-1918/023.csv
+    tags: ['Rath-023']
+  - filename: ./rath-1918/024.csv
+    tags: ['Rath-024']
+  - filename: ./rath-1918/025.csv
+    tags: ['Rath-025']
+  - filename: ./rath-1918/026.csv
+    tags: ['Rath-026']
+  - filename: ./rath-1918/027.csv
+    tags: ['Rath-027']
+  - filename: ./rath-1918/028.csv
+    tags: ['Rath-028']
+  - filename: ./rath-1918/029.csv
+    tags: ['Rath-029']
+  - filename: ./rath-1918/030.csv
+    tags: ['Rath-030']
