@@ -1,0 +1,52 @@
+deck:
+  name: 'Language::Semitic::Egyptian Arabic::Vocabulary'
+
+model:
+  name: 'Egyptian Arabic Vocabulary'
+  kind: 'normal'
+  style:
+    css: ../_model/arab.css
+  templates:
+    - name: Recognize
+      qfmt: ../_model/recognize-qfmt.html
+      afmt: ../_model/recognize-afmt.html
+    - name: Recall
+      qfmt: ../_model/recall-qfmt.html
+      afmt: ../_model/recall-afmt.html
+  fields:
+    - name: Phrase
+      template: ../_template/Phrase.txt
+      index: true
+      rtl: true
+      description: Phrase
+    - name: Grammar
+      template: ../_template/Grammar.txt
+      index: true
+      description: Grammar
+    - name: Transcription
+      template: ../_template/Transcription.txt
+      description: Transcription
+    - name: Translation
+      template: ../_template/Translation.txt
+      merge: true
+      description: Translation
+    - name: Notes
+      template: ../_template/Notes.txt
+      format: markdown
+      description: Notes
+
+audio: []
+video: []
+image: []
+
+data:
+  - filename: ./bishweesh/01.csv
+    tags: ['Bishweesh-01']
+  - filename: ./bishweesh/02.csv
+    tags: ['Bishweesh-02']
+  - filename: ./bishweesh/03.csv
+    tags: ['Bishweesh-03']
+  - filename: ./bishweesh/04.csv
+    tags: ['Bishweesh-04']
+  - filename: ./bishweesh/05.csv
+    tags: ['Bishweesh-05']

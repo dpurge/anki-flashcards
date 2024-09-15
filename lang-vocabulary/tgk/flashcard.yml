@@ -1,0 +1,75 @@
+deck:
+  name: 'Language::Iranian::Tajik::Vocabulary'
+
+model:
+  name: 'Tajik Vocabulary'
+  kind: 'normal'
+  style:
+    css: ../_model/cyrl.css
+  templates:
+    - name: Recognize
+      qfmt: ../_model/recognize-qfmt.html
+      afmt: ../_model/recognize-afmt.html
+    - name: Recall
+      qfmt: ../_model/recall-qfmt.html
+      afmt: ../_model/recall-afmt.html
+  fields:
+    - name: Phrase
+      template: ../_template/Phrase.txt
+      index: true
+      description: Phrase
+    - name: Grammar
+      template: ../_template/Grammar.txt
+      index: true
+      description: Grammar
+    - name: Transcription
+      template: ../_template/Transcription.txt
+      description: Transcription
+    - name: Translation
+      template: ../_template/Translation.txt
+      merge: true
+      description: Translation
+    - name: Notes
+      template: ../_template/Notes.txt
+      format: markdown
+      description: Notes
+
+audio: []
+video: []
+image: []
+
+data:
+  - filename: ./arzumanov-2019/01.csv
+    tags: ['Arzumanov-01']
+  - filename: ./arzumanov-2019/02.csv
+    tags: ['Arzumanov-02']
+  - filename: ./arzumanov-2019/03.csv
+    tags: ['Arzumanov-03']
+  - filename: ./arzumanov-2019/04.csv
+    tags: ['Arzumanov-04']
+  - filename: ./arzumanov-2019/05.csv
+    tags: ['Arzumanov-05']
+  - filename: ./arzumanov-2019/06.csv
+    tags: ['Arzumanov-06']
+  - filename: ./arzumanov-2019/07.csv
+    tags: ['Arzumanov-07']
+  - filename: ./arzumanov-2019/08.csv
+    tags: ['Arzumanov-08']
+  - filename: ./arzumanov-2019/09.csv
+    tags: ['Arzumanov-09']
+  - filename: ./arzumanov-2019/10.csv
+    tags: ['Arzumanov-10']
+  - filename: ./arzumanov-2019/11.csv
+    tags: ['Arzumanov-11']
+  - filename: ./arzumanov-2019/12.csv
+    tags: ['Arzumanov-12']
+  - filename: ./arzumanov-2019/13.csv
+    tags: ['Arzumanov-13']
+  - filename: ./arzumanov-2019/14.csv
+    tags: ['Arzumanov-14']
+  - filename: ./arzumanov-2019/15.csv
+    tags: ['Arzumanov-15']
+  - filename: ./arzumanov-2019/16.csv
+    tags: ['Arzumanov-16']
+  - filename: ./makhadov-1993/01.csv
+    tags: ['Makhadov-01']

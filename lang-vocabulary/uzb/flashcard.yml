@@ -1,0 +1,46 @@
+deck:
+  name: 'Language::Turkic::Uzbek::Vocabulary'
+
+model:
+  name: 'Uzbek Vocabulary'
+  kind: 'normal'
+  style:
+    css: ../_model/latn.css
+  templates:
+    - name: Recognize
+      qfmt: ../_model/recognize-qfmt.html
+      afmt: ../_model/recognize-afmt.html
+    - name: Recall
+      qfmt: ../_model/recall-qfmt.html
+      afmt: ../_model/recall-afmt.html
+  fields:
+    - name: Phrase
+      template: ../_template/Phrase.txt
+      index: true
+      description: Phrase
+    - name: Grammar
+      template: ../_template/Grammar.txt
+      index: true
+      description: Grammar
+    - name: Transcription
+      template: ../_template/Transcription.txt
+      description: Transcription
+    - name: Translation
+      template: ../_template/Translation.txt
+      merge: true
+      description: Translation
+    - name: Notes
+      template: ../_template/Notes.txt
+      format: markdown
+      description: Notes
+
+audio: []
+video: []
+image: []
+data:
+  - filename: ./sng-2012/A2-1.csv
+    tags: ['SNG-A2-1']
+  - filename: ./sng-2012/A2-2.csv
+    tags: ['SNG-A2-2']
+  - filename: ./sng-2012/A2-3.csv
+    tags: ['SNG-A2-3']
