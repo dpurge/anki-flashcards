@@ -1,0 +1,67 @@
+deck:
+  name: 'Language::Slavic::Bulgarian::Vocabulary'
+
+model:
+  name: 'Bulgarian Vocabulary'
+  kind: 'normal'
+  style:
+    css: ../_model/cyrl.css
+  templates:
+    - name: Recognize
+      qfmt: ../_model/recognize-qfmt.html
+      afmt: ../_model/recognize-afmt.html
+    - name: Recall
+      qfmt: ../_model/recall-qfmt.html
+      afmt: ../_model/recall-afmt.html
+  fields:
+    - name: Phrase
+      template: ../_template/Phrase.txt
+      index: true
+      description: Phrase
+    - name: Grammar
+      template: ../_template/Grammar.txt
+      index: true
+      description: Grammar
+    - name: Transcription
+      template: ../_template/Transcription.txt
+      description: Transcription
+    - name: Translation
+      template: ../_template/Translation.txt
+      merge: true
+      description: Translation
+    - name: Notes
+      template: ../_template/Notes.txt
+      format: markdown
+      description: Notes
+
+audio: []
+video: []
+image: []
+
+data:
+  - filename: ./glivinskaya-2004/01.csv
+    tags: ['Glivinskaya-01']
+  - filename: ./ivanova-2011/01.csv
+    tags: ['Ivanova-01']
+  - filename: ./zdravejte-2013/01.csv
+    tags: ['Zdravejte-01']
+  - filename: ./zdravejte-2013/01.csv
+    tags: ['Zdravejte-01']
+  - filename: ./zdravejte-2013/02.csv
+    tags: ['Zdravejte-02']
+  - filename: ./zdravejte-2013/03.csv
+    tags: ['Zdravejte-03']
+  - filename: ./zdravejte-2013/04.csv
+    tags: ['Zdravejte-04']
+  - filename: ./zdravejte-2013/05.csv
+    tags: ['Zdravejte-05']
+  - filename: ./zdravejte-2013/06.csv
+    tags: ['Zdravejte-06']
+  - filename: ./zdravejte-2013/07.csv
+    tags: ['Zdravejte-07']
+  - filename: ./zdravejte-2013/08.csv
+    tags: ['Zdravejte-08']
+  - filename: ./zdravejte-2013/09.csv
+    tags: ['Zdravejte-09']
+  - filename: ./zdravejte-2013/10.csv
+    tags: ['Zdravejte-10']

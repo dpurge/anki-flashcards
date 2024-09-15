@@ -77,3 +77,63 @@ data:
     tags: ['GuteReise-18']
   - filename: ./gute-reise-1982/19.csv
     tags: ['GuteReise-19']
+  - filename: ./listvin-2016/01.csv
+    tags: ['Listvin-01']
+  - filename: ./listvin-2016/02.csv
+    tags: ['Listvin-02']
+  - filename: ./listvin-2016/03.csv
+    tags: ['Listvin-03']
+  - filename: ./listvin-2016/04.csv
+    tags: ['Listvin-04']
+  - filename: ./listvin-2016/05.csv
+    tags: ['Listvin-05']
+  - filename: ./listvin-2016/06.csv
+    tags: ['Listvin-06']
+  - filename: ./listvin-2016/07.csv
+    tags: ['Listvin-07']
+  - filename: ./listvin-2016/08.csv
+    tags: ['Listvin-08']
+  - filename: ./listvin-2016/09.csv
+    tags: ['Listvin-09']
+  - filename: ./listvin-2016/10.csv
+    tags: ['Listvin-10']
+  - filename: ./listvin-2016/11.csv
+    tags: ['Listvin-11']
+  - filename: ./listvin-2016/12.csv
+    tags: ['Listvin-12']
+  - filename: ./listvin-2016/13.csv
+    tags: ['Listvin-13']
+  - filename: ./listvin-2016/14.csv
+    tags: ['Listvin-14']
+  - filename: ./listvin-2016/15.csv
+    tags: ['Listvin-15']
+  - filename: ./listvin-2016/16.csv
+    tags: ['Listvin-016']
+  - filename: ./nikiel-1976/01.csv
+    tags: ['Nikiel-01']
+  - filename: ./nikiel-1976/02.csv
+    tags: ['Nikiel-02']
+  - filename: ./nikiel-1976/03.csv
+    tags: ['Nikiel-03']
+  - filename: ./nikiel-1976/04.csv
+    tags: ['Nikiel-04']
+  - filename: ./nikiel-1976/05.csv
+    tags: ['Nikiel-05']
+  - filename: ./nikiel-1976/06.csv
+    tags: ['Nikiel-06']
+  - filename: ./nikiel-1976/07.csv
+    tags: ['Nikiel-07']
+  - filename: ./nikiel-1976/08.csv
+    tags: ['Nikiel-08']
+  - filename: ./nikiel-1976/09.csv
+    tags: ['Nikiel-09']
+  - filename: ./nikiel-1976/10.csv
+    tags: ['Nikiel-10']
+  - filename: ./noskov-2017/00.csv
+    tags: ['Noskov-00']
+  - filename: ./noskov-2017/01.csv
+    tags: ['Noskov-01']
+  - filename: ./noskov-2017/02.csv
+    tags: ['Noskov-02']
+  - filename: ./noskov-2017/03.csv
+    tags: ['Noskov-03']
