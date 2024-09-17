@@ -40,6 +40,28 @@ video: []
 image: []
 
 data:
+  - filename: ./bagauddin-1992/001.csv
+    tags: ['Bagauddin-001']
+  - filename: ./bagauddin-1992/002.csv
+    tags: ['Bagauddin-002']
+  - filename: ./bagauddin-1992/003.csv
+    tags: ['Bagauddin-003']
+  - filename: ./bagauddin-1992/004.csv
+    tags: ['Bagauddin-004']
+  - filename: ./bagauddin-1992/005.csv
+    tags: ['Bagauddin-005']
+  - filename: ./bagauddin-1992/006.csv
+    tags: ['Bagauddin-006']
+  - filename: ./bagauddin-1992/007.csv
+    tags: ['Bagauddin-007']
+  - filename: ./bagauddin-1992/008.csv
+    tags: ['Bagauddin-008']
+  - filename: ./bagauddin-1992/009.csv
+    tags: ['Bagauddin-009']
+  - filename: ./bagauddin-1992/010.csv
+    tags: ['Bagauddin-010']
+  - filename: ./bagauddin-1992/011.csv
+    tags: ['Bagauddin-011']
   - filename: ./fietz-2007/00.csv
     tags: ['Fietz-00']
   - filename: ./fietz-2007/01.csv
@@ -48,5 +70,23 @@ data:
     tags: ['Kurowski-01']
   - filename: ./kurowski-1973/02.csv
     tags: ['Kurowski-02']
-  - filename: ./kurowski-1973/03.csv
-    tags: ['Kurowski-03']
+  - filename: ./madina/A01.csv
+    tags: ['Madina-01']
+  - filename: ./madina/A02.csv
+    tags: ['Madina-02']
+  - filename: ./madina/A03.csv
+    tags: ['Madina-03']
+  - filename: ./madina/A04.csv
+    tags: ['Madina-04']
+  - filename: ./madina/A05.csv
+    tags: ['Madina-05']
+  - filename: ./sharbatov/06.csv
+    tags: ['Sharbatov-06']
+  - filename: ./sharbatov/07.csv
+    tags: ['Sharbatov-07']
+  - filename: ./sharbatov/08.csv
+    tags: ['Sharbatov-08']
+  - filename: ./shirwani-2011/01.csv
+    tags: ['Shirwani-01']
+  - filename: ./shirwani-2011/02.csv
+    tags: ['Shirwani-02']

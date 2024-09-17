@@ -1,0 +1,53 @@
+deck:
+  name: 'Language::Slavic::Serbian::Vocabulary'
+
+model:
+  name: 'Serbian Vocabulary'
+  kind: 'normal'
+  style:
+    css: ../_model/cyrl.css
+  templates:
+    - name: Recognize
+      qfmt: ../_model/recognize-qfmt.html
+      afmt: ../_model/recognize-afmt.html
+    - name: Recall
+      qfmt: ../_model/recall-qfmt.html
+      afmt: ../_model/recall-afmt.html
+  fields:
+    - name: Phrase
+      template: ../_template/Phrase.txt
+      index: true
+      description: Phrase
+    - name: Grammar
+      template: ../_template/Grammar.txt
+      index: true
+      description: Grammar
+    - name: Transcription
+      template: ../_template/Transcription.txt
+      description: Transcription
+    - name: Translation
+      template: ../_template/Translation.txt
+      merge: true
+      description: Translation
+    - name: Notes
+      template: ../_template/Notes.txt
+      format: markdown
+      description: Notes
+
+audio: []
+video: []
+image: []
+
+data:
+  - filename: ./trofimkina-2012/02.csv
+    tags: ['Trofimkina-02']
+  - filename: ./trofimkina-2012/03.csv
+    tags: ['Trofimkina-03']
+  - filename: ./trofimkina-2012/04.csv
+    tags: ['Trofimkina-04']
+  - filename: ./trofimkina-2012/05.csv
+    tags: ['Trofimkina-05']
+  - filename: ./trofimkina-2012/06.csv
+    tags: ['Trofimkina-06']
+  - filename: ./trofimkina-2012/07.csv
+    tags: ['Trofimkina-07']

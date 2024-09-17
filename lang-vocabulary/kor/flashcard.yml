@@ -1,0 +1,55 @@
+deck:
+  name: 'Language::Other::Korean::Vocabulary'
+
+model:
+  name: 'Korean Vocabulary'
+  kind: 'normal'
+  style:
+    css: ../_model/kore.css
+  templates:
+    - name: Recognize
+      qfmt: ../_model/recognize-qfmt.html
+      afmt: ../_model/recognize-afmt.html
+    - name: Recall
+      qfmt: ../_model/recall-qfmt.html
+      afmt: ../_model/recall-afmt.html
+  fields:
+    - name: Phrase
+      template: ../_template/Phrase.txt
+      index: true
+      description: Phrase
+    - name: Grammar
+      template: ../_template/Grammar.txt
+      index: true
+      description: Grammar
+    - name: Transcription
+      template: ../_template/Transcription.txt
+      description: Transcription
+    - name: Translation
+      template: ../_template/Translation.txt
+      merge: true
+      description: Translation
+    - name: Notes
+      template: ../_template/Notes.txt
+      format: markdown
+      description: Notes
+
+audio: []
+video: []
+image: []
+
+data:
+  - filename: ./kasatkina-2004/01.csv
+    tags: ['Kasatkina-01']
+  - filename: ./kasatkina-2004/02.csv
+    tags: ['Kasatkina-02']
+  - filename: ./kasatkina-2004/03.csv
+    tags: ['Kasatkina-03']
+  - filename: ./kasatkina-2004/04.csv
+    tags: ['Kasatkina-04']
+  - filename: ./kasatkina-2017/01.csv
+    tags: ['Kasatkina-01']
+  - filename: ./kasatkina-2017/02.csv
+    tags: ['Kasatkina-02']
+  - filename: ./kim-2006/a01.csv
+    tags: ['Kim-A01']

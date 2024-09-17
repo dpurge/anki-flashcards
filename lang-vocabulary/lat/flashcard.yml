@@ -1,0 +1,49 @@
+deck:
+  name: 'Language::Romance::Latin::Vocabulary'
+
+model:
+  name: 'Latin Vocabulary'
+  kind: 'normal'
+  style:
+    css: ../_model/latn.css
+  templates:
+    - name: Recognize
+      qfmt: ../_model/recognize-qfmt.html
+      afmt: ../_model/recognize-afmt.html
+    - name: Recall
+      qfmt: ../_model/recall-qfmt.html
+      afmt: ../_model/recall-afmt.html
+  fields:
+    - name: Phrase
+      template: ../_template/Phrase.txt
+      index: true
+      description: Phrase
+    - name: Grammar
+      template: ../_template/Grammar.txt
+      index: true
+      description: Grammar
+    - name: Transcription
+      template: ../_template/Transcription.txt
+      description: Transcription
+    - name: Translation
+      template: ../_template/Translation.txt
+      merge: true
+      description: Translation
+    - name: Notes
+      template: ../_template/Notes.txt
+      format: markdown
+      description: Notes
+
+audio: []
+video: []
+image: []
+
+data:
+  - filename: ./cambridge/a01.csv
+    tags: ['Cambridge-01']
+  - filename: ./cambridge/a02.csv
+    tags: ['Cambridge-02']
+  - filename: ./shelmerdine-2007/01.csv
+    tags: ['Shelmerdine-01']
+  - filename: ./shelmerdine-2007/02.csv
+    tags: ['Shelmerdine-02']

@@ -40,6 +40,22 @@ video: []
 image: []
 
 data:
+  - filename: ./alavi/06.csv
+    tags: ['Alavi-06']
+  - filename: ./alavi/07.csv
+    tags: ['Alavi-07']
+  - filename: ./alavi/08.csv
+    tags: ['Alavi-08']
+  - filename: ./alavi/09.csv
+    tags: ['Alavi-09']
+  - filename: ./alavi/10.csv
+    tags: ['Alavi-10']
+  - filename: ./azfa/A03.csv
+    tags: ['Azfa-A03']
+  - filename: ./colloquial-2011/01.csv
+    tags: ['Colloquial-01']
+  - filename: ./ivanov-2014/00.csv
+    tags: ['Ivanov-00']
   - filename: ./ovchinnikova-2002/a01.csv
     tags: ['Ovchinnikova-A01']
   - filename: ./ovchinnikova-2002/a02.csv
