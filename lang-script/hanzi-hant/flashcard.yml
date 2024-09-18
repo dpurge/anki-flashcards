@@ -1,0 +1,50 @@
+deck:
+  name: 'Script::Chinese (Traditional)'
+
+model:
+  name: 'Chinese Script (Traditional)'
+  kind: 'normal'
+  style:
+    css: ../_model/hant.css
+  templates:
+    - name: Recognize
+      qfmt: ../_model/recognize-qfmt.html
+      afmt: ../_model/recognize-afmt.html
+  fields:
+    - name: Text
+      template: ../_template/Text.txt
+      index: true
+      description: Text
+    - name: Transcription
+      template: ../_template/Transcription.txt
+      index: true
+      description: Transcription
+    - name: IPA
+      template: ../_template/IPA.txt
+      description: IPA
+    - name: Description
+      template: ../_template/Description.txt
+      merge: true
+      description: Description
+    - name: Notes
+      template: ../_template/Notes.txt
+      format: markdown
+      description: Notes
+
+audio: []
+video: []
+image: []
+
+data:
+  - filename: ./isaenko-1954/01.csv
+    tags: ['Isaenko-01']
+  - filename: ./isaenko-1954/02.csv
+    tags: ['Isaenko-02']
+  - filename: ./isaenko-1954/03.csv
+    tags: ['Isaenko-03']
+  - filename: ./isaenko-1954/04.csv
+    tags: ['Isaenko-04']
+  - filename: ./isaenko-1954/05.csv
+    tags: ['Isaenko-05']
+  - filename: ./isaenko-1954/06.csv
+    tags: ['Isaenko-06']
