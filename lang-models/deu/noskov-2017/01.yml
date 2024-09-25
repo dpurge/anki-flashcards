@@ -1,0 +1,71 @@
+- Text: |
+    Das ist {{c1::Lektion eins::lekcja numer jeden}}.
+- Text: |
+    Ist {{c1::das Thema::ten temat}} neu für uns?
+- Text: |
+    Ist {{c1::die Grammatik::gramatyka}} schwer?
+- Text: |
+    Wann hast du heute {{c1::Unterricht::lekcje}}?
+- Text: |
+    {{c1::Wie viele Stunden::Ile godzin}} arbeitet er?
+- Text: |
+    {{c1::Wie viele Stunden::Ile lekcji}} hast du heute?
+- Text: |
+    Ist {{c1::das Studium::studia}} leicht?
+- Text: |
+    {{c1::Ist der Satz::Czy to zdanie jest}} kurz oder lang?
+- Text: |
+    {{c1::Ist das Wort::Czy to słowo jest}} neu für dich?
+- Text: |
+    {{c1::Hast du Interesse::Czy interesujesz się}} für Sprachen?
+- Text: |
+    {{c1::Lernst du::Czy uczysz się}} Deutsch?
+- Text: |
+    {{c1::Lernst du::Czy uczysz się}} gut?
+- Text: |
+    Der Lehrer {{c1::lehrt uns::uczy nas}} Deutsch.
+- Text: |
+    {{c1::Kennst du::Czy znasz}} dieses Wort?
+- Text: |
+    {{c1::Grüßt du::Czy pozdrawiasz}} alle?
+- Text: |
+    {{c1::Wir beginnen::Zaczynamy}} unsere Arbeit.
+- Text: |
+    Unsere Arbeit {{c1::beginnt::zaczyna się}} jetzt.
+- Text: |
+    {{c1::Bildest du::Czy budujesz}} den Satz richtig?
+- Text: |
+    {{c1::Wer korrigiert::Kto poprawia}} unsere Fehler?
+- Text: |
+    Wie {{c1::heißt du::się nazywasz}}?
+- Text: |
+    {{c1::Ich heiße::Nazywam się}} Max.
+- Text: |
+    Was {{c1::heißt das::to się nazywa}}?
+- Text: |
+    {{c1::Wer fehlt::Kogo brakuje}} heute?
+- Text: |
+    {{c1::Übst du::Czy ćwiczysz}} viel?
+- Text: |
+    {{c1::Übersetzt du::Czy tłumaczysz}} gut?
+- Text: |
+    {{c1::Verstehst du::Czy rozumiesz}} gut Deutsch?
+- Text: |
+    Ist das {{c1::richtig::dobrze}}?
+- Text: |
+    Warum ist das {{c1::falsch::źle}}?
+- Text: |
+    Ist {{c1::die deutsche Sprache::język niemiecki}} schwer?
+- Text: |
+    Schreibst du {{c1::deutlich::wyraźnie}}?
+- Text: |
+    Ist alles {{c1::klar::jasne}}?
+- Text: |
+    Ist das {{c1::angenehm::przyjemne}}?
+- Text: |
+    - Vielen Dank!
+    - Danke {{c1::gleichfalls::również}}!
+- Text: |
+    Er ist {{c1::schon da::już tam}}.
+- Text: |
+    Das ist {{c1::schön::piękne}}!

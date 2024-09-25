@@ -1,0 +1,26 @@
+.card {
+    font-family: arial;
+    font-size: 20px;
+    text-align: center;
+    /* color: black;
+    background-color: white; */
+}
+   
+.cloze {
+    font-weight: bold;
+    /* color: #660000; */
+}
+
+.nightMode .cloze {
+    /* color: lightblue; */
+}
+
+.text {
+    font-size: 120%;
+    /* color: #660000; */
+}
+
+.notes {
+    /* color: #663300; */
+    font-style: italic;
+}

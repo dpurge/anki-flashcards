@@ -1,0 +1,32 @@
+- Text: |
+    *甲:* {{c1::你好。::Dzień dobry.}}
+    
+    *乙:* {{c1::你好。::Dzień dobry.}}
+  Transcription: |
+    *Jiǎ:* {{c1::Nǐ hǎo.}}
+    
+    *Yǐ:* {{c1::Nǐ hǎo.}}
+- Text: |
+    *甲:* {{c1::谢谢。::Dziękuję.}}
+    
+    *乙:* {{c2::不客气。::Nie ma za co.}}
+  Transcription: |
+    *Jiǎ:* {{c1::Xièxiè.}}
+    
+    *Yǐ:* {{c2::Bù kèqì.}}
+- Text: |
+    *甲:* {{c1::对不起。::Przepraszam.}}
+    
+    *乙:* {{c2::没关系。::Nie ma za co.}}
+  Transcription: |
+    *Jiǎ:* {{c1::Duìbùqǐ.}}
+    
+    *Yǐ:* {{c2::Méiguānxì.}}
+- Text: |
+    *甲:* {{c1::再见。::Do widzenia.}}
+    
+    *乙:* {{c1::再见。::Do widzenia.}}
+  Transcription: |
+    *Jiǎ:* {{c1::Zàijiàn.}}
+    
+    *Yǐ:* {{c1::Zàijiàn.}}
