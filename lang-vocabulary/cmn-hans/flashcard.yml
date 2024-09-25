@@ -39,6 +39,22 @@ video: []
 image: []
 
 data:
+  - filename: ./boya/a1-01.csv
+    tags: ['Boya-A1-01']
+  - filename: ./boya/a1-02.csv
+    tags: ['Boya-A1-02']
+  - filename: ./boya/a1-03.csv
+    tags: ['Boya-A1-03']
+  - filename: ./boya/a1-04.csv
+    tags: ['Boya-A1-04']
+  - filename: ./boya/a1-05.csv
+    tags: ['Boya-A1-05']
+  - filename: ./boya/a1-06.csv
+    tags: ['Boya-A1-06']
+  - filename: ./hsk/01.csv
+    tags: ['HSK-01']
+  - filename: ./hsk/02.csv
+    tags: ['HSK-02']
   - filename: ./short-term/threshold/01.csv
     tags: ['Threshold-01']
   - filename: ./short-term/threshold/02.csv

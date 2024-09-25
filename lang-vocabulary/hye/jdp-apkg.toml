@@ -1,0 +1,57 @@
+filename = "armenian-vocabulary.apkg"
+
+audio = []
+video = []
+image = []
+
+[deck]
+id = 1384960351
+name = 'Language::Armenian::Vocabulary'
+
+[model]
+id = 1224323835
+name = 'Armenian Vocabulary'
+type = 'front-back'
+guid = ['Phrase', 'Grammar', 'Translation']
+styles = '../_model/latn-simple.css'
+
+[[model.templates]]
+name = 'Recognize'
+qfmt = '../_model/recognize-qfmt-simple.html'
+afmt = '../_model/recognize-afmt-simple.html'
+
+[[model.templates]]
+name = 'Recall'
+qfmt = '../_model/recall-qfmt-simple.html'
+afmt = '../_model/recall-afmt-simple.html'
+
+[[model.fields]]
+name = 'Phrase'
+markdown = false
+template = '../_template/Phrase.html'
+
+[[model.fields]]
+name = 'Grammar'
+markdown = false
+template = '../_template/Grammar.html'
+
+[[model.fields]]
+name = 'Transcription'
+markdown = false
+template = '../_template/Transcription.html'
+
+[[model.fields]]
+name = 'Translation'
+markdown = false
+template = '../_template/Translation.html'
+
+[[model.fields]]
+name = 'Notes'
+markdown = false
+template = '../_template/Notes.html'
+
+# xxx
+
+#[[data]]
+#filename = 'xxx/01.csv'
+#tags = ['XXX01']
