@@ -1,0 +1,34 @@
+deck:
+  name: 'Language::Austroasiatic::Vietnamese::Models'
+
+model:
+  name: 'Vietnamese Models'
+  kind: 'cloze'
+  style:
+    css: ../_model/latn.css
+  templates:
+    - name: Recall
+      qfmt: ../_model/recall-qfmt.html
+      afmt: ../_model/recall-afmt.html
+  fields:
+    - name: Text
+      template: ../_template/Text.txt
+      format: markdown
+      index: true
+      description: Text
+    - name: Transcription
+      template: ../_template/Transcription.txt
+      format: markdown
+      description: Transcription
+    - name: Notes
+      template: ../_template/Notes.txt
+      format: markdown
+      description: Notes
+
+audio: []
+video: []
+image: []
+
+data:
+  - filename: ./colloquial-2020/01.yml
+    tags: ['Colloquial-01']

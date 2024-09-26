@@ -1,0 +1,56 @@
+- Text: |
+    Hùng: {{c2::Chào::Dzień dobry}} chị.
+
+    Angela: {{c2::Chào::Dzień dobry}} anh. Anh {{c1::tên là gì::jak się nazywasz}}?
+- Text: |
+    Hùng: {{c1::Tôi tên là::Nazywam się}} Hùng. {{c2::Rất vui được gặp::Cieszę się że mogę poznać}} chị.
+
+    Angela: {{c1::Tôi tên là::Nazywam się}} Angela. {{c2::Rất vui được gặp::Cieszę się że mogę poznać}} anh.
+- Text: |
+    Hùng: {{c1::Xin giới thiệu với::Pozwól że ci przedstawię}} chị Angela, đây là Lan.
+
+    Lan: {{c2::Chào::Dzień dobry}} chị Angela. {{c3::Rất vui được gặp::Bardzo mi miło poznać}} chị.
+- Text: |
+    Angela: {{c1::Rất vui được gặp::Bardzo mi miło poznać}} chị. Chị {{c2::có khỏe không::jak się masz}}?
+
+    Lan: Tôi {{c2::khỏe::mam się dobrze}}. {{c3::Cám ơn::Dziękuję}} chị. {{c4::Còn::A}} chị?
+
+    Angela: Tôi {{c2::cũng khỏe::też mam się dobrze}}. {{c3::Cám ơn::Dziękuję}} chị.
+- Text: |
+    Lan: {{c1::Chào::Do widzenia}} chị. {{c2::Hẹn gặp lại::Do zobaczenia}}.
+
+    Angela: {{c1::Chào::Do widzenia}} anh chị. {{c2::Hẹn gặp lại::Do zobaczenia}}.
+- Text: |
+    Angela: Chào {{c1::bác::proszę Pana}}.
+
+    Hoan: Chào {{c2::cháu::proszę Pani}}.
+- Text: |
+    Hoan: Chào cháu. {{c1::Xin lỗi cháu::Przepraszam}}, {{c2::cháu tên là gì::jak się Pani nazywa}}?
+
+    Angela: {{c3::Cháu tên là::Nazywam się}} Angela. Cháu {{c4::rất::bardzo}} hân hạnh được gặp {{c6::bác::Pana}}.
+
+    Hoan: {{c3::Bác tên là::Nazywam się}} Hoan. Bác {{c5::cũng::też}} {{c4::rất::bardzo}} hân hạnh được biết {{c6::cháu::Panią}}.
+- Text: |
+    Angela: {{c1::Chào em::Dzień dobry}}.
+
+    Hương: {{c2::Chào chị::Dzień dobry}}.
+- Text: |
+    Angela: {{c1::Chị tên::Nazywam się}} Angela. {{c2::Em tên gì::Jak się nazywasz}}?
+
+    Hương: Dạ, {{c2::em tên::nazywam się}} Hương.
+- Text: |
+    Angela: {{c1::Em khỏe không::Jak się masz}}?
+    
+    Hương: {{c2::Em hơi mệt::Jestem trochę zmęczona}}. {{c3::Còn chị::A Pani}}?
+
+    Angela: {{c4::Chị khỏe::Mam się dobrze}}. {{c5::Cám ơn em::Dziękuję Ci}}.
+- Text: |
+    Hương: {{c1::Chị đi với ai::Z kim Pani podróżuje}}, chị Angela?
+
+    Angela: {{c2::Chị đi một mình::Podróżuję sama}}. {{c3::Còn em::A ty}}?
+
+    Hương: {{c4::Em đi với bố mẹ của em::Podróżuję ze swoimi rodzicami}}.
+- Text: |
+    Angela: {{c1::Chị buồn ngủ quá::Chce mi się bardzo spać}}. {{c2::Chị về chỗ của chị đây::Wrócę na swoje miejsce}}. {{c3::Chào em::Do widzenia}}.
+
+    Hương: {{c3::Chào chị::Do widzenia}} Angela.
