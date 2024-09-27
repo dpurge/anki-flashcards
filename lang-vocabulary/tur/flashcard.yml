@@ -73,6 +73,10 @@ data:
     tags: ['Guzev-06']
   - filename: ./guzev-2006/07.csv
     tags: ['Guzev-07']
+  - filename: ./guzev-2006/08.csv
+    tags: ['Guzev-08']
+  - filename: ./guzev-2006/09.csv
+    tags: ['Guzev-09']
   - filename: ./istanbul/a1-01.csv
     tags: ['Istanbul-A101']
   - filename: ./kabardin-2016/01.csv

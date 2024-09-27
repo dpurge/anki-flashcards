@@ -55,6 +55,24 @@ data:
     tags: ['HSK-01']
   - filename: ./hsk/02.csv
     tags: ['HSK-02']
+  - filename: ./npcr/01.csv
+    tags: ['NPCR-01']
+  - filename: ./npcr/02.csv
+    tags: ['NPCR-02']
+  - filename: ./npcr/03.csv
+    tags: ['NPCR-03']
+  - filename: ./npcr/04.csv
+    tags: ['NPCR-04']
+  - filename: ./npcr/05.csv
+    tags: ['NPCR-05']
+  - filename: ./npcr/06.csv
+    tags: ['NPCR-06']
+  - filename: ./npcr/07.csv
+    tags: ['NPCR-07']
+  - filename: ./npcr/08.csv
+    tags: ['NPCR-08']
+  - filename: ./npcr/09.csv
+    tags: ['NPCR-09']
   - filename: ./short-term/threshold/01.csv
     tags: ['Threshold-01']
   - filename: ./short-term/threshold/02.csv
