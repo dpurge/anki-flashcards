@@ -55,6 +55,8 @@ data:
     tags: ['HSK-01']
   - filename: ./hsk/02.csv
     tags: ['HSK-02']
+  - filename: ./hsk-standard/a01.csv
+    tags: ['HSKStandard-a01']
   - filename: ./npcr/01.csv
     tags: ['NPCR-01']
   - filename: ./npcr/02.csv
