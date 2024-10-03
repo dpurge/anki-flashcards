@@ -1,0 +1,7 @@
+- Task: |
+    Utwórz w klastrze kubernetesa obiekt typu `CronJob ` korzystając z obrazu `busybox:1.28` który co minutę będzie pisał "Hello World".
+  Code: |
+    kubectl create cronjob hello \
+      --image=busybox:1.28 \
+      --schedule="*/1 * * * *" \
+        -- echo "Hello World"

@@ -1,0 +1,27 @@
+deck:
+  name: 'Computing::DevOps::Git'
+
+model:
+  name: 'Code Snippet'
+  kind: 'normal'
+  style:
+    css: ../_model/code.css
+  templates:
+    - name: Code
+      qfmt: ../_model/code-qfmt.html
+      afmt: ../_model/code-afmt.html
+  fields:
+    - name: Task
+      template: ../_template/Task.txt
+      index: true
+      format: markdown
+      description: Task
+    - name: Code
+      template: ../_template/Code.txt
+      description: Code
+    - name: Note
+      template: ../_template/Note.txt
+      format: markdown
+      description: Note
+
+data: []

@@ -1,0 +1,19 @@
+.card {
+    font-family: arial;
+    font-size: 20px;
+    text-align: center;
+}
+
+.task {
+    font-size: 120%;
+}
+
+.code {
+    font-family: monospace;
+    text-align: left;
+    white-space: pre;
+}
+
+.note {
+    font-style: italic;
+}

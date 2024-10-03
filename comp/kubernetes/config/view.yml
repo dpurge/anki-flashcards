@@ -1,0 +1,36 @@
+- Task: |
+    Wyświetl w terminalu konfigurację polecenia `kubectl`.
+  Code: |
+    kubectl config \
+      view
+- Task: |
+    Wyświetl listę kontekstów polecenia `kubectl`.
+  Code: |
+    kubectl config \
+      get-contexts
+- Task: |
+    Wyświetl nazwę bieżącego kontekstu polecenia `kubectl`.
+  Code: |
+    kubectl config \
+      current-context
+- Task: |
+    Wyświetl listę nazw użytkowników zdefiniowanych w konfiguracji polecenia `kubectl`.
+  Code: |
+    kubectl config \
+      view \
+      -o jsonpath=\
+        '{.users[*].name}'
+- Task: |
+    Wyświetl nazwę pierwszego użytkownika zdefiniowanego w konfiguracji polecenia `kubectl`.
+  Code: |
+    kubectl config \
+      view \
+      -o jsonpath=\
+        '{.users[].name}'
+- Task: |
+    Wyświetl hasło użutkownika `kubeuser` zdefiniowanego w konfiguracji polecenia `kubectl`.
+  Code: |
+    kubectl config \
+      view \
+      -o jsonpath=\
+        '{.users[?(@.name == "kubeuser")].user.password}'

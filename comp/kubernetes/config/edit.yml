@@ -1,0 +1,21 @@
+- Task: |
+    Ustaw jako bieżący kontekst `my-cluster` dla polecenia `kubectl`.
+  Code: |
+    kubectl config \
+      use-context my-cluster
+- Task: |
+    Ustaw dwa pliki konfiguracyjne dla polecenia `kubectl`: `~/.kube/config` i `~/.kube/kubconfig2`
+  Code: |
+    KUBECONFIG=~/.kube/config:~/.kube/kubconfig2
+- Task: |
+    Dodaj użytkownika `kubeuser` z nazwą użytkownika `kubeuser` i hasłem `kubepassword` w konfiguracji polecenia `kubectl`.
+  Code: |
+    kubectl config \
+      set-credentials kubeuser \
+        --username=kubeuser \
+        --password=kubepassword
+- Task: |
+    Usuń użytkownika `kubeuser` z konfiguracji polecenia `kubectl`.
+  Code: |
+    kubectl config \
+      unset users.kubeuser

@@ -1,0 +1,4 @@
+- Task: |
+    Wyświetl dokumentację do manifestów obiektów typu `Pod` w klastrze kubernetesa.
+  Code: |
+    kubectl explain pods

@@ -1,0 +1,35 @@
+- Task: |
+    Utwórz w klastrze kubernetesa obiekty skonfigurowane w manifeście `./my-manifest.yaml`.
+  Code: |
+    kubectl apply \
+      -f ./my-manifest.yaml
+- Task: |
+    Utwórz w klastrze kubernetesa obiekty zdefiniowane w manifestach `./my1.yaml` i `./my2.yaml`.
+  Code: |
+    kubectl apply \
+      -f ./my1.yaml \
+      -f ./my2.yaml 
+- Task: |
+    Utwórz w klastrze kubernetesa obiekty zdefiniowane w manifestach w katalogu `./dir`.
+  Code: |
+    kubectl apply \
+      -f ./dir
+- Task: |
+    Utwórz w klastrze kubernetesa obiekty zdefiniowane w manifeście pod adresem `https://git.io/vPieo`.
+  Code: |
+    kubectl apply \
+      -f https://git.io/vPieo
+- Task: |
+    Utwórz w klastrze kubernetesa dwa Pod-y wpisując ich manifesty w `STDIN`.
+  Code: |
+    kubectl apply -f - <<EOF
+    apiVersion: v1
+    kind: Pod
+    ... snip ...
+
+    ---
+
+    apiVersion: v1
+    kind: Pod
+    ... snip ...
+    EOF

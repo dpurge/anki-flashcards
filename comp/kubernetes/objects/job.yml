@@ -1,0 +1,6 @@
+- Task: |
+    Utwórz w klastrze kubernetesa obiekt typu `Job` korzystając z obrazu `busybox:1.28` który wypisze "Hello World".
+  Code: |
+    kubectl create job hello \
+      --image=busybox:1.28 \
+        -- echo "Hello World"

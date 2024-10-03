@@ -1,0 +1,46 @@
+deck:
+  name: 'Computing::DevOps::Kubernetes'
+
+model:
+  name: 'Code Snippet'
+  kind: 'normal'
+  style:
+    css: ../_model/code.css
+  templates:
+    - name: Code
+      qfmt: ../_model/code-qfmt.html
+      afmt: ../_model/code-afmt.html
+  fields:
+    - name: Task
+      template: ../_template/Task.txt
+      index: true
+      format: markdown
+      description: Task
+    - name: Code
+      template: ../_template/Code.txt
+      description: Code
+    - name: Note
+      template: ../_template/Note.txt
+      format: markdown
+      description: Note
+
+data:
+  - filename: ./config/bash.yml
+    tags: ['cfg-bash']
+  - filename: ./config/view.yml
+    tags: ['cfg-view']
+  - filename: ./config/edit.yml
+    tags: ['cfg-edit']
+  - filename: ./manifest/apply.yml
+    tags: ['manifest-apply']
+  - filename: ./manifest/explain.yml
+    tags: ['manifest-explain']
+  - filename: ./objects/cronjob.yml
+    tags: ['obj-cronjob']
+  - filename: ./objects/deployment.yml
+    tags: ['obj-deployment']
+  - filename: ./objects/job.yml
+    tags: ['obj-job']
+  - filename: ./objects/secret.yml
+    tags: ['obj-secret']
+
