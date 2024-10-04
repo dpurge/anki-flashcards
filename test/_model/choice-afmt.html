@@ -1,0 +1,29 @@
+<div class="question">{{Question}}</div>
+
+<hr>
+
+<ul class="choices">
+    <li id="choiceA">{{A}}</li>
+    <li id="choiceB">{{B}}</li>
+    <li id="choiceC">{{C}}</li>
+    <li id="choiceD">{{D}}</li>
+</ul>
+
+<div class="notes">{{Notes}}</div>
+
+<div id="answer">{{Answer}}</div>
+
+<script>
+(function() {
+    const choices = ["A", "B", "C", "D"];
+    const answer = document.getElementById("answer").innerText.trim();
+    choices.forEach((choice, index) => {
+        const element = document.getElementById("choice" + choice);
+        if (choice === answer) {
+            element.className = "correct";
+        } else {
+            element.className = "wrong";
+        };
+    });
+})();
+</script>

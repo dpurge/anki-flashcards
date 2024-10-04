@@ -1,0 +1,33 @@
+.card {
+    font-family: arial;
+    font-size: 20px;
+    text-align: center;
+}
+
+.question {
+    font-size: 110%;
+}
+
+.notes {
+    font-style: italic;
+}
+
+.choices {
+    text-align: left;
+}
+
+.correct {
+    text-align: left;
+    font-size: 110%;
+    font-weight: bold;
+}
+
+.wrong {
+    text-align: left;
+    font-size: 90%;
+    text-decoration: line-through;
+}
+
+#answer {
+    display: none;
+}

@@ -1,0 +1,60 @@
+- Question: What feature of port definitions in Pods allows referencing them in the targetPort attribute of a Service in Kubernetes?
+  A: IP addressing
+  B: Naming conventions
+  C: Network protocols
+  D: Port mapping
+  Answer: B
+- Question: How can you ensure flexibility in deploying and evolving Services in Kubernetes?
+  A: By using static IP addresses
+  B: By dynamically changing Pod labels
+  C: By referencing port names in Service configurations
+  D: By manually configuring network protocols
+  Answer: C
+- Question: What does Kubernetes support for port definitions in Services to accommodate multiple protocols?
+  A: Dynamic port allocation
+  B: Single port definition
+  C: Multiple port definitions
+  D: Port forwarding
+  Answer: C
+- Question: How does Kubernetes handle Services with a mixture of Pods using different network protocols?
+  A: By restricting protocol usage
+  B: By using separate Services for each protocol
+  C: By allowing multiple port definitions with different protocols
+  D: By enforcing uniform protocol configurations
+  Answer: C
+- Question: What is the default protocol for Services in Kubernetes?
+  A: UDP
+  B: HTTP
+  C: TCP
+  D: SSH
+  Answer: C
+- Question: How does Kubernetes facilitate flexibility in port numbering for Services?
+  A: By enforcing strict port ranges
+  B: By allowing dynamic port allocation
+  C: By using port naming conventions
+  D: By supporting multiple port definitions
+  Answer: D
+- Question: What benefit does referencing port names in Service configurations provide in Kubernetes?
+  A: Enhanced security
+  B: Improved scalability
+  C: Increased flexibility in port mapping
+  D: Simplified network policies
+  Answer: C
+- Question: What feature of Services in Kubernetes allows for exposing multiple ports?
+  A: Port forwarding
+  B: Port aliasing
+  C: Multiple port definitions
+  D: Dynamic port allocation
+  Answer: C
+- Question: How can Kubernetes ensure compatibility between Services and backend Pods when port numbers change?
+  A: By automatically updating Pod configurations
+  B: By using dynamic port allocation
+  C: By referencing port names in Service configurations
+  D: By enforcing strict port numbering rules
+  Answer: C
+- Question: What flexibility does Kubernetes offer for changing port numbers in backend Pods without affecting clients?
+  A: Manual configuration of client-side ports
+  B: Use of port aliasing
+  C: Referencing port names in Service configurations
+  D: Dynamic port allocation for Services
+  Answer: C

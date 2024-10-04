@@ -1,0 +1,57 @@
+deck:
+  name: 'Test::DevOps::Kubernetes'
+
+model:
+  name: 'Multiple Choice'
+  kind: 'normal'
+  style:
+    css: ../_model/choice.css
+  templates:
+    - name: Choice
+      qfmt: ../_model/choice-qfmt.html
+      afmt: ../_model/choice-afmt.html
+  fields:
+    - name: Question
+      template: ../_template/Question.txt
+      index: true
+      format: markdown
+      description: Question
+    - name: A
+      template: ../_template/ChoiceA.txt
+      format: markdown
+      description: Choice A
+    - name: B
+      template: ../_template/ChoiceB.txt
+      format: markdown
+      description: Choice B
+    - name: C
+      template: ../_template/ChoiceC.txt
+      format: markdown
+      description: Choice C
+    - name: D
+      template: ../_template/ChoiceD.txt
+      format: markdown
+      description: Choice D
+    - name: Answer
+      template: ../_template/Answer.txt
+      description: Answer
+    - name: Notes
+      template: ../_template/Notes.txt
+      format: markdown
+      description: Notes
+
+data:
+  - filename: ./cka/intro.yml
+    tags: ['cka-intro']
+  - filename: ./cka/service-discovery.yml
+    tags: ['cka-svc-discovery']
+  - filename: ./cka/service.yml
+    tags: ['cka-svc']
+  - filename: ./cka/service-without-selectors.yml
+    tags: ['cka-svc-without-selectors']
+  - filename: ./cka/external-name.yml
+    tags: ['cka-external-name']
+  - filename: ./cka/create-service.yml
+    tags: ['cka-create-service']
+  - filename: ./cka/endpoint-slices.yml
+    tags: ['cka-endpoint-slices']

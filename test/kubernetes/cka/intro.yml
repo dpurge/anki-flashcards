@@ -1,0 +1,120 @@
+- Question: What is the Service API in Kubernetes primarily designed for?
+  A: Managing container images
+  B: Exposing groups of Pods over a network
+  C: Configuring network security policies
+  D: Orchestrating load balancing mechanisms
+  Answer: B
+- Question: How does the Service abstraction in Kubernetes help in decoupling applications?
+  A: By defining logical sets of endpoints
+  B: By managing container replicas
+  C: By enforcing security policies
+  D: By providing direct access to Pods
+  Answer: A
+- Question: In Kubernetes, what determines the set of Pods targeted by a Service?
+  A: Replica count
+  B: Selector definition
+  C: Pod IP addresses
+  D: Container image name
+  Answer: B
+- Question: What is the purpose of an Ingress in Kubernetes?
+  A: To manage containerized databases
+  B: To consolidate routing rules for web traffic
+  C: To monitor resource usage
+  D: To control access to the Kubernetes API
+  Answer: B
+- Question: How does an Ingress differ from a Service in Kubernetes?
+  A: Ingress provides access to internal services while Service handles external traffic.
+  B: Ingress consolidates routing rules, while Service manages endpoint exposure.
+  C: Ingress is used for stateful workloads, while Service is for stateless workloads.
+  D: Ingress manages container lifecycle, while Service manages networking policies.
+  Answer: B
+- Question: What additional capabilities does the Gateway API for Kubernetes provide beyond Ingress and Service?
+  A: Enhanced security features
+  B: Load balancing mechanisms
+  C: Custom routing configurations
+  D: Network service access configuration
+  Answer: D
+- Question: How are Ingress and Gateway related in Kubernetes?
+  A: Ingress is a subset of Gateway functionality.
+  B: Gateway is an alternative to Ingress.
+  C: Ingress and Gateway are complementary for managing network access.
+  D: Ingress is deprecated in favor of Gateway.
+  Answer: C
+- Question: Which Kubernetes resource acts as the entry point for routing rules consolidation?
+  A: Ingress
+  B: Service
+  C: Gateway
+  D: Pod
+  Answer: A
+- Question: What type of workload would typically benefit from using Ingress in Kubernetes?
+  A: Stateful applications
+  B: Stateless microservices
+  C: Batch processing jobs
+  D: Database management systems
+  Answer: B
+- Question: In Kubernetes, how are routing rules consolidated using Ingress?
+  A: By exposing multiple components behind a single listener
+  B: By defining logical sets of endpoints
+  C: By enforcing network security policies
+  D: By managing containerized databases
+  Answer: A
+- Question: What role does the Gateway API play in Kubernetes networking?
+  A: It replaces Ingress for routing configurations.
+  B: It provides additional capabilities beyond Ingress and Service.
+  C: It handles container image management.
+  D: It controls access to the Kubernetes API server.
+  Answer: B
+- Question: How does the Service API in Kubernetes contribute to application scalability?
+  A: By managing container lifecycles
+  B: By dynamically adjusting replica counts
+  C: By defining logical sets of endpoints
+  D: By enforcing network security policies
+  Answer: C
+- Question: Which Kubernetes resource is responsible for managing access to network services within the cluster?
+  A: Gateway
+  B: Ingress
+  C: Service
+  D: Pod
+  Answer: C
+- Question: What is the primary advantage of using a Service in Kubernetes?
+  A: Simplifying container image management
+  B: Ensuring high availability of Pods
+  C: Exposing groups of Pods over a network
+  D: Enforcing security policies within Pods
+  Answer: C
+- Question: How do frontend clients interact with backend services in Kubernetes, facilitated by Services?
+  A: Clients directly communicate with individual Pods.
+  B: Clients communicate with a logical set of endpoints defined by Services.
+  C: Clients access Pods through a centralized routing system.
+  D: Clients must manually track the set of backend Pods.
+  Answer: B
+- Question: Which Kubernetes resource helps consolidate routing rules into a single resource for managing web traffic?
+  A: Gateway
+  B: Ingress
+  C: Service
+  D: Pod
+  Answer: B
+- Question: In Kubernetes, what determines which Pods are targeted by a Service?
+  A: Pod IP addresses
+  B: Replica count
+  C: Selector definition
+  D: Container image name
+  Answer: C
+- Question: What is the primary function of an Ingress in Kubernetes?
+  A: Managing container replicas
+  B: Defining routing rules for web traffic
+  C: Exposing groups of Pods over a network
+  D: Enforcing security policies within Pods
+  Answer: B
+- Question: How does the Gateway API in Kubernetes extend networking capabilities beyond Ingress and Service?
+  A: By consolidating routing rules
+  B: By providing additional security features
+  C: By dynamically adjusting Pod replicas
+  D: By configuring access to network services
+  Answer: D
+- Question: What is the main benefit of using Ingress for managing web traffic in Kubernetes?
+  A: Simplifying container image management
+  B: Enabling centralized routing rule configuration
+  C: Ensuring high availability of Pods
+  D: Enforcing security policies within Pods
+  Answer: B

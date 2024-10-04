@@ -1,0 +1,120 @@
+- Question: What type of object is a Service in Kubernetes?
+  A: Configuration
+  B: Pod
+  C: Service
+  D: ConfigMap
+  Answer: C
+- Question: How can you interact with Service definitions in Kubernetes?
+  A: Directly accessing the API server
+  B: Using kubectl or similar tools to make API calls
+  C: Modifying Pod configurations
+  D: Editing YAML files manually
+  Answer: B
+- Question: What tool is commonly used to manage Service definitions in Kubernetes?
+  A: Docker
+  B: Minikube
+  C: kubectl
+  D: Helm
+  Answer: C
+- Question: What type of port can a Service in Kubernetes map to a targetPort?
+  A: HTTP
+  B: UDP
+  C: TCP
+  D: SSH
+  Answer: C
+- Question: When creating a Service, what does Kubernetes assign to it?
+  A: Pod replicas
+  B: Replica counts
+  C: A cluster IP address
+  D: Pod IP addresses
+  Answer: C
+- Question: How does Kubernetes handle updates to the set of EndpointSlices for a Service?
+  A: Manually by administrators
+  B: Automatically by the controller for the Service
+  C: Through direct API calls
+  D: By restarting Pods
+  Answer: B
+- Question: What is the default type of IP address assigned to a Service in Kubernetes?
+  A: External IP
+  B: Internal IP
+  C: Cluster IP
+  D: Virtual IP
+  Answer: C
+- Question: Which mechanism does Kubernetes use for virtual IP address management in Services?
+  A: Virtual IPs and Service Proxies
+  B: Kubernetes Load Balancer
+  C: NodePort Service
+  D: Ingress Controller
+  Answer: A
+- Question: What naming convention must the name of a Service object adhere to?
+  A: RFC 1918
+  B: RFC 3339
+  C: RFC 1035
+  D: RFC 5321
+  Answer: C
+- Question: What is the default value of the targetPort field in a Service definition?
+  A: The same as the port field
+  B: Randomly assigned
+  C: 8080
+  D: 80
+  Answer: A
+- Question: How does Kubernetes continuously update the set of EndpointSlices for a Service?
+  A: Through manual intervention
+  B: By restarting Pods
+  C: Automatically by the controller for the Service
+  D: By reloading configuration files
+  Answer: C
+- Question: What does a Service object in Kubernetes typically target?
+  A: Pod replicas
+  B: Node IP addresses
+  C: Pod IP addresses
+  D: Cluster IP addresses
+  Answer: C
+- Question: What is the purpose of a Service controller in Kubernetes?
+  A: To manage Pod lifecycles
+  B: To handle API requests
+  C: To continuously update EndpointSlices for a Service
+  D: To manage networking policies
+  Answer: C
+- Question: Which type of Kubernetes resource must have a valid RFC 1035 label name?
+  A: Deployment
+  B: StatefulSet
+  C: Service
+  D: PersistentVolume
+  Answer: C
+- Question: How does Kubernetes handle incoming traffic for a Service?
+  A: By directly routing traffic to individual Pods
+  B: By using a load balancer
+  C: By applying network policies
+  D: By inspecting Pod configurations
+  Answer: B
+- Question: What does a Service map incoming ports to on its target Pods by default?
+  A: 443
+  B: 80
+  C: 9376
+  D: Randomly assigned
+  Answer: B
+- Question: What does Kubernetes provide to abstract away the complexity of managing network traffic to Pods?
+  A: Virtual IP addresses
+  B: Ingress resources
+  C: Services
+  D: Network policies
+  Answer: C
+- Question: How does Kubernetes enable virtual IP address management for Services?
+  A: Through manual configuration
+  B: By using DNS resolution
+  C: Through the Virtual IPs and Service Proxies mechanism
+  D: By assigning static IP addresses
+  Answer: C
+- Question: What is the primary function of a Service object in Kubernetes?
+  A: Managing container replicas
+  B: Exposing Pods over a network
+  C: Defining routing rules
+  D: Configuring network security policies
+  Answer: B
+- Question: What is the recommended approach to modifying Service definitions in Kubernetes?
+  A: Editing YAML files directly
+  B: Using a graphical user interface
+  C: Making API calls programmatically
+  D: Using kubectl or similar tools
+  Answer: D

@@ -19,9 +19,9 @@ model:
     - name: Code
       template: ../_template/Code.txt
       description: Code
-    - name: Note
-      template: ../_template/Note.txt
+    - name: Notes
+      template: ../_template/Notes.txt
       format: markdown
-      description: Note
+      description: Notes
 
 data: []

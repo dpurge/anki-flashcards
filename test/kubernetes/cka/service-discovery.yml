@@ -1,0 +1,60 @@
+- Question: How can you utilize Kubernetes APIs for service discovery in your application?
+  A: By querying the API server for matching Pods
+  B: By querying the API server for matching EndpointSlices
+  C: By directly accessing backend Pods
+  D: By configuring network load balancers manually
+  Answer: B
+- Question: What does Kubernetes update for a Service whenever the set of Pods changes?
+  A: Service definitions
+  B: Replica counts
+  C: EndpointSlices
+  D: Pod IP addresses
+  Answer: C
+- Question: For non-native applications in Kubernetes, what options are available to place a network port or load balancer between the application and backend Pods?
+  A: Direct Pod access
+  B: Service discovery mechanisms
+  C: Querying the API server
+  D: Configuring Ingress resources
+  Answer: D
+- Question: How can Kubernetes assist non-native applications in connecting to backend Pods?
+  A: By exposing Pod IP addresses directly
+  B: By providing EndpointSlices for each Service
+  C: By offering manual configuration of network ports
+  D: By offering service discovery mechanisms
+  Answer: D
+- Question: What is the purpose of EndpointSlices in Kubernetes service discovery?
+  A: To define routing rules
+  B: To manage container replicas
+  C: To track changes in the set of Pods for a Service
+  D: To manage network security policies
+  Answer: C
+- Question: How do non-native applications typically interact with backend Pods in Kubernetes?
+  A: Through direct Pod access
+  B: Through querying the API server for Pods
+  C: Through service discovery mechanisms
+  D: Through manual configuration of load balancers
+  Answer: C
+- Question: What enables Kubernetes workloads to find the target they want to connect to?
+  A: Direct querying of Pod IP addresses
+  B: Manual configuration of network ports
+  C: Service discovery mechanisms
+  D: Static routing rules
+  Answer: C
+- Question: In Kubernetes, what updates when the set of Pods in a Service changes?
+  A: Pod IP addresses
+  B: Service definitions
+  C: Replica counts
+  D: EndpointSlices
+  Answer: D
+- Question: How does Kubernetes assist non-native applications in connecting to backend Pods?
+  A: By exposing Pod IP addresses directly
+  B: By providing direct access to backend Pods
+  C: By offering service discovery mechanisms
+  D: By configuring network load balancers automatically
+  Answer: C
+- Question: What options does Kubernetes provide for non-native applications to establish connections with backend Pods?
+  A: Direct API server access
+  B: Manual load balancer configuration
+  C: Service discovery mechanisms
+  D: Pod IP address listing
+  Answer: C

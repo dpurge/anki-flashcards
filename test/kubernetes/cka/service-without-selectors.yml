@@ -1,0 +1,120 @@
+- Question: When might you use a Service without selectors in Kubernetes?
+  A: When deploying external databases
+  B: When scaling Pods dynamically
+  C: When enforcing network policies
+  D: When managing container replicas
+  Answer: A
+- Question: How can a Service without selectors in Kubernetes abstract access to backend resources?
+  A: By using selector-less EndpointSlices
+  B: By directly referencing Pod IP addresses
+  C: By configuring network load balancers
+  D: By utilizing Ingress resources
+  Answer: A
+- Question: What does a Service without selectors allow in Kubernetes?
+  A: Access to Kubernetes API server
+  B: Abstraction of different types of backend resources
+  C: Dynamic scaling of Pods
+  D: Enforcement of security policies
+  Answer: B
+- Question: In which scenario might you use a Service without selectors in Kubernetes?
+  A: When deploying stateful applications
+  B: When running batch processing jobs
+  C: When migrating workloads to Kubernetes
+  D: When managing container images
+  Answer: C
+- Question: How does a Service without selectors in Kubernetes enable workload migration?
+  A: By automating Pod deployment
+  B: By facilitating access to external resources
+  C: By abstracting access to backend services
+  D: By enforcing network policies
+  Answer: C
+- Question: What Kubernetes resource is typically used in conjunction with a Service without selectors?
+  A: Ingress
+  B: EndpointSlice
+  C: ConfigMap
+  D: PersistentVolume
+  Answer: B
+- Question: What label should be set for a Service without selectors in Kubernetes?
+  A: kubernetes.io/selector-less
+  B: kubernetes.io/service-name
+  C: kubernetes.io/backend
+  D: kubernetes.io/pod-label
+  Answer: B
+- Question: How does Kubernetes handle backend selection in a Service without selectors?
+  A: Automatically selects all available Pods
+  B: Manually assigns backend IP addresses
+  C: Uses EndpointSlices to define specific endpoints
+  D: Relies on Ingress resources for backend routing
+  Answer: C
+- Question: What is the purpose of the addressType field in an EndpointSlice for a Service without selectors?
+  A: To specify the backend database type
+  B: To indicate the type of IP addresses used by endpoints
+  C: To define network policies for accessing endpoints
+  D: To configure load balancer settings
+  Answer: B
+- Question: How does Kubernetes support pointing a Service to resources outside the cluster?
+  A: By using Ingress resources
+  B: By configuring ExternalName Services
+  C: By defining Pod selectors
+  D: By enforcing network policies
+  Answer: B
+- Question: What protocol is specified in the appProtocol field for a port in an EndpointSlice?
+  A: HTTP
+  B: TCP
+  C: UDP
+  D: HTTPS
+  Answer: A
+- Question: What is the primary benefit of using a Service without selectors in Kubernetes?
+  A: Enhanced security
+  B: Flexibility in backend resource abstraction
+  C: Simplified network configuration
+  D: Improved scalability
+  Answer: B
+- Question: How can Kubernetes support routing a Service to a different Namespace or cluster?
+  A: By configuring network load balancers
+  B: By using Service without selectors
+  C: By defining Pod selectors
+  D: By enforcing network policies
+  Answer: B
+- Question: What does the endpoints field in an EndpointSlice specify?
+  A: Backend IP addresses
+  B: Pod names
+  C: Service selectors
+  D: Network policies
+  Answer: A
+- Question: What role does EndpointSlice play in Kubernetes Services without selectors?
+  A: Defining routing rules
+  B: Specifying backend IP addresses
+  C: Enforcing security policies
+  D: Managing Pod lifecycles
+  Answer: B
+- Question: What is the advantage of using EndpointSlices with a Service without selectors?
+  A: Improved scalability
+  B: Enhanced security
+  C: Flexibility in backend configuration
+  D: Simplified networking
+  Answer: C
+- Question: How does Kubernetes handle backend resources when using a Service without selectors?
+  A: It selects all available Pods automatically
+  B: It manually assigns backend IP addresses
+  C: It uses EndpointSlices to define specific endpoints
+  D: It relies on Ingress resources for backend routing
+  Answer: C
+- Question: What type of access does a Service without selectors enable in Kubernetes?
+  A: Direct Pod access
+  B: External cluster access
+  C: In-cluster access
+  D: Restricted access
+  Answer: B
+- Question: How does a Service without selectors provide flexibility in managing backend resources?
+  A: By automatically scaling Pods
+  B: By abstracting access to external resources
+  C: By enforcing strict Pod selection rules
+  D: By using predefined network policies
+  Answer: B
+- Question: What Kubernetes API version is used for defining EndpointSlices for a Service without selectors?
+  A: v1
+  B: v1alpha1
+  C: v1beta1
+  D: discovery.k8s.io/v1
+  Answer: D

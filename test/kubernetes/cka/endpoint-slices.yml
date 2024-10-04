@@ -1,0 +1,120 @@
+- Question: What is a requirement for the name of an EndpointSlice object in Kubernetes?
+  A: It must be unique within the cluster.
+  B: It must include the Service name.
+  C: It must match the Pod name.
+  D: It must follow a specific naming convention.
+  Answer: A
+- Question: How do you link an EndpointSlice to a Service in Kubernetes?
+  A: By setting the kubernetes.io/service-name label
+  B: By using a specific API version
+  C: By defining matching selectors
+  D: By configuring network policies
+  Answer: A
+- Question: What range of IP addresses is not allowed for endpoints in an EndpointSlice in Kubernetes?
+  A: 10.0.0.0/8
+  B: 192.168.0.0/16
+  C: 127.0.0.0/8
+  D: 172.16.0.0/12
+  Answer: C
+- Question: Why are cluster IPs of other Kubernetes Services not allowed as endpoint IP addresses in Kubernetes?
+  A: Due to network security policies
+  B: Because of kube-proxy limitations
+  C: To prevent IP conflicts
+  D: To enforce isolation between Services
+  Answer: B
+- Question: What label should be set to specify the controller managing an EndpointSlice in Kubernetes?
+  A: endpointslice.kubernetes.io/managed-by
+  B: kubernetes.io/controller-name
+  C: kubernetes.io/endpoint-controller
+  D: controller.kubernetes.io/managed-by
+  Answer: A
+- Question: How should you name an EndpointSlice managed by your own controller code?
+  A: Use “controller” as the value for endpointslice.kubernetes.io/managed-by.
+  B: Use a value similar to “my-domain.example/name-of-controller”.
+  C: Use the name of the Kubernetes Service.
+  D: Use a random string as the name.
+  Answer: B
+- Question: What naming convention should you follow for a third-party tool managing EndpointSlices?
+  A: Use all-uppercase letters.
+  B: Use the name of the Kubernetes namespace.
+  C: Use the name of the tool in all-lowercase and replace spaces and punctuation with dashes.
+  D: Use a randomly generated name.
+  Answer: C
+- Question: What value should you avoid using for the managed-by label of an EndpointSlice in Kubernetes?
+  A: “controller”
+  B: “my-domain.example/name-of-controller”
+  C: “staff”
+  D: “cluster-admins”
+  Answer: A
+- Question: Why should you avoid using “controller” as the managed-by label value for an EndpointSlice?
+  A: It conflicts with Kubernetes’ own control plane.
+  B: It is reserved for Kubernetes system controllers.
+  C: It can cause naming collisions.
+  D: It does not provide meaningful information about the controller.
+  Answer: A
+- Question: What does setting the managed-by label for an EndpointSlice in Kubernetes help with?
+  A: It enforces access control policies.
+  B: It identifies the controller managing the EndpointSlice.
+  C: It defines network routing rules.
+  D: It specifies Pod selectors.
+  Answer: B
+- Question: What is the purpose of the kubernetes.io/service-name label on an EndpointSlice in Kubernetes?
+  A: To specify the Kubernetes Service managing the EndpointSlice
+  B: To define network policies for the EndpointSlice
+  C: To indicate the namespace of the EndpointSlice
+  D: To identify the controller managing the EndpointSlice
+  Answer: A
+- Question: What restriction applies to endpoint IP addresses in an EndpointSlice in Kubernetes?
+  A: They cannot be within the cluster IP range.
+  B: They must belong to the same subnet as the Pod IPs.
+  C: They must not be loopback or link-local addresses.
+  D: They must be reserved IP addresses.
+  Answer: C
+- Question: How does Kubernetes handle conflicts between the names of EndpointSlices in the same namespace?
+  A: It merges the EndpointSlices.
+  B: It raises an error during creation.
+  C: It automatically renames one of the EndpointSlices.
+  D: It assigns a random suffix to one of the names.
+  Answer: B
+- Question: What is the significance of having unique names for EndpointSlices in Kubernetes?
+  A: It simplifies management and troubleshooting.
+  B: It ensures efficient resource utilization.
+  C: It facilitates load balancing.
+  D: It prevents conflicts and errors.
+  Answer: D
+- Question: What role does the managed-by label play in Kubernetes EndpointSlices?
+  A: It specifies the controller managing the EndpointSlice.
+  B: It defines access control policies for the EndpointSlice.
+  C: It determines the Pod selector for the EndpointSlice.
+  D: It assigns network policies to the EndpointSlice.
+  Answer: A
+- Question: How does Kubernetes ensure the uniqueness of names for EndpointSlices in the same namespace?
+  A: By appending timestamps to the names
+  B: By using a centralized naming registry
+  C: By enforcing naming conventions
+  D: By raising errors during creation
+  Answer: D
+- Question: What does the managed-by label value “staff” imply in Kubernetes EndpointSlices?
+  A: Manual management by staff members
+  B: Automation by a controller named “staff”
+  C: Deployment by non-administrative users
+  D: Automatic management by Kubernetes’ control plane
+  Answer: A
+- Question: What IP address ranges are prohibited for endpoint IPs in Kubernetes EndpointSlices?
+  A: 192.0.0.0/8
+  B: 169.254.0.0/16
+  C: 10.0.0.0/8
+  D: 172.16.0.0/12
+  Answer: B
+- Question: What information does the managed-by label provide about an EndpointSlice in Kubernetes?
+  A: The namespace of the EndpointSlice
+  B: The creation timestamp of the EndpointSlice
+  C: The controller managing the EndpointSlice
+  D: The Pod selector for the EndpointSlice
+  Answer: C
+- Question: How does the managed-by label value help in identifying the source of management for an EndpointSlice in Kubernetes?
+  A: By indicating the organization’s domain name
+  B: By specifying the controller’s name and namespace
+  C: By providing details about the managing tool or controller
+  D: By representing the controller’s role in the Kubernetes cluster
+  Answer: C

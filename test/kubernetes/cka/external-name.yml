@@ -1,0 +1,60 @@
+- Question: How does accessing a Service without a selector differ from accessing a Service with a selector in Kubernetes?
+  A: It requires manual endpoint configuration.
+  B: It follows the same routing mechanism.
+  C: It bypasses network policies.
+  D: It utilizes different API endpoints.
+  Answer: B
+- Question: What are the endpoints defined in the EndpointSlice manifest used for in Kubernetes?
+  A: To configure network policies
+  B: To define Pod selectors
+  C: To route traffic to backend resources
+  D: To manage Pod lifecycles
+  Answer: C
+- Question: Why does the Kubernetes API server restrict proxying to endpoints not mapped to Pods?
+  A: To enforce network security policies
+  B: To prevent unauthorized access to endpoints
+  C: To improve API server performance
+  D: To simplify networking configurations
+  Answer: B
+- Question: What action would fail if attempting to proxy to a Service without a selector in Kubernetes?
+  A: kubectl exec
+  B: kubectl apply
+  C: kubectl describe
+  D: kubectl proxy
+  Answer: D
+- Question: What is an ExternalName Service in Kubernetes?
+  A: A Service with selectors
+  B: A Service without selectors
+  C: A Service using DNS names instead of IP addresses
+  D: A Service with restricted access
+  Answer: C
+- Question: What prevents the Kubernetes API server from being used as a proxy to unauthorized endpoints?
+  A: Network policies
+  B: EndpointSlice configurations
+  C: Authentication and authorization mechanisms
+  D: Pod security policies
+  Answer: C
+- Question: How does Kubernetes handle routing traffic to endpoints defined in an EndpointSlice?
+  A: Through manual configuration
+  B: By utilizing DNS resolution
+  C: By following Service definitions
+  D: By enforcing network policies
+  Answer: C
+- Question: What is the purpose of an EndpointSlice manifest in Kubernetes?
+  A: To define network policies
+  B: To manage Pod lifecycles
+  C: To configure routing rules
+  D: To specify backend resources for a Service
+  Answer: D
+- Question: What type of Service is used when DNS names are preferred over IP addresses in Kubernetes?
+  A: ExternalName Service
+  B: ClusterIP Service
+  C: NodePort Service
+  D: LoadBalancer Service
+  Answer: A
+- Question: What mechanism does Kubernetes employ to prevent unauthorized access to endpoints through the API server?
+  A: Proxy authentication
+  B: Endpoint authorization
+  C: RBAC (Role-Based Access Control)
+  D: Network segmentation
+  Answer: C
