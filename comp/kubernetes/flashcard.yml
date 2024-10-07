@@ -25,6 +25,10 @@ model:
       description: Notes
 
 data:
+  - filename: ./ckad/core.yml
+    tags: ['ckad-core']
+  - filename: ./ckad/multi-container.yml
+    tags: ['ckad-multi-container']
   - filename: ./config/bash.yml
     tags: ['cfg-bash']
   - filename: ./config/view.yml

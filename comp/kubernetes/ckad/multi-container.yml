@@ -1,0 +1,117 @@
+- Task: |
+    Utwórz pod-a z dwoma kontenerami `busybox` wykonującymi komendę `echo hello; sleep 3600`.
+    Połącz się z drugim kontenerem i wykonaj polecenie `ls`.
+  Code: |
+    ```bash
+    kubectl run busybox \
+      --image=busybox \
+      --restart=Never \
+      -o yaml \
+      --dry-run=client \
+      -- /bin/sh 
+        -c 'echo hello;sleep 3600' \
+          > pod.yaml
+
+    vi pod.yaml
+    ```
+
+    # Add two containers
+
+    ```YAML
+    containers:
+      - args:
+        - /bin/sh
+        - -c
+        - echo hello;sleep 3600
+        image: busybox
+        imagePullPolicy: IfNotPresent
+        name: busybox
+        resources: {}
+      - args:
+        - /bin/sh
+        - -c
+        - echo hello;sleep 3600
+        image: busybox
+        name: busybox2
+    ```
+
+    ```bash
+    kubectl create \
+      -f pod.yaml
+    
+    kubectl exec \
+      -it busybox \
+      -c busybox2 \
+      -- ls
+
+    kubectl delete po busybox
+    ```
+- Task: |
+    - Utwórz pod-a `nginx` i otwórz port 80.
+    - Utwórz init kontener `busybox` który pobierze plik komendą `wget -O /work-dir/index.html http://neverssl.com/online`
+    - Utwórz wolumen typu emptyDir i podłącz go do obu kontenerów; dla kontenera nginx jako `/usr/share/nginx/html`, a dla init kontenera jako `/work-dir`
+    - Następnie pobierz IP pod-a, utwórz tymczasowego pod-a `busybox` i wykonaj w nim komendę `wget -O- IP`
+  Code: |
+    # Zainicjuj manifest
+
+    ```bash
+    kubectl run box \
+      --image=nginx \
+      --restart=Never \
+      --port=80 \
+      --dry-run=client \
+      -o yaml > pod-init.yaml
+    ```
+
+    # Dodaj init kontener i wolumin
+
+    ```YAML
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      labels:
+        run: box
+      name: box
+    spec:
+      initContainers: 
+      - args: 
+        - /bin/sh 
+        - -c 
+        - "wget -O /work-dir/index.html http://neverssl.com/online"
+        image: busybox 
+        name: box 
+        volumeMounts: 
+        - name: vol 
+          mountPath: /work-dir 
+      containers:
+      - image: nginx
+        name: nginx
+        ports:
+        - containerPort: 80
+        volumeMounts: 
+        - name: vol 
+          mountPath: /usr/share/nginx/html 
+      volumes: 
+      - name: vol 
+        emptyDir: {} 
+    ```
+
+    ```bash
+    # Utwórz pod-a
+    kubectl apply \
+      -f pod-init.yaml
+
+    # Pobierz IP
+    kubectl get po -o wide
+
+    # Wykonal polecenie wget
+    kubectl run box-test \
+      --image=busybox \
+      --restart=Never \
+      -it --rm \
+      -- /bin/sh \
+        -c "wget -O- $(kubectl get pod box -o jsonpath='{.status.podIP}')"
+
+    # Posprzątaj
+    kubectl delete po box
+    ```
