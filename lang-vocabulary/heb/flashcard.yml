@@ -40,6 +40,20 @@ video: []
 image: []
 
 data:
+  - filename: ./chayat-2007/u01.csv
+    tags: ['chayat-u01']
+  - filename: ./chayat-2007/u02.csv
+    tags: ['chayat-u02']
+  - filename: ./chayat-2007/u03.csv
+    tags: ['chayat-u03']
+  - filename: ./chayat-2007/u04.csv
+    tags: ['chayat-u04']
+  - filename: ./chayat-2007/u05.csv
+    tags: ['chayat-u05']
+  - filename: ./chayat-2007/u06.csv
+    tags: ['chayat-u06']
+  - filename: ./chayat-2007/u07.csv
+    tags: ['chayat-u07']
   - filename: ./kostenko-2014/01.csv
     tags: ['Kostenko-01']
   - filename: ./kostenko-2014/01a.csv
