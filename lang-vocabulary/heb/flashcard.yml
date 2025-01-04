@@ -54,6 +54,8 @@ data:
     tags: ['chayat-u06']
   - filename: ./chayat-2007/u07.csv
     tags: ['chayat-u07']
+  - filename: ./chayat-2007/a01.csv
+    tags: ['chayat-a01']
   - filename: ./kostenko-2014/01.csv
     tags: ['Kostenko-01']
   - filename: ./kostenko-2014/01a.csv
