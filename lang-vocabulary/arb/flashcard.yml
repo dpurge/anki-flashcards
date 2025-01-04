@@ -80,6 +80,12 @@ data:
     tags: ['Madina-04']
   - filename: ./madina/A05.csv
     tags: ['Madina-05']
+  - filename: ./ryding-2005/01.csv
+    tags: ['Ryding-01']
+  - filename: ./ryding-2005/02.csv
+    tags: ['Ryding-02']
+  - filename: ./ryding-2005/03.csv
+    tags: ['Ryding-03']
   - filename: ./sharbatov/06.csv
     tags: ['Sharbatov-06']
   - filename: ./sharbatov/07.csv
