@@ -57,6 +57,28 @@ data:
     tags: ['HSK-02']
   - filename: ./hsk-standard/a01.csv
     tags: ['HSKStandard-a01']
+  - filename: ./hsk-wordclass/adjective-1.csv
+    tags: ['HSK-adj-01']
+  - filename: ./hsk-wordclass/adjective-2.csv
+    tags: ['HSK-adj-02']
+  - filename: ./hsk-wordclass/adjective-3.csv
+    tags: ['HSK-adj-03']
+  - filename: ./hsk-wordclass/adverb-1.csv
+    tags: ['HSK-adv-01']
+  - filename: ./hsk-wordclass/interjection-1.csv
+    tags: ['HSK-intj-01']
+  - filename: ./hsk-wordclass/numeral-1.csv
+    tags: ['HSK-num-01']
+  - filename: ./hsk-wordclass/numeral-2.csv
+    tags: ['HSK-num-02']
+  - filename: ./hsk-wordclass/numeral-3.csv
+    tags: ['HSK-num-03']
+  - filename: ./hsk-wordclass/numeral-4.csv
+    tags: ['HSK-num-04']
+  - filename: ./hsk-wordclass/numeral-5.csv
+    tags: ['HSK-num-05']
+  - filename: ./hsk-wordclass/verb-1.csv
+    tags: ['HSK-v-01']
   - filename: ./npcr/01.csv
     tags: ['NPCR-01']
   - filename: ./npcr/02.csv
