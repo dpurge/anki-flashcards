@@ -63,10 +63,16 @@ data:
     tags: ['HSK-adj-02']
   - filename: ./hsk-wordclass/adjective-3.csv
     tags: ['HSK-adj-03']
+  - filename: ./hsk-wordclass/adjective-4.csv
+    tags: ['HSK-adj-04']
   - filename: ./hsk-wordclass/adverb-1.csv
     tags: ['HSK-adv-01']
   - filename: ./hsk-wordclass/interjection-1.csv
     tags: ['HSK-intj-01']
+  - filename: ./hsk-wordclass/interrogative-pronoun.csv
+    tags: ['HSK-intr-01']
+  - filename: ./hsk-wordclass/noun-1.csv
+    tags: ['HSK-n-01']
   - filename: ./hsk-wordclass/numeral-1.csv
     tags: ['HSK-num-01']
   - filename: ./hsk-wordclass/numeral-2.csv
@@ -77,6 +83,22 @@ data:
     tags: ['HSK-num-04']
   - filename: ./hsk-wordclass/numeral-5.csv
     tags: ['HSK-num-05']
+  - filename: ./hsk-wordclass/personal-pronoun-1.csv
+    tags: ['HSK-pron-01']
+  - filename: ./hsk-wordclass/personal-pronoun-2.csv
+    tags: ['HSK-pron-02']
+  - filename: ./hsk-wordclass/personal-pronoun-3.csv
+    tags: ['HSK-pron-03']
+  - filename: ./hsk-wordclass/personal-pronoun-4.csv
+    tags: ['HSK-pron-04']
+  - filename: ./hsk-wordclass/phrase-1.csv
+    tags: ['HSK-ph-01']
+  - filename: ./hsk-wordclass/phrase-2.csv
+    tags: ['HSK-ph-02']
+  - filename: ./hsk-wordclass/phrase-3.csv
+    tags: ['HSK-ph-03']
+  - filename: ./hsk-wordclass/phrase-4.csv
+    tags: ['HSK-ph-04']
   - filename: ./hsk-wordclass/verb-1.csv
     tags: ['HSK-v-01']
   - filename: ./npcr/01.csv
