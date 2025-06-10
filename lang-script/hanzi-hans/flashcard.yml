@@ -38,3 +38,5 @@ image: []
 data:
   - filename: ./other/components.csv
     tags: ['Components']
+  - filename: ./3600-characters/A01.csv
+    tags: ['3600']
