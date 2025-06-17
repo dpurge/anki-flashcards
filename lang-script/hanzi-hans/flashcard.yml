@@ -38,5 +38,39 @@ image: []
 data:
   - filename: ./other/components.csv
     tags: ['Components']
-  - filename: ./3600-characters/A01.csv
-    tags: ['3600']
+  - filename: ./3600/A01.csv
+    tags: ['3600-A01']
+  - filename: ./hanzigong/01.csv
+    tags: ['hzg01']
+  - filename: ./yuedu/01.csv
+    tags: ['yd01']
+  - filename: ./yuedu/02.csv
+    tags: ['yd02']
+  - filename: ./yuedu/03.csv
+    tags: ['yd03']
+  - filename: ./yuedu/04.csv
+    tags: ['yd04']
+  - filename: ./yuedu/05.csv
+    tags: ['yd05']
+  - filename: ./yuedu/06.csv
+    tags: ['yd06']
+  - filename: ./yuedu/07.csv
+    tags: ['yd07']
+  - filename: ./yuedu/08.csv
+    tags: ['yd08']
+  - filename: ./yuedu/09.csv
+    tags: ['yd09']
+  - filename: ./yuedu/10.csv
+    tags: ['yd10']
+  - filename: ./yuedu/11.csv
+    tags: ['yd11']
+  - filename: ./yuedu/12.csv
+    tags: ['yd12']
+  - filename: ./yuedu/13.csv
+    tags: ['yd13']
+  - filename: ./yuedu/14.csv
+    tags: ['yd14']
+  - filename: ./yuedu/15.csv
+    tags: ['yd15']
+  - filename: ./yuedu/16.csv
+    tags: ['yd16']
