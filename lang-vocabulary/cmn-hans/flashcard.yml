@@ -119,6 +119,22 @@ data:
     tags: ['NPCR-08']
   - filename: ./npcr/09.csv
     tags: ['NPCR-09']
+  - filename: ./schaum/01.csv
+    tags: ['Schaum-01']
+  - filename: ./schaum/02.csv
+    tags: ['Schaum-02']
+  - filename: ./schaum/03.csv
+    tags: ['Schaum-03']
+  - filename: ./schaum/04.csv
+    tags: ['Schaum-04']
+  - filename: ./schaum/05.csv
+    tags: ['Schaum-05']
+  - filename: ./schaum/06.csv
+    tags: ['Schaum-06']
+  - filename: ./schaum/07.csv
+    tags: ['Schaum-07']
+  - filename: ./schaum/08.csv
+    tags: ['Schaum-08']
   - filename: ./short-term/threshold/01.csv
     tags: ['Threshold-01']
   - filename: ./short-term/threshold/02.csv
