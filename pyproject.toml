@@ -1,19 +1,22 @@
 [project]
-name = "anki-flashcards"
+name = "anki-build"
 version = "0.1.0"
-description = "Add your description here"
+description = "Build anki flashcards"
 readme = "README.md"
 authors = [
-    { name = "D. Purge", email = "david.purge@gmail.com" }
+    { name = "D. Purge", email = "dpurge@example.com" }
 ]
 requires-python = ">=3.13"
 dependencies = [
     "anki>=25.9.2",
+    "click>=8.3.1",
+    "markdown>=3.10.2",
     "pydantic>=2.12.5",
+    "pyyaml>=6.0.3",
 ]
 
 [project.scripts]
-anki-build = "anki_flashcards:main"
+anki-build = "anki_build:cli"
 
 [build-system]
 requires = ["hatchling"]
