@@ -1,0 +1,42 @@
+version: '3'
+
+vars:
+  GIT_BRANCH:
+    sh: git rev-parse --abbrev-ref HEAD
+  GIT_COMMIT:
+    sh: git log -n 1 --format=%h
+  BUILD_DATE:
+    sh: date '+%Y-%m-%d'
+  ITEMS: |
+    out/czech.apkg:dat/lang-vocabulary/ces/flashcard.yml
+  COMMENT: |
+    out/german.apkg:dat/lang-vocabulary/deu/flashcard.yml
+
+tasks:
+
+  clean:
+    desc: Delete generated files
+    cmds:
+      - rm -f {{ .TASKFILE_LOCATION }}/out/*.apkg
+
+  build:
+    desc: Build all packages
+    silent: true
+    cmds:
+      - for:
+          var: ITEMS
+        task: build-package
+        vars:
+          ITEM: '{{ .ITEM }}'
+
+  build-package:
+    desc: Build package
+    internal: true
+    silent: true
+    cmd: |
+      IFS=: read -r outfile infile <<< {{ .ITEM }}
+      echo "$(date '+%Y-%m-%d %H:%M:%S') ${outfile} ${infile}"
+      uv run anki-build build ./${infile} -o ./${outfile}
+    requires:
+      vars:
+        - ITEM

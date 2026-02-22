@@ -10,7 +10,7 @@ from .format import format_text, format_markdown
 
 def read_csv(filename):
     with filename.open(encoding="utf-8") as f:
-        data = list(csv.DictReader(f, delimiter='\t'))
+        data = list(csv.DictReader(filter(lambda row: row[0]!='#', f), delimiter='\t'))
     return data
 
 def read_yaml(filename):

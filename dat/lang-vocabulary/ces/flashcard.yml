@@ -39,18 +39,7 @@ video: []
 image: []
 
 data:
-  - filename: ./gofortieva-1976/001.csv
-    tags: ['Gofortieva-001']
-  - filename: ./martynenko-2019/001.csv
-    tags: ['Martynenko-001']
-  - filename: ./martynenko-2019/002.csv
-    tags: ['Martynenko-002']
-  - filename: ./martynenko-2019/003.csv
-    tags: ['Martynenko-003']
-  - filename: ./martynenko-2019/004.csv
-    tags: ['Martynenko-004']
-  - filename: ./martynenko-2019/005.csv
-    tags: ['Martynenko-005']
-  - filename: ./martynenko-2019/006.csv
-    tags: ['Martynenko-006']
-
+  - filename: ./gofortieva-1976-vocabulary-pol-latn.csv
+    tags: ['gofortieva-1976']
+  - filename: ./martynenko-2019-vocabulary-pol-latn.csv
+    tags: ['martynenko-2019']
