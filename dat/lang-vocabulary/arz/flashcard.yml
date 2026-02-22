@@ -40,13 +40,5 @@ video: []
 image: []
 
 data:
-  - filename: ./bishweesh/01.csv
-    tags: ['Bishweesh-01']
-  - filename: ./bishweesh/02.csv
-    tags: ['Bishweesh-02']
-  - filename: ./bishweesh/03.csv
-    tags: ['Bishweesh-03']
-  - filename: ./bishweesh/04.csv
-    tags: ['Bishweesh-04']
-  - filename: ./bishweesh/05.csv
-    tags: ['Bishweesh-05']
+  - filename: ./bishweesh-2008-vocabulary-pol-latn.csv
+    tags: ['bishweesh-2008']

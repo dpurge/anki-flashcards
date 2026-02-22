@@ -40,5 +40,5 @@ video: []
 image: []
 
 data:
-  - filename: ./colloquial/01.csv
-    tags: ['Colloquial-01']
+  - filename: ./liddicoat-1965-vocabulary-pol-latn.csv
+    tags: ['liddicoat-1965']

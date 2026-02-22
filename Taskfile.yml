@@ -8,9 +8,13 @@ vars:
   BUILD_DATE:
     sh: date '+%Y-%m-%d'
   ITEMS: |
-    out/czech.apkg:dat/lang-vocabulary/ces/flashcard.yml
+    out/arabic.apkg:dat/lang-vocabulary/arb/flashcard.yml
   COMMENT: |
+    out/levantine-arabic.apkg:dat/lang-vocabulary/apc/flashcard.yml
+    out/egyptian-arabic.apkg:dat/lang-vocabulary/arz/flashcard.yml
+    out/czech.apkg:dat/lang-vocabulary/ces/flashcard.yml
     out/german.apkg:dat/lang-vocabulary/deu/flashcard.yml
+    out/hebrew.apkg:dat/lang-vocabulary/heb/flashcard.yml
 
 tasks:
 
