@@ -39,49 +39,19 @@ video: []
 image: []
 
 data:
-  - filename: ./arovina-1971/01.csv
-    tags: ['Arovina-01']
-  - filename: ./arovina-1971/02.csv
-    tags: ['Arovina-02']
-  - filename: ./arovina-1971/03.csv
-    tags: ['Arovina-03']
-  - filename: ./arovina-1971/04.csv
-    tags: ['Arovina-04']
-  - filename: ./aylarov-1958/01.csv
-    tags: ['Aylarov-01']
-  - filename: ./dudina-2005/01.csv
-    tags: ['Dudina-01']
-  - filename: ./dudina-2005/02.csv
-    tags: ['Dudina-02']
-  - filename: ./dudina-2005/03.csv
-    tags: ['Dudina-03']
-  - filename: ./dudina-2005/04.csv
-    tags: ['Dudina-04']
-  - filename: ./dudina-2005/05.csv
-    tags: ['Dudina-05']
-  - filename: ./guzev-2006/01.csv
-    tags: ['Guzev-01']
-  - filename: ./guzev-2006/02.csv
-    tags: ['Guzev-02']
-  - filename: ./guzev-2006/03.csv
-    tags: ['Guzev-03']
-  - filename: ./guzev-2006/04.csv
-    tags: ['Guzev-04']
-  - filename: ./guzev-2006/05.csv
-    tags: ['Guzev-05']
-  - filename: ./guzev-2006/06.csv
-    tags: ['Guzev-06']
-  - filename: ./guzev-2006/07.csv
-    tags: ['Guzev-07']
-  - filename: ./guzev-2006/08.csv
-    tags: ['Guzev-08']
-  - filename: ./guzev-2006/09.csv
-    tags: ['Guzev-09']
-  - filename: ./istanbul/a1-01.csv
-    tags: ['Istanbul-A101']
-  - filename: ./kabardin-2016/01.csv
-    tags: ['Kabardin-01']
-  - filename: ./kabardin-2016/02.csv
-    tags: ['Kabardin-02']
-  - filename: ./yedi-2015/a1-01.csv
-    tags: ['Yedi-A101']
+  - filename: ./arovina-1971-vocabulary-pol-latn.csv
+    tags: ['arovina-1971']
+  - filename: ./aylarov-1954-vocabulary-pol-latn.csv
+    tags: ['aylarov-1954']
+  - filename: ./dudina-2005-vocabulary-pol-latn.csv
+    tags: ['dudina-2005']
+  - filename: ./guzev-2012-vocabulary-pol-latn.csv
+    tags: ['guzev-2012']
+  - filename: ./iklim-2015-vocabulary-pol-latn.csv
+    tags: ['iklim-2015']
+  - filename: ./istanbul-2012-vocabulary-pol-latn.csv
+    tags: ['istanbul-2012']
+  - filename: ./kabardin-2016-vocabulary-pol-latn.csv
+    tags: ['kabardin-2016']
+  - filename: ./shcheka-2008-vocabulary-pol-latn.csv
+    tags: ['shcheka-2008']

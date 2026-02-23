@@ -8,11 +8,14 @@ vars:
   BUILD_DATE:
     sh: date '+%Y-%m-%d'
   ITEMS: |
-    out/arabic.apkg:dat/lang-vocabulary/arb/flashcard.yml
+    out/turkish.apkg:dat/lang-vocabulary/tur/flashcard.yml
   COMMENT: |
+    out/arabic.apkg:dat/lang-vocabulary/arb/flashcard.yml
+    out/czech.apkg:dat/lang-vocabulary/ces/flashcard.yml
     out/levantine-arabic.apkg:dat/lang-vocabulary/apc/flashcard.yml
     out/egyptian-arabic.apkg:dat/lang-vocabulary/arz/flashcard.yml
-    out/czech.apkg:dat/lang-vocabulary/ces/flashcard.yml
+    out/farsi.apkg:dat/lang-vocabulary/fas/flashcard.yml
+    out/french.apkg:dat/lang-vocabulary/fra/flashcard.yml
     out/german.apkg:dat/lang-vocabulary/deu/flashcard.yml
     out/hebrew.apkg:dat/lang-vocabulary/heb/flashcard.yml
 
