@@ -39,11 +39,7 @@ video: []
 image: []
 
 data:
-  - filename: ./isaenko-1954/01.csv
-    tags: ['Isaenko-01']
-  - filename: ./lingshailo-1955/01.csv
-    tags: ['LingShaiLo-01']
-  - filename: ./lingshailo-1955/02.csv
-    tags: ['LingShaiLo-02']
-  - filename: ./lingshailo-1955/03.csv
-    tags: ['LingShaiLo-03']
+  - filename: ./isaenko-1954-vocabulary-pol-latn.csv
+    tags: ['isaenko-1954']
+  - filename: ./lingshailuo-1955-vocabulary-pol-latn.csv
+    tags: ['lingshailuo-1955']

@@ -39,15 +39,9 @@ video: []
 image: []
 
 data:
-  - filename: ./catlett-2006/01.csv
-    tags: ['Catlett-01']
-  - filename: ./catlett-2006/02.csv
-    tags: ['Catlett-02']
-  - filename: ./catlett-2006/03.csv
-    tags: ['Catlett-03']
-  - filename: ./colloquial-2012/01.csv
-    tags: ['Colloquial-01']
-  - filename: ./colloquial-2012/02.csv
-    tags: ['Colloquial-02']
-  - filename: ./colloquial-2012/03.csv
-    tags: ['Colloquial-03']
+  - filename: ./catlett-2005-vocabulary-pol-latn.csv
+    tags: ['catlett-2005']
+  - filename: ./colloquial-2012-vocabulary-pol-latn.csv
+    tags: ['colloquial-2012']
+  - filename: ./healy-2004-vocabulary-pol-latn.csv
+    tags: ['healy-2004']

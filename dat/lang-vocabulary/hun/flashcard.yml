@@ -39,25 +39,9 @@ video: []
 image: []
 
 data:
-  - filename: ./mroczko-1982/01.csv
-    tags: ['Mroczko-01']
-  - filename: ./mroczko-1982/02.csv
-    tags: ['Mroczko-02']
-  - filename: ./mroczko-1982/03.csv
-    tags: ['Mroczko-03']
-  - filename: ./mroczko-1982/04.csv
-    tags: ['Mroczko-04']
-  - filename: ./nagy-2015/01.csv
-    tags: ['Nagy-01']
-  - filename: ./sandor-1961/01.csv
-    tags: ['Sandor-01']
-  - filename: ./sandor-1961/02.csv
-    tags: ['Sandor-02']
-  - filename: ./sandor-1961/03.csv
-    tags: ['Sandor-03']
-  - filename: ./sandor-1961/04.csv
-    tags: ['Sandor-04']
-  - filename: ./sandor-1961/05.csv
-    tags: ['Sandor-05']
-  - filename: ./sandor-1961/06.csv
-    tags: ['Sandor-06']
+  - filename: ./mroczko-1982-vocabulary-pol-latn.csv
+    tags: ['mroczko-1982']
+  - filename: ./nagy-2015-vocabulary-pol-latn.csv
+    tags: ['nagy-2015']
+  - filename: ./sandor-1961-vocabulary-pol-latn.csv
+    tags: ['sandor-1961']
