@@ -39,11 +39,7 @@ video: []
 image: []
 
 data:
-  - filename: ./cambridge/a01.csv
-    tags: ['Cambridge-01']
-  - filename: ./cambridge/a02.csv
-    tags: ['Cambridge-02']
-  - filename: ./shelmerdine-2007/01.csv
-    tags: ['Shelmerdine-01']
-  - filename: ./shelmerdine-2007/02.csv
-    tags: ['Shelmerdine-02']
+  - filename: ./cambridge-2005-vocabulary-pol-latn.csv
+    tags: ['cambridge-2005']
+  - filename: ./oxford-2006-vocabulary-pol-latn.csv
+    tags: ['oxford-2006']

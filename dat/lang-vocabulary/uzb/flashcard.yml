@@ -38,9 +38,5 @@ audio: []
 video: []
 image: []
 data:
-  - filename: ./sng-2012/A2-1.csv
-    tags: ['SNG-A2-1']
-  - filename: ./sng-2012/A2-2.csv
-    tags: ['SNG-A2-2']
-  - filename: ./sng-2012/A2-3.csv
-    tags: ['SNG-A2-3']
+  - filename: ./sng-2012-vocabulary-pol-latn.csv
+    tags: ['sng-2012']

@@ -39,9 +39,7 @@ video: []
 image: []
 
 data:
-  - filename: ./makarova-1975/00.csv
-    tags: ['Makarova-00']
-  - filename: ./makarova-1975/01.csv
-    tags: ['Makarova-01']
-  - filename: ./yourself-2003/01.csv
-    tags: ['TY-01']
+  - filename: ./makarova-1975-vocabulary-pol-latn.csv
+    tags: ['makarova-1975']
+  - filename: ./yourself-2003-vocabulary-pol-latn.csv
+    tags: ['yourself-2003']

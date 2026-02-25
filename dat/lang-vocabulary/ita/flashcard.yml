@@ -39,21 +39,7 @@ video: []
 image: []
 
 data:
-  - filename: ./anson/01.csv
-    tags: ['Anson-01']
-  - filename: ./anson/02.csv
-    tags: ['Anson-02']
-  - filename: ./anson/03.csv
-    tags: ['Anson-03']
-  - filename: ./anson/04.csv
-    tags: ['Anson-04']
-  - filename: ./anson/05.csv
-    tags: ['Anson-05']
-  - filename: ./anson/06.csv
-    tags: ['Anson-06']
-  - filename: ./anson/07.csv
-    tags: ['Anson-07']
-  - filename: ./zawadzka-1973/01.csv
-    tags: ['Zawadzka-01']
-  - filename: ./zawadzka-1973/02.csv
-    tags: ['Zawadzka-02']
+  - filename: ./anson-vocabulary-pol-latn.csv
+    tags: ['anson']
+  - filename: ./zawadzka-1973-vocabulary-pol-latn.csv
+    tags: ['zawadzka-1973']

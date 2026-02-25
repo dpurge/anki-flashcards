@@ -39,7 +39,7 @@ video: []
 image: []
 
 data:
-  - filename: ./beginners/01.csv
-    tags: ['Beginners-01']
-  - filename: ./beginners/02.csv
-    tags: ['Beginners-02']
+  - filename: ./aleksandrovichjus-1988-vocabulary-pol-latn.csv
+    tags: ['aleksandrovichjus-1988']
+  - filename: ./dambriunas-2006-vocabulary-pol-latn.csv
+    tags: ['dambriunas-2006']

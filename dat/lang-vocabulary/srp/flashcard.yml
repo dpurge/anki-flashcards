@@ -39,15 +39,5 @@ video: []
 image: []
 
 data:
-  - filename: ./trofimkina-2012/02.csv
-    tags: ['Trofimkina-02']
-  - filename: ./trofimkina-2012/03.csv
-    tags: ['Trofimkina-03']
-  - filename: ./trofimkina-2012/04.csv
-    tags: ['Trofimkina-04']
-  - filename: ./trofimkina-2012/05.csv
-    tags: ['Trofimkina-05']
-  - filename: ./trofimkina-2012/06.csv
-    tags: ['Trofimkina-06']
-  - filename: ./trofimkina-2012/07.csv
-    tags: ['Trofimkina-07']
+  - filename: ./trofimkina-2012-vocabulary-pol-latn.csv
+    tags: ['trofimkina-2012']

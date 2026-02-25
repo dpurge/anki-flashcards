@@ -39,5 +39,5 @@ video: []
 image: []
 
 data:
-  - filename: ./drenyasova-1989/01.csv
-    tags: ['Drenyasova-01']
+  - filename: ./drenjasova-1989-vocabulary-pol-latn.csv
+    tags: ['drenjasova-1989']
