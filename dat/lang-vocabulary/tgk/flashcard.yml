@@ -39,37 +39,7 @@ video: []
 image: []
 
 data:
-  - filename: ./arzumanov-2019/01.csv
-    tags: ['Arzumanov-01']
-  - filename: ./arzumanov-2019/02.csv
-    tags: ['Arzumanov-02']
-  - filename: ./arzumanov-2019/03.csv
-    tags: ['Arzumanov-03']
-  - filename: ./arzumanov-2019/04.csv
-    tags: ['Arzumanov-04']
-  - filename: ./arzumanov-2019/05.csv
-    tags: ['Arzumanov-05']
-  - filename: ./arzumanov-2019/06.csv
-    tags: ['Arzumanov-06']
-  - filename: ./arzumanov-2019/07.csv
-    tags: ['Arzumanov-07']
-  - filename: ./arzumanov-2019/08.csv
-    tags: ['Arzumanov-08']
-  - filename: ./arzumanov-2019/09.csv
-    tags: ['Arzumanov-09']
-  - filename: ./arzumanov-2019/10.csv
-    tags: ['Arzumanov-10']
-  - filename: ./arzumanov-2019/11.csv
-    tags: ['Arzumanov-11']
-  - filename: ./arzumanov-2019/12.csv
-    tags: ['Arzumanov-12']
-  - filename: ./arzumanov-2019/13.csv
-    tags: ['Arzumanov-13']
-  - filename: ./arzumanov-2019/14.csv
-    tags: ['Arzumanov-14']
-  - filename: ./arzumanov-2019/15.csv
-    tags: ['Arzumanov-15']
-  - filename: ./arzumanov-2019/16.csv
-    tags: ['Arzumanov-16']
-  - filename: ./makhadov-1993/01.csv
-    tags: ['Makhadov-01']
+  - filename: ./arzumanov-2019-vocabulary-pol-latn.csv
+    tags: ['arzumanov-2019']
+  - filename: ./makhadov-1993-vocabulary-pol-latn.csv
+    tags: ['makhadov-1993']
