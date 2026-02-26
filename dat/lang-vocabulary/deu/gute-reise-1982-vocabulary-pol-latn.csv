@@ -1,31 +1,31 @@
 Phrase	Grammar	Transcription	Translation	Notes
 # === 1 ===
-alle			wszyscy	
+alle			wszyscy; wszystkie	
 angenehm	a		miły; przyjemny	
 der Bahnhof			dworzec kolejowy	
 bitte			proszę	
 danke			dziękuję	
-das			-	
+das			-; to	
 dort			tam	
 du			ty	
 einmal			raz; kiedyś	
 er			on	
 es			ono	
 das Gepäck			bagaż	
-gut			dobry	
+gut			dobry; dobrze	
 herzlich			serdeczny	
-hier			tutaj	
+hier			tutaj; tu	
 ich			ja	
 ihr			wy; jej; ich	
 in			w	
-ja			tak	
+ja			tak; tak jest	
 der Koffer			walizka	
 der Lautsprecher			głośnik	
 die Lektion			lekcja	
 noch			jeszcze	
 nun			teraz	
 der Ostbahnhof			Dworzec Wschodni	
-schnell			szybko	
+schnell			szybko; szybki	
 schon	adv		już	
 sehr			bardzo	
 sein	v		być	
@@ -42,7 +42,7 @@ in Berlin			w Berlinie
 sehr angenehm			bardzo mi miło	
 noch einmal			jeszcze raz	
 # === 2 ===
-aber			ale	
+aber			ale; lecz	
 auch			także	
 auf			na	
 aus			z	
@@ -80,14 +80,14 @@ arbeiten			pracować
 der Arbeitsplatz			miejsce pracy	
 das Bad			łazienka	
 der Balkon			balkon	
-dann			następnie; potem	
+dann			następnie; potem; wtedy	
 fertig			gotowy	
 gemütlich			przytulny	
 genug			dosyć	
-groß			duży	
+groß			duży; wielki; wielka; wielkie	
 das Haus			dom	
 hübsch			ładny	
-klein			mały	
+klein			mały; mała; małe	
 der Korridor			korytarz	
 die Küche			kuchnia	
 nein			nie	
@@ -99,7 +99,7 @@ schlafen			spać
 das Schlafzimmer			sypialnia	
 übrigens			zresztą	
 unser			nasz	
-wahr			prawdziwy	
+wahr			prawdziwy; prawdziwie	
 die Wohnung			mieszkanie	
 das Wohnzimmer			salon	
 das Zimmer			pokój	
@@ -121,7 +121,7 @@ elf			jedenaście
 der Fernsehturm			wieża telewizyjna	
 fünf			pięć	
 fünfzehn			piętnaście	
-ganz			cały	
+ganz			cały; całkiem	
 hinten			z tyłu	
 das Hotel			hotel	
 jetzt			teraz	
@@ -133,7 +133,7 @@ modern			nowoczesny
 neun			dziewięć	
 neunzehn			dziewiętnaście	
 plus			plus	
-rechts			na prawo; z prawej strony	
+rechts			na prawo; z prawej strony; po prawej stronie	
 die S-Bahn			kolej podmiejska	
 schön	a		ładny; piękny	
 sechs			sześć	
@@ -151,7 +151,7 @@ vierzehn			czternaście
 was?			co?	
 die Welt			świat	
 die Weltuhr			zegar świata	
-wie?			jaki?; jaka?; jakie?; jak?	
+wie?			jaki?; jaka?; jakie?; jak?; jacy?	
 wo?			gdzie?	
 zehn			dziesięć	
 zwanzig			dwadzieścia	
@@ -171,8 +171,8 @@ Hunger haben	VP		być głodnym
 bestellen			zamawiać	
 bestimmt			na pewno	
 das Café			kawiarnia	
-da			tam; w takim razie; wtedy	
-doch			przecież	
+da			tam; w takim razie; wtedy; tu; wtem	
+doch			przecież; jednak	
 das Eis			lody	
 der Eiskaffee	N		kawa z lodami; kawa mrożona	
 essen			jeść	
@@ -185,10 +185,10 @@ der Hunger	N		głód
 der Kaffee			kawa	
 die Karte			karta; mapa; bilet	
 der Kellner			kelner	
-mit			z	
+mit			-; z	kim? czym?
 der Mokka	N		mokka	
 mögen	V		chcieć; mieć ochotę	
-nehmen			brać	
+nehmen			brać; wziąć	
 die Nuß	N		orzech	
 die Nußtorte	N		tort orzechowy	
 der Ober	N		kelner	
@@ -221,7 +221,7 @@ Viel Glück!			Dużo szczęścia!
 Ich gratuliere herzlich!			Składam serdeczne życzenia!	
 Danke sehr!			Dziękuję bardzo!	
 Ich danke herzlich!			Dziękuję serdecznie!	
-die Blume			kwiat	
+die Blume			kwiat; kwiatek	
 das Brot			chleb	
 die Butter			masło	
 der Dank			podziękowanie	
@@ -235,9 +235,9 @@ der Glückwunsch			życzenie
 gratulieren			składać życzenia	
 herein			do wewnątrz	
 hereinkommen			wchodzić	do wewnątrz
-hoch			wysoki	
+hoch			wysoki; wysoka; wysokie	
 der Käse			ser	
-langsam			powoli	
+langsam			powoli; powolny; wolno	
 leben			żyć	
 lesen			czytać	
 mal			raz; razy	w matematyce
@@ -248,7 +248,7 @@ Prost!			Na zdrowie!
 die Rose			róża	
 russisch			rosyjski; po rosyjsku	
 sollen			powinien	
-sprechen			mówić	
+sprechen			mówić; rozmawiać	
 die Überraschung			niespodzianka	
 die Wurst			kiełbasa	
 zuerst			najpierw; na początku	
@@ -268,7 +268,7 @@ bald			wkrótce
 bis			do	
 erst			dopiero	
 der Fahrstuhl			winda	
-die Frau			pani; kobieta; żona	
+die Frau			pani; kobieta; żona; niewiasta	
 das Fräulein			panna	
 sich freuen			cieszyć się	
 gefallen			podobać się	
@@ -309,7 +309,7 @@ das Fleisch			mięso
 die Fleischwaren			wyroby mięsne	
 fragen			pytać	
 frisch			świeży	
-geben			dawać	
+geben			dawać; dać	
 gehen			iść	
 das Gemüse			warzywa; jarzyny	
 gern			chętnie	
@@ -333,7 +333,7 @@ das Mehl			mąka
 die Milch			mleko	
 nach			po	
 die Nußschokolade			czekolada orzechowa	
-oder			albo	
+oder			albo; lub	
 das Pfund			funt; 1/2 kg	
 das Salz			sól	
 das Schnitzel			sznycel	
@@ -357,7 +357,7 @@ zwanzig			dwadzieścia
 bestellen			zamawiać	
 essen			jeść	
 haben			mieć	
-nehmen			brać	
+nehmen			brać; wziąć	
 trinken			pić	
 wünschen			życzyć sobie	
 lesen			czytać	
@@ -403,7 +403,7 @@ die Nummer			numer
 die Sekunde			sekunda	
 sofort			natychmiast	
 sogar			nawet	
-sonst			w przeciwnym razie	
+sonst			zresztą; w przeciwnym razie; poza tym	
 sie Straße			ulica	
 die Straßenbahn			tramwaj	
 die Stunde			godzina	okres czasu
@@ -541,7 +541,7 @@ die Postkarte			karta pocztowa
 die Postleitzahl			kod pocztowy	
 richtig	a		właściwy; poprawny	
 der Samstag			sobota	
-der Schalter			okienko	w urzędach
+der Schalter			okienko	w urzędach; kasy
 schicken			wysyłać	
 der Sonnabend			sobota	
 der Sonntag			niedziela	
@@ -563,7 +563,7 @@ das Wort			słowo; wyraz
 zählen			liczyć	
 der Zuname			nazwisko	
 # === 12 ===
-da			tam; w takim razie; wtedy	
+da			tam; w takim razie; wtedy; tu; wtem	
 warten			czekać	
 im Gepäckautomaten			w automacie na bagaż	
 an alles denken			myśleć o wszystkim	
@@ -606,14 +606,14 @@ der Hinweis			wskazówka
 der Junge			chłopiec	
 der Kollege			kolega	
 können			móc; potrafić	
-kurz			krótki	
+kurz			krótki; krótka; krótkie	
 die Leute			ludzie	
 der Liegewagen			wagon z miejscami do leżenia	
 die Lokomotive			lokomotywa	
 müssen			musieć	
 der Nachtzug			pociąg nocny	
 nochmals			jeszcze raz	
-öffnen			otwierać	
+öffnen			otwierać; otworzyć	
 der Personenzug			pociąg osobowy	
 prima			wspaniały	
 das Problem			problem	
@@ -927,14 +927,14 @@ das Gespräch			rozmowa
 der Großvater			dziadek	
 die Großmutter			babka	
 grüßen			pozdrawiać	
-immer			zawsze	
+immer			zawsze; ciągle	
 sich interessieren für etwas			interesować się czymś	
 der Kognak			koniak	
 die Kollegin			koleżanka	
 der Professor			profesor	
 der Nachmittag			popołudnie	14-18 Uhr
 nie			nigdy	
-der Onkel			wujek	
+der Onkel			wujek; wuj; stryj	
 der Satz			zdanie	
 der Schneider			krawiec	
 die Schwester			siostra	
@@ -1003,7 +1003,7 @@ von			od
 vorgehen			iść naprzód	
 vorzeigen			okazać	
 die Waage			waga	
-zeigen			pokazywać	
+zeigen			pokazywać; pokazać	
 der Zoll			cło	
 die Zollkontrolle			kontrola celna	
 zu			do; zbyt	
@@ -1045,7 +1045,7 @@ der Grenzfluß			rzeka graniczna
 das Grenzgebiet			teren przygraniczny	
 die Grenzkontrolle			kontrola graniczna	
 die Handtasche			torebka	
-hängen			wisieć; wieszać	
+hängen			wisieć; wieszać; powiesić	
 das Hemd			koszula	
 das Heizgerät			grzejnik	
 hinter			za	
@@ -1082,7 +1082,7 @@ unter			pod
 das Unterhemd			podkoszulek	
 die Unterhose			kalesony	
 der Unteroffizier			podoficer	
-die Vase			waza; wazon	
+die Vase			waza; wazon	na kwiaty
 vorn			z przodu; na przodzie	
 die Volksrepublik Polen			Polska Rzeczpospolita Ludowa	
 wahrscheinlich			prawdopodobnie	

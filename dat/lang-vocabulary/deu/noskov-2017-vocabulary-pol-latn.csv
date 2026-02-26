@@ -1,7 +1,7 @@
 Phrase	Grammar	Transcription	Translation	Notes
 # === 0 ===
-zählen			liczyć	
 eins			jeden	
+zählen			liczyć	
 wiederholen			powtarzać	
 das Affrikate	n		afrykata	
 das Alphabet	n		alfabet	
@@ -17,68 +17,70 @@ die Verbindung	f		połączenie
 der Vokal	m		samogłoska	
 zusätzlich	a/adv		dodatkowy	
 # === 1 ===
+angenehm	a		miły; przyjemny	
+die Lektion			lekcja	
+schon	adv		już	
 heißen			nazywać się	
-lernen			uczyć się	
+schön	a		ładny; piękny	
+deutsch	a		niemiecki	
+deutsch	adv		po niemiecku	
+kennen			znać	
 beginnen			zaczynać; zaczynać się	
-schön	a		piękny; ładny	
-der Satz			zdanie	
-das Thema			temat	
+fehlen			brakować	
+richtig	a		właściwy; poprawny	
 das Wort			słowo; wyraz	
+verstehen			rozumieć	
+deutlich	a		wyraźny	
+grüßen			pozdrawiać	
+der Satz			zdanie	
+lernen			uczyć się	
+das Thema			temat	
 die Grammatik			gramatyka	
 der Unterricht			lekcja; zajęcia	
 korrigieren			poprawiać	
-die Lektion			lekcja	
-die Stunde	f		godzina; lekcja	
+die Stunde	f		lekcja; godzina	
 das Studium	n		studia	
 das Interesse	n		zainteresowanie	
 lehren	vt		uczyć	
-kennen			znać	
-grüßen			pozdrawiać	
 bilden	vt		budować	
-fehlen			brakować	
 üben	vt		ćwiczyć	
 übersetzen	vt		tłumaczyć	
-verstehen			rozumieć	
-richtig	a		właściwy; poprawny	
 richtig	adv		dobrze; poprawnie	
 falsch	a		zły; niepoprawny	
 falsch	adv		źle; niepoprawnie	
-deutsch	a		niemiecki	
-deutsch	adv		po niemiecku	
-deutlich	a		wyraźny	
 deutlich	adv		wyraźnie	
 klar	a/adv		jasny; jasno	
-angenehm	a		miły; przyjemny	
 angenehm	adv		miło; przyjemnie	
-gleichfalls	adv		tak samo; również; też	
-schon	adv		już	
+gleichfalls	adv		również; tak samo; też	
 schön	adv		pięknie; ładnie	
 # === 2 ===
 kommen			przychodzić; pochodzić	
-der Vater			ojciec	
-die Mutter			matka	
-leben			żyć	
-null			zero	
-eins			jeden	
-zwei			dwa	
-drei			trzy	
-vier			cztery	
-fünf			pięć	
-sechs			sześć	
-sieben			siedem	
+wohnen			mieszkać	
 acht			osiem	
-neun			dziewięć	
-zehn			dziesięć	
-elf			jedenaście	
-zwölf			dwanaście	
-dreizehn			trzynaście	
-vierzehn			czternaście	
-fünfzehn			piętnaście	
-sechzehn			szesnaście	
-siebzehn			siedemnaście	
 achtzehn			osiemnaście	
+drei			trzy	
+dreizehn			trzynaście	
+eins			jeden	
+elf			jedenaście	
+fünf			pięć	
+fünfzehn			piętnaście	
+neun			dziewięć	
 neunzehn			dziewiętnaście	
+sechs			sześć	
+sechzehn			szesnaście	
+sieben			siedem	
+siebzehn			siedemnaście	
+die Stadt			miasto	
+vier			cztery	
+vierzehn			czternaście	
+zehn			dziesięć	
 zwanzig			dwadzieścia	
+zwei			dwa	
+zwölf			dwanaście	
+leben			żyć	
+die Mutter			matka	
+hundert			sto	
+besuchen			odwiedzać; zwiedzać	
 dreißig			trzydzieści	
 vierzig			czterdzieści	
 fünfzig			pięćdziesiąt	
@@ -86,60 +88,58 @@ sechzig			sześćdziesiąt
 siebzig			siedemdziesiąt	
 achtzig			osiemdziesiąt	
 neunzig			dziewięćdziesiąt	
-hundert			sto	
-voll			pełny	
+der Betrieb			przedsiębiorstwo; fabryka	
+der Vater			ojciec	
+der Name			imię; nazwisko	
+der Ort			miejsce; miejscowość	
+der Vorname			imię	
+glauben			sądzić; wierzyć	
+tausend			tysiąc	
+der Beruf			zawód	
+das Datum			data	
 die Familie			rodzina	
+null			zero	
+voll			pełny	
 die Eltern			rodzice	
 die Geschwister			rodzeństwo	
-besuchen			odwiedzać; zwiedzać	
 prüfen			sprawdzać	
-die Stadt			miasto	
-der Name			imię; nazwisko	
-der Vorname			imię	
-das Datum			data	
-der Ort			miejsce; miejscowość	
 das Dorf	n		wieś	
-der Beruf			zawód	
-der Betrieb			przedsiębiorstwo; fabryka	
 die Ursache	f		przyczyna; powód	
 das Papier	n		papier	
 werden	vi		stać się; zostać	
 stammen	vi		pochodzić; wywodzić się	
-wohnen			mieszkać	
-glauben			sądzić; wierzyć	
 ablegen	vt		odkładać; składać	np. egzamin
 anfangen	vt/vi		zaczynać	
 bereit	a		gotowy	
 vorbereiten	vt		przygotować	
 geboren sein	vi		być urodzonym	
 einander	pron		nawzajem; wzajemnie	
-tausend			tysiąc	
 eine Million			milion	
 # === 3 ===
+der Tag			dzień	
+der Abend			wieczór	18-23 Uhr
+fertig			gotowy	
 die Uhr			zegar; godzina	
 essen			jeść	
-selbst			sam	
-das Gesicht			twarz	
 der Morgen			poranek	04-10 Uhr
+die Nacht			noc	23-04 Uhr
+selbst			sam	
+wecken			budzić	
+das Gericht			danie; potrawa	
+der Nachmittag			popołudnie	14-18 Uhr
+schmecken			smakować	
+bleiben			pozostać	
+das Gesicht			twarz	
 der Vormittag			przedpołudnie	10-12 Uhr
 der Mittag			południe	12-14 Uhr
-der Nachmittag			popołudnie	14-18 Uhr
-der Abend			wieczór	18-23 Uhr
-die Nacht			noc	23-04 Uhr
 aufstehen			wstawać	
 gewöhnlich	adv		zwykle	
-fertig			gotowy	
-der Tag			dzień	
 die Hand	f		ręka	
 der Zahn	m		ząb	
-das Gericht			potrawa; danie	
 tun	vt/vi		robić; czynić	
-wecken			budzić	
 aufwachen	vi		budzić się	
-bleiben			pozostać	
 verlaufen	vi		upływać	
 gelten	vi		obowiązywać; dotyczyć; mieć opinię; uchodzić za	
-schmecken			smakować	
 sich waschen			myć się	
 sich rasieren			golić się	
 sich kämmen			czesać się	
