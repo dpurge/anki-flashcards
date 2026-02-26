@@ -1,9 +1,9 @@
 Phrase	Grammar	Transcription	Translation	Notes
 # === 1 ===
+有		yǒu	mieć; istnieć; posiadać	
 我		wǒ	ja	
 你		nǐ	ty	
 他		tā	on; ona; ono	
-有		yǒu	mieć; posiadać; istnieć	
 書		shū	książka	
 ［沒］		méi	nie	
 紙		zhǐ	papier	
@@ -40,7 +40,7 @@ Phrase	Grammar	Transcription	Translation	Notes
 好		hǎo	dobry; dobrze	
 好		hào	lubić; podobać się	
 ［個］		gè	sztuka; klasyfikator ogólny	
-［夫］		fū	mąż; mężczyzna	
+［夫］		fū	mężczyzna; mąż	
 一		yī	jeden	
 二		èr	dwa	
 三		sān	trzy	
@@ -57,6 +57,7 @@ Phrase	Grammar	Transcription	Translation	Notes
 誰的		shéide	czyj? czyja? czyje?	
 工夫		gōngfu	czas wolny	
 # === 3 ===
+多少		duōshǎo	ile?	
 ［第］		dì		prefiks liczebników porządkowych
 課		kè	lekcja	
 會		huì	umieć; móc	
@@ -88,14 +89,15 @@ Phrase	Grammar	Transcription	Translation	Notes
 棹子		zhuōzi	stół	
 學生		xuésheng	uczeń; student	
 知道		zhīdào	wiedzieć	
-多少		duōshǎo	ile?	
 作工		zuò gōng	pracować	
 書棹子		shūzhuōzi	biurko	
 # === 4 ===
 
 # === 5 ===
-姓		xìng	nazwisko; mieć na nazwisko	
 白		bái	biały; jasny	
+可是		kěshì	ale; jednakże	
+給		gěi	dawać	
+姓		xìng	nazwisko; mieć na nazwisko	
 ［名］		míng	imię; nazwa	
 叫		jiào	wołać; nazywać; kazać	
 ［志］		zhì	wola; zamiar	
@@ -103,14 +105,13 @@ Phrase	Grammar	Transcription	Translation	Notes
 說		shuō	mówić	
 話		huà	słowa; mowa; język	
 ［同］		tóng	wspólnie; razem; z	
-［些］		xiē	trochę; kilka	
+［些］		xiē	kilka; trochę	
 ［房］		fáng	dom	
 家		jiā	dom; rodzina	
 ［屋］		wū	pokój	
 對		duì	z; poprawnie	
 ［可］		kě	można	
 ［以］		yǐ	dlatego, że	
-給		gěi	dawać	
 能		néng	móc; być w stanie	
 跟		gēn	iść za; iść z	
 ［東］		dōng	wschód	
@@ -124,7 +125,6 @@ Phrase	Grammar	Transcription	Translation	Notes
 國家		guójiā	państwo	
 屋子		wūzi	pokój	
 可以		kěyǐ	można; wolno	
-可是		kěshì	ale; jednakże	
 東西		dōngxī	rzecz	
 同學		tóngxué	kolega szkolny	
 # === 6 ===
@@ -170,6 +170,7 @@ Phrase	Grammar	Transcription	Translation	Notes
 你們的		nǐmen de	wasz; wasze	
 他們的		tāmen de	ich	
 # === 7 ===
+茶碗		cháwǎn	filiżanka; czarka do herbaty	
 每		měi	każdy	
 天		tiān	dzień; doba; niebo	
 ［點］		diǎn	trochę; kropka; kropla	
@@ -213,7 +214,6 @@ Phrase	Grammar	Transcription	Translation	Notes
 生日		shēngrì	urodziny	
 再見		zàijiàn	do widzenia	
 還是		háishi	albo	
-茶碗		cháwǎn	filiżanka; czarka do herbaty	
 昨天		zuótiān	wczoraj	
 明天見		míngtiān jiàn	do jutra!; do zobaczenia!	
 # === 8 ===
