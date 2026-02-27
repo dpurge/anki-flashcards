@@ -1,0 +1,33 @@
+name: build
+
+on:
+    workflow_dispatch:
+        inputs:
+            language:
+                description: List of languages
+                required: true
+
+env:
+    PYTHON_VERSION: 3.12
+    UV_VERSION: latest
+
+jobs:
+
+    build:
+
+        runs-on: [ubuntu-latest]
+
+        steps:
+
+        -   name: Checkout
+            uses: actions/checkout@v4
+            with:
+                fetch-depth: 0
+
+        -   name: Make tools
+            id: tools
+            uses: ./.github/actions/make-tools
+
+        -   name: Make release
+            id: release
+            uses: ./.github/actions/make-release

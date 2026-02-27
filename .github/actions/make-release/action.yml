@@ -1,0 +1,12 @@
+name: Make release
+description: Create GitHub release
+
+
+runs:
+  using: composite
+  steps:
+
+    - name: Example
+      shell: bash
+      run: |
+        echo "This is an example."

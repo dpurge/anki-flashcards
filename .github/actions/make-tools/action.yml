@@ -1,0 +1,27 @@
+name: Make tools
+description: Prepare tools for the build
+
+inputs:
+  python-version:
+    description: Python version
+    required: true
+    default: 3.12
+  uv-version:
+    description: Astral uv version
+    required: true
+    default: latest
+
+
+runs:
+  using: composite
+  steps:
+
+  - name: Install Python
+    uses: actions/setup-python@v5
+    with:
+      python-version: ${{ inputs.python-version }}
+
+  - name: Install uv
+    uses: astral-sh/setup-uv@v4
+    with:
+      version: ${{ inputs.uv-version }}
