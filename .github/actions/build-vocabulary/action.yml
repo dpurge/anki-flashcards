@@ -19,4 +19,4 @@ runs:
     run: |
       outdir=$( dirname -- "${{ inputs.output-apkg }}" )
       mkdir -p "${outdir}"
-      uv run anki-build build "${{ inputs.input-project }}"" -o "${{ inputs.output-apkg }}"
+      uv run anki-build build "${{ inputs.input-project }}" -o "${{ inputs.output-apkg }}"
