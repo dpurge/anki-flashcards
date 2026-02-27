@@ -17,4 +17,4 @@ runs:
   - name: Build apkg
     shell: bash
     run: |
-      uv run anki-build build ./dat/lang-vocabulary/deu/flashcard.yml -o ./out/german.apkg
+      uv run anki-build build ${{ inputs.input-project }} -o ${{ inputs.output-apkg }}
