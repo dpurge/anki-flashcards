@@ -17,4 +17,5 @@ runs:
   - name: Build apkg
     shell: bash
     run: |
+      ls -la
       uv run anki-build build ${{ inputs.input-project }} -o ${{ inputs.output-apkg }}
