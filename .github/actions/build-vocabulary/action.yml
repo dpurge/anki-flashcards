@@ -1,0 +1,20 @@
+name: Build vocabulary
+description: Build Anki vocabulary apkg
+
+inputs:
+  input-project:
+    description: Directory with input vocabulary
+    required: true
+  output-apkg:
+    description: Directory to output vocabulary 
+    required: true
+
+
+runs:
+  using: composite
+  steps:
+
+  - name: Build apkg
+    shell: bash
+    run: |
+      uv run anki-build build ./dat/lang-vocabulary/deu/flashcard.yml -o ./out/german.apkg

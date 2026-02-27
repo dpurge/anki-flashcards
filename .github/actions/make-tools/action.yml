@@ -11,6 +11,11 @@ inputs:
     required: true
     default: latest
 
+outputs:
+  version:
+    description: Version for artifacts
+    value: ${{ steps.version.outputs.version }}
+
 
 runs:
   using: composite
@@ -25,3 +30,10 @@ runs:
     uses: astral-sh/setup-uv@v4
     with:
       version: ${{ inputs.uv-version }}
+
+  - name: Set version
+    id: version
+    shell: bash
+    run: |
+      version=$(uv version | cut -d ' ' -f 2)-$(git rev-parse --short HEAD)
+      echo "version=${version}" >> "${GITHUB_OUTPUT}"

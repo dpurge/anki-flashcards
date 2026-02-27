@@ -28,6 +28,27 @@ jobs:
             id: tools
             uses: ./.github/actions/make-tools
 
+        -   name: Arabic (Syrian) vocabulary
+            if: ${{ contains(inputs.language, 'apc') }}
+            uses: ./.github/actions/build-vocabulary
+            with:
+                input-project: dat/lang-vocabulary/apc/flashcard.yml
+                output-apkg: out/syrian-arabic.apkg
+
+        -   name: Arabic (Standard) vocabulary
+            if: ${{ contains(inputs.language, 'arb') }}
+            uses: ./.github/actions/build-vocabulary
+            with:
+                input-project: dat/lang-vocabulary/arb/flashcard.yml
+                output-apkg: out/arabic.apkg
+
+        -   name: Arabic (Egyptian) vocabulary
+            if: ${{ contains(inputs.language, 'arz') }}
+            uses: ./.github/actions/build-vocabulary
+            with:
+                input-project: dat/lang-vocabulary/arz/flashcard.yml
+                output-apkg: out/egyptian-arabic.apkg
+
         -   name: Make release
             id: release
             uses: ./.github/actions/make-release
