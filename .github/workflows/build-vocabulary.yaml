@@ -36,21 +36,238 @@ jobs:
             uses: ./.github/actions/build-vocabulary
             with:
                 input-project: dat/lang-vocabulary/apc/flashcard.yml
-                output-apkg: out/syrian-arabic-${{ steps.tools.outputs.version }}.apkg
+                output-apkg: out/syrian-arabic-vocabulary-${{ steps.tools.outputs.version }}.apkg
 
         -   name: Arabic (Standard) vocabulary
             if: ${{ contains(inputs.language, 'arb') }}
             uses: ./.github/actions/build-vocabulary
             with:
                 input-project: dat/lang-vocabulary/arb/flashcard.yml
-                output-apkg: out/arabic-${{ steps.tools.outputs.version }}.apkg
+                output-apkg: out/arabic-vocabulary-${{ steps.tools.outputs.version }}.apkg
 
         -   name: Arabic (Egyptian) vocabulary
             if: ${{ contains(inputs.language, 'arz') }}
             uses: ./.github/actions/build-vocabulary
             with:
                 input-project: dat/lang-vocabulary/arz/flashcard.yml
-                output-apkg: out/egyptian-arabic-${{ steps.tools.outputs.version }}.apkg
+                output-apkg: out/egyptian-arabic-vocabulary-${{ steps.tools.outputs.version }}.apkg
+
+        -   name: Bulgarian vocabulary
+            if: ${{ contains(inputs.language, 'bul') }}
+            uses: ./.github/actions/build-vocabulary
+            with:
+                input-project: dat/lang-vocabulary/bul/flashcard.yml
+                output-apkg: out/bulgarian-vocabulary-${{ steps.tools.outputs.version }}.apkg
+
+        -   name: Czech vocabulary
+            if: ${{ contains(inputs.language, 'ces') }}
+            uses: ./.github/actions/build-vocabulary
+            with:
+                input-project: dat/lang-vocabulary/ces/flashcard.yml
+                output-apkg: out/czech-vocabulary-${{ steps.tools.outputs.version }}.apkg
+
+        -   name: Mandarin Chinese (Simplified) vocabulary
+            if: ${{ contains(inputs.language, 'cmn-hans') }}
+            uses: ./.github/actions/build-vocabulary
+            with:
+                input-project: dat/lang-vocabulary/cmn-hans/flashcard.yml
+                output-apkg: out/mandarin-chinese-simplified-vocabulary-${{ steps.tools.outputs.version }}.apkg
+
+        -   name: Mandarin Chinese (Traditional) vocabulary
+            if: ${{ contains(inputs.language, 'cmn-hant') }}
+            uses: ./.github/actions/build-vocabulary
+            with:
+                input-project: dat/lang-vocabulary/cmn-hant/flashcard.yml
+                output-apkg: out/mandarin-chinese-traditional-vocabulary-${{ steps.tools.outputs.version }}.apkg
+
+        -   name: German vocabulary
+            if: ${{ contains(inputs.language, 'deu') }}
+            uses: ./.github/actions/build-vocabulary
+            with:
+                input-project: dat/lang-vocabulary/deu/flashcard.yml
+                output-apkg: out/german-vocabulary-${{ steps.tools.outputs.version }}.apkg
+
+        -   name: Modern Greek vocabulary
+            if: ${{ contains(inputs.language, 'ell') }}
+            uses: ./.github/actions/build-vocabulary
+            with:
+                input-project: dat/lang-vocabulary/ell/flashcard.yml
+                output-apkg: out/modern-greek-vocabulary-${{ steps.tools.outputs.version }}.apkg
+
+        -   name: Esperanto vocabulary
+            if: ${{ contains(inputs.language, 'epo') }}
+            uses: ./.github/actions/build-vocabulary
+            with:
+                input-project: dat/lang-vocabulary/epo/flashcard.yml
+                output-apkg: out/esperanto-vocabulary-${{ steps.tools.outputs.version }}.apkg
+
+        -   name: Farsi vocabulary
+            if: ${{ contains(inputs.language, 'fas') }}
+            uses: ./.github/actions/build-vocabulary
+            with:
+                input-project: dat/lang-vocabulary/fas/flashcard.yml
+                output-apkg: out/farsi-vocabulary-${{ steps.tools.outputs.version }}.apkg
+
+        -   name: Finnish vocabulary
+            if: ${{ contains(inputs.language, 'fin') }}
+            uses: ./.github/actions/build-vocabulary
+            with:
+                input-project: dat/lang-vocabulary/fin/flashcard.yml
+                output-apkg: out/finnish-vocabulary-${{ steps.tools.outputs.version }}.apkg
+
+        -   name: French vocabulary
+            if: ${{ contains(inputs.language, 'fra') }}
+            uses: ./.github/actions/build-vocabulary
+            with:
+                input-project: dat/lang-vocabulary/fra/flashcard.yml
+                output-apkg: out/french-vocabulary-${{ steps.tools.outputs.version }}.apkg
+
+        -   name: Ancient Greek vocabulary
+            if: ${{ contains(inputs.language, 'grc') }}
+            uses: ./.github/actions/build-vocabulary
+            with:
+                input-project: dat/lang-vocabulary/grc/flashcard.yml
+                output-apkg: out/ancient-greek-vocabulary-${{ steps.tools.outputs.version }}.apkg
+
+        -   name: Hebrew vocabulary
+            if: ${{ contains(inputs.language, 'heb') }}
+            uses: ./.github/actions/build-vocabulary
+            with:
+                input-project: dat/lang-vocabulary/heb/flashcard.yml
+                output-apkg: out/hebrew-vocabulary-${{ steps.tools.outputs.version }}.apkg
+
+        -   name: Hindi vocabulary
+            if: ${{ contains(inputs.language, 'hin') }}
+            uses: ./.github/actions/build-vocabulary
+            with:
+                input-project: dat/lang-vocabulary/hin/flashcard.yml
+                output-apkg: out/hindi-vocabulary-${{ steps.tools.outputs.version }}.apkg
+
+        -   name: Croatian vocabulary
+            if: ${{ contains(inputs.language, 'hrv') }}
+            uses: ./.github/actions/build-vocabulary
+            with:
+                input-project: dat/lang-vocabulary/hrv/flashcard.yml
+                output-apkg: out/croatian-vocabulary-${{ steps.tools.outputs.version }}.apkg
+
+        -   name: Hungarian vocabulary
+            if: ${{ contains(inputs.language, 'hun') }}
+            uses: ./.github/actions/build-vocabulary
+            with:
+                input-project: dat/lang-vocabulary/hun/flashcard.yml
+                output-apkg: out/hungarian-vocabulary-${{ steps.tools.outputs.version }}.apkg
+
+        -   name: Armenian vocabulary
+            if: ${{ contains(inputs.language, 'hye') }}
+            uses: ./.github/actions/build-vocabulary
+            with:
+                input-project: dat/lang-vocabulary/hye/flashcard.yml
+                output-apkg: out/armenian-vocabulary-${{ steps.tools.outputs.version }}.apkg
+
+        -   name: Indonesian vocabulary
+            if: ${{ contains(inputs.language, 'ind') }}
+            uses: ./.github/actions/build-vocabulary
+            with:
+                input-project: dat/lang-vocabulary/ind/flashcard.yml
+                output-apkg: out/indonesian-vocabulary-${{ steps.tools.outputs.version }}.apkg
+
+        -   name: Italian vocabulary
+            if: ${{ contains(inputs.language, 'ita') }}
+            uses: ./.github/actions/build-vocabulary
+            with:
+                input-project: dat/lang-vocabulary/ita/flashcard.yml
+                output-apkg: out/italian-vocabulary-${{ steps.tools.outputs.version }}.apkg
+
+        -   name: Kazakh vocabulary
+            if: ${{ contains(inputs.language, 'kaz') }}
+            uses: ./.github/actions/build-vocabulary
+            with:
+                input-project: dat/lang-vocabulary/kaz/flashcard.yml
+                output-apkg: out/kazakh-vocabulary-${{ steps.tools.outputs.version }}.apkg
+
+        -   name: Korean vocabulary
+            if: ${{ contains(inputs.language, 'kor') }}
+            uses: ./.github/actions/build-vocabulary
+            with:
+                input-project: dat/lang-vocabulary/kor/flashcard.yml
+                output-apkg: out/korean-vocabulary-${{ steps.tools.outputs.version }}.apkg
+
+        -   name: Latin vocabulary
+            if: ${{ contains(inputs.language, 'lat') }}
+            uses: ./.github/actions/build-vocabulary
+            with:
+                input-project: dat/lang-vocabulary/lat/flashcard.yml
+                output-apkg: out/latin-vocabulary-${{ steps.tools.outputs.version }}.apkg
+
+        -   name: Lithuanian vocabulary
+            if: ${{ contains(inputs.language, 'lit') }}
+            uses: ./.github/actions/build-vocabulary
+            with:
+                input-project: dat/lang-vocabulary/lit/flashcard.yml
+                output-apkg: out/lithuanian-vocabulary-${{ steps.tools.outputs.version }}.apkg
+
+        -   name: Dutch vocabulary
+            if: ${{ contains(inputs.language, 'nld') }}
+            uses: ./.github/actions/build-vocabulary
+            with:
+                input-project: dat/lang-vocabulary/nld/flashcard.yml
+                output-apkg: out/dutch-vocabulary-${{ steps.tools.outputs.version }}.apkg
+
+        -   name: Romanian vocabulary
+            if: ${{ contains(inputs.language, 'ron') }}
+            uses: ./.github/actions/build-vocabulary
+            with:
+                input-project: dat/lang-vocabulary/ron/flashcard.yml
+                output-apkg: out/romanian-vocabulary-${{ steps.tools.outputs.version }}.apkg
+
+        -   name: Spanish vocabulary
+            if: ${{ contains(inputs.language, 'spa') }}
+            uses: ./.github/actions/build-vocabulary
+            with:
+                input-project: dat/lang-vocabulary/spa/flashcard.yml
+                output-apkg: out/spanish-vocabulary-${{ steps.tools.outputs.version }}.apkg
+
+        -   name: Serbian vocabulary
+            if: ${{ contains(inputs.language, 'srp') }}
+            uses: ./.github/actions/build-vocabulary
+            with:
+                input-project: dat/lang-vocabulary/srp/flashcard.yml
+                output-apkg: out/serbian-vocabulary-${{ steps.tools.outputs.version }}.apkg
+
+        -   name: Tajik vocabulary
+            if: ${{ contains(inputs.language, 'tgk') }}
+            uses: ./.github/actions/build-vocabulary
+            with:
+                input-project: dat/lang-vocabulary/tgk/flashcard.yml
+                output-apkg: out/tajik-vocabulary-${{ steps.tools.outputs.version }}.apkg
+
+        -   name: Turkish vocabulary
+            if: ${{ contains(inputs.language, 'tur') }}
+            uses: ./.github/actions/build-vocabulary
+            with:
+                input-project: dat/lang-vocabulary/tur/flashcard.yml
+                output-apkg: out/turkish-vocabulary-${{ steps.tools.outputs.version }}.apkg
+
+        -   name: Ukrainian vocabulary
+            if: ${{ contains(inputs.language, 'ukr') }}
+            uses: ./.github/actions/build-vocabulary
+            with:
+                input-project: dat/lang-vocabulary/ukr/flashcard.yml
+                output-apkg: out/ukrainian-vocabulary-${{ steps.tools.outputs.version }}.apkg
+
+        -   name: Uzbek vocabulary
+            if: ${{ contains(inputs.language, 'uzb') }}
+            uses: ./.github/actions/build-vocabulary
+            with:
+                input-project: dat/lang-vocabulary/uzb/flashcard.yml
+                output-apkg: out/uzbek-vocabulary-${{ steps.tools.outputs.version }}.apkg
+
+        -   name: Vietnamese vocabulary
+            if: ${{ contains(inputs.language, 'vie') }}
+            uses: ./.github/actions/build-vocabulary
+            with:
+                input-project: dat/lang-vocabulary/vie/flashcard.yml
+                output-apkg: out/vietnamese-vocabulary-${{ steps.tools.outputs.version }}.apkg
 
         -   name: Make release
             id: release
