@@ -11,6 +11,9 @@ env:
     PYTHON_VERSION: 3.12
     UV_VERSION: latest
 
+permissions:
+  contents: write
+
 jobs:
 
     build:
