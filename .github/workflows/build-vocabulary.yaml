@@ -33,22 +33,25 @@ jobs:
             uses: ./.github/actions/build-vocabulary
             with:
                 input-project: dat/lang-vocabulary/apc/flashcard.yml
-                output-apkg: out/syrian-arabic.apkg
+                output-apkg: out/syrian-arabic-${{ steps.tools.outputs.version }}.apkg
 
         -   name: Arabic (Standard) vocabulary
             if: ${{ contains(inputs.language, 'arb') }}
             uses: ./.github/actions/build-vocabulary
             with:
                 input-project: dat/lang-vocabulary/arb/flashcard.yml
-                output-apkg: out/arabic.apkg
+                output-apkg: out/arabic-${{ steps.tools.outputs.version }}.apkg
 
         -   name: Arabic (Egyptian) vocabulary
             if: ${{ contains(inputs.language, 'arz') }}
             uses: ./.github/actions/build-vocabulary
             with:
                 input-project: dat/lang-vocabulary/arz/flashcard.yml
-                output-apkg: out/egyptian-arabic.apkg
+                output-apkg: out/egyptian-arabic-${{ steps.tools.outputs.version }}.apkg
 
         -   name: Make release
             id: release
             uses: ./.github/actions/make-release
+            with:
+                version: ${{ steps.tools.outputs.version }}
+                apkg-folder: out

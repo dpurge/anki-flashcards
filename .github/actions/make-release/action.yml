@@ -1,12 +1,19 @@
-name: Make release
-description: Create GitHub release
+name: Release apkg
+description: Create GitHub release with apkg files
 
+inputs:
+  version:
+    description: Release version
+    required: true
+  apkg-folder:
+    description: Directory with apkg files
+    required: true
 
 runs:
   using: composite
   steps:
 
-    - name: Example
-      shell: bash
-      run: |
-        echo "This is an example."
+  - name: Release APKG
+    shell: bash
+    run: |
+      gh release create v${{ inputs.version }} ${{ inputs.apkg-folder }}/*.apkg
