@@ -15,5 +15,7 @@ runs:
 
   - name: Release APKG
     shell: bash
+    env:
+      GH_TOKEN: ${{ github.token }}
     run: |
       gh release create v${{ inputs.version }} ${{ inputs.apkg-folder }}/*.apkg
