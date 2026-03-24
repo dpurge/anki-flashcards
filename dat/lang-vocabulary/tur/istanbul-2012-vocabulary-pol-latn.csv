@@ -1,198 +1,3314 @@
 Phrase	Grammar	Transcription	Translation	Notes
-# === 1 ===
-ad	N		imię	
-isim	N		imię	
-ağaç	N		drzewo	
-alkol	N		alkohol	
-Almanya	N		Niemcy	
-anneler günü	N		dzień matki	
-araba	N		samochód; wóz	
-arkadaş	N		przyjaciel; towarzysz	
-avukat	N		adwokat	
-Avusturya	N		Austria	
-baba	N		ojciec	
-bahçe	N		ogród	
-balık	N		ryba	
-banka	N		bank	
-bardak	N		szklanka; puchar	
-bay	N		pan	
-bayan	N		pani	
-bayram	N		święto	
-bebek	N		niemowlę	
-bey	N		pan	
-bilet	N		bilet	
-bilgisayar	N		komputer	
-bulaşık			brudny	
-büro	N		biuro	
-cami	N		meczet	
-cetvel	N		linijka	
-ceviz	N		orzech	
-çamaşır			pranie	
-çanta	N		torba	
-çarşı	N		targowisko	
-çay	N		herbata	
-çiçek	N		kwiat	
-Çin	N		Chiny	
-çocuk	N		dziecko	
-defter	N		zeszyt	
-deniz	N		morze	
-ders	N		lekcja	
-doğum günü	N		urodziny	
-doktor	N		lekarz	
-dolap	N		szafa	
-düğün	N		wesele	
-eczane	N		apteka	
-ekmek	N		chleb	
-elbise	N		suknia	
-elma	N		jabłko	
-erkek	N		mężczyzna	
-ev	N		dom	
-fare	N		mysz	
-fındık	N		orzech laskowy	
-fırça	N		szczotka; pędzel	
-film	N		film	
-Fransa	N		Francja	
-futbolcu	N		piłkarz	
-garson	N		kelner	
-göz	N		oko	
-gül	N		róża	
-hâl	N		stan; położenie	
-halı	N		dywan	
-hanım	N		małżonka; pani	
-hastalık	N		choroba	
-havuç	N		marchew	
-hayal	N		przywidzenie	
-hemşire	N		pielęgniarka	
-ıspanak	N		szpinak	
-ızgara	N		pieczeń	
-ideal			idealny; ideał	
-inek	N		krowa	
-İngiltere	N		Anglia	
-insan	N		człowiek	
-İspanya	N		Hiszpania	
-iş	N		praca	
-İtalya	N		Włochy	
-Japonya	N		Japonia	
-jeton	N		żeton	
-jilet	N		żyletka	
-kadın	N		kobieta	
-kafe	N		kawiarnia	
-kahve	N		kawa	
-kalabalık			tłok; ścisk	
-kalem	N		długopis; ołówek; pióro	
-kalp	N		serce	
-kapı	N		drzwi; brama	
-kedi	N		kot	
-kız	N		córka; dziewczyna	
-kira	N		czynsz; najem	
-kişi	N		osoba; ktoś	
-kitap	N		książka	
-koltuk	N		fotel	
-Kore	N		Korea	
-köpek	N		pies	
-köy	N		wieś	
-kuş	N		ptak	
-kutu	N		pudełko	
-kütüphane	N		biblioteka; księgarnia	
-lale	N		tulipan	
-limon	N		cytryna	
-lokanta	N		restauracja	
-mağaza	N		duży sklep	
-makas	N		nożyce	
-masa	N		stół	
-merdiven	N		schody	
-meşgul			zajęty	
-metro	N		metro	
-millet	N		naród	
-misal	N		przykład	
-mühendis	N		inżynier	
-nar	N		granat	owoc
-Nijerya	N		Nigeria	
-numara	N		numer	
-oda	N		pokój; izba	
-orman	N		las	
-otel	N		hotel	
-otobüs	N		autobus	
-öğrenci	N		uczeń	
-öğretmen	N		nauczyciel	
-ördek	N		kaczka	
-paket	N		paczka	
-para	N		pieniądze	
-pardösü	N		płaszcz; jesionka	
-park	N		park	
-patates	N		ziemniaki; kartofle	
-pencere	N		okno	
-petrol	N		ropa naftowa	
-piyano	N		fortepian	
-polis	N		policja	
-portakal	N		pomarańcza	
-postacı	N		listonosz	
-radyo	N		radio	
-resim	N		rysunek; obraz	
-rol	N		rola	
-roman	N		powieść	
-Rusya	N		Rosja	
-saat	N		godzina; zegar; czas	
-saç	N		blacha	
-salon	N		salon	
-sandalye	N		krzesło	
-sembol	N		symbol	
-seyahat	N		podróż	
-sıra	N		ławka; szereg	
-silgi	N		gumka do ścierania	
-sokak	N		ulica	
-soru	N		pytanie	
-sorun	N		problem	
-sözlük	N		słownik	
-Suriye	N		Syria	
-şarkıcı	N		śpiewak; piosenkarz	
-şemsiye	N		parasol	
-şişe	N		butelka	
-tahta	N		deska	
-tavuk	N		kura	
-telefon	N		telefon	
-top	N		piłka	
-turist	N		turysta	
-Türkiye	N		Turcja	
-uçak	N		samolot	
-uçurtma	N		latawiec	
-üzüm	N		winogrono	
-vagon	N		wagon	
-vazo	N		wazon	
-yabancı	N		cudzoziemiec; obcokrajowiec	
-yemek	N		jedzenie	
-yeni yıl	N		Nowy Rok	
-yıldız	N		gwiazda	
-yüzük	N		pierścień	
-zeytin	N		oliwka	
-zürafa	N		żyrafa	
-etmek	V		robić	
-gelmek	V		przychodzić; przyjść	
-görüşmek	V		spotkać się	
-olmak	V		stać się	
-Affedersiniz.			Przepraszam.	
-Afiyet olsun.			Smacznego!	
-Bol şanslar.			Powodzenia!	
-Çok yaşa.			Na zdrowie!	
-Geçmiş olsun.			Wracaj do zdrowia.	
-Görüşürüz.			Do zobaczenia wkrótce!	
-Görüşmek üzere.			Do zobaczenia wkrótce!	
-Güle güle.			Do widzenia!	
-Günaydın.			Dzień dobry.	
-Hoş geldin.			Witaj!	
-Lütfen.			Proszę!	
-Merhaba.			dzień dobry!	
-Özür dilerim.			Przepraszam!	
-Rica ederim.			Proszę bardzo!	
-Tamam.			W porządku!	
-Tebrikler.			Najlepsze życzenia!	
-Üzgünüm.			Niestety!	
+# === a1-1 ===
+baba			ojciec; tata	
+masa			stół; tabela	
+oda			pokój; izba	
+kapı			drzwi; wrota	
+saç			włos; włosy	
+kız			dziewczynka; córka; dziewczyna	
+kadın			kobieta	
 çok			bardzo; dużo	
-az			mało; rzadko	
+ad			imię; nazwa	
+ev			dom	
+dolap			szafa	
+az			mało	
+çanta			teczka; torba	
+kalem			pióro do pisania; długopis; ołówek; pióro	
+üzüm			winogrona; winogrono	
+sokak			ulica	
+para			pieniądze; moneta	
+saat			godzina; zegar; zegarek	
+numara			numer; ocena szkolna	
+doktor			doktor; lekarz	
+resim			rysunek; obraz	
+isim			imię	
+bilet			bilet	
+lokanta			stołówka; restauracja	
+defter			zeszyt	
+ders			lekcja; zajęcia	
+otel			hotel	
+telefon			telefon	
 temiz			czysty; czysto	
+ekmek			chleb	
+erkek			mężczyzna; samiec	
+iş			praca	
+kitap			książka; ksiązka	
+kişi			człowiek; osoba	
+köy			wieś; wioska	
 büyük			duży; wielki; starszy; dorosły	
-hiç			żaden; jakiś	
-güzel			dobry; piękny; pięknie; ładny	
+Rusya			Rosja	
+Türkiye			Turcja	
+sandalye			krzesło	
+deniz			morze	
+hiç			żaden; wcale	
+pencere			okno	
+ağaç			drzewo	
+göz			oko	
+güzel			piękny; pięknie	
+bay			pan	
+bayan			pani	
+bey			pan	
+hanım			kobieta; żona; pani	
+çocuk			dziecko; chłopczyk	
+bahçe			ogród; sad	
+tahta			tablica	
+öğretmen			nauczyciel; wykładowca	
+öğrenci			uczeń; student	
+kütüphane			biblioteka	
+çiçek			kwiatek; kwiat	
+kutu			pudełko	
+silgi			gumka do ścierania; gumka	
+sözlük			słownik	
+elma			jabłko	
+radyo			radio	
+top			piłka	
+balık			ryba	
+makas			nożyce; nożyczki	
+yüzük			pierścień; pierścionek	
+bardak			szkło; szklanka	
+uçak			samolot	
+yemek			jedzenie; jeść	
+arkadaş			przyjaciel; towarzysz	
+insan			człowiek; osoba	
+mühendis			inżynier	
+soru			pytanie	
 lütfen			proszę	
-Hoş bulduk.			Dziękuję.; Dziękuję bardzo!	
-Hoşça kal.			Do widzenia.; Cześć!	
+merdiven			schody	
+bayram			święto	
+kahve			kawa	
+Almanya			Niemcy	
+araba			samochód	
+bebek			dziecko; niemowlę	
+bilgisayar			komputer	
+cami			meczet	
+cetvel			linijka	
+çay			herbata	
+Çin			chiński; Chiny	
+elbise			sukienka	
+fare			mysz	
+fındık			orzech laskowy	
+Fransa			Francja	
+görüşmek			spotkać; spotykać się	
+hemşire			pielęgniarka	
+Hoş bulduk.			Dziękuję.; Miło być gościem.	
+Hoşça kal.			Do widzenia.	
+ızgara			grill	
+İngiltere			Anglia	
+İtalya			Włochy	
+Japonya			Japonia	
+jeton			znak; żeton	
+jilet			żyletka	
+kedi			kot	
+kuş			ptak	
+limon			cytryna	
+millet			naród	
+nar			granat	
+olmak			być	
+otobüs			autobus	
+ördek			kaczka	
+park			park	
+roman			powieść	
+sıra			ławka; kolejka; kolejność	
+şişe			butelka	
+tavuk			kurczak	
+vazo			wazon	
+yıldız			gwiazda	
+zeytin			oliwka	
+zürafa			żyrafa	
+alkol			alkohol	
+anneler günü			Dzień Matki	
+avukat			adwokat	
+Avusturya			Austria	
+banka			bank	
+bulaşık			naczynia do zmycia	
+büro			biuro	
+ceviz			orzech włoski	
+çamaşır			pranie	
+çarşı			bazar	
+doğum günü			urodziny	
+düğün			wesele	
+eczane			apteka	
+fırça			szczotka	
+film			film	
+futbolcu			piłkarz	
+garson			kelner	
+gül			róża	
+hâl			stan	
+halı			dywan	
+hastalık			choroba	
+havuç			marchewka	
+hayal			marzenie	
+ıspanak			szpinak	
+ideal			idealny	
+inek			krowa	
+İspanya			Hiszpania	
+kafe			kawiarnia	
+kalabalık			tłum	
+kalp			serce	
+kira			czynsz	
+koltuk			fotel	
+Kore			Korea	
+köpek			pies	
+lale			tulipan	
+mağaza			sklep	
+meşgul			zajęty	
+metro			metro	
+misal			przykład	
+Nijerya			Nigeria	
+orman			las	
+paket			paczka	
+pardösü			płaszcz	
+patates			ziemniak	
+petrol			benzyna	
+piyano			pianino	
+polis			policja	
+portakal			pomarańcza	
+postacı			listonosz	
+rol			rola	
+salon			salon	
+sembol			symbol	
+seyahat			podróż	
+sorun			problem	
+Suriye			Syria	
+şarkıcı			piosenkarz	
+şemsiye			parasol	
+turist			turysta	
+uçurtma			latawiec	
+vagon			wagon	
+yabancı			obcokrajowiec	
+yeni yıl			nowy rok	
+etmek			robić	czasownik posiłkowy
+gelmek			przychodzić	
+Affedersiniz.			Przepraszam.	
+Afiyet olsun.			Smacznego.	
+Bol şanslar.			Dużo szczęścia.	
+Çok yaşa.			Na zdrowie.	
+Geçmiş olsun.			Szybkiego powrotu do zdrowia.	
+Görüşürüz.			Do zobaczenia.	
+Görüşmek üzere.			Do zobaczenia.	
+Güle güle.			Do widzenia.	
+Günaydın.			Dzień dobry.	
+Hoş geldin.			Witaj.	
+Lütfen.			Proszę.	
+Merhaba.			Cześć.	
+Özür dilerim.			Przepraszam.	
+Rica ederim.			Nie ma za co.	
+Tamam.			Dobrze.	
+Tebrikler.			Gratulacje.	
+Üzgünüm.			Przykro mi.	
+# === a1-2 ===
+kapalı			zamknięty; pochmurny; zamknięte	
+boş			pusty; wolny	
+dar			wąski; ciasny; waski	
+duvar			ściana	
+çalışkan			pracowity; staranny	
+açık			otwarty; jasny; otwarcie; jasno	o kolorze
+kırmızı			czerwony	
+bina			budynek	
+kaç			ile	
+burada			tutaj	
+orada			tam	
+nerede			gdzie?; gdzie	
+koridor			korytarz	
+uzak			daleki; daleko	
+kat			piętro	
+tembel			leniwy	
+kötü			zły	
+kolay			łatwy; łatwo	
+yok			nie ma; nie istnieje	
+soyadı			nazwisko	
+şimdi			teraz; obecnie	
+iyi			dobry; dobrze; zdrowy	
+ay			księżyc; miesiąc	
+yıl			rok	
+bekâr			kawaler; nie żonaty; panna	
+evli			żonaty; zamężna	
+her			każdy	
+akşam			wieczór	
+sabah			poranek; rano	
+sıcak			gorący; upał; gorąco	
+gazete			gazeta	
+geniş			obszerny; przestronny; szeroki	
+gün			dzień; doba	
+bugün			dzisiaj	
+gündüz			dzień; w ciągu dnia	
+şehir			miasto	
+tarih			historia; data	
+yazı tahtası			tablica; tablica szkolna	
+bütün			cały; wszystek; wszystko	
+hasta			chory	
+hastane			szpital	
+postane			poczta; urząd pocztowy	
+genç			młody człowiek; młody	
+var			jest; istnieje; znajduje się	
+lamba			lampa	
+tabak			talerz; płyta	
+çirkin			brzydki	
+kuaför			fryzjer	
+kitaplık			biblioteka; półka na książki	
+mutfak			kuchnia	
+yaşlı			stary; w podeszłym wieku	
+tatil			wolny od pracy; dzień wolny; urlop	
+yer			miejsce	
+çünkü			dlatego że; ponieważ	
+dolu			pełny; grad	
+hafta sonu			weekend	
+sayı			numer; ilość; liczba	
+adres			adres	
+anahtar			klawisz; klucz	
+doğum tarihi			data urodzenia	
+domates			pomidory; pomidor	
+durak			zatrzymywać się; przystanek	
+fırın			piekarnik; piekarnia	
+mahalle			sąsiedztwo; dzielnica	
+market			rynek; sklep spożywczy	
+ofis			biuro	
+önemli			ważny	
+ucuz			tani	
+üst			góra; szczyt; górny	
+banka			bank	
+aç			głodny	
+alışveriş			zakupy	
+alışveriş merkezi			centrum handlowe	
+alt			dół; dolny	
+artı			plus	
+başarılı			odnoszący sukcesy	
+birçok			wiele	
+bölü			podzielone przez	
+cesur			odważny	
+ciddi			poważny	
+çarpı			razy	
+çöp kutusu			kosz na śmieci	
+dağınık			nieuporządkowany	
+dergi			magazyn	
+dikkatli			ostrożny	
+dikkatsiz			nieuważny	
+dosya			teczka	
+düzenli			regularny; uporządkowany	
+eczacı			farmaceuta	
+eğlenceli			zabawny	
+eksi			minus	
+fakir			biedny	
+fark			różnica	
+genellikle			zazwyczaj	
+güçlü			silny	
+güçsüz			słaby	
+her zaman			zawsze	
+hızlı			szybki	
+içecek			napój	
+istasyon			stacja	
+kaçıncı			który z kolei	
+kantin			stołówka	
+kasap			rzeźnik	
+kasiyer			kasjer	
+kıskanç			zazdrosny	
+kibar			uprzejmy	
+kilo			kilogram	
+komik			śmieszny	
+konuşkan			rozmowny	
+kuyumcu			jubiler	
+manav			sklep warzywny; warzywniak	
+mutlu			szczęśliwy	
+mutsuz			nieszczęśliwy	
+nesne			rzecz	
+niçin			dlaczego	
+ocak			styczeń	
+öğleden sonra			po południu	
+önemsiz			nieważny	
+pahalı			drogi	
+pastane			cukiernia	
+pembe			różowy	
+projektör			projektor	
+psikolog			psycholog	
+resepsiyonist			recepcjonista	
+sakin			spokojny	
+sehpa			stolik kawowy	
+sekreter			sekretarka	
+semt			dzielnica	
+sessiz			cichy	
+sıfat			przymiotnik	
+sinirli			zdenerwowany	
+sosyal			towarzyski; społeczny	
+şişman			gruby	
+tehlikeli			niebezpieczny	
+tezgâhtar			sprzedawca	
+tuzlu			słony	
+yakın			bliski	
+yastık			poduszka	
+yaş			wiek	
+yavaş			wolny	
+yiyecek			jedzenie	
+yoğun			intensywny	
+yorgun			zmęczony	
+zamir			zaimek	
+zayıf			szczupły	
+zengin			bogaty	
+aramak			szukać	
+# === a1-3 ===
+anne			matka; mama	
+büfe			bufet	
+işçi			robotnik	
+kulüp			klub	
+yeni			nowy; dopiero co; niedawno	
+eski			stary; dawny; pradawny; starożytny	
+fabrika			fabryka	
+zaman			czas	
+hava			powietrze; atmosfera; pogoda	
+sabahları			rano; porankami	
+memur			oficer; urzędnik	
+kebap			kebab	
+vermek			dawać	
+hazır			gotowy	
+kullanmak			używać	
+yemek			jedzenie; jeść	
+sanmak			myśleć; sądzić; być zdania	
+sağlıklı			zdrowy	
+demek			to znaczy; mówić	
+eş			małżonka; małżonek	
+aynı			taki sam; ten sam	
+beraber			razem	
+değişik			różne; dziwny	
+söylemek			mówić	
+açmak			otwierać	
+anlamak			zrozumieć; rozumieć	
+bavul			walizka	
+bilmek			wiedzieć	
+çıkmak			odejść; wychodzić	
+dinlemek			słuchać	
+futbol			piłka nożna	
+kanepe			kanapa	
+kapatmak			zamknąć; zamykać	
+konuşmak			rozmawiać	
+müşteri			klient	
+okumak			czytać	
+öğrenmek			uczyć się	
+pijama			piżama	
+sormak			zapytać; pytać	
+tanışmak			spotkać; poznawać się	
+tekrar etmek			powtarzać	
+uygun			odpowiedni	
+vapur			prom	
+yanlış			zło; błędny	
+yazmak			pisać	
+yurt			kraj; akademik	
+film			film	
+açık büfe			bufet	
+bale			balet	
+biletçi			kasjer biletowy	
+bilgisayar oyunu			gra komputerowa	
+borç			dług	
+boş zaman			wolny czas	
+cevap			odpowiedź	
+dans			taniec	
+dışarı			na zewnątrz	
+dizi			serial	
+ekonomi			ekonomia	
+erken			wcześnie	
+ev hanımı			gospodyni domowa	
+farklı			różny	
+fikir			pomysł	
+futbol maçı			mecz piłkarski	
+geç			późno	
+gezi			wycieczka	
+gitar			gitara	
+gösteri			pokaz	
+hafta içi			dni powszednie	
+hayat			życie	
+hediye			prezent	
+heyecanlı			podekscytowany	
+hiçbir zaman			nigdy	
+hukuk			prawo	
+içeri			do środka	
+iş yeri			miejsce pracy	
+işadamı			biznesmen	
+kampus			kampus	
+kızgın			wściekły	
+konser			koncert	
+litre			litr	
+maç			mecz	
+mp3 çalar			odtwarzacz mp3	
+müsait			dostępny	
+nefes			oddech	
+normal			normalny	
+opera			opera	
+öğlen			południe	
+öğrenci işleri			dziekanat	
+restoran			restauracja	
+sefer			raz	
+sergi			wystawa	
+site			strona internetowa; osiedle	
+şarkı			piosenka	
+şiir			wiersz	
+terlik			klapki; kapcie	
+tiyatro			teatr	
+tur			wycieczka	
+tür			rodzaj	
+yalan			kłamstwo	
+yemekhane			stołówka	
+yolcu			pasażer	
+yorum			komentarz; interpretacja	
+bakmak			patrzeć	
+banyo yapmak			kąpać się	
+başlamak			zaczynać	
+bayılmak			mdleć	
+beslenmek			odżywiać się	
+binmek			wsiadać	
+biriktirmek			zbierać; gromadzić	
+bitmek			kończyć się	
+buluşmak			spotykać się	
+çalışmak			pracować	
+dinlenmek			odpoczywać	
+dolaşmak			spacerować	
+dönmek			wracać	
+durmak			zatrzymywać się	
+duş almak			brać prysznic	
+fotoğraf çekmek			fotografować	
+geçmek			przechodzić	
+gezmek			spacerować; zwiedzać	
+girmek			wchodzić	
+gitmek			iść	
+hazırlamak			przygotowywać	
+hazırlanmak			przygotowywać się	
+hoşlanmak			lubić	
+internete girmek			korzystać z internetu	
+izlemek			oglądać	
+kahvaltı etmek			jeść śniadanie	
+kalkmak			wstawać	
+kalmak			pozostawać	
+kontrol etmek			sprawdzać	
+korkmak			bać się	
+koşmak			biec	
+koymak			kłaść	
+nefret etmek			nienawidzić	
+oturmak			siedzieć	
+oynamak			grać; bawić się	
+özlemek			tęsknić	
+para çekmek			wypłacać pieniądze	
+pişirmek			gotować	
+sevmek			kochać	
+sıkılmak			nudzić się	
+sohbet etmek			rozmawiać	
+spor yapmak			uprawiać sport	
+stres atmak			redukować stres	
+tanımak			znać	
+temizlemek			sprzątać	
+tırmanmak			wspinać się	
+uyumak			spać	
+uzanmak			leżeć	
+varmak			docierać	
+yapmak			robić	
+yardım etmek			pomagać	
+yardım istemek			prosić o pomoc	
+yaşamak			żyć	
+yatmak			kłaść się spać	
+yorulmak			męczyć się	
+yürümek			chodzić	
+yüzmek			pływać	
+bol bol			dużo	
+inşallah			oby	
+# === a1-4 ===
+karı			żona	
+aile			rodzina	
+burun			nos; przylądek	
+ütü			żelazko; żelazo	
+abla			starsza siostra	
+teyze			ciocia; ciotka ze strony matki	ze strony matki
+dayı			wujek	ze strony matki
+ağız			usta	
+üniversite			uniwersytet	
+almak			brać	
+mektup			list	
+amca			wujek ze strony ojca; stryj	
+lise			liceum	
+anahtar			klawisz; klucz	
+yazmak			pisać	
+oynamak			grać; bawić się	
+ağabey			starszy brat	
+anadil			język ojczysty	
+anaokulu			przedszkole	
+anneanne			babcia ze strony matki	
+babaanne			babcia ze strony ojca	
+boyun			szyja	
+dede			dziadek	
+diş			ząb	
+erkek kardeş			brat	
+hala			ciotka ze strony ojca	
+havuz			basen	
+ilkokul			szkoła podstawowa	
+kız kardeş			siostra	
+koca			mąż	
+kol			ramię	
+manto			płaszcz	
+omuz			bark	
+ortaokul			szkoła średnia	
+satranç			szachy	
+şirket			firma	
+teneffüs			przerwa	
+yabancı dil			język obcy	
+yaramaz			niegrzeczny	
+zevkli			przyjemny	
+dans etmek			tańczyć	
+çalmak			grać na instrumencie	
+hissetmek			czuć	
+göndermek			wysyłać	
+öğretmek			uczyć	
+telefon etmek			dzwonić	
+# === a1-5 ===
+palto			palto; płaszcz	
+sarı			żółty	
+mavi			niebieski	
+akıl			rozum; rozsądek	
+yeşil			zielony	
+eylül			wrzesień	
+atmak			rzucać	
+cumartesi			sobota	
+çeşitli			różnorodny	
+pazar			niedziela	
+birlikte			razem	
+ekim			październik	
+vakit			czas	
+harf			list; litera	
+hazırlık			przygotowanie	
+ilkbahar			wiosna	
+Nisan			kwiecień	
+ağustos			sierpień	
+ajanda			kalendarz	
+anma			upamiętnienie	
+aralık			grudzień	
+ateş			ogień	
+balayı			miesiąc miodowy	
+biricik			jedyny	
+birliktelik			bycie razem	
+boya			farba	
+buçuk			i pół	
+cimri			skąpy	
+cuma			piątek	
+çarşamba			środa	
+çeyrek			kwadrans	
+çorba			zupa	
+çoşku			entuzjazm	
+dakika			minuta	
+dilek			życzenie	
+dini			religijny	
+dişçi			dentysta	
+dolunay			pełnia księżyca	
+düğüm			węzeł	
+egemenlik			suwerenność	
+evlilik			małżeństwo	
+galeri			galeria	
+gelecek			przyszłość	
+gençlik			młodość	
+geveze			gadatliwy	
+haziran			czerwiec	
+hece			sylaba	
+heyecan			podniecenie; podekscytowanie	
+kasım			listopad	
+kaza			wypadek	
+kış			zima	
+kurum			instytucja	
+kutlama			uroczystość; świętowanie	
+kültür			kultura	
+marş			marsz	
+mart			marzec	
+mayıs			maj	
+mevsim			pora roku	
+mezuniyet			ukończenie szkoły	
+milli			narodowy	
+mola			przerwa	
+mor			fioletowy	
+nice			wiele	
+nikah			ślub cywilny	
+odun			drewno opałowe; drewno	
+ömür			życie	
+pazartesi			poniedziałek	
+perşembe			czwartek	
+program			program	
+randevu			spotkanie	
+resmi			oficjalny	
+rezervasyon			rezerwacja	
+salı			wtorek	
+saniye			sekunda	
+saygıdeğer			szanowny	
+sevgili			ukochany	
+sonbahar			jesień	
+sürpriz			niespodzianka	
+şubat			luty	
+temmuz			lipiec	
+toplantı			spotkanie; zebranie	
+ulusal			krajowy	
+yaz			lato	
+yılbaşı			nowy rok	
+yıldönümü			rocznica	
+zafer			zwycięstwo	
+zorluk			trudność	
+asmak			wieszać	
+atlamak			skakać	
+beklemek			czekać	
+benzemek			przypominać; być podobnym	
+devam etmek			kontynuować	
+dilemek			życzyć	
+doğmak			rodzić się	
+evlenmek			żenić się	
+gecikmek			spóźniać się	
+heyecanlanmak			ekscytować się	
+kapanmak			zamykać się	
+karşılamak			witać	
+katılmak			dołączać; uczestniczyć	
+korumak			chronić	
+kutlamak			świętować	
+kutlu olmak			być szczęśliwym	
+öpmek			całować	
+satın almak			kupować	
+sürmek			trwać	
+toplamak			zbierać	
+vedalaşmak			żegnać się	
+yakmak			palić	
+yaşlanmak			starzeć się	
+yenmek			jeść; pokonywać	
+yıkamak			myć	
+ziyaret etmek			odwiedzać	
+# === a1-6 ===
+ön			przód; przednia część; przedni	
+akraba			krewny; krewni	
+renk			kolor	
+teyze			ciocia; ciotka ze strony matki	ze strony matki
+kuzen			kuzyn	
+orta			środek; średni; środkowy	
+kütüphane			biblioteka	
+sözlük			słownik	
+çiftçi			rolnik	
+terzi			krawiec	
+emekli			emeryt; emerytowany	
+sağ			żywy; prawidłowy; prawy	
+nehir			rzeka	
+cadde			ulica; aleja	
+dinlemek			słuchać	
+görüşmek			spotkać; spotykać się	
+karşı			naprzeciwko; naprzeciw	
+kızarmak			rumienić się; czerwienić się	
+mahalle			sąsiedztwo; dzielnica	
+şeker			cukier	
+üst			góra; szczyt; górny	
+düğün			wesele	
+kalabalık			tłum	
+alt			dół; dolny	
+cesur			odważny	
+kibar			uprzejmy	
+bayılmak			mdleć	
+gezmek			spacerować; zwiedzać	
+kalkmak			wstawać	
+tanımak			znać	
+boyun			szyja	
+yaramaz			niegrzeczny	
+hissetmek			czuć	
+katılmak			dołączać; uczestniczyć	
+Akıllı			mądry	
+Alan			obszar	
+Arka			tylny	
+Aşağı			na dół	
+Çene			broda	
+Çevre			środowisko	
+Dış			zewnętrzny	
+Enişte			szwagier	
+Göl			jezioro	
+Grip			grypa	
+Güler yüzlü			uśmiechnięty	
+Halsiz			osłabiony	
+İç			wewnętrzny	
+İskele			przystań	
+Köprü			most	
+Köşe			róg	
+Kulak			ucho	
+Lezzetli			smaczny	
+Manzara			widok; krajobraz	
+Marka			marka	
+Mercimek çorbası			zupa z soczewicy	
+Meydan			plac	
+Parmak			palec	
+Patlıcan			bakłażan	
+Plan			plan	
+Rapor			raport	
+Reçete			recepta	
+Salıncak			huśtawka	
+Sol			lewy	
+Şikâyet			skarga	
+Tahmin			przewidywanie	
+Tarihi			historyczny	
+Ten			cera	
+Vücut			ciało	
+Yenge			szwagierka	
+Yukarı			w górę	
+Ağrımak			boleć	
+Anlaşmak			dogadywać się; dogadać się	
+Beğenmek			lubić	
+Danışmak			konsultować się	
+Değiştirmek			zmieniać	
+İlgilenmek			interesować się	
+Kaşınmak			drapać się	
+Sallanmak			kołysać się	
+Tansiyon ölçtürmek			mierzyć ciśnienie	
+Tartılmak			ważyć się	
+Tedavi olmak			leczyć się	
+Öksürmek			kaszleć	
+Ziyarete gelmek			przyjść z wizytą	
+# === a2-1 ===
+su			woda; sok	
+büfe			bufet	
+altın			złoto; złoty	
+yüksek			wysoki; wysoko	
+beyaz			biały	
+sevimli			miły; sympatyczny; uroczy	
+soğuk			zimny; zimno	
+levha			obraz; tablica	słowo przestarzałe
+perde			zasłonka; zasłona	
+çöp			śmieci	
+peynir			ser	
+tamamlamak			uzupełniać; skończyć; kończyć	
+uzatmak			wyciągać; przedłużać	
+yorgan			kołdra	
+faydalı			pożyteczny; przydatny	
+et			mięso	
+cadde			ulica; aleja	
+doldurmak			wypełnić; napełniać	
+gözlük			okulary	
+işaretlemek			podpisać; zaznaczać	
+karpuz			arbuz	
+köfte			klopsiki; kofte	
+lahmacun			pizza; lahmacun	
+lokum			turecka rozkosz; lokum	
+meslek			stanowisko; zawód	
+müşteri			klient	
+sıralamak			sortować; porządkować	
+şeker			cukier	
+tuz			sól	
+yumurta			jajko	
+Afiyet olsun.			Smacznego.	
+düzenli			regularny; uporządkowany	
+site			strona internetowa; osiedle	
+pişirmek			gotować	
+göndermek			wysyłać	
+Akıllı			mądry	
+Güler yüzlü			uśmiechnięty	
+Lezzetli			smaczny	
+Patlıcan			bakłażan	
+Ten			cera	
+Beğenmek			lubić	
+ada			wyspa	
+ana yemek			danie główne	
+apartman			blok mieszkalny	
+aptal			głupi	
+âşık			zakochany	
+aşk			miłość	
+avuç			garść; dłoń	
+baklava			baklava	
+bez			tkanina	
+bıyık			wąsy	
+biber			papryka	
+bol			obfity	
+börek			borek	
+bulut			chmura	
+çikolata			czekolada	
+çim			trawa	
+çizgi			linia	
+dalgalı			falisty	
+damar			żyła	
+demet			pęczek	
+dengesiz			niezrównoważony	
+dilim			plasterek	
+dosdoğru			prosto	
+dürüst			uczciwy	
+düşünceli			zamyślony	
+ecza dolabı			apteczka	
+ela			piwny	
+emir			rozkaz	
+enerjik			energiczny	
+esprili			dowcipny	
+gece			noc	
+gerekli			potrzebny	
+gökyüzü			niebo	
+güvenilir			godny zaufania	
+harika			wspaniały	
+hayvan			zwierzę	
+huzurlu			spokojny	
+ihtiyaç			potrzeba	
+ilaç			lekarstwo	
+inatçı			uparty	
+istek			chęć	
+kadayıf			kadaif	
+kadeh			kieliszek	
+kap			pojemnik	
+kapıcı			dozorca	
+karabiber			czarny pieprz	
+karınca			mrówka	
+karizmatik			charyzmatyczny	
+kâse			miska	
+kekik			tymianek	
+kemer			pasek	
+kenar			krawędź	
+kısım			część	
+kıyma			mięso mielone	
+kızıl			czerwonawy	
+kilogram			kilogram	
+klinik			klinika	
+konu			temat	
+korkak			tchórzliwy	
+kurabiye			ciastko	
+kuşbaşı			mięso w kostkę	
+kutsal			święty	
+küp			kostka	
+makarna			makaron	
+malzeme			składnik	
+maydanoz			pietruszka	
+menü			menu	
+meraklı			ciekawy	
+mesut			szczęśliwy	
+miktar			ilość	
+mutlaka			koniecznie	
+müze			muzeum	
+naz			fochy	
+neşeli			wesoły	
+otopark			parking	
+öneri			sugestia	
+pizza			pizza	
+porsiyon			porcja	
+profil			profil	
+prospektüs			ulotka	
+rüya			sen	
+rüzgâr			wiatr	
+sabır			cierpliwość	
+sakal			broda	
+salata			sałatka	
+salyangoz			ślimak	
+saman			słoma	
+saygı			szacunek	
+sevgi			uczucie	
+sıvı			płyn	
+sifon			syfon	
+sigara			papieros	
+sipariş			zamówienie	
+soğan			cebula	
+sosyal paylaşım			media społecznościowe	
+şarap			wino	
+şirin			uroczy	
+şiş			szpikulec	
+tane			sztuka	
+tarif			przepis	
+tatlı			deser	
+tava			patelnia	
+tavsiye			rada	
+tecrübe			doświadczenie	
+tek			pojedynczy	
+tramvay			tramwaj	
+tuvalet			toaleta	
+uyarı			ostrzeżenie	
+veteriner			weterynarz	
+yağ			olej; tłuszcz	
+yağmur			deszcz	
+yarar			korzyść	
+yarışma			konkurs	
+yaşam			życie	
+yeterince			wystarczająco	
+zarar			szkoda	
+acele etmek			spieszyć się	
+anlatmak			opowiadać	
+bağlamak			wiązać	
+basmak			naciskać	
+bıkmak			mieć dość	
+çağırmak			wołać	
+çekmek			ciągnąć	
+çırpmak			trzepać; ubijać	
+dizmek			układać	
+doğramak			kroić	
+dökmek			wylewać	
+duymak			słyszeć	
+düşünmek			myśleć	
+düzenlemek			organizować	
+eklemek			dodawać	
+geç kalmak			spóźniać się	
+hapşırmak			kichać	
+haşlamak			gotować	
+hatırlamak			pamiętać	
+ısmarlamak			zamawiać	
+ihmal etmek			zaniedbywać	
+ilave etmek			dodawać	
+ilerlemek			posuwać się naprzód	
+isyan etmek			buntować się	
+kavga etmek			kłócić się	
+kaynatmak			gotować	
+kızartmak			smażyć	
+kızmak			złościć się	
+kopmak			odrywać się	
+oluşturmak			tworzyć	
+önermek			proponować	
+özen göstermek			starannie dbać	
+park etmek			parkować	
+rendelemek			ścierać na tarce	
+saklamak			chować; przechowywać	
+süslemek			dekorować	
+süzmek			odcedzać	
+tarif etmek			opisywać	
+tükenmek			kończyć się	
+usanmak			mieć dość; znużyć się	
+yağmak			padać	
+itmek			pchać	
+merak etmek			być ciekawym	
+numaralandırmak			numerować	
+silmek			wycierać	
+yalan söylemek			kłamać	
+yerleştirmek			umieszczać	
+Çok yaşayın.			Na zdrowie.	
+Elinize sağlık.			Dobra robota.	
+Hayırlı olsun.			Niech dobrze służy.	
+Kolay gelsin.			Powodzenia w pracy.	
+# === a2-2 ===
+sarı			żółty	
+tavan			sufit	
+kırmızı			czerwony	
+müdür			dyrektor; kierownik	
+beyaz			biały	
+ay			księżyc; miesiąc	
+sene			rok	
+siyah			czarny	
+gündüz			dzień; w ciągu dnia	
+komutan			dowódca	
+emekli			emeryt; emerytowany	
+affetmek			wybaczyć; wybaczać	
+fare			mysz	
+incelemek			zbadać; badać	
+tavşan			królik	
+alkol			alkohol	
+mağaza			sklep	
+meşgul			zajęty	
+ekonomi			ekonomia	
+tür			rodzaj	
+kültür			kultura	
+saniye			sekunda	
+toplantı			spotkanie; zebranie	
+Reçete			recepta	
+gece			noc	
+ihtiyaç			potrzeba	
+müze			muzeum	
+ilerlemek			posuwać się naprzód	
+alaycı			szyderczy	
+alışkanlık			nawyk	
+ampul			żarówka	
+as			kier	
+bağımlılık			uzależnienie	
+baklagil			roślina strączkowa	
+beslenme			odżywianie	
+bilgin			uczony	
+bolca			obficie	
+bordo			bordowy	
+buluş			wynalazek	
+cömert			hojny	
+çizgi film			kreskówka	
+demokrasi			demokracja	
+deney			eksperyment	
+derbi			derby	
+dük			książę	
+düşes			księżna	
+egzersiz			ćwiczenie	
+erişkin			dorosły	
+esnek			elastyczny	
+fırsatçı			oportunista	
+gazetecilik			dziennikarstwo	
+hayalci			marzyciel	
+hırsız			złodziej	
+hizmetçi			służąca	
+hükümdar			władca	
+ışın			promień	
+idareci			kierownik	
+iletişim			komunikacja	
+ilginç			interesujący	
+ilk			pierwszy	
+iskelet			szkielet	
+kahkaha			śmiech	
+kahraman			bohater	
+kalsiyum			wapń	
+kanat			skrzydło	
+kaplumbağa			żółw	
+kemik			kość	
+kolesterol			cholesterol	
+konforlu			komfortowy	
+kongre			kongres	
+koyun			owca	
+kristal			kryształ	
+kurnaz			sprytny	
+kuruyemiş			bakalie	
+lacivert			granatowy	
+lakap			przezwisko	
+lodos			wiatr południowo-zachodni	
+madde			substancja	
+magazin			magazyn	
+metre			metr	
+mizaç			temperament	
+mucit			wynalazca	
+muhteşem			wspaniały	
+müfettiş			inspektor	
+nargile			fajka wodna	
+okyanus			ocean	
+ödül			nagroda	
+politika			polityka	
+protein			białko	
+puan			punkt	
+radyo dalgası			fala radiowa	
+romancı			powieściopisarz	
+rütbe			stopień	
+saf			naiwny	
+sahil			wybrzeże	
+satış			sprzedaż	
+sıradan			zwyczajny	
+sinyal			sygnał	
+şövalye			rycerz	
+takım			drużyna	
+takma			sztuczny	
+teleskop			teleskop	
+telsiz			krótkofalówka	
+unvan			tytuł	
+usta			mistrz	
+vasıta			pojazd	
+yazar			pisarz	
+yolculuk			podróż	
+bastırmak			tłumić	
+icat etmek			wynaleźć	
+kazanmak			wygrywać	
+keşfetmek			odkrywać	
+mezun olmak			ukończyć szkołę	
+yayımlamak			publikować	
+# === a2-3 ===
+ılık			ciepły; letni	
+taş			kamień; kamienny	
+torun			wnuk; wnuczka	
+hava			powietrze; atmosfera; pogoda	
+dağ			góra	
+oğul			syn	
+güneşli			słoneczny	
+asker			żołnierz	
+hastane			szpital	
+çiftçi			rolnik	
+eş			małżonka; małżonek	
+faydalı			pożyteczny; przydatny	
+kıyı			brzeg; wybrzeże	
+nehir			rzeka	
+mobilya			meble	
+sınav			egzamin	
+vakit			czas	
+döner			kebab; obrotowy	
+görüşmek			spotkać; spotykać się	
+Mısır			Egipt; kukurydza	
+valiz			walizka	
+yurt			kraj; akademik	
+doğum günü			urodziny	
+hayal			marzenie	
+semt			dzielnica	
+sosyal			towarzyski; społeczny	
+dizi			serial	
+gösteri			pokaz	
+hediye			prezent	
+tur			wycieczka	
+geçmek			przechodzić	
+gezmek			spacerować; zwiedzać	
+katılmak			dołączać; uczestniczyć	
+Çevre			środowisko	
+Anlaşmak			dogadywać się; dogadać się	
+Değiştirmek			zmieniać	
+dürüst			uczciwy	
+harika			wspaniały	
+inatçı			uparty	
+sakal			broda	
+saygı			szacunek	
+çağırmak			wołać	
+düzenlemek			organizować	
+tükenmek			kończyć się	
+okyanus			ocean	
+sahil			wybrzeże	
+ahşap			drewniany	
+aniden			nagle	
+Avrupa			Europa	
+baharatlı			pikantny	
+bal			miód	
+bambu			bambus	
+başbakan			premier	
+belediye			urząd miejski	
+bölge			region	
+bülbül			słowik	
+çadır			namiot	
+çekirdek			pestka	
+dışkı			odchody	
+eldiven			rękawiczka	
+etkinlik			wydarzenie	
+ev planı			plan domu	
+fal			wróżba	
+ferah			przestronny	
+festival			festiwal	
+gelenek			tradycja	
+icat			wynalazek	
+izleyici			widz	
+jimnastik			gimnastyka	
+kaban			płaszcz	
+kampanya			kampania	
+kar			śnieg	
+katedral			katedra	
+kazak			sweter	
+kıymet			wartość	
+klozet			sedes	
+mahalli			lokalny	
+makyaj			makijaż	
+merasim			ceremonia	
+mercimek			soczewica	
+mesai			praca; czas pracy	
+metrekare			metr kwadratowy	
+mimar			architekt	
+nemli			wilgotny	
+ödeme			płatność	
+padişah			sułtan	
+pamuk			bawełna	
+piramit			piramida	
+plaj			plaża	
+robot			robot	
+romatizma			reumatyzm	
+sağanak			ulewa	
+satılık			na sprzedaż	
+seçim			wybory; wybór	
+serin			chłodny	
+sirk			cyrk	
+sisli			mglisty	
+soslu			z sosem	
+sörf			surfing	
+stant			stoisko	
+şelale			wodospad	
+tapınak			świątynia	
+tarla			pole	
+tuş			klawisz	
+vaat			obietnica	
+vize			wiza	
+yağmurluk			płaszcz przeciwdeszczowy	
+yanardağ			wulkan	
+yoğunluk			natężenie	
+yosun			glon	
+yöresel			regionalny	
+artmak			wzrastać	
+azalmak			zmniejszać się	
+balık tutmak			łowić ryby	
+boyamak			malować	
+çalıştırmak			uruchamiać	
+çizmek			rysować	
+dalmak			nurkować	
+geçirmek			spędzać	
+gerçekleştirmek			realizować	
+güneşlenmek			opalać się	
+ikna etmek			przekonywać	
+iptal olmak			zostać odwołanym	
+kaçmak			uciekać	
+karar vermek			decydować	
+kartopu oynamak			bawić się w śnieżki	
+kayak yapmak			jeździć na nartach	
+kürek çekmek			wiosłować	
+tahmin etmek			zgadywać	
+takmak			zakładać	
+tıraş olmak			golić się	
+# === a2-4 ===
+tembel			leniwy	
+işçi			robotnik	
+merdiven			schody	
+vestiyer			garderoba; szatnia	
+müşteri			klient	
+fakir			biedny	
+kasiyer			kasjer	
+tezgâhtar			sprzedawca	
+yaramaz			niegrzeczny	
+veteriner			weterynarz	
+mimar			architekt	
+padişah			sułtan	
+tarla			pole	
+ambulans			karetka	
+asansör			winda	
+bilmece			zagadka	
+cankurtaran			ratownik	
+cin			dżin	
+deve			wielbłąd	
+diyar			kraina	
+efsane			legenda	
+evliya			święty	
+fıkra			dowcip; anegdota	
+fırtına			burza	
+hayran			wielbiciel	
+inşaat			budowa	
+itfaiyeci			strażak	
+kasaba			miasteczko	
+kaval			flet pasterski	
+kıtlık			głód; niedobór	
+konfeksiyon			odzież gotowa	
+köçek			tancerz	
+macera			przygoda	
+metrobüs			metrobus	
+nişanlı			narzeczony	
+ölümsüz			nieśmiertelny	
+ölümsüzlük			nieśmiertelność	
+pansiyon			pensjonat	
+santral görevlisi			operator centrali	
+sebze			warzywo	
+sedefkâr			rzemieślnik od masy perłowej	
+sihirli			magiczny	
+sürü			stado	
+tas			misa	
+tepe			wzgórze	
+uslu			grzeczny	
+yem			pasza	
+yönetmen			reżyser	
+alay etmek			wyśmiewać się	
+anırmak			ryczeć	
+boğulmak			tonąć	
+bozulmak			zepsuć się; psuć się	
+fethetmek			podbijać	
+fışkırmak			tryskać	
+incitmek			zranić; ranić	
+oda tutmak			wynająć pokój	
+şaşırmak			dziwić się	
+şımartmak			rozpieszczać	
+yetiştirmek			wychowywać	
+# === a2-5 ===
+delikanlı			młody człowiek; młodzieniec	
+güneş			słońce	
+karanlık			ciemność; mrok; ciemny	
+nehir			rzeka	
+dolu			pełny; grad	
+dünya			świat	
+fırın			piekarnik; piekarnia	
+form			formularz	
+karşılaşmak			spotkać; spotkać się; spotykać	
+vazo			wazon	
+postacı			listonosz	
+şarkıcı			piosenkarz	
+kilo			kilogram	
+manav			sklep warzywny; warzywniak	
+tür			rodzaj	
+beslenmek			odżywiać się	
+biriktirmek			zbierać; gromadzić	
+pişirmek			gotować	
+Alan			obszar	
+Göl			jezioro	
+Manzara			widok; krajobraz	
+Sallanmak			kołysać się	
+biber			papryka	
+bulut			chmura	
+gökyüzü			niebo	
+müze			muzeum	
+rüzgâr			wiatr	
+yağmur			deszcz	
+yağmak			padać	
+alışkanlık			nawyk	
+serin			chłodny	
+yöresel			regionalny	
+şaşırmak			dziwić się	
+afiş			plakat	
+animasyon			animacja	
+aşçı			kucharz	
+atmosfer			atmosfera	
+banka kartı			karta bankowa	
+belgesel			dokument	
+bilim kurgu			fantastyka naukowa	
+bilimsel gerçek			fakt naukowy	
+bulmaca			łamigłówka	
+cisim			ciało	
+çığ			lawina	
+çöpçü			śmieciarz	
+damlacık			kropelka	
+dedikodu			plotka	
+deprem			trzęsienie ziemi	
+dikey			pionowy	
+doğa			natura	
+doğa olayı			zjawisko przyrodnicze	
+elektrik enerjisi			energia elektryczna	
+etraf			okolica	
+fay			uskok	
+genişlik			szerokość	
+gişe memuru			pracownik okienka	
+gökkuşağı			tęcza	
+günlük			dziennik; codzienny	
+hobi			hobby	
+hokkabaz			kuglarz	
+hortum			trąba powietrzna	
+ılıman			umiarkowany	
+ihtimal			możliwość	
+iklim			klimat	
+iskele			molo	
+kırık			złamany	
+klasik			klasyczny	
+koleksiyon			kolekcja	
+komedi			komedia	
+korku			strach	
+köşk			willa	
+kum			piasek	
+kum fırtınası			burza piaskowa	
+kurak			suchy	
+kuraklık			susza	
+meteorolojik			meteorologiczny	
+nem			wilgotność	
+öğle yemeği			obiad	
+özet			streszczenie	
+polisiye			kryminał	
+romantik			romantyczny	
+sel			powódź	
+sihirbaz			magik	
+sopa			kij	
+tamirci			mechanik	
+teslim			dostawa	
+toz			kurz	
+toz fırtınası			burza pyłowa	
+tropik yağmur			deszcz tropikalny	
+tsunami			tsunami	
+volkanik patlama			wybuch wulkanu	
+yatay			poziomy	
+yatılı okul			internat	
+yazlık kıyafet			letnie ubranie	
+yer çekimi			grawitacja	
+yer kabuğu			skorupa ziemska	
+yıldırım			błyskawica	
+ziyaret			wizyta	
+batmak			tonąć	
+çarpmak			uderzać	
+dağıtmak			rozdawać	
+dizilmek			ustawiać się	
+donmak			zamarzać	
+fırçalamak			szczotkować	
+horlamak			chrapać	
+imzalamak			podpisywać	
+iyileşmek			zdrowieć	
+kaynamak			wrzeć	
+küsmek			obrażać się	
+nişanlanmak			zaręczyć się	
+söndürmek			gasić	
+sürtünmek			pocierać się	
+tartmak			ważyć	
+taşımak			przenosić	
+taşmak			wylewać się	
+yapışmak			przyklejać się	
+# === a2-6 ===
+hazır			gotowy	
+uzatmak			wyciągać; przedłużać	
+süre			okres; czas trwania	
+çıkış			wyjście	
+köfte			klopsiki; kofte	
+lahmacun			pizza; lahmacun	
+pide			chleb pita; pide	
+simit			obwarzanek; simit	
+çamaşır			pranie	
+düğün			wesele	
+yoğun			intensywny	
+terlik			klapki; kapcie	
+yalan			kłamstwo	
+izlemek			oglądać	
+şirket			firma	
+heyecan			podniecenie; podekscytowanie	
+kutlama			uroczystość; świętowanie	
+gecikmek			spóźniać się	
+vedalaşmak			żegnać się	
+yenmek			jeść; pokonywać	
+konu			temat	
+mutlaka			koniecznie	
+öneri			sugestia	
+tavsiye			rada	
+tecrübe			doświadczenie	
+batmak			tonąć	
+acele			pośpiech	
+açma			bułeczka açma	
+alkollü			alkoholowy	
+anlam			znaczenie	
+ayaküstü			na stojąco	
+ayran			ayran	
+bagaj			bagaż	
+bakıcı			opiekun	
+bedesten			kryty bazar	
+briç			brydż	
+çatal (yiyecek)			widelec	
+dekoratif			dekoracyjny	
+deneyim			doświadczenie	
+desen			wzór	
+döviz			waluta	
+ehliyet			prawo jazdy	
+ekip			ekipa; zespół	
+geleneksel			tradycyjny	
+gözleme			gözleme	
+gürültü			hałas	
+güverte			pokład	
+han			zajazd	
+hat			linia	
+İhtiyaç			potrzeba	
+ilan			ogłoszenie	
+izin			pozwolenie	
+karar			decyzja	
+katmer			katmer	
+kestane			kasztan	
+kokoreç			kokorecz	
+kumpir			kumpir	
+lazım			potrzebny	
+martı			mewa	
+nakit			gotówka	
+öncelik			pierwszeństwo	
+poğaça			pogacza	
+rahat			wygodny	
+rakip			rywal	
+refah			dobrobyt	
+sanatçı			artysta	
+sandal			łódka	
+seyir			rejs	
+sıkışık			ciasny	
+sınır			granica	
+siyasetçi			polityk	
+sözleşme			umowa	
+şekerleme			słodycze	
+şiddet			przemoc	
+tavla			tryktrak	
+tost			tost	
+ud			oud	
+ünlü			sławny	
+vakıf			fundacja	
+vatandaş			obywatel	
+vezne			kasa	
+yaygın			powszechny	
+ara vermek			robić przerwę	
+bilgi vermek			informować	
+bitirmek			kończyć	
+borç vermek			pożyczać	
+burs vermek			przyznawać stypendium	
+çekinmek			wahać się	
+çözmek			rozwiązywać	
+dayanmak			wytrzymywać	
+denemek			próbować	
+destek vermek			wspierać	
+devam et			kontynuować	
+dikiş dikmek			szyć	
+dikkat etmek			uważać	
+doymak			najeść się	
+farkında olmak			być świadomym	
+gitar çalmak			grać na gitarze	
+giyinmek			ubierać się	
+göz kırpmak			mrugać	
+güvenmek			ufać	
+hoş görmek			pobłażać	
+hüküm vermek			wydawać wyrok	
+ıslık çalmak			gwizdać	
+ilgilenmek			interesować się	
+inanç			wiara	
+kaybolmak			zgubić się	
+kaymak			ślizgać się	
+kımıldamak			ruszać się	
+közlemek			opiekać w żarze	
+kredi almak			brać kredyt	
+mola vermek			robić przerwę	
+neden olmak			powodować	
+para bozdurmak			rozmieniać pieniądze	
+problem çıkarmak			sprawiać problemy	
+sığmak			mieścić się	
+sıkıntı çekmek			cierpieć; cierpieć niedostatek	
+soluklanmak			odsapnąć	
+şişirmek			nadmuchiwać	
+takip etmek			śledzić	
+ütülemek			prasować	
+yatıştırmak			uspokajać	
+yetişmek			zdążyć	
+zannetmek			sądzić	
+# === b1-1 ===
+zam			dodatek; podwyżka	
+döşeme			podłoga	
+çöp			śmieci	
+değerlendirmek			ocenić; oceniać	
+doldurmak			wypełnić; napełniać	
+durum			sytuacja	
+fatura			faktura; rachunek	
+jandarma			żandarm; żandarmeria	
+karşılaşmak			spotkać; spotkać się; spotykać	
+uygun			odpowiedni	
+borç			dług	
+evlilik			małżeństwo	
+ömür			życie	
+benzemek			przypominać; być podobnym	
+Manzara			widok; krajobraz	
+ihtiyaç			potrzeba	
+acele etmek			spieszyć się	
+basmak			naciskać	
+kopmak			odrywać się	
+önermek			proponować	
+kanat			skrzydło	
+satış			sprzedaż	
+kaban			płaszcz	
+ödeme			płatność	
+bozulmak			zepsuć się; psuć się	
+fışkırmak			tryskać	
+günlük			dziennik; codzienny	
+söndürmek			gasić	
+deneyim			doświadczenie	
+ilan			ogłoszenie	
+sözleşme			umowa	
+sığmak			mieścić się	
+takip etmek			śledzić	
+abone			abonent	
+acil			nagły	
+adım			krok	
+araç			pojazd	
+arıza			awaria	
+bedel			koszt	
+bilek			nadgarstek	
+boru			rura	
+büyüklük			wielkość	
+büyüleyici			urzekający	
+civar			okolica	
+dahil			wliczony	
+davranış			zachowanie	
+depozito			kaucja	
+doğalgaz			gaz ziemny	
+eğitim			edukacja	
+emlak			nieruchomości	
+endişeli			zaniepokojony	
+etki			wpływ	
+fiyat			cena	
+fonksiyon			funkcja	
+garip			dziwny	
+güvenlik			bezpieczeństwo	
+halat			lina	
+ham			surowy	
+ısıtma			ogrzewanie	
+ıslak			mokry	
+içerik			treść	
+imdat			ratunku	
+iş bölümü			podział pracy	
+işlem			operacja	
+kiralık			do wynajęcia	
+kombi			piec gazowy	
+konum			lokalizacja	
+koza			kokon	
+lavabo			umywalka	
+lüks			luksusowy	
+masrafsız			niewymagający wydatków	
+mevki			położenie	
+muhit			okolica	
+müstakil			wolnostojący	
+nezih			porządny	
+özellik			cecha	
+pazarlık			targowanie się	
+pil			bateria	
+sahip			właściciel	
+satır			linia; tasak	
+sızıntı			wyciek	
+sigorta			ubezpieczenie	
+şofben			podgrzewacz wody	
+tarife			taryfa	
+taşınma			przeprowadzka	
+temel			podstawowy	
+tesisatçı			hydraulik	
+tuhaf			dziwny	
+tüketim			zużycie	
+ulaşım			transport	
+uyum			zgodność; harmonia	
+vali			gubernator	
+vana			zawór	
+vergi			podatek	
+yakınlık			bliskość	
+yapışık			przylegający	
+yuva			gniazdo	
+akıtmak			przelewać	
+atıştırmak			podjadać	
+ayırmak			oddzielać	
+boşaltmak			opróżniać	
+burkmak			skręcić	
+dikkat çekmek			przyciągać uwagę	
+eğmek			zginać	
+harcamak			wydawać	
+ısınmak			ogrzewać się	
+ilerletmek			posuwać naprzód	
+kurtulmak			pozbywać się	
+patlamak			wybuchać	
+sıkışmak			zakleszczyć się	
+sızdırmak			przeciekać	
+tartışmak			dyskutować	
+telaşlanmak			denerwować się	
+tercih etmek			wybierać	
+teslim etmek			dostarczać	
+tıkanmak			zatykać się	
+uğraşmak			zmagać się	
+yadırgamak			uważać za dziwne	
+yansıtmak			odzwierciedlać	
+yardımcı olmak			pomagać	
+yığmak			gromadzić	
+zenginleşmek			bogacić się	
+başının etini yemek			zanudzać kogoś	
+kalbini fethetmek			zdobyć czyjeś serce	
+# === b1-2 ===
+arzu			chęć; pragnienie; życzenie	
+amaç			cel	
+saymak			liczyć	
+tamamlamak			uzupełniać; skończyć; kończyć	
+değerlendirmek			ocenić; oceniać	
+incelemek			zbadać; badać	
+kurmak			stworzyć; zakładać	
+hastalık			choroba	
+zafer			zwycięstwo	
+zorluk			trudność	
+yağ			olej; tłuszcz	
+beslenme			odżywianie	
+esnek			elastyczny	
+ödül			nagroda	
+satış			sprzedaż	
+mesai			praca; czas pracy	
+seçim			wybory; wybór	
+artmak			wzrastać	
+macera			przygoda	
+günlük			dziennik; codzienny	
+geleneksel			tradycyjny	
+izin			pozwolenie	
+güvenmek			ufać	
+davranış			zachowanie	
+özellik			cecha	
+temel			podstawowy	
+abur cubur			śmieciowe jedzenie	
+ambalaj			opakowanie	
+amiral			admirał	
+asgari			minimalny	
+aşağılama			upokorzenie	
+aşırı			nadmierny	
+ayrıntı			szczegół	
+azim			determinacja	
+baskı			presja	
+başarı			sukces	
+başlık			tytuł	
+beklenti			oczekiwanie	
+benzerlik			podobieństwo	
+birey			jednostka	
+cazip			atrakcyjny	
+çalışan			pracownik	
+danışman			doradca	
+değişiklik			zmiana	
+denizaltı			łódź podwodna	
+departman			dział	
+destek			wsparcie	
+devlet			państwo	
+dikiş			szycie	
+doğrultu			kierunek	
+dolgun			pełny	
+dönüm noktası			punkt zwrotny	
+duruş			postawa	
+düşük			niski	
+editör			redaktor	
+eksiklik			brak	
+elverişsiz			niekorzystny	
+engel			przeszkoda	
+engelli			niepełnosprawny	
+etkileyici			imponujący	
+etkin			aktywny; skuteczny	
+farklılık			różnica	
+fırsat			okazja	
+firma			firma	
+fiziksel			fizyczny	
+fizyolojik			fizjologiczny	
+geçici			tymczasowy	
+gıda			żywność	
+girişimci			przedsiębiorca	
+görev			zadanie	
+görünüm			wygląd	
+görünüş			aparycja	
+güç			siła	
+hedef			cel	
+hizmet			usługa	
+huy			usposobienie	
+ikramiye			premia	
+iştah			apetyt	
+itibar			reputacja	
+katkı			wkład	
+kazanç			zysk	
+kıdemli			starszy stażem	
+kişilik			osobowość	
+konteynır			kontener	
+korkunç			straszny	
+liderlik			przywództwo	
+maaş			pensja	
+mandıracılık			mleczarstwo	
+memnuniyetsiz			niezadowolony	
+metabolizma			metabolizm	
+nakış			haft	
+organizasyon			organizacja	
+ortam			otoczenie	
+öğe			element	
+örgüt			organizacja	
+özenli			staranny	
+özgü			właściwy dla	
+paralel			równoległy	
+parlak			błyszczący	
+performans			wydajność	
+planlama			planowanie	
+püf noktası			kruczek	
+rastgele			losowo	
+rastlantı			zbieg okoliczności	
+risk			ryzyko	
+saklı			ukryty	
+saygın			szanowany	
+sorumlu			odpowiedzialny	
+sürekli			ciągły; stale	
+şart			warunek	
+şikayetçi			skarżący się	
+tanıdık			znajomy	
+tanım			definicja	
+toptancı			hurtownik	
+tarz			styl	
+tehlike			niebezpieczeństwo	
+tempo			tempo	
+usul			metoda	
+ücra			odległy	
+ümit			nadzieja	
+verimsiz			niewydajny	
+yaradılış			natura	
+yaşayış			sposób życia	
+yenik			pokonany	
+yenilikçi			innowacyjny	
+yetenek			talent	
+yetişkin			dorosły	
+zahmetli			żmudny	
+akıldan geçirmek			rozważać	
+aklına getirmek			przywoływać na myśl	
+aksamak			szwankować	
+anımsamak			przypominać sobie	
+aşmak			przekraczać	
+bahsetmek			wspominać	
+belirlemek			określać	
+bocalamak			gubić się; miotać się	
+cesaret etmek			odważyć się	
+depolamak			magazynować	
+dokunmak			dotykać	
+dönüşmek			przekształcać się	
+eleştirmek			krytykować	
+geliştirmek			rozwijać	
+gerektirmek			wymagać	
+görevlendirmek			wyznaczać	
+gütmek			prowadzić	
+ilgi çekmek			przyciągać uwagę	
+imza atmak			podpisywać	
+izin vermek			pozwalać	
+kaçınmak			unikać	
+kanıtlamak			udowadniać	
+kaptırmak			dać sobie odebrać	
+kırılmak			obrażać się	
+kurtarmak			ratować	
+motive etmek			motywować	
+paylaşmak			dzielić się	
+rica etmek			prosić	
+sağlamak			zapewniać; umożliwiać	
+sıyrılmak			pozbywać się	
+söz tutmak			dotrzymywać słowa	
+şikayet etmek			skarżyć się	
+tanımlamak			definiować	
+tüketmek			zużywać	
+ulaşmak			docierać; osiągać	
+uzaklaşmak			oddalać się	
+uzamak			wydłużać się	
+yaratmak			tworzyć	
+yenilemek			odnawiać	
+yıpratmak			zużywać	
+yol açmak			prowadzić do	
+yönetmek			zarządzać	
+yönlendirmek			kierować	
+yüceltmek			wywyższać	
+yükseltmek			podnosić	
+zorlamak			zmuszać	
+zorlaştırmak			utrudniać	
+# === b1-3 ===
+adalet			sprawiedliwość	
+akılcı			racjonalny	
+akik			agat	
+akuamarin			akwamaryn	
+ametist			ametyst	
+antrenman			trening	
+arkeoloji			archeologia	
+aytaşı			kamień księżycowy	
+baca			komin	
+bağlam			kontekst	
+bahane			wymówka	
+bereket			obfitość	
+berrak			przejrzysty	
+biçim			forma	
+bileşim			skład	
+biyokimya			biochemia	
+boyut			wymiar	
+böbrek			nerka	
+cesaret			odwaga	
+çukur			dół	
+çuvaldız			duża igła	
+çürük			zepsuty	
+dal			gałąź	
+dalak			śledziona	
+davetli			zaproszony	
+denizci			marynarz	
+dinç			rześki	
+diyetisyen			dietetyk	
+doğurganlık			płodność	
+dönem			okres	
+düşkün			uzależniony	
+düzensizlik			nieporządek	
+empati			empatia	
+federasyon			federacja	
+felç			paraliż	
+gelin			panna młoda	
+gen			gen	
+genetik			genetyka	
+gerekçe			uzasadnienie	
+gergin			napięty	
+görüş			opinia	
+hamilelik			ciąża	
+hamur			ciasto	
+hatmi			prawoślaz	
+hormon			hormon	
+hücre			komórka	
+Issız			odludny	
+ilerleme			postęp	
+iyimserlik			optymizm	
+kalite			jakość	
+kaplıca			uzdrowisko termalne	
+karaciğer			wątroba	
+karanfil			goździk	
+karbonhidrat			węglowodan	
+kas			mięsień	
+keçe			filc	
+keyif			przyjemność	
+kısırlık			bezpłodność	
+kibir			pycha	
+kamite			komitet	
+konferans			konferencja	
+konsantrasyon			koncentracja	
+kraliyet			królewskość	
+kramp			skurcz	
+kulübe			chatka	
+kuşkusuz			bez wątpienia	
+kuvars			kwarc	
+lif			błonnik	
+lohusa			położnica	
+mantık			logika	
+mecburiyet			konieczność	
+mineral			minerał	
+molekül			cząsteczka	
+nalın			drewniaki	
+nazar			urok	
+nüfus			ludność	
+obezite			otyłość	
+obur			żarłoczny	
+oran			proporcja	
+ortalama			średnia	
+oyun			gra	
+öğün			posiłek	
+özgün			oryginalny	
+özgüven			pewność siebie	
+peştamal			pestemal	
+pıhtı			skrzep	
+pişmanlık			żal	
+prensip			zasada	
+radyasyon			promieniowanie	
+rakam			liczba	
+rehber			przewodnik	
+rekor			rekord	
+röportaj			wywiad	
+sayesinde			dzięki	
+sezgi			intuicja	
+sıkıntı			problem	
+SIVI			płyn	
+soba			piec	
+süreç			proces	
+sürme			surma	
+şaşırtıcı			zaskakujący	
+şefkat			czułość	
+şifa			uzdrowienie	
+şömine			kominek	
+tansiyon			ciśnienie	
+tarçın			cynamon	
+tasarruf			oszczędność	
+tedavi			leczenie	
+tedbir			środek ostrożności	
+tere			rzeżucha	
+tıp			medycyna	
+tiroit bezleri			gruczoły tarczycy	
+toplum			społeczeństwo	
+tutanak			protokół	
+tutsak			jeniec	
+tüccar			kupiec	
+uğraş			wysiłek	
+uğur			szczęście	
+uzman			specjalista	
+virüs			wirus	
+yaratıcılık			kreatywność	
+yaşantı			życie codzienne	
+yayınevi			wydawnictwo	
+yeşim			jadeit	
+zencefil			imbir	
+artırmak			zwiększać	
+benimsemek			przyjmować; przyswajać	
+berraklaştırmak			wyjaśniać	
+etki etmek			wpływać	
+gerçekleşmek			urzeczywistniać się	
+görev almak			podejmować się zadania	
+hedeflemek			celować	
+istifa etmek			rezygnować	
+izne çıkmak			iść na urlop	
+kabullenmek			akceptować	
+katmak			dodawać	
+kavuşmak			doczekać się	
+netleşmek			stawać się jasnym	
+not etmek			notować	
+odaklanmak			skupiać się	
+ovmak			pocierać	
+pıhtılaşmak			krzepnąć	
+saklanmak			chować się	
+şifayı kapmak			rozchorować się	
+tazelemek			odświeżać	
+uyarlamak			dostosowywać	
+yaramak			przydawać się	
+yedeklemek			tworzyć kopię zapasową	
+yitirmek			tracić	
+yitmek			zanikać	
+yüreklendirmek			dodawać otuchy	
+açıklığa kavuşmak			stać się jasnym	
+ayakta kalmak			utrzymać się	
+can pazarı			walka o życie	
+dizini dövmek			gorzko żałować	
+enine boyuna			gruntownie	
+güzellik salonu			salon piękności	
+kabuklu yemiş			orzechy	
+kafa karışıklığı			zamieszanie	
+katkı maddesi			dodatek	
+keyfine varmak			rozsmakować się	
+keyfini çıkarmak			cieszyć się	
+masaya yatırmak			omawiać szczegółowo	
+yaşam koçu			coach życia	
+başkan			naczelnik; przewodniczący	
+doçent			docent	
+metin			tekst	
+sıra			ławka; kolejka; kolejność	
+düğün			wesele	
+beslenmek			odżywiać się	
+odun			drewno opałowe; drewno	
+katılmak			dołączać; uczestniczyć	
+kutlamak			świętować	
+Rapor			raport	
+Reçete			recepta	
+Şikâyet			skarga	
+Vücut			ciało	
+damar			żyła	
+kısım			część	
+öneri			sugestia	
+tavsiye			rada	
+yaşam			życie	
+çırpmak			trzepać; ubijać	
+saklamak			chować; przechowywać	
+ilginç			interesujący	
+kolesterol			cholesterol	
+kristal			kryształ	
+okyanus			ocean	
+protein			białko	
+keşfetmek			odkrywać	
+ahşap			drewniany	
+çadır			namiot	
+ikna etmek			przekonywać	
+batmak			tonąć	
+yaygın			powszechny	
+# === b1-4 ===
+kazanç			zysk	
+algı			percepcja	
+anadili			język ojczysty	
+analiz			analiza	
+ayakta			na stojąco	
+bağlılık			przywiązanie	
+belirgin			wyraźny	
+çağ			epoka	
+çizelge			wykres	
+dağarcık			zasób	
+dağcılık			wspinaczka górska	
+denge			równowaga	
+dolayısıyla			dlatego	
+dönemeç			zakręt	
+gerçekçi			realistyczny	
+hakim			sędzia	
+işe yarar			przydatny	
+işlev			funkcja	
+jest			gest	
+koordinasyon			koordynacja	
+mekanizma			mechanizm	
+mesafe			odległość	
+mimik			mimika	
+monte			zmontowany	
+mümkün			możliwy	
+ölçüm			pomiar	
+ölçüt			kryterium	
+platform			platforma	
+potansiyel			potencjał	
+siyaset			polityka	
+somut			konkretny	
+soyut			abstrakcyjny	
+strateji			strategia	
+süngerli			gąbkowy	
+tekerleme			łamaniec językowy	
+telaffuz			wymowa	
+ustalık			mistrzostwo	
+uyumlu			zgodny	
+uzay			przestrzeń kosmiczna; kosmos	
+üretken			produktywny	
+varlık			byt; aktywa	
+veri			dane	
+verimli			wydajny	
+yaklaşım			podejście	
+yokuş			wzniesienie	
+yorucu			męczący	
+zeka			inteligencja	
+zihin			umysł	
+ağırlık vermek			kłaść nacisk	
+algılamak			postrzegać	
+ayrılmak			rozdzielać się	
+dikiş tutturmak			dawać sobie radę	
+hatır sormak			pytać o samopoczucie	
+istekte bulunmak			składać prośbę	
+kaynaklanmak			wynikać	
+köreltmek			stępiać	
+mal olmak			kosztować	
+mantık yürütmek			rozumować	
+meydana gelmek			powstawać	
+saptamak			ustalać	
+sönmek			gasnąć	
+tespit etmek			stwierdzać	
+yer almak			mieć miejsce	
+yorumlamak			interpretować	
+alameti farika			znak rozpoznawczy	
+bakış açısı			punkt widzenia	
+beden dili			mowa ciała	
+ilgi alanı			obszar zainteresowań	
+harita			mapa	
+tablo			obraz; tabela	
+karar			decyzja	
+kımıldamak			ruszać się	
+işlem			operacja	
+# === b1-5 ===
+kutsal			święty	
+kasaba			miasteczko	
+martı			mewa	
+inanç			wiara	
+anonim			anonimowy	
+çekirge			konik polny	
+detoks			detoks	
+karamsarl k			pesymizm	
+meteliksiz			bez grosza	
+piyango			loteria	
+slogan			slogan	
+şerit			pas	
+talihsiz			pechowy	
+tebessüm			uśmiech	
+tekne			łódź	
+teori			teoria	
+tesadüf			przypadek	
+toksin			toksyna	
+tura			orzeł	
+yonca			koniczyna	
+arınmak			oczyszczać się	
+çıldırtmak			doprowadzać do szału	
+hâlsiz kalmak			opadać z sił	
+hayal kurmak			marzyć	
+olgunlaşmak			dojrzewać	
+öfkelenmek			złościć się	
+batıl inanç			przesąd	
+can atmak			bardzo pragnąć	
+gözden çıkarmak			spisać na straty	
+iç hesaplaşma			wewnętrzne rozliczenie	
+içini çekmek			wzdychać	
+konsantre olmak			koncentrować się	
+tadını çıkarmak			delektować się	
+vicdan meselesi			kwestia sumienia	
+# === b1-6 ===
+yol açmak			prowadzić do	
+yer almak			mieć miejsce	
+ağırlama			przyjmowanie gości	
+ahretlik			serdeczna przyjaciółka	
+anayasa			konstytucja	
+aşama			etap	
+atılgan			przedsiębiorczy	
+bağımsız			niezależny	
+bazlama			bazlama	
+birim			jednostka	
+birleşim			połączenie	
+bürokratik			biurokratyczny	
+Civil civil			gwarno	
+çarpıcı			uderzający	
+çıkar			korzyść	
+ekonomik			ekonomiczny	
+felaket			katastrofa	
+gölet			staw	
+görenek			zwyczaj	
+harem			harem	
+hurnma			daktyl	
+huzur			spokój	
+ibadet			modlitwa	
+içtenlik			szczerość	
+ifade			wyrażenie	
+ilgi			zainteresowanie	
+işteş			wzajemny	
+kayıtsız			obojętny	
+kin			uraza	
+kül			popiół	
+mangal			grill	
+muhtaç			potrzebujący	
+müessese			instytucja	
+nadiren			rzadko	
+nefret			nienawiść	
+nimet			dobrodziejstwo	
+öğretim			nauczanie	
+ölçülü			umiarkowany	
+önlem			środek zapobiegawczy	
+özne			podmiot	
+platonik			platoniczny	
+posa			miąższ	
+sakar			niezdarny	
+samimiyet			serdeczność	
+sanık			oskarżony	
+selamlık			część domu dla mężczyzn	
+seminer			seminarium	
+sevecenlik			serdeczność	
+sırdaş			powiernik	
+sistem			system	
+sohbet			rozmowa	
+sülale			ród	
+tandır			tandyr	
+unsur			element	
+üstünlük			przewaga	
+vefa			lojalność	
+yargıç			sędzia	
+zahmet			trud	
+dinmek			ustawać	
+esirgemek			oszczędzać	
+inkâr etmek			zaprzeczać	
+katlanmak			znosić	
+kaytarmak			obijać się	
+kötüleşmek			pogarszać się	
+rahatlamak			odprężać się	
+sarsılmak			zachwiać się	
+sinirlenmek			denerwować się	
+yoğunlaşmak			koncentrować się	
+adet yerini bulmak			dla formalności	
+alçak gönüllü			skromny	
+alım gücü			siła nabywcza	
+ayakta durmak			utrzymać się na nogach	
+aynı çatı altında (yaşamak)			żyć pod jednym dachem	
+bir çuval inciri berbat etmek			wszystko zepsuć	
+çevre kirliliği			zanieczyszczenie środowiska	
+üstünlük kurmak			zdobywać przewagę	
+dert yanmak			użalać się	
+eli boş gitmek			iść z pustymi rękami	
+fazla gelmek			być za dużo	
+hoş karşılamak			przyjmować życzliwie	
+hoşbeş etmek			gawędzić	
+içini boşaltmak			wygadać się	
+kara günler			trudne dni	
+kârlı çıkmak			wyjść na tym dobrze	
+kendini dışarı atmak			wybiec na zewnątrz	
+ikiyüzlü			dwulicowy	
+kuşak çatışması			konflikt pokoleń	
+miadı dolmak			stracić ważność	
+peşinde koşmak			gonić za	
+romantik takılmak			zachowywać się romantycznie	
+sıkı fıkı olmak			być bardzo blisko	
+uygun görmek			uznać za stosowne	
+vaaz vermek			prawić kazanie	
+vali kebabı			kebab vali	
+yakından tanımak			dobrze znać	
+yemek faslı			pora posiłku	
+yüreği hop etmek			serce podchodzi do gardła	
+soy			ród; pochodzenie	
+karşılıklı			naprzeciwko; wzajemny	
+kişisel			osobisty	
+yetkili			urzędnik; upoważniony	
+güçlü			silny	
+komik			śmieszny	
+sakin			spokojny	
+geçmek			przechodzić	
+kurum			instytucja	
+saygı			szacunek	
+madde			substancja	
+gelenek			tradycja	
+vize			wiza	
+incitmek			zranić; ranić	
+küsmek			obrażać się	
+çekinmek			wahać się	
+# === b2-1 ===
+gelenek			tradycja	
+incitmek			zranić; ranić	
+tavla			tryktrak	
+kırılmak			obrażać się	
+şifa			uzdrowienie	
+buhar			para	
+buruşuk			pomarszczony	
+çarmıh			krzyż	
+çek-yat			rozkładana kanapa	
+gelir düzeyi			poziom dochodów	
+gözlem			obserwacja	
+hac			pielgrzymka do Mekki	
+hacı			pielgrzym	
+heves			zapał	
+ikon			ikona	
+izlenim			wrażenie	
+karavan			przyczepa kempingowa	
+kısıtlı			ograniczony	
+konukseverlik			gościnność	
+mütevazı			skromny	
+palet			płetwa	
+sanal			wirtualny	
+sektör			sektor	
+şnorkel			fajka do nurkowania	
+tedirgin			zaniepokojony	
+tırabzan			poręcz	
+turizm elçisi			ambasador turystyki	
+yarımada			półwysep	
+bağlanmak			przywiązywać się	
+bronzlaşmak			opalać się	
+elemek			przesiewać	
+keselemek			szorować rękawicą kąpielową	
+oyalamak			zwodzić	
+pazarlamak			promować	
+# === b2-2 ===
+bağımlılık			uzależnienie	
+mucit			wynalazca	
+telsiz			krótkofalówka	
+tuş			klawisz	
+belgesel			dokument	
+koleksiyon			kolekcja	
+civar			okolica	
+etkin			aktywny; skuteczny	
+özenli			staranny	
+yönlendirmek			kierować	
+uzay			przestrzeń kosmiczna; kosmos	
+veri			dane	
+tedirgin			zaniepokojony	
+alarm			alarm	
+askeri			wojskowy	
+astronot			astronauta	
+atari			automat do gier	
+basın			prasa	
+boynuz			róg	
+canavar			potwór	
+cihaz			urządzenie	
+çıktı			wydruk	
+dokunmatil			dotykowy	
+esas			główny	
+etnografya			etnografia	
+fayton			dorożka	
+fevkalâde			nadzwyczajny	
+folklorik			folklorystyczny	
+gar			dworzec	
+gezegen			planeta	
+harikulâde			cudowny	
+ileti			wiadomość	
+kabin			kabina	
+kapasite			pojemność	
+kısa yol			skrót	
+kullanıcı			użytkownik	
+kurşun			ołów	
+maden			kopalnia	
+masum			niewinny	
+mesal			pochodnia	
+misket			kulka	
+mülâkat			rozmowa kwalifikacyjna	
+porselen			porcelana	
+şeffaf			przezroczysty	
+şifre			hasło	
+takipçi			obserwujący	
+telgraf			telegraf	
+tutucu			konserwatywny	
+yakıt			paliwo	
+yazıcı			drukarka	
+anmak			wspominać	
+cızırdamak			skwierczeć	
+savunmak			bronić	
+sergilemek			wystawiać	
+tıklamak			klikać	
+ayak uydurmak			dotrzymywać kroku	
+bağımlı olmak			być uzależnionym	
+başa çıkmak			radzić sobie	
+dili tutulmak			oniemieć	
+geride bırakmak			zostawiać w tyle	
+geride kalmak			pozostawać w tyle	
+hızına yetişememek			nie nadążać	
+temelini atmak			kłaść podwaliny; położyć podwaliny	
+# === b2-3 ===
+mizaç			temperament	
+kıtlık			głód; niedobór	
+yatıştırmak			uspokajać	
+endişeli			zaniepokojony	
+iştah			apetyt	
+öğe			element	
+odaklanmak			skupiać się	
+yitirmek			tracić	
+saptamak			ustalać	
+tedirgin			zaniepokojony	
+atılganlık			przedsiębiorczość	
+azimli			zdeterminowany	
+barışçıl			pokojowy	
+bedensel			cielesny	
+bulanık			mętny	
+çatışma			konflikt	
+dengeleyici			równoważący	
+düşünsel			intelektualny	
+edepli			przyzwoity	
+eğilim			skłonność; tendencja	
+esinti			bryza	
+fon			tło	
+güdülenme			motywacja	
+haz			przyjemność	
+hile			podstęp	
+ima			aluzja	
+karamsar			pesymistyczny	
+kararlılık			stanowczość	
+kifayetsiz			niewystarczający	
+matem			żałoba	
+mısra			wers	
+mutasavvıf			mistyk suficki	
+ruhsal			duchowy	
+seyrek			rzadki	
+tepki			reakcja	
+tutku			pasja	
+ufuk			horyzont	
+yargı			osąd	
+yiğit			dzielny	
+zarif			elegancki	
+ertelemek			odkładać	
+kandırmak			oszukiwać	
+kapsamak			obejmować	
+saldırganlaşmak			stawać się agresywnym	
+şımarmak			rozpieszczać się	
+duygusal zekâ			inteligencja emocjonalna	
+hayal kırıklığı			rozczarowanie	
+kalıtsal özellik			cecha dziedziczna	
+kılık kiyafet			ubiór	
+sindirim sistemi			układ trawienny	
+sinirsel bozukluk			zaburzenie nerwowe	
+# === b2-4 ===
+bağımlılık			uzależnienie	
+desen			wzór	
+geleneksel			tradycyjny	
+sığmak			mieścić się	
+yansıtmak			odzwierciedlać	
+tarz			styl	
+prensip			zasada	
+çağ			epoka	
+yoğunlaşmak			koncentrować się	
+sektör			sektor	
+akım			trend	
+bilinçli			świadomy	
+hazırcevap			cięty	
+moda			moda	
+örgü			dzianina; splot	
+puantiye			groszki	
+stil			styl	
+şık			elegancki	
+takıntı			obsesja	
+tasarım			projekt	
+tasarımcı			projektant	
+tayyör			kostium damski	
+tulum			kombinezon	
+vatka			poduszka naramienna	
+fısıldamak			szeptać	
+küreselleşmek			globalizować się	
+takılmak			zawieszać się	
+tasarlamak			projektować	
+tasarruf etmek			oszczędzać	
+yönelmek			kierować się	
+damgasını vurmak			odcisnąć piętno	
+ele almak			omawiać; podejmować temat	
+gündemde kalmak			pozostawać na czasie	
+imaj oluşturmak			tworzyć wizerunek	
+nüfuz etmek			przenikać	
+öncelik vermek			nadawać priorytet	
+risk almak			podejmować ryzyko	
+sahip çıkmak			troszczyć się	
+yok satmak			wyprzedawać się na pniu	
+# === b2-5 ===
+zafer			zwycięstwo	
+sürmek			trwać	
+lakap			przezwisko	
+piramit			piramida	
+tapınak			świątynia	
+tercih etmek			wybierać	
+kanıtlamak			udowadniać	
+yitirmek			tracić	
+şifre			hasło	
+akustik			akustyczny	
+aristokrat			arystokrata	
+asıl			właściwy	
+atasözü			przysłowie	
+bitkin			wyczerpany	
+cenaze			pogrzeb	
+çile			cierpienie	
+destan			epos	
+dev			olbrzym	
+fener			latarnia	
+hafıza			pamięć	
+heykel			rzeźba	
+kaya			skała	
+kurban			ofiara	
+mermer			marmur	
+peri bacası			komin wróżki	
+rivayet			podanie	
+SİVrİ			spiczasty	
+soylu			szlachetny	
+söylenti			pogłoska	
+şantiye			plac budowy	
+zalim			okrutny	
+barındırmak			mieścić	
+çığlık atmak			krzyczeć	
+fokurdamak			bulgotać	
+teklif etmek			proponować	
+anıt mezar			mauzoleum	
+canına tak etmek			mieć serdecznie dość	
+gönlü ferman dinlememek			nie umieć zapanować nad sercem	
+gönlünü hoş tutmak			utrzymywać się w dobrym nastroju	
+göz kamaştırmak			olśniewać	
+katkı sağlamak			wnosić wkład	
+# === b2-6 ===
+itibar			reputacja	
+usul			metoda	
+aşmak			przekraczać	
+gerekçe			uzasadnienie	
+algılamak			postrzegać	
+çekirge			konik polny	
+posa			miąższ	
+cenaze			pogrzeb	
+anatomi			anatomia	
+aykırılık			sprzeczność	
+azar			nagana	
+bellek			pamięć	
+boğa			byk	
+cinayet			morderstwo	
+denizatı			konik morski	
+doruk			szczyt	
+eskimo			Eskimos	
+fevkalade			nadzwyczajny	
+gayret			wysiłek	
+gösterge			wskaźnik	
+gülünç			śmieszny	
+harikulade			cudowny	
+haysiyet			godność	
+hörgüç			garb	
+kaptan			kapitan	
+kesik			nacięcie	
+kırkayak			stonoga	
+kiler			spiżarnia	
+kova			wiadro	
+köftehor			nicpoń	
+leğen			miednica	
+mat			matowy	
+matador			matador	
+muhterem			szanowny	
+mücadele			walka	
+mühür			pieczęć	
+okkalı			solidny	
+olasılık			prawdopodobieństwo	
+omurilik			rdzeń kręgowy	
+onur			honor	
+öbür			tamten	
+pergel			cyrkiel	
+pürüzsüz			gładki	
+saydam			przezroczysty	
+sivrisinek			komar	
+şakak			skroń	
+yel			wiatr	
+zar			błona; kość do gry	
+aldatmak			oszukiwać	
+ayıklamak			wybierać	
+azarlamak			strofować	
+çatmak			ganić	
+daldırmak			zanurzać	
+pekiştirmek			wzmacniać	
+sahiplenmek			przywłaszczać sobie	
+sıvazlamak			gładzić	
+şaşmak			dziwić się	
+takdir etmek			doceniać	
+tutuklamak			aresztować	
+ummak			mieć nadzieję	
+yakınmak			skarżyć się	
+yanılmak			mylić się	
+yaralamak			ranić	
+ağzına layık			bardzo smaczny	
+başına devlet kuşu konmak			mieć wielkie szczęście	
+berabere kalmak			zremisować	
+büyümüş de küçülmüş			rezolutny ponad wiek	
+Cehennem ol!			Idź do diabła!	
+dillere destan			legendarny	
+eser kalmamak			nie zostać ani śladu	
+evlat edinmek			adoptować	
+iş güç sahibi			mający stałą pracę	
+kafasına esmek			przyjść do głowy	
+maymun olmak			robić z siebie błazna	
+ruh ikizi			bratnia dusza	
+taçsız kral			niekoronowany król	
+Uğurlar olsun!			Szerokiej drogi!	
+üstesinden gelmek			poradzić sobie	
+Yolun açık olsun!			Powodzenia w drodze!	
+sanmak			myśleć; sądzić; być zdania	
+Tartılmak			ważyć się	
+usanmak			mieć dość; znużyć się	
+erişkin			dorosły	
+azim			determinacja	
+baskı			presja	
+# === c1-1 ===
+felç			paraliż	
+mantık			logika	
+mekanizma			mechanizm	
+aşama			etap	
+atılgan			przedsiębiorczy	
+heves			zapał	
+alarm			alarm	
+akım			trend	
+tasarlamak			projektować	
+mermer			marmur	
+saydam			przezroczysty	
+şakak			skroń	
+ateş saati			zegar ogniowy	
+ay yılı			rok księżycowy	
+barınma			zakwaterowanie	
+cıva			rtęć	
+çanak			misa	
+çelimsiz			cherlawy	
+devre			obwód	
+düzenek			mechanizm	
+göç			migracja	
+güneş saati			zegar słoneczny	
+güneş yılı			rok słoneczny	
+hasat			zbiory	
+hicrî			hidżryjski	
+hürmetli			szacowny	
+ibre			wskazówka	
+ipucu			wskazówka	
+isyankâr			buntowniczy	
+işitme engelli			niedosłyszący	
+kadran			tarcza	
+kum saati			klepsydra	
+makul			rozsądny	
+mehtap			blask księżyca	
+mekanik			mechaniczny	
+metal			metal	
+mil			oś	
+milâdî			gregoriański	
+periyot			okres	
+piyanist			pianista	
+pusula			kompas	
+rutin			rutyna	
+sağır			głuchy	
+sponsor			sponsor	
+su saati			zegar wodny	
+teorik			teoretyczny	
+tüyo			wskazówka	
+uygarlık			cywilizacja	
+yöre			region	
+buğulanmak			zaparowywać	
+çırpınmak			miotać się	
+doğrulmak			prostować się	
+eritmek			topić	
+iletmek			przekazywać	
+ilişkilendirmek			wiązać; kojarzyć	
+istifade etmek			korzystać	
+kaygılanmak			martwić się	
+olanaklı kılmak			umożliwiać	
+sözleşmek			umawiać się	
+takışmak			sprzeczać się	
+ulumak			wyć	
+yaygınlaşmak			upowszechniać się	
+zehirlenmek			zatruć się	
+zonklamak			pulsować	
+başını kaşıyacak zamanı olmamak			nie mieć chwili czasu	
+bir şeyi lehine çevirmek			obrócić coś na swoją korzyść	
+bir şeyin temelini atmak			położyć podwaliny czegoś	
+birisini ekmek			wystawić kogoś do wiatru	
+çekip gitmek			pójść sobie	
+ilgi duymak			interesować się	
+ilham vermek			inspirować	
+kalbi küt küt atmak			serce wali jak młot	
+merak uyandırmak			budzić ciekawość	
+para canlısı			materialista	
+renk katmak			dodać kolorytu	
+sinirleri gerilmek			mieć napięte nerwy	
+ümidini kaybetmek			stracić nadzieję	
+yapış yapış olmak			być lepkim	
+zaman almak			zajmować czas	
+zaman harcamak			spędzać czas	
+zaman kaybetmek			tracić czas	
+zaman öldürmek			zabijać czas	
+düzenlemek			organizować	
+sihirbaz			magik	
+taşmak			wylewać się	
+ayrıntı			szczegół	
+beklenti			oczekiwanie	
+# === c1-2 ===
+depolamak			magazynować	
+kanıtlamak			udowadniać	
+antrenman			trening	
+hormon			hormon	
+kramp			skurcz	
+molekül			cząsteczka	
+bağlılık			przywiązanie	
+içtenlik			szczerość	
+vefa			lojalność	
+katlanmak			znosić	
+izlenim			wrażenie	
+cihaz			urządzenie	
+temelini atmak			kłaść podwaliny; położyć podwaliny	
+tepki			reakcja	
+tutku			pasja	
+yiğit			dzielny	
+fısıldamak			szeptać	
+harikulade			cudowny	
+ummak			mieć nadzieję	
+ruh ikizi			bratnia dusza	
+alt tarafı			zaledwie	
+antropolog			antropolog	
+ayet			werset	
+belirti			objaw	
+bilhassa			zwłaszcza	
+bilinçaltı			podświadomość	
+cefa			cierpienie	
+çekingen			nieśmiały	
+derviş			derwisz	
+dizgin			lejce	
+dörtnala			galopem	
+edep			przyzwoitość	
+emniyet kemeri			pas bezpieczeństwa	
+eser			dzieło	
+faz			faza	
+gazel			gazel	
+gerdanlık			naszyjnik	
+gözbebeği			źrenica	
+güvercin			gołąb	
+hakiki			prawdziwy	
+hasılı			krótko mówiąc	
+ıstırap			cierpienie	
+ilham			natchnienie	
+imkân			możliwość	
+irtibat			kontakt	
+ispat			dowód	
+kalender			beztroski	
+kanaat			opinia	
+karışım			mieszanka	
+katot			katoda	
+kaynak			źródło	
+kıvılcım			iskra	
+kimya			chemia	
+kusursuz			bezbłędny	
+kuşkucu			sceptyczny	
+kuyruklu yıldız			kometa	
+lisan			język	
+lunapark			wesołe miasteczko	
+maharet			umiejętność	
+makam			stanowisko; urząd	
+maksat			cel	
+mânâ			znaczenie	
+manevî			duchowy	
+mecnun			szalenie zakochany	
+muhatap			rozmówca	
+mülakat			rozmowa kwalifikacyjna	
+müsaade			pozwolenie	
+nahoş			nieprzyjemny	
+nasip			przeznaczenie	
+nazik			uprzejmy	
+ne denli			jak bardzo	
+niyaz			błaganie	
+nörotik			neurotyczny	
+övgü			pochwała	
+pisi			kotek	
+salınım			oscylacja	
+samanyolu			Droga Mleczna	
+sanki			jakby	
+saplantı			obsesja	
+seyran			przechadzka	
+sırça			szkło	
+sine			pierś	
+sitem			wyrzut	
+sükûnet			spokój	
+tabir			wyrażenie	
+takdir			uznanie	
+takıntılı			obsesyjny	
+tasavvuf			sufizm	
+tavır			postawa	
+tedavül			obieg	
+tekke			tekke	
+teslimiyet			poddanie się	
+tez			teza	
+tüberküloz			gruźlica	
+ultraviyole			ultrafiolet	
+vicdan azabı			wyrzuty sumienia	
+zemin			podłoże	
+zikir			zikr	
+ziyade			bardziej	
+adamak			poświęcać	
+aksetmek			odbijać się	
+deşmek			przebijać	
+fırlatmak			rzucać	
+harmanlamak			mieszać	
+iddia etmek			twierdzić	
+işlemek			przetwarzać	
+kasılmak			napinać się	
+övmek			chwalić	
+püskürtmek			rozpylać	
+salgılamak			wydzielać	
+seyre dalmak			wpatrywać się	
+sınıflandırmak			klasyfikować	
+sürüklemek			ciągnąć	
+süzülmek			sunąć się	
+tatmin etmek			zaspokajać	
+yakarmak			błagać	
+aşk olsun			wstyd!	
+değmeyin keyfime			ale mi dobrze	
+dilinden düşürmemek			ciągle o czymś mówić	
+dillerde dolaşmak			być na ustach wszystkich	
+kafayı yemek			zwariować	
+lanet olsun			niech to diabli	
+payını almak			dostać swoją działkę	
+öz			rodzony; własny; osobisty; istota	
+sır			sekret; tajemnica	
+mektep			szkoła	
+oymak			żłobić; rzeźbić; wycinać	
+isyan etmek			buntować się	
+bilgin			uczony	
+kıymet			wartość	
+uyum			zgodność; harmonia	
+tercih etmek			wybierać	
+# === c1-3 ===
+karşılıklı			naprzeciwko; wzajemny	
+zarf			koperta	
+yorum			komentarz; interpretacja	
+sıkılmak			nudzić się	
+kıtlık			głód; niedobór	
+yaygın			powszechny	
+sıkıntı çekmek			cierpieć; cierpieć niedostatek	
+tempo			tempo	
+kısırlık			bezpłodność	
+felaket			katastrofa	
+muhtaç			potrzebujący	
+katlanmak			znosić	
+zar			błona; kość do gry	
+ummak			mieć nadzieję	
+yakınmak			skarżyć się	
+ilişkilendirmek			wiązać; kojarzyć	
+hâkimiyet			dominacja	
+iman			wiara	
+köken			pochodzenie	
+kesin			pewny	
+geçersiz			nieważny	
+gelişigüzel			byle jak	
+hayırsever			filantrop	
+nalbant,			kowal podkuwający konie	
+aşırı doz			przedawkowanie	
+çeyiz			posag	
+bayındırlık			roboty publiczne	
+malvarlığı			majątek	
+huzurevi			dom opieki	
+uğraşı			zajęcie	
+kabartma			płaskorzeźba	
+pul			znaczek	
+enteresan			interesujący	
+karşılık olarak			w zamian	
+sunmak			przedstawiać	
+kebe			filcowe okrycie	
+değişken			zmienny	
+seçkin			wybitny	
+tabut			trumna	
+desteklemek			wspierać	
+özetlemek			podsumowywać	
+itiraz etmek			sprzeciwiać się	
+ayırt etmek			rozróżniać	
+çek bozdurmak			realizować czek	
+suratını asmak			stroić fochy	
+ileri geri konuşmak			gadać bez sensu	
+geri çevirmek			odrzucać	
+ele geçmek			dostać się w ręce	
+yaşayıp gitmek			po prostu żyć dalej	
+iş işten geçmek			być za późno	
+şeref vermek			zaszczycić obecnością	
+aman dilemek			błagać o litość	
+ümidi kaybolmak			tracić nadzieję	
+kılık değiştirmek			przebierać się	
+işleri yolunda olmak			mieć wszystko na dobrej drodze	
+hale düşmek			popaść w stan	
+onaylamak			zatwierdzać	
+uzak durmak			trzymać się z daleka	
+başını dinlemek			odpocząć od wszystkiego	
+adım atmak			robić krok	
+küçük düşünmek			myśleć małostkowo	
+peşini bırakmamak			nie dawać spokoju	
+süzülüp gitmek			odpłynąć	
+gözünü yükseklere dikmek			mierzyć wysoko	
+hamle yapmak			wykonać ruch	
+# === c1-4 ===
+avuç			garść; dłoń	
+rütbe			stopień	
+unvan			tytuł	
+satır			linia; tasak	
+uğraşmak			zmagać się	
+organizasyon			organizacja	
+benimsemek			przyjmować; przyswajać	
+sektör			sektor	
+bilinçli			świadomy	
+makul			rozsądny	
+makam			stanowisko; urząd	
+mülakat			rozmowa kwalifikacyjna	
+algılama			percepcja	
+analitik			analityczny	
+arşın			arszyn	
+arzuhal			podanie	
+arzuhalci			pisarz podań	
+aşırı makyaj			mocny makijaż	
+atanma			nominacja	
+biçare			bezradny	
+bizzat			osobiście	
+cihan			świat	
+çırak			czeladnik	
+dart			dart	
+dava			sprawa	
+esna			podczas	
+frekans			częstotliwość	
+hasır			mata trzcinowa	
+hekim			lekarz	
+heybetli			okazały	
+ıstırab			cierpienie	
+imaj			wizerunek	
+iskemle			krzesło	
+izin tezkeresi			przepustka	
+kadı			kadi	
+kama			sztylet	
+kamış			trzcina	
+külliye			kompleks budynków	
+maruzat			przedstawienie sprawy	
+motivasyon			motywacja	
+staj			staż	
+sütun			kolumna	
+tabure			taboret	
+tazminat			odszkodowanie	
+uçuk kıyafet			krzykliwy strój	
+üstat			mistrz	
+vizyon			wizja	
+yasal süreç			postępowanie prawne	
+zulüm			ucisk	
+artış göstermek			wykazywać wzrost	
+arz etmek			przedkładać	
+çare aramak			szukać rozwiązania	
+kanaat getirmek			dochodzić do wniosku	
+ölçüp biçmek			dobrze rozważyć	
+delik deşik etmek			podziurawić	
+derdine çare olmak			zaradzić czyjemuś problemowi	
+emri başı üstüne			rozkaz	
+ipler koptu			miarka się przebrała	
+# === c1-5 ===
+şelale			wodospad	
+vakıf			fundacja	
+garip			dziwny	
+dönüşmek			przekształcać się	
+bağlam			kontekst	
+olgunlaşmak			dojrzewać	
+sanal			wirtualny	
+tutku			pasja	
+örgü			dzianina; splot	
+düzenek			mechanizm	
+yöre			region	
+bilinçaltı			podświadomość	
+danıştay			Rada Stanu	
+bakteri			bakteria	
+mantar			grzyb	
+denetlenme			kontrolowanie	
+kısıtlanma			ograniczenie	
+olgu			fakt	
+propaganda			propaganda	
+ideoloji			ideologia	
+şahsiyet			osobowość	
+versiyon			wersja	
+gala			gala	
+trajikomik			tragikomiczny	
+orijinal			oryginalny	
+bobin			szpula	
+mülkiyet			własność	
+başrol			główna rola	
+tapu			akt własności	
+hariç			poza	
+kritik			krytyczny	
+müthiş			niesamowity	
+soytarılık			błaznowanie	
+smokin			smoking	
+rezil			skompromitowany	
+mecbur			zmuszony	
+gladyatör			gladiator	
+uğruna			dla	
+doküman			dokument	
+tribün			trybuna	
+uzantı			rozszerzenie	
+restore edilmek			zostać odrestaurowanym	
+sınırlı tutmak			utrzymywać w ograniczonym zakresie	
+kılavuzluk etmek			przewodzić	
+yöneltmek			kierować	
+yansımak			odbijać się	
+tutturmak			trafić	
+canı gönülden			z całego serca	
+göz önüne serilmek			zostać ukazanym	
+çığır açmak			przecierać szlaki	
+iki laf etmek			zamienić dwa słowa	
+gün ışığına çıkarmak			wydobyć na światło dzienne	
+ilham almak			czerpać inspirację	
+peşine düşmek			ruszyć za czymś	
+bir şeyde hakkı olmak			mieć do czegoś prawo	
+sönük kalmak			wypadać blado	
+kanun çıkarmak			uchwalać ustawę	
+işe giriş			podjęcie pracy	
+# === c1-6 ===
+görsel			wizualny	
+oran			proporcja	
+arınmak			oczyszczać się	
+nahoş			nieprzyjemny	
+tevazu			skromność	
+ihtiras			ambicja	
+muhakeme			osąd	
+bilinç			świadomość	
+fazilet			cnota	
+hikmet			mądrość	
+şuur			świadomość	
+işitsel			słuchowy	
+duyu			zmysł	
+reaksiyon			reakcja	
+yazılım			oprogramowanie	
+küreselleşme			globalizacja	
+faktör			czynnik	
+kalifiye			wykwalifikowany	
+bileşke			wypadkowa	
+entelektüel			intelektualny	
+uygar			cywilizowany	
+yetkinlik			kompetencja	
+ütopik			utopijny	
+irtibatlandırmak			powiązywać	
+yapılandırmak			strukturyzować	
+# === c1-7 ===
+görsel			wizualny	
+oran			proporcja	
+arınmak			oczyszczać się	
+nahoş			nieprzyjemny	
+tevazu			skromność	
+ihtiras			ambicja	
+muhakeme			osąd	
+bilinç			świadomość	
+fazilet			cnota	
+hikmet			mądrość	
+şuur			świadomość	
+işitsel			słuchowy	
+duyu			zmysł	
+reaksiyon			reakcja	
+yazılım			oprogramowanie	
+küreselleşme			globalizacja	
+faktör			czynnik	
+kalifiye			wykwalifikowany	
+bileşke			wypadkowa	
+entelektüel			intelektualny	
+uygar			cywilizowany	
+yetkinlik			kompetencja	
+ütopik			utopijny	
+irtibatlandırmak			powiązywać	
+yapılandırmak			strukturyzować	
+# === c1-8 ===
+oymak			żłobić; rzeźbić; wycinać	
+yetişkin			dorosły	
+bocalamak			gubić się; miotać się	
+biçim			forma	
+eğilim			skłonność; tendencja	
+kapsamak			obejmować	
+soylu			szlachetny	
+eser			dzieło	
+olgu			fakt	
+ihtiras			ambicja	
+telkin			sugestia	
+çerçeve			ramy	
+ergenlik			dojrzewanie	
+teşvik			zachęta	
+yatkın			skłonny	
+yayın			publikacja	
+nezaret			nadzór	
+ıslahevi			zakład poprawczy	
+palmiye			palma	
+fert			jednostka	
+mağdur			poszkodowany	
+telafi			rekompensata	
+hükümran			panujący	
+uyuşmazlık			spór	
+sistematik			systematyczny	
+uzlaşımsal			konwencjonalny	
+ferdi			indywidualny	
+itidal			umiar	
+asli			zasadniczy	
+akit			umowa	
+kamu			publiczny	
+otorite			autorytet	
+müebbet			dożywocie	
+işkence			tortury	
+sera			szklarnia	
+minyatür			miniatura	
+moloz			gruz	
+poster			plakat	
+lağım			kanał ściekowy	
+hibe			dotacja	
+çatışmak			ścierać się	
+zikretmek			wspominać	
+volta atmak			spacerować tam i z powrotem	
+yolunu bulmak			znaleźć drogę	
+önemsemek			przywiązywać wagę	
+öngörmek			przewidywać	
+örgütlenmek			organizować się	
+temin etmek			zapewniać	
+kavramak			pojmować	
+edinmek			nabywać	
+# === c1-9 ===
+tarz			styl	
+tekerleme			łamaniec językowy	
+unsur			element	
+tutku			pasja	
+zarif			elegancki	
+kapsamak			obejmować	
+destan			epos	
+maharet			umiejętność	
+maksat			cel	
+itiraz etmek			sprzeciwiać się	
+ayırt etmek			rozróżniać	
+cemiyet			stowarzyszenie	
+ehemmiyet			znaczenie	
+enflasyon			inflacja	
+espri			dowcip	
+fay hattı			uskok tektoniczny	
+güreşçi			zapaśnik	
+hiciv			satyra	
+hikmetli			mądry	
+ırk			rasa	
+istatistik			statystyka	
+karikatür			karykatura	
+kelepir			okazja	
+koz			atut	
+mahsul			plon	
+mahsus			specjalnie	
+mazeret			wymówka	
+meddah			gawędziarz	
+mizah			humor	
+moruk			stary dziad	
+muhalif			opozycyjny	
+mübalağa			przesada	
+mülk			własność	
+müsamere			przedstawienie szkolne	
+nezaket			uprzejmość	
+nükte			cięta riposta	
+orta oyunu			teatr improwizowany	
+öksüz			półsierota	
+palyaço			klaun	
+pota			obręcz	
+sadaka			jałmużna	
+şive			akcent	
+taşlama			satyra	
+teferruat			szczegół	
+tereddüt			wahanie	
+tesir			wpływ	
+vasıf			kwalifikacja	
+vatoz			płaszczka	
+yergi			szyderstwo	
+yetim			sierota	
+zümre			warstwa	
+dile getirmek			wyrażać	
+hedef almak			brać na cel	
+içerlemek			brać sobie do serca	
+mahkûm etmek			skazywać	
+meşhur etmek			rozsławiać	
+sevk etmek			kierować	
+bıyık altından gülmek			podśmiewać się pod nosem	
+dilinden düşmemek			nie schodzić z ust	
+göze batmak			rzucać się w oczy	
+gözlerinin içi gülmek			oczy mu się śmieją	
+gülmekten kırılmak			pękać ze śmiechu	
+gündem oluşturmak			tworzyć temat dnia	
+iş çevirmek			kombinować	
+lafın altından kalkmak			umieć obronić swoje słowa	
+şaka kaldırmak			znosić żarty	
+şakası olmamak			nie być żartem	
+şakaya vurmak			obrócić w żart	
+yüze gülmek			uśmiechać się komuś w twarz	
+mizaç			temperament	
+unvan			tytuł	
+bilmece			zagadka	
+fıkra			dowcip; anegdota	
+# === c1-10 ===
+fakir			biedny	
+fiyat			cena	
+cazip			atrakcyjny	
+etkin			aktywny; skuteczny	
+hizmet			usługa	
+varlık			byt; aktywa	
+heves			zapał	
+kapsamak			obejmować	
+enflasyon			inflacja	
+mal			towar	
+tüketici			konsument	
+gelir			dochód	
+harcama			wydatek	
+talep			popyt	
+ithal			importowany	
+sanayileşme			uprzemysłowienie	
+istikrar			stabilność	
+aktif			aktywny	
+aksaklık			zakłócenie	
+sorumsuz			nieodpowiedzialny	
+limit			limit	
+kategori			kategoria	
+hatır			wzgląd	
+maruz kalmak			być narażonym	
+hüküm sürmek			panować	
+adlandırmak			nazywać	
+görebilmek			móc dostrzec	
+üşenmek			nie chcieć się	
+# === c1-11 ===
+ortalama			średnia	
+saptamak			ustalać	
+buhar			para	
+yakıt			paliwo	
+barınma			zakwaterowanie	
+göç			migracja	
+ipucu			wskazówka	
+sera			szklarnia	
+ırk			rasa	
+aşina			obeznany	
+atık			odpad	
+basık			niski	
+bilimkurgu			fantastyka naukowa	
+buzul			lodowiec	
+çap			średnica	
+çölleşme			pustynnienie	
+doku			tkanka	
+dürtü			impuls	
+egemen			dominujący	
+eksantrik			ekscentryczny	
+ekvator			równik	
+elipsoid			elipsoida	
+fosil			skamielina	
+hammadde			surowiec	
+ilke			zasada	
+inanış			przekonanie	
+kalkınma			rozwój	
+kardiyovasküler			sercowo-naczyniowy	
+kasırga			huragan	
+kıyas			porównanie	
+kireç			wapno	
+klostrofobi			klaustrofobia	
+kozmonot			kosmonauta	
+kutup			biegun	
+küre			kula	
+küremsi			kulisty	
+maceraperest			żądny przygód	
+milat			punkt zwrotny	
+mürettebat			załoga	
+oluşum			formacja	
+radyatör			kaloryfer	
+rant			renta	
+ritüel			rytuał	
+sağ salim			cały i zdrowy	
+sapma			odchylenie	
+simülasyon			symulacja	
+solunum			oddychanie	
+sürdürülebilirlik			zrównoważony rozwój	
+tahrip			zniszczenie	
+taşkın			wezbranie	
+tehdit			zagrożenie	
+tesisat			instalacja	
+tespit			ustalenie	
+tetikletolerans			tolerancja wyzwalania	
+topografik			topograficzny	
+uydu			satelita	
+vantilatör			wentylator	
+yarıçap			promień	
+yerçekimi			grawitacja	
+yerküre			kula ziemska	
+zirve			szczyt	
+bilinçlendirmek			uświadamiać	
+karşı karşıya kalmak			stanąć wobec	
+yığılmak			nawarstwiać się	
+zedelemek			naruszać	
+kısım			część	
+okyanus			ocean	
+klozet			sedes	
+atmosfer			atmosfera	
+iklim			klimat	
+kuraklık			susza	
+sel			powódź	
+ekip			ekipa; zespół	
+uyum			zgodność; harmonia	
+# === c1-12 ===
+ikramiye			premia	
+bahane			wymówka	
+algılamak			postrzegać	
+çarpıcı			uderzający	
+canavar			potwór	
+savunmak			bronić	
+ele almak			omawiać; podejmować temat	
+destan			epos	
+istifade etmek			korzystać	
+maruz kalmak			być narażonym	
+sağ salim			cały i zdrowy	
+nesil			pokolenie	
+zamane			dzisiejsze czasy	
+mecra			medium	
+girişimcilik			przedsiębiorczość	
+zira			ponieważ	
+kuşak			pokolenie	
+vefasız			nielojalny	
+küresel			globalny	
+denetim			kontrola	
+serüven			przygoda	
+karmaşa			chaos	
+kapkaç			kradzież z wyrwaniem	
+arbede			bójka	
+terör			terror	
+manşet			nagłówek	
+kitle			masa	
+hıdrellez			Hıdrellez	
+darmadağın			w rozsypce	
+işlek			ruchliwy	
+alıntı			cytat	
+nadir			rzadki	
+keramet			cud	
+gündem			agenda	
+şöhret			sława	
+çevrimiçi			online	
+bulgu			ustalenie	
+erişim			dostęp	
+ilkel			prymitywny	
+ozan			bard	
+yerel			lokalny	
+taklit			imitacja	
+eleştirmen			krytyk	
+kıt			skąpy	
+gurbet			obczyzna	
+mürüvvet			pomyślność dziecka	
+dahil etmek			włączać	
+yatkın olmak			być skłonnym	
+kıyaslamak			porównywać	
+uydurmak			wymyślać	
+kamuoyu oluşturmak			kształtować opinię publiczną	
+çullanmak			rzucać się na kogoś	
+yeltenmek			ważyć się	
+linç etmek			linczować	
+feryat etmek			lamentować	
+çarpıtmak			zniekształcać	
+aktarmak			przekazywać	
+tembihlemek			upominać	
+sivrilmek			wyróżniać się	
+taramak			skanować	
+kısıtlamak			ograniczać	
+ihraç etmek			eksportować	
+sitem etmek			robić wyrzuty	
+gözler önüne sermek			ukazywać jak na dłoni	
+basmakalıp			schematyczny	
+evde kalmak			zostać starą panną / starym kawalerem	
+olmayacak duaya amin demek			liczyć na niemożliwe	
+doğmamış çocuğa don biçmek			dzielić skórę na niedźwiedziu	
+kaynanası sevmek			kochać teściową	
+sihirli kutu			magiczne pudełko	
+aptal kutusu			pudło ogłupiacz	
+pes doğrusu			no nie, przesada	
+çarşaf çarşaf			na całe łamy	
+ekmek yemek			zarabiać na chleb	
+pabucunu dama atmak			odejść w zapomnienie	
+bağımlılık			uzależnienie	
+afiş			plakat	
