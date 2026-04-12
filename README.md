@@ -13,4 +13,6 @@ Build with `anki-build`:
 ```sh
 uv run anki-build --help
 uv run anki-build build ./dat/lang-vocabulary/deu/flashcard.yml -o ./out/german.apkg
+uv run anki-build build ./dat/lang-vocabulary/fas/flashcard.yml -o ./out/farsi.apkg
+uv run anki-build build ./dat/lang-vocabulary/tur/flashcard.yml -o ./out/turkish.apkg
 ```

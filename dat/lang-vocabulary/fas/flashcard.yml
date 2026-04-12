@@ -52,3 +52,5 @@ data:
     tags: ['ovchinnikova-2002']
   - filename: ./thackston-2009-vocabulary-pol-latn.csv
     tags: ['thackston-2009']
+  - filename: ./ostrovski-2004-vocabulary-pol-latn.csv
+    tags: ['ostrovski-2004']
