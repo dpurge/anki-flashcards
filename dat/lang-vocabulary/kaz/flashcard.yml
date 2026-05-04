@@ -39,24 +39,8 @@ video: []
 image: []
 
 data:
-  - filename: ./kozhakhmetova-1989/01.csv
-    tags: ['Kozhakhmetova-01']
-  - filename: ./kozhakhmetova-1989/02.csv
-    tags: ['Kozhakhmetova-02']
-  - filename: ./kozhakhmetova-1989/03.csv
-    tags: ['Kozhakhmetova-03']
-  - filename: ./kozhakhmetova-1989/04.csv
-    tags: ['Kozhakhmetova-04']
-  - filename: ./kozhakhmetova-1989/05.csv
-    tags: ['Kozhakhmetova-05']
-  - filename: ./kozhakhmetova-1989/06.csv
-    tags: ['Kozhakhmetova-06']
-  - filename: ./kozhakhmetova-1989/07.csv
-    tags: ['Kozhakhmetova-07']
-  - filename: ./kozhakhmetova-1989/08.csv
-    tags: ['Kozhakhmetova-08']
-  - filename: ./kozhakhmetova-1989/09.csv
-    tags: ['Kozhakhmetova-09']
+  - filename: ./kozhakhmetova-1989-vocabulary-pol-latn.csv
+    tags: ['kozhakhmetova-1989']
   - filename: ./oralbaeva-1989/01.csv
     tags: ['Oralbaeva-01']
   - filename: ./razgovornyj/01.csv
