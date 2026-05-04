@@ -41,11 +41,11 @@ image: []
 data:
   - filename: ./kozhakhmetova-1989-vocabulary-pol-latn.csv
     tags: ['kozhakhmetova-1989']
-  - filename: ./oralbaeva-1989/01.csv
-    tags: ['Oralbaeva-01']
-  - filename: ./razgovornyj/01.csv
-    tags: ['Razgovornyj-01']
-  - filename: ./razgovornyj/02.csv
-    tags: ['Razgovornyj-02']
-  - filename: ./razgovornyj/03.csv
-    tags: ['Razgovornyj-03']
+  # - filename: ./oralbaeva-1989/01.csv
+  #   tags: ['Oralbaeva-01']
+  # - filename: ./razgovornyj/01.csv
+  #   tags: ['Razgovornyj-01']
+  # - filename: ./razgovornyj/02.csv
+  #   tags: ['Razgovornyj-02']
+  # - filename: ./razgovornyj/03.csv
+  #   tags: ['Razgovornyj-03']
