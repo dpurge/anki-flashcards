@@ -1,0 +1,23 @@
+.card {
+    font-family: arial;
+    font-size: 20px;
+    text-align: center;
+}
+
+.question {
+    font-size: 120%;
+}
+
+.answer {
+    font-size: 120%;
+}
+
+.code {
+    font-family: monospace;
+    text-align: left;
+    white-space: pre;
+}
+
+.notes {
+    font-style: italic;
+}

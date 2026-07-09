@@ -1,0 +1,91 @@
+- Q: |
+    Why is jitter added to exponential backoff, rather than just doubling the delay each retry?
+  A: |
+    Pure exponential backoff still lets many clients retry in lockstep after the same delay, causing a "thundering herd" that re-hammers the failing service. Jitter randomizes the delay so retries spread out over time.
+
+- Q: |
+    When retrying a flaky operation, which errors should you retry and which should you not?
+  A: |
+    Retry transient errors: timeouts, 5xx server errors, throttling (429). Don't retry errors that won't change on retry: 4xx auth errors, bad input/validation errors.
+  N: |
+    Retrying everything indiscriminately (including auth/validation errors) is wrong.
+
+- Q: |
+    Besides jitter and error filtering, what other bound must a production retry loop have?
+  A: |
+    A cap — either a max number of retries or a max total elapsed time — never an unbounded `while True: retry`.
+
+- Q: |
+    For production retry logic in Python, why prefer a library over hand-rolled backoff code?
+  A: |
+    Libraries like `tenacity` or `backoff` (or an SDK's built-in retry config, e.g. boto3) already handle jitter, capping, and error-type filtering correctly and are tested — reinventing this from scratch for production code is a red flag.
+  C: |
+    from tenacity import retry, wait_exponential, stop_after_attempt
+
+    @retry(wait=wait_exponential(multiplier=1, max=30), stop=stop_after_attempt(5))
+    def call_flaky_api():
+        ...
+
+- Q: |
+    Why does calling `.readlines()` or `.read()` on a 10GB log file break a naive processing script?
+  A: |
+    Both load the **entire file** into memory as one string/list before any processing happens, so memory usage scales with file size regardless of how the data is later used.
+
+- Q: |
+    What's the memory-safe way to iterate over a huge file in Python?
+  A: |
+    Line-by-line streaming: `for line in file:` — this reads one line at a time without materializing the whole file in memory.
+  C: |
+    with open("huge.log") as f:
+        for line in f:
+            process(line)
+
+- Q: |
+    How do generators help when chaining multiple processing steps over a large file?
+  A: |
+    A generator (using `yield`) passes one item at a time through each processing step, so no intermediate step materializes a full list in memory — each stage only holds one item at a time.
+  N: |
+    "Using less code" is not the point — the point is avoiding materialized intermediate lists.
+
+- Q: |
+    If you're streaming input from a large file, what's the matching mistake to avoid on the output side?
+  A: |
+    Buffering all aggregated results into one big dict/list in memory before writing anything out — instead stream/chunk the output too (write incrementally, or aggregate in bounded chunks).
+
+- Q: |
+    After fixing a memory issue in a large-file processing script, how do you confirm the fix actually worked?
+  A: |
+    Profile memory usage (e.g., `memory_profiler`) or watch the process's RSS while it runs — don't just assume the streaming rewrite fixed it.
+  N: |
+    Assuming the fix works without checking is wrong.
+
+- Q: |
+    What does the GIL (Global Interpreter Lock) actually restrict in CPython?
+  A: |
+    Only one thread can execute Python bytecode at a time, even on a multi-core machine — so `threading` does not give true CPU parallelism for Python code.
+  N: |
+    "GIL means no concurrency at all" is wrong/a red flag — the GIL is released during I/O waits, so I/O-bound concurrency still works.
+
+- Q: |
+    Why does `threading` still help performance for I/O-bound work in Python, despite the GIL?
+  A: |
+    The GIL is released while a thread is blocked on I/O (network, disk), so other threads can run Python code during that wait — giving real concurrency benefit for I/O-bound tasks even without CPU parallelism.
+
+- Q: |
+    For a script making 50 parallel API calls, would `asyncio` or `threading` scale better, and why?
+  A: |
+    `asyncio` scales better — it runs many concurrent I/O-bound tasks on a single thread via an event loop, with much lower per-task overhead than spawning/managing 50 OS threads.
+
+- Q: |
+    Why is `multiprocessing`, not `threading` or `asyncio`, necessary for CPU-heavy parsing work?
+  A: |
+    `multiprocessing` uses separate OS processes, each with its own GIL and interpreter — this is the only one of the three that achieves real parallel execution of Python bytecode across CPU cores.
+  N: |
+    Defaulting to threading for CPU-bound work is a mistake — it won't get real parallelism due to the GIL.
+
+- Q: |
+    For a DevOps script that both makes 50 parallel API calls AND does CPU-heavy parsing, what's the ideal architecture?
+  A: |
+    A hybrid: use `asyncio` (with `aiohttp`) for the I/O-bound API calls, and offload the CPU-heavy parsing to a `multiprocessing` process pool (e.g., via `loop.run_in_executor` with a `ProcessPoolExecutor`).
+  N: |
+    Only addressing one half of the scenario (just I/O or just CPU) is wrong — the question is designed to test whether you propose a combined approach.

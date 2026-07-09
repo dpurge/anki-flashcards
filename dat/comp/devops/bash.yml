@@ -1,0 +1,98 @@
+- Q: |
+    What `find` command finds `.log` files older than 7 days in `/var/log/app`?
+  A: |
+    `find /var/log/app -name "*.log" -mtime +7`
+  C: |
+    find /var/log/app -name "*.log" -mtime +7
+  N: |
+    Parsing `ls` is a classic anti-pattern (breaks on filenames with spaces/newlines, non-portable date formats).
+
+- Q: |
+    Before deleting files found by `find`, what safety practice should you follow?
+  A: |
+    Run the `find` command with `-print` (or just no action) first and log the list of matches to a file, verify it's correct, then switch to `-delete` — never write and run a destructive delete command untested.
+  N: |
+    Writing a destructive one-liner with no test/dry-run step is a mistake.
+
+- Q: |
+    How do you delete the files `find` matches while also logging what was deleted, in one safe flow?
+  A: |
+    Print/log matches first, then act — e.g. `find ... -mtime +7 | tee deleted.log | xargs rm --` — logging happens before/during removal, not after.
+  C: |
+    find /var/log/app -name "*.log" -mtime +7 -print | tee deleted.log | xargs -d '\n' rm --
+
+- Q: |
+    What's the performance difference between `find -exec rm {} \\;`, `find -exec rm {} +`, and `find ... | xargs rm`?
+  A: |
+    `-exec ... \\;` runs `rm` once **per file** (slow for large counts). `-exec ... +` and `xargs` both batch many filenames into fewer `rm` invocations, which is much faster on large file counts.
+
+- Q: |
+    Why does unquoted filename handling matter when deleting files found by `find`, and how do you avoid it?
+  A: |
+    Filenames containing spaces or special characters get word-split incorrectly by default. Use `find -print0 | xargs -0 rm --` (null-delimited) instead of newline-delimited piping, to safely handle any filename.
+  C: |
+    find /var/log/app -name "*.log" -mtime +7 -print0 | xargs -0 rm --
+  N: |
+    Assuming clean filenames and using unquoted variables/newline splitting is a red flag.
+
+- Q: |
+    Name two other naive failure modes (besides quoting) to watch for in a "delete old files" script.
+  A: |
+    A typo turning the command into `rm -rf` on the wrong path, and not accounting for symlinks or files still open by another process (which `find -delete` will still remove, potentially breaking an active writer).
+
+- Q: |
+    In Bash, what does `"$@"` expand to versus `"$*"`?
+  A: |
+    `"$@"` expands to each positional parameter as a **separate** quoted word (arguments preserved individually). `"$*"` expands to **all** positional parameters joined into a **single string**, separated by the first character of `IFS` (space by default).
+
+- Q: |
+    Why does `"$*"` joining depend on `IFS`?
+  A: |
+    `"$*"` joins the positional parameters using the first character of the `IFS` (Internal Field Separator) variable — if `IFS` is changed from its default (space/tab/newline), the join character changes too.
+
+- Q: |
+    Do `$@` and `$*` behave differently when left unquoted?
+  A: |
+    No — unquoted, both undergo word-splitting and glob expansion identically, producing the same result. The distinction between them only matters when they are **quoted**.
+  N: |
+    Thinking that "they're basically the same" without this quoting caveat is wrong.
+
+- Q: |
+    Why is `"$@"` almost always the right choice when forwarding arguments to another command in a wrapper script?
+  A: |
+    It preserves each argument exactly as passed, including any that contain spaces. Example: `mydocker() { docker "$@"; }` — using `"$*"` here would collapse a multi-word argument into one string and break the call.
+  C: |
+    mydocker() { docker "$@"; }
+
+- Q: |
+    Name the standard defensive header used at the top of Bash deploy scripts and what each flag does.
+  A: |
+    `set -euo pipefail` — `-e` exits on any command failure, `-u` exits on use of an unset variable, `pipefail` makes a pipeline's exit status the first non-zero status of any command in it (not just the last).
+  C: |
+    set -euo pipefail
+
+- Q: |
+    Why doesn't plain `set -e` (without `pipefail`) catch a failing command in the middle of a pipeline?
+  A: |
+    By default, a pipeline's exit status is the exit status of its **last** command only — an earlier command in the pipe can fail silently while the pipeline as a whole still reports success. `set -o pipefail` fixes this by propagating any failure in the chain.
+
+- Q: |
+    Why does `set -e` fail to stop a script when a failing command is used inside an `if`, `while`, or with `&&`/`||`?
+  A: |
+    Bash intentionally does not apply `-e`'s exit-on-error behavior to commands whose exit status is being tested by a condition — that's the whole point of testing it, so `set -e` treats those contexts as exempt.
+  N: |
+    Vaguely thinking "set -e doesn't always work" without knowing these specific gaps (pipelines, conditions, command substitution) is wrong.
+
+- Q: |
+    How does `trap` improve failure diagnostics in a script that uses `set -e`?
+  A: |
+    `trap 'echo error on line $LINENO' ERR` runs on any error that triggers `set -e`, printing the line number where the failure occurred — much more useful than a script that just silently exits.
+  C: |
+    trap 'echo "error on line $LINENO"' ERR
+
+- Q: |
+    Is `set -euo pipefail` alone sufficient error handling for a critical deploy step?
+  A: |
+    No — for critical sections you still want explicit checks, e.g. `command || { echo "fail"; exit 1; }`, because `set -e`'s automatic behavior has known gaps (pipelines without `pipefail` context, conditions, subshells) and doesn't give clear failure messages on its own.
+  N: |
+    Treating `set -e` as sufficient on its own, with no explicit checks for critical steps, is wrong.

@@ -1,0 +1,103 @@
+- Q: |
+    What's a coherent CI/CD stage sequence for a typical service, from commit to production?
+  A: |
+    Lint/static analysis → unit tests → build/package → security/dependency scanning → integration tests → deploy to staging → smoke tests → deploy to production (progressively — canary or blue-green, not all-at-once).
+  N: |
+    A vague "we run tests then deploy" answer, with no coherent sequence, is wrong.
+
+- Q: |
+    Name three failure types that should hard-block a deploy, no exceptions.
+  A: |
+    - failing tests
+    - critical security vulnerabilities
+    - a failed build
+
+- Q: |
+    Name two issues that should produce a warning rather than blocking a deploy.
+  A: |
+    A slight dip in code coverage, or minor lint issues — these are worth flagging but shouldn't halt the pipeline.
+  N: |
+    Treating every check as equally blocking (or treating nothing as blocking) is wrong.
+
+- Q: |
+    Why is deploying straight to 100% of production traffic in one shot considered poor practice?
+  A: |
+    A single big-bang deploy exposes all users to a bad change simultaneously with no early warning. Progressive strategies (canary, rolling, blue-green) expose a small subset first, limiting blast radius if something's wrong.
+
+- Q: |
+    What should trigger an automated rollback after a progressive production deploy?
+  A: |
+    Post-deploy error-rate or latency metrics crossing a defined threshold — rollback should be triggered automatically by monitoring signals, not only by a human noticing something's wrong.
+  N: |
+    Assuming deploy-to-prod is a single all-or-nothing step with no rollback trigger is wrong.
+
+- Q: |
+    Why does CI/CD pipeline speed matter beyond just convenience?
+  A: |
+    A slow pipeline (e.g., 45 minutes) gets routed around or loses developer trust (people stop waiting for it, or merge without it finishing) — a fast, well-designed pipeline (e.g., 10 minutes via parallelized test stages and dependency caching) actually gets used as intended.
+
+- Q: |
+    What does "blameless" mean in a postmortem, and why does it matter?
+  A: |
+    Focus on "what in the system/process allowed this to happen," not "who made the mistake." People make errors because systems allow them to — punishing individuals suppresses future incident reporting and hides real risk.
+  N: |
+    Framing a postmortem as finding who to blame is a mistake.
+
+- Q: |
+    What three structural elements should a postmortem document contain?
+  A: |
+    A clear timeline (detection, diagnosis, mitigation, resolution), root cause analysis (e.g., "5 whys," going past the surface trigger to the systemic cause), and concrete, assigned, tracked action items.
+  N: |
+    A vague "we'll discuss what happened" with no structure is wrong.
+
+- Q: |
+    Why should a postmortem distinguish "contributing factors" from "the root cause"?
+  A: |
+    Most real incidents have multiple contributing factors (e.g., a bad deploy + missing alerting + no rollback plan) — collapsing this into one villain misses the other systemic gaps that also need fixing.
+
+- Q: |
+    What's the actual signal that a postmortem was effective, versus just a formality nobody reads?
+  A: |
+    Its action items get tracked to completion (not just listed and forgotten), and it's shared broadly enough that the same class of failure doesn't recur elsewhere in the org.
+  N: |
+    Treating the postmortem document itself as the deliverable, rather than the completed action items, is a mistake.
+
+- Q: |
+    Should a postmortem only happen after a major outage?
+  A: |
+    No — a lightweight postmortem for a near-miss or a fast recovery captures learning opportunities too; waiting only for major outages misses lessons from incidents that almost became worse.
+
+- Q: |
+    What are the four DORA metrics?
+  A: |
+    Deployment frequency, lead time for changes, change failure rate, and time to restore service (MTTR).
+  N: |
+    A vague "uptime and speed" answer with no specific named framework is wrong.
+
+- Q: |
+    Why must deployment frequency and lead time be balanced against change failure rate, rather than optimized alone?
+  A: |
+    Optimizing only speed metrics (deploy frequently, ship fast) can reward moving recklessly — if change failure rate is high, "fast" deploys are just producing more incidents faster. The four DORA metrics together balance speed against stability.
+
+- Q: |
+    Give an example of a vanity metric in DevOps and explain why it's misleading.
+  A: |
+    "Deploys per day" alone means nothing if change failure rate is high — you're shipping breakage faster, not delivering value faster. Similarly, "100% test coverage" doesn't guarantee tests actually catch real bugs.
+  N: |
+    Citing a metric like "lines of code" or raw deploy count alone as a success measure is a mistake.
+
+- Q: |
+    Where does the underlying data for DORA metrics actually come from in practice?
+  A: |
+    - CI/CD system logs (deploy timestamps, build/lead times)
+    - incident tracking systems (failure rate, time-to-restore)
+    - deploy tooling
+    
+    Not an abstract framework that's never actually measured.
+  N: |
+    Treating DORA metrics as purely theoretical, with no described collection method, is a mistake.
+
+- Q: |
+    Why do DORA metrics matter to the business, not just engineering?
+  A: |
+    They're leading indicators connected to business impact — e.g., high MTTR directly costs revenue and customer trust during outages, not just an internal engineering concern.

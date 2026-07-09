@@ -1,0 +1,90 @@
+- Q: |
+    When designing for 10x traffic growth, what should you do first, before deciding what to scale?
+  A: |
+    Identify the actual bottleneck through data — current metrics and load testing — rather than guessing. Scaling the wrong component wastes effort and doesn't fix the real ceiling.
+  N: |
+    Jumping straight to "add microservices" or "add Kubernetes" without this step is a mistake.
+
+- Q: |
+    Why are stateless components easier to scale for 10x growth than stateful ones?
+  A: |
+    Stateless components (e.g., app servers) can simply be horizontally scaled — add more identical instances behind a load balancer. Stateful components (database, session store) require different strategies — read replicas, sharding, or caching — since data can't just be duplicated arbitrarily.
+  N: |
+    Treating all scaling as "just add more servers," with no distinction for stateful components, is wrong.
+
+- Q: |
+    For most systems facing 10x growth, which two scaling levers deliver the most headroom for the least complexity, before reaching for harder patterns?
+  A: |
+    A caching layer and read replicas — both address the common bottleneck (database read load) with comparatively low operational complexity, before considering sharding, event-driven decoupling, or a microservices split.
+
+- Q: |
+    What's the senior-engineer instinct when asked to design for 10x growth, regarding what NOT to build yet?
+  A: |
+    Explicitly defer maximal complexity — e.g., "I wouldn't split into microservices or build a queue-based system until we actually see the specific bottleneck that requires it."
+  N: |
+    Proposing maximal complexity as the default answer, with nothing deferred, is a mistake.
+
+- Q: |
+    Why is load testing/capacity planning done proactively rather than reactively for a growth plan?
+  A: |
+    It validates the scaling plan actually holds up before the traffic arrives — discovering a bottleneck during a live incident is far more costly than finding it in a load test.
+
+- Q: |
+    What real organizational factor (beyond "scalability") most legitimately drives a monolith-vs-microservices decision?
+  A: |
+    Team size/structure (Conway's Law) — service boundaries tend to mirror team boundaries; splitting services makes sense when independent teams need independent deployment, not just for theoretical scalability.
+  N: |
+    A generic "microservices scale better" answer with no real constraint named is a mistake.
+
+- Q: |
+    Name three operational costs that microservices introduce which a monolith doesn't have.
+  A: |
+    Distributed tracing complexity, network reliability concerns (calls that used to be in-process can now fail), and data consistency challenges across services (no single transaction spanning services).
+  N: |
+    Presenting microservices as having no downsides is a mistake — you should know real costs.
+
+- Q: |
+    What's a concrete criterion for reversing a decision to split into microservices?
+  A: |
+    If a service boundary causes constant cross-service transactions or chatty synchronous calls, that boundary was probably drawn in the wrong place — or if the team stayed small and spends more time on infra than features, going back to a monolith may be the right call.
+  N: |
+    Treating the architecture decision as permanent/dogmatic, with no reversal criteria, is a mistake.
+
+- Q: |
+    What's the tell that someone chose microservices for the wrong reason?
+  A: |
+    They adopted microservices because it's trendy/resume-driven, without pointing to an actual organizational or technical constraint that required it.
+
+- Q: |
+    What is fault tolerance, and how does it typically show up in an architecture?
+  A: |
+    The system continues operating correctly even when a component fails, often transparently to the user — e.g., a request is automatically retried against a healthy replica with no visible impact.
+
+- Q: |
+    What is high availability, and how is it typically measured?
+  A: |
+    Minimizing downtime through redundancy (multi-AZ deployment, load balancing, health checks + auto-healing). Measured as an uptime percentage (e.g., 99.9% vs 99.99%) — it accepts brief failover windows rather than guaranteeing zero disruption.
+
+- Q: |
+    What is disaster recovery, and what does it involve that high availability doesn't?
+  A: |
+    Recovering from a large-scale event (region outage, data corruption, catastrophic failure). Involves RPO/RTO targets, a backup/restore strategy, and typically a documented, periodically-tested runbook — often not fully automated the way HA failover is.
+
+- Q: |
+    Using the terms fault tolerance, high availability, and disaster recovery interchangeably — why is that a red flag?
+  A: |
+    They operate at different scales and cost different amounts of engineering effort. Conflating them suggests the candidate hasn't actually designed resilience deliberately at each layer.
+
+- Q: |
+    Why is building multi-region DR for every system itself a design mistake?
+  A: |
+    Over-engineering resilience for disaster scenarios that are unlikely relative to their cost wastes engineering effort that could go toward the system's actual risk profile — resilience investment should match actual risk/cost, not default to maximum.
+  N: |
+    Assuming maximum resilience is always the right answer is a red flag.
+
+- Q: |
+    How do you validate that fault tolerance and DR actually work, rather than just assuming they do?
+  A: |
+    Chaos engineering (Chaos Monkey-style fault injection) to validate fault tolerance under real failure conditions, and periodically-run DR drills to confirm backup/restore and runbooks actually work end-to-end.
+  N: |
+    Assuming failover/DR "works" without ever testing it is a red flag.

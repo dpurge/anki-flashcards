@@ -1,0 +1,110 @@
+# Version control (Git) interview flashcards
+
+- Q: |
+    Why doesn't `git rm <file>` followed by a commit actually remove that file from a repo's history?
+  A: |
+    `git rm` only stops tracking the file going forward — a new commit that removes it. The file's content still exists in every earlier commit's history and is fetchable by anyone who clones/fetches those commits.
+  N: |
+    Thinking `git rm` alone removes it from history is a red flag.
+
+- Q: |
+    What tools actually rewrite git history to purge a file/secret from every commit?
+  A: |
+    `git filter-repo` or the BFG Repo-Cleaner (for a file committed many commits back), or `git rebase -i` (for a file only in a few recent, not-yet-shared commits).
+
+- Q: |
+    Why is rewriting history disruptive once other team members have already pulled the affected commits?
+  A: |
+    Rewriting changes commit SHAs downstream of the change — anyone who already pulled the old history now has a diverged local branch, forcing them to re-clone or carefully rebase to reconcile with the force-pushed rewrite.
+  N: |
+    Force-pushing a rewritten history without considering this downstream impact is a red flag.
+
+- Q: |
+    If a secret was committed and already pushed/pulled by the team, what should happen before any git history cleanup?
+  A: |
+    Rotate the secret first — history rewriting doesn't undo the exposure, since anyone who already cloned/fetched has the old commit cached. Rotation is the priority; history cleanup is secondary hygiene.
+  N: |
+    Focusing only on the git mechanics and missing the security angle (rotate first) is a red flag.
+
+- Q: |
+    In many real orgs, why might a team choose NOT to rewrite history after a secret leak, even though the secret is still technically visible in old commits?
+  A: |
+    Because the secret is already considered compromised (rotation handles that), the disruption of a full history rewrite on a shared branch often isn't worth it — many teams just remove it going forward with a new commit and communicate to the team, rather than force-pushing rewritten history.
+
+- Q: |
+    What two things prevent large binaries/secrets from being committed in the first place?
+  A: |
+    `.gitignore` (to exclude files by pattern) and pre-commit hooks (to scan and block commits containing secrets or oversized files) — and `git-lfs` for files that legitimately need version control despite being large.
+
+- Q: |
+    What does `git merge` do to combine two branches?
+  A: |
+    It creates a new merge commit joining both histories, preserving the actual sequence of events including parallel work — non-destructive, and safe to use on shared branches.
+
+- Q: |
+    What does `git rebase` do differently from `git merge`?
+  A: |
+    It replays your commits onto a new base, producing a linear history — a cleaner log, but it rewrites the SHAs of every replayed commit.
+
+- Q: |
+    What's the rule of thumb for when NOT to rebase?
+  A: |
+    Never rebase commits that have already been pushed and could be in use by others — rewriting shared history causes duplicated commits/conflicts for anyone who already pulled the old version. Rebase is for local/personal branch cleanup before sharing.
+  N: |
+    Being unaware that rebase causes problems on shared branches is a red flag.
+
+- Q: |
+    Give a concrete scenario where you'd rebase, and one where you'd merge instead.
+  A: |
+    Rebase a feature branch onto `main` before opening a PR, for a clean linear history during review. Use merge (not rebase) when integrating a shared/long-lived branch where preserving the actual history of parallel work matters.
+  N: |
+    Only knowing one of the two commands well, or giving a vague "they both combine branches" answer, is a red flag.
+
+- Q: |
+    What does `git pull --rebase` do differently from a default `git pull`?
+  A: |
+    Default `git pull` merges the remote changes into your local branch (creating a merge commit if you have local commits). `git pull --rebase` instead replays your local commits on top of the fetched remote history, avoiding the extra merge commit.
+
+- Q: |
+    What is `git rebase -i` typically used for before opening a PR?
+  A: |
+    Squashing and cleaning up local commits (combining WIP commits, rewriting messages) into a clean, logical set of commits — done before the branch is shared/pushed.
+
+- Q: |
+    In trunk-based development, how long do feature branches typically live, and how is incomplete work handled?
+  A: |
+    Hours to a day or two (or skipped entirely) — everyone integrates into the single main/trunk branch frequently. Incomplete features are merged to main but hidden behind feature flags rather than kept isolated on a branch.
+
+- Q: |
+    In Git Flow, what are the five standard branch types and their purposes?
+  A: |
+    `main`/`master` (always reflects production), `develop` (integration branch before a release), `feature/*` (one per feature, branched from and merged back into develop), `release/*` (cut from develop for release prep, bug fixes only), `hotfix/*` (branched from main for urgent production fixes, merged into both main and develop).
+
+- Q: |
+    Why does trunk-based development pair naturally with continuous deployment, while Git Flow suits versioned release cycles?
+  A: |
+    Trunk-based's frequent small merges to a single branch keep code close to deployable at all times, fitting a "deploy anytime" cadence. Git Flow's long-lived release/develop branches give a formal staging/gating point before a release, fitting teams that ship discrete, versioned releases (e.g., installed software) or need formal sign-off between versions.
+
+- Q: |
+    Why does trunk-based development have lower merge conflict risk than Git Flow, generally?
+  A: |
+    Frequent, small merges stay close to main, so drift between a branch and main stays minimal. Git Flow's long-lived feature/release branches can drift far from main before merging, increasing conflict risk at merge time.
+
+- Q: |
+    What mechanism makes it safe to merge an incomplete feature to main under trunk-based development?
+  A: |
+    Feature flags — the code exists in main but is hidden/disabled until it's ready to be released to users, decoupling "merged" from "released."
+
+- Q: |
+    What risk does trunk-based development carry if a team lacks feature flags or strong automated tests?
+  A: |
+    Broken or incomplete code can end up live on main with nothing hiding it — since there's no long-lived isolation branch, a bad merge affects everyone immediately.
+  N: |
+    Trunk-based development without feature flags or strong tests is genuinely risky, not just a stylistic tradeoff.
+
+- Q: |
+    What real factors (not textbook theory) should drive a team's choice between trunk-based development and Git Flow?
+  A: |
+    Team size, deployment frequency/release cadence (continuous deploy vs. scheduled versioned releases), and CI/CD maturity (how strong automated testing is) — not which model is "more organized."
+  N: |
+    Reciting textbook definitions with no real experience, or insisting one branching strategy is universally correct, is a red flag. A strong answer also names the downsides of whichever strategy they chose.

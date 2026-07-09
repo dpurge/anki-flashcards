@@ -1,0 +1,100 @@
+- Q: |
+    `df -h` shows a disk at 100% full, but `du -sh /*` adds up to nowhere near that. What's the classic cause?
+  A: |
+    A deleted file is still held open by a running process.
+    The inode/blocks aren't freed until the file descriptor closes, so `du` (which walks the visible filesystem tree) doesn't see it, but `df` (which reports actual block usage) does.
+  N: |
+    Do not guess randomly or jump straight to "reboot" instead of diagnosing.
+
+- Q: |
+    What command finds processes holding open file handles to deleted files?
+  A: |
+    `lsof | grep deleted` (or `lsof +L1`, which lists open files with a link count of 0).
+  C: |
+    lsof +L1
+
+- Q: |
+    How do you fix the "disk full but du doesn't add up" problem without rebooting?
+  A: |
+    Restart or reload the offending process (often a service still writing to a log file that was deleted out from under it) — this releases the file descriptor and frees the space immediately.
+
+- Q: |
+    What's the common real-world scenario that causes a deleted-but-still-open file, and how do you prevent it?
+  A: |
+    A log file gets deleted (e.g., manually or by a naive rotation script) while a service keeps writing to its old file descriptor.
+    Prevent it with `logrotate`'s `copytruncate` option, or by signaling the service to reopen its log file after rotation instead of deleting the file it's actively writing to.
+  N: |
+    Do not just fix the immediate issue with no prevention strategy.
+
+- Q: |
+    What does `SIGTERM` (signal 15, the default for `kill`) actually do to a process?
+  A: |
+    It asks the process to terminate gracefully — the process can catch the signal, flush buffers, close file handles/connections, save state, and exit cleanly.
+
+- Q: |
+    What does `SIGKILL` (`kill -9`) do differently from `SIGTERM`?
+  A: |
+    `SIGKILL` cannot be caught or handled by the process at all — the kernel terminates it immediately, with zero opportunity for cleanup.
+  N: |
+    Do not think `kill -9` is just "a stronger version" of `kill` (rather than fundamentally uncatchable).
+
+- Q: |
+    Why is `kill -9` on a database process specifically risky?
+  A: |
+    With no chance to flush/close cleanly, data files can be left in an inconsistent state, requiring crash recovery on next start (replaying the WAL/journal) — or in the worst case, corruption if the storage engine doesn't handle abrupt termination well.
+  N: |
+    Be aware of consequences for databases/stateful apps.
+
+- Q: |
+    What's the correct escalation practice when a process needs to be terminated?
+  A: |
+    Try `SIGTERM` first and give the process time to shut down gracefully; only escalate to `SIGKILL` if it's genuinely hung/unresponsive after a reasonable timeout.
+  N: |
+    Do not default to `kill -9` habitually, instead of escalating from `SIGTERM`.
+
+- Q: |
+    A colleague reports a server is "slow" with no detail. What's the first broad command to run, and what three things does it tell you at a glance?
+  A: |
+    `top`/`htop` or `vmstat 1` — gives a quick read on CPU split (user/system/iowait), memory usage, and load average, in one view.
+  N: |
+    Using random commands with no order/logic instead of starting broad is inefficient.
+
+- Q: |
+    In `vmstat` or `top`, what pattern indicates the server is CPU-bound rather than I/O-bound?
+  A: |
+    High `us`/`sy` (user/system CPU time) with **low** `wa` (iowait), and load average exceeding the number of cores.
+
+- Q: |
+    Why can't you interpret a load average number on its own — what must you compare it to?
+  A: |
+    The number of CPU cores (`nproc`). A load average of 4 is fine on a 16-core box but means severe overload on a 2-core box.
+  N: |
+    Do not treating any load average number as inherently bad, without checking core count.
+
+- Q: |
+    What metric in `vmstat`/`top` signals the server is I/O-bound, and what command confirms it in more detail?
+  A: |
+    High `wa` (iowait) signals I/O-bound; confirm and drill in with `iostat -x 1`, looking at `%util` (device busy-ness) and `await` (average wait time per I/O request).
+  C: |
+    iostat -x 1
+  N: |
+    This distinguishes "CPU is busy computing" from "CPU is idle, waiting on disk" — a key methodology point.
+
+- Q: |
+    How do you check for memory pressure/swapping as the real cause of perceived slowness?
+  A: |
+    `free -h` to check swap usage, and `vmstat` for nonzero `si`/`so` (swap in/out) — active swapping under load is often the true root cause even when CPU looks fine.
+  C: |
+    free -h
+
+- Q: |
+    What commands check whether a slow server is network-bound?
+  A: |
+    `sar -n DEV` or `iftop`/`nload` for throughput, and `ss -s` for a summary of connection states (e.g., excessive `TIME_WAIT` or `SYN_SENT`).
+
+- Q: |
+    What's the overall methodology for diagnosing "the server is slow," rather than just naming individual commands?
+  A: |
+    Systematic elimination in order: CPU → memory → disk I/O → network — using each layer's signal to rule it in/out before moving to the next, rather than a random grab-bag of commands.
+  N: |
+    Only knowing to "check top" and stopping there, with no further drill-down, is not sufficient.

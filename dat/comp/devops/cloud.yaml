@@ -1,0 +1,124 @@
+# Cloud / IAM / architecture interview flashcards
+
+- Q: |
+    In IAM, what is the difference between authentication (AuthN) and authorization (AuthZ)?
+  A: |
+    AuthN verifies **who** you are (credentials, tokens, certificates). AuthZ verifies **what you're allowed to do** once identity is established.
+  N: |
+    Candidates who conflate the two are a red flag — they confuse "logged in" with "permitted."
+
+- Q: |
+    IAM has three conceptual layers: identity, permission set, and attachment mechanism. What does each one answer?
+  A: |
+    - **Identity** — who/what is acting (IAM user, role, GCP service account, Azure managed identity)
+    - **Permission set** — what actions are allowed (IAM policy JSON, GCP IAM binding, Azure RBAC role definition)
+    - **Attachment mechanism** — how identity is linked to permissions (attaching a policy to a role, binding a member to a resource, assigning an RBAC role at a scope)
+  N: |
+    A senior candidate should talk about *where* they attach permissions (resource vs. project vs. org scope), not just what the permissions say — scope leaks happen at the attachment layer.
+
+- Q: |
+    In AWS, how does an IAM policy actually take effect?
+  A: |
+    A policy document isn't useful until it's **attached** — to a user (bad practice), a group, or a role that's then assumed. The same policy can be attached to multiple roles; attachment is a separate action from creating the policy.
+
+- Q: |
+    In GCP IAM, what is a "binding" and what does it connect?
+  A: |
+    A binding ties a **member** (user, service account, group) to a **role** at a specific resource scope (project, folder, org, or individual resource). The binding itself is the attachment mechanism — the same role can be bound to different members at different scopes.
+
+- Q: |
+    In Azure RBAC, what is a "role assignment"?
+  A: |
+    A role assignment attaches a **role definition** to a security principal at a **scope** (management group, subscription, resource group, or resource). The assignment is the attachment mechanism.
+
+- Q: |
+    Why does the "attachment layer" matter so much for real-world IAM mistakes?
+  A: |
+    It's where scope leaks happen. Binding a role at the project level when a single-resource binding would suffice is the most common real-world over-scoping mistake.
+
+- Q: |
+    Give a concrete example of a least-privilege IAM setup for a compute workload.
+  A: |
+    An EC2 instance role scoped to only the specific S3 bucket and DynamoDB table it needs — no wildcard (`*`) actions or resources.
+  N: |
+    "We just use admin roles for simplicity" is a red flag answer to this question.
+
+- Q: |
+    What AWS mechanism lets a workload obtain short-lived credentials instead of long-lived keys?
+  A: |
+    STS `AssumeRole` — it issues temporary, time-limited credentials scoped to an IAM role, avoiding long-lived static keys.
+
+- Q: |
+    What is an IAM permission boundary (AWS) used for?
+  A: |
+    It sets the maximum permissions an identity (user/role) can ever have, even if an attached policy grants more — a guardrail against over-permissioning, often paired with conditional/context-aware access policies.
+
+- Q: |
+    What's a common IAM failure mode that erodes least-privilege over time, and how do you prevent it?
+  A: |
+    Overly broad policies granted "temporarily" (e.g., during an incident) that never get revoked. Prevented by ongoing IAM hygiene: periodic audits, credential/permission rotation, and access reviews.
+  N: |
+    Look for candidates who mention ongoing auditing/rotation, not just initial setup — "no concept of ongoing IAM hygiene" is a red flag.
+
+- Q: |
+    In a multi-region HA design, what's the core tradeoff between active-active and active-passive?
+  A: |
+    Active-active serves traffic from all regions simultaneously (higher availability and lower latency, but must handle concurrent writes/conflicts). Active-passive keeps a standby region idle until failover (simpler consistency, but slower failover and wasted capacity).
+
+- Q: |
+    Name one managed multi-region database service per major cloud provider.
+  A: |
+    AWS Aurora Global Database (or RDS cross-region read replicas); GCP Cloud Spanner; Azure Cosmos DB with multi-region writes.
+
+- Q: |
+    How does the CAP theorem apply when designing a multi-region stateful application?
+  A: |
+    You can't have full Consistency, Availability, and Partition tolerance simultaneously — under a network partition between regions, you must choose to sacrifice either consistency (accept stale/lagging reads) or availability (reject requests).
+  N: |
+    A vague "it just syncs" answer, with no acknowledgment of this tradeoff, is a red flag.
+
+- Q: |
+    What are three strategies for resolving write conflicts across regions in a multi-region system?
+  A: |
+    - Last-write-wins (LWW) — simplest, can silently drop data
+    - Vector clocks — detect concurrent conflicting writes for explicit resolution
+    - Application-level merge — domain-specific logic decides how to combine conflicting writes
+
+- Q: |
+    What is "split-brain" in a multi-region HA architecture, and why is it a red flag if a candidate doesn't mention it?
+  A: |
+    Split-brain occurs when a network partition causes both regions to believe they're primary and accept independent writes, causing divergent state. Assuming "multi-region = automatically HA" without acknowledging this risk is a red flag.
+
+- Q: |
+    Which AWS and Azure services provide latency-based or health-aware traffic routing for multi-region failover?
+  A: |
+    AWS Route 53 (latency-based routing + health checks); Azure Traffic Manager.
+  N: |
+    A strong answer also mentions failover *detection time* — how long until routing reacts to a region going unhealthy — not just that routing exists.
+
+- Q: |
+    What cost factor is often overlooked when designing multi-region architectures?
+  A: |
+    Cross-region data transfer costs (replication traffic, inter-region API calls) — omitting any mention of cost is a red flag for this question.
+
+- Q: |
+    You're paged because cloud costs jumped 40% overnight with no deploy. What's the first systematic step?
+  A: |
+    Narrow the spike using the provider's cost tool (AWS Cost Explorer, GCP Billing reports, Azure Cost Management), filtering by service, then by resource/tag, then by time window — not jumping straight to shutting things down.
+  N: |
+    "Jumps straight to shut everything down" instead of a systematic narrow-down is a red flag.
+
+- Q: |
+    Name four common causes of an unexpected overnight cloud cost spike.
+  A: |
+    Runaway autoscaling, orphaned resources (unattached EBS volumes, idle load balancers), unexpected data transfer costs, and a misconfigured Lambda/Cloud Function stuck in a retry loop.
+
+- Q: |
+    What two preventive measures should be in place so a cost spike is caught before it pages someone overnight?
+  A: |
+    Budget alerts and anomaly detection (e.g., AWS Cost Anomaly Detection), configured proactively rather than relying on reactive investigation.
+
+- Q: |
+    Why is tagging discipline a prerequisite for fast cost-spike investigation?
+  A: |
+    Without consistent resource tags (team, service, environment), cost tools can't attribute the spike to a specific owner or workload, turning a quick filter-by-tag lookup into a slow manual hunt.

@@ -1,0 +1,99 @@
+- Q: |
+    A pod is stuck in `CrashLoopBackOff`. What's the first command to run and what are you looking for?
+  A: |
+    `kubectl describe pod <pod>` — check the Events section for scheduling/pull errors and the container status for the last exit code.
+  C: |
+    kubectl describe pod <pod>
+
+- Q: |
+    After `kubectl describe pod`, what's the next debugging step to see why the container actually died?
+  A: |
+    `kubectl logs <pod> --previous` — this pulls logs from the **crashed** container instance, not the newly restarted one (plain `kubectl logs` shows the new container, which may have no useful output yet).
+  C: |
+    kubectl logs <pod> --previous
+  N: |
+    "Just check the logs" without `--previous` is wrong — it misses the actual crash output.
+
+- Q: |
+    What does exit code 137 on a crashed container usually mean, and how do you confirm it?
+  A: |
+    137 = SIGKILL, almost always an OOM kill. Confirm via `kubectl describe pod` — the container status shows `OOMKilled` as the reason alongside exit code 137.
+  N: |
+    Know specific exit codes and their meaning; not mentioning exit codes at all is wrong.
+
+- Q: |
+    Besides OOM, name three other common root causes of `CrashLoopBackOff`.
+  A: |
+    App crash on startup (bug/unhandled exception), missing config/secrets (app fails fast without them), and image pull issues (bad tag, missing registry auth).
+
+- Q: |
+    How can a misconfigured liveness probe cause `CrashLoopBackOff` even when the app is healthy?
+  A: |
+    If `initialDelaySeconds` is too short for a slow-starting app, the liveness probe fails before the app is ready and Kubernetes kills the container — restarting it in a loop even though it would eventually become healthy.
+  N: |
+    Not knowing liveness/readiness probes as a possible cause is wrong for this question.
+
+- Q: |
+    What's the two-stage process Kubernetes uses to decide which node a pod lands on?
+  A: |
+    **Filtering** (predicates) — eliminate nodes that don't meet the pod's requirements (resource requests, taints, node selectors). **Scoring** (priorities) — rank the remaining nodes and pick the best-scoring one.
+  N: |
+    Thinking scheduling is random/round-robin is wrong.
+
+- Q: |
+    What role do resource requests/limits play in pod scheduling?
+  A: |
+    The scheduler filters out any node whose available (allocatable) capacity can't satisfy the pod's resource **requests** — limits don't affect scheduling, only runtime enforcement.
+
+- Q: |
+    What's the simplest way to constrain which nodes a pod can run on, and what's its main limitation?
+  A: |
+    `nodeSelector` — matches pods to nodes by exact label match. Limitation: it only supports simple AND-of-equality matches, no "preferred but not required" or complex logic.
+
+- Q: |
+    How do nodeAffinity/podAffinity/podAntiAffinity improve on `nodeSelector`?
+  A: |
+    They support `requiredDuringScheduling` (hard constraint) vs. `preferredDuringScheduling` (soft, weighted preference), and can match based on other pods' labels (podAffinity/podAntiAffinity), not just node labels.
+
+- Q: |
+    What's the difference between taints/tolerations and affinity for controlling pod placement?
+  A: |
+    Taints **repel** pods from a node by default; only pods with a matching **toleration** are allowed to schedule there. Affinity works the opposite direction — it's the pod expressing a preference/requirement for certain nodes, with no repelling effect on untainted nodes.
+  N: |
+    Only knowing `nodeSelector` and not this distinction is wrong.
+
+- Q: |
+    Give a real example of using taints and tolerations together.
+  A: |
+    Taint GPU nodes (e.g., `nvidia.com/gpu=true:NoSchedule`) so regular workloads are repelled by default, then add a matching toleration only to pods that actually need GPU, so they're the only ones allowed to land there.
+
+- Q: |
+    What are topology spread constraints and why are they more precise than podAntiAffinity for zone distribution?
+  A: |
+    Topology spread constraints let you specify a `maxSkew` and topology key (e.g., zone) so replicas are evenly distributed across that topology domain — podAntiAffinity can only express "don't co-locate," not "spread evenly with a bounded skew."
+  N: |
+    Be aware topology spread constraints exist.
+
+- Q: |
+    What are the three build-time practices for reducing container image attack surface?
+  A: |
+    - minimal base images (distroless/alpine)
+    - multi-stage builds (so build tools/compilers never ship in the final image)
+    - pinned versions (no `:latest` tag, so builds are reproducible and traceable)
+
+- Q: |
+    What tools are commonly used for vulnerability scanning in CI, and what's essential about how blocking is configured?
+  A: |
+    Trivy, Grype, or cloud-native scanners (ECR/Artifact Registry scanning) — essential is a defined **severity threshold** for blocking (e.g., block on Critical with known exploit, don't block on every Low).
+  N: |
+    "Scan everything" with no criteria is wrong — it ignores alert fatigue.
+
+- Q: |
+    Name three runtime security controls for containers beyond scanning.
+  A: |
+    Enforcing a non-root user, a read-only root filesystem where possible, and cluster-wide policy enforcement via admission controllers (OPA/Gatekeeper, Kyverno).
+
+- Q: |
+    What judgment call distinguishes "block the deploy" from "log and track" for a discovered CVE?
+  A: |
+    Block for a critical CVE with a known exploit; log-and-track for low-severity findings with no available fix — treating every CVE as equally blocking ignores the security/velocity tradeoff and causes alert fatigue.

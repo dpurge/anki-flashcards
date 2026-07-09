@@ -1,0 +1,97 @@
+- Q: |
+    A secret was accidentally committed and pushed to a public GitHub repo. What's the first action, before cleaning up git history?
+  A: |
+    Rotate/revoke the credential immediately. The secret must be treated as compromised the moment it's pushed — history rewriting takes time, and anyone who already cloned/forked the repo has it cached regardless of later cleanup.
+  N: |
+    Focusing only on removing it from git history, without rotating first, is wrong.
+
+- Q: |
+    Does making the repo private or deleting the commit immediately after the leak mean the secret is safe?
+  A: |
+    No — anyone who already cloned, forked, or had a webhook/scraper index the repo before it was fixed already has the secret cached. It must still be treated as compromised.
+  N: |
+    Assuming no harm occurred just because the repo was fixed quickly is a mistake.
+
+- Q: |
+    What tools are used to actually remove a secret from git history (after rotation)?
+  A: |
+    `git filter-repo` or the BFG Repo-Cleaner — both rewrite history to strip the secret from all commits, not just the latest one.
+
+- Q: |
+    After rotating a leaked secret, how do you investigate whether it was actually exploited?
+  A: |
+    Check access logs tied to that credential (API access logs, DB connection logs, cloud audit trails) for any usage from unrecognized IPs/identities during the exposure window.
+
+- Q: |
+    What preventive controls stop secrets from being committed in the first place?
+  A: |
+    Pre-commit hooks (`git-secrets`, `detect-secrets`) to catch secrets before they're committed, plus secret scanning in CI and at the repo level (GitHub secret scanning, GitGuardian) as a backstop.
+  N: |
+    Treating the leak as a one-off mistake with no systemic fix proposed is a mistake.
+
+- Q: |
+    What's the root-cause fix that prevents secrets from ever being in code/config files to begin with?
+  A: |
+    Moving to a secrets manager (Vault, AWS Secrets Manager) so applications fetch secrets at runtime instead of storing them in source or config.
+
+- Q: |
+    What does encryption in transit (TLS) protect against, and what does it NOT protect against?
+  A: |
+    It protects data moving between systems from network-level interception (eavesdropping, MITM). It does nothing once data reaches its destination and is decrypted for use.
+
+- Q: |
+    What does encryption at rest protect against, and what does it NOT protect against?
+  A: |
+    It protects data if physical storage, a disk, or a backup/snapshot is stolen or accessed out-of-band. It does nothing against an attacker who accesses the data through the application itself, since the app decrypts it to use it.
+
+- Q: |
+    Even with both encryption at rest and in transit correctly implemented, what attack path is still fully open?
+  A: |
+    Data in use — if an attacker gains application-level access (stolen credentials, SQL injection, a compromised app process), they read data exactly as the application does: decrypted.
+  N: |
+    Believing encryption alone protects against all breaches is wrong.
+
+- Q: |
+    Why is key management often called "the actual hard problem" in encryption, rather than the encryption algorithm itself?
+  A: |
+    Encryption is only as strong as how its keys are stored, rotated, and access-controlled — a compromised key (or one accessible to anyone with app-level access) makes the encryption itself irrelevant.
+  N: |
+    No mention of key storage/rotation at all is a mistake.
+
+- Q: |
+    What emerging technology addresses the "data in use" gap that at-rest and in-transit encryption both leave open?
+  A: |
+    Confidential computing / encryption in use (e.g., AWS Nitro Enclaves) — processes data inside a hardware-isolated enclave so even a compromised host OS/hypervisor can't read it while it's being computed on.
+  N: |
+    At minimum, you should mention application-layer access control and least privilege as the practical mitigation for what encryption doesn't cover.
+
+- Q: |
+    When triaging known CVEs across a fleet, why is raw CVSS score alone insufficient to prioritize patching?
+  A: |
+    CVSS measures theoretical severity, not whether the vulnerable component is actually reachable/exploitable in your specific environment (exposure), or whether there's a known exploit actively being used in the wild.
+  N: |
+    Patching strictly by CVSS number with no environmental context is a mistake.
+
+- Q: |
+    Beyond CVSS, name three factors that should drive patch prioritization.
+  A: |
+    Exploitability/exposure in this specific environment, whether an exploit is known to be active in the wild, and the blast radius if the vulnerable component were compromised.
+
+- Q: |
+    What's the difference between emergency out-of-band patching and normal patch cadence?
+  A: |
+    Emergency patching applies immediately for critical, actively-exploited, internet-facing vulnerabilities. Normal cadence follows scheduled maintenance windows with staging tests first, for lower-urgency findings.
+  N: |
+    Treating every CVE as equally urgent, or having no patch cadence at all, is a mistake.
+
+- Q: |
+    Why should patches be rolled out via canary/staged deployment rather than fleet-wide simultaneously?
+  A: |
+    Patching isn't risk-free — a bad patch can cause its own outage. Staged rollout limits blast radius and allows catching a bad patch before it hits the whole fleet, with a rollback plan ready.
+  N: |
+    Assuming patching is inherently risk-free, with no rollback plan, is wrong.
+
+- Q: |
+    What do you do when a known-vulnerable component can't be patched immediately (e.g., EOL software)?
+  A: |
+    Apply compensating controls — network segmentation to limit exposure, or WAF rules to block known exploit patterns — while planning the actual remediation (upgrade/replacement).

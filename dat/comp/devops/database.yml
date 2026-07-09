@@ -1,0 +1,106 @@
+# Database interview flashcards
+
+- Q: |
+    A production database is at 95% CPU with timeouts. What should you check first, before making any changes?
+  A: |
+    Slow query logs, `EXPLAIN ANALYZE` on suspect queries, active connection count, and lock contention (e.g., `pg_stat_activity` in Postgres, `SHOW PROCESSLIST` in MySQL) — observe before acting.
+  N: |
+    Jumping straight to "resize the instance" without this diagnosis is wrong.
+
+- Q: |
+    Name four distinct root causes of a database CPU spike that diagnosis should distinguish between.
+  A: |
+    - a missing index causing full table scans
+    - a new deploy introducing an N+1 query pattern
+    - connection pool exhaustion
+    - a long-running transaction holding locks — or simply a legitimate traffic spike.
+  N: |
+    Treating all DB slowness as a capacity issue (rather than distinguishing a query problem from a capacity problem) is wrong.
+
+- Q: |
+    Why is "just scale up the instance" a weak first response to a DB CPU spike?
+  A: |
+    It masks the underlying problem (e.g., a missing index or bad query) and costs more money without fixing anything — the same query pattern will eventually exhaust the bigger instance too.
+
+- Q: |
+    After confirming the query pattern itself is sound, what are two scaling levers for handling legitimate load?
+  A: |
+    Read replicas (to offload read traffic) and connection pooling (PgBouncer, RDS Proxy) to avoid connection exhaustion under high concurrency.
+
+- Q: |
+    What's the difference between a database backup and point-in-time recovery (PITR)?
+  A: |
+    A backup is a periodic full/incremental snapshot at one moment. PITR is the ability to restore to **any** specific timestamp, typically achieved by replaying continuous transaction logs (WAL in Postgres, binlogs in MySQL) on top of a base backup.
+
+- Q: |
+    If your RPO (Recovery Point Objective) is 5 minutes, why is a daily snapshot alone insufficient?
+  A: |
+    A daily snapshot alone risks up to 24 hours of data loss. Hitting a 5-minute RPO requires continuous transaction log shipping (WAL/binlog archiving) replayed on top of the base backup, not just periodic snapshots.
+  N: |
+    Thinking daily snapshots satisfy any RPO is wrong.
+
+- Q: |
+    What's the difference between RPO and RTO?
+  A: |
+    RPO (Recovery Point Objective) is how much data you can afford to lose (measured in time since last recoverable point).
+    RTO (Recovery Time Objective) is how long the restore process itself is allowed to take.
+  N: |
+    Conflating the two, or being unfamiliar with the terms, suggests you haven't actually run a DR exercise.
+
+- Q: |
+    Name managed-service features that provide PITR without self-managing WAL/binlog shipping.
+  A: |
+    RDS automated backups with transaction logs, or Aurora's continuous backup — both provide PITR as a built-in capability rather than requiring manual log-shipping setup.
+
+- Q: |
+    Why isn't "we take backups" the same as "we have verified disaster recovery"?
+  A: |
+    An untested backup is not a verified recovery capability — restores must actually be tested (e.g., periodic restore drills) to confirm the backup is valid and the process meets the RTO.
+  N: |
+    Assuming backups equal recovery without ever verifying via a test restore is wrong.
+
+- Q: |
+    What's the risk of a naive `ALTER TABLE ADD COLUMN ... NOT NULL DEFAULT X` on a 100M+ row table?
+  A: |
+    On some databases/versions (older MySQL/Postgres), this rewrites the entire table and holds a lock for the whole duration — causing an outage on a large table.
+  N: |
+    Assuming `ALTER TABLE` is always safe/instant is wrong.
+
+- Q: |
+    How did Postgres 11+ change the cost of adding a `NOT NULL` column with a default value?
+  A: |
+    For a **constant** default, Postgres 11+ made this a metadata-only change (no table rewrite). Complex/non-constant defaults, or older Postgres/MySQL versions, still require a full rewrite and care.
+
+- Q: |
+    What's the safe pattern for adding a NOT NULL column with a default on a huge production table?
+  A: |
+    Add the column as nullable first, backfill values in small batches (avoiding one long transaction and limiting replication lag), then add the `NOT NULL` constraint once the backfill is complete — turning one big lock into many small ones.
+  N: |
+    Only saying "run it during off-hours" with no technical batching mitigation is wrong.
+
+- Q: |
+    What tools exist specifically for online (non-locking) schema changes in MySQL?
+  A: |
+    `gh-ost` and `pt-online-schema-change` — both perform schema migrations by copying data to a shadow table incrementally, avoiding a long table-wide lock.
+
+- Q: |
+    Why does a large unbatched migration risk replica lag, not just primary-side locking?
+  A: |
+    A huge write burst on the primary (e.g., backfilling 100M rows in one transaction) has to be replayed on replicas too — if not batched, replicas fall significantly behind, and any read traffic routed to them sees stale data.
+  N: |
+    Be aware that schema-change behavior/safety varies by database and version.
+
+- Q: |
+    What is an OLTP (Online Transaction Processing) database optimized for?
+  A: |
+    Running the live application: many small, fast reads/writes (single-row lookups, single-order inserts), row-based storage, strong consistency (ACID), and thousands of concurrent small transactions.
+
+- Q: |
+    What is an OLAP (Online Analytical Processing) system optimized for?
+  A: |
+    Analyzing large volumes of historical data: few but large, complex queries (scans/aggregations across millions of rows), columnar storage, and fewer concurrent queries where each one is much heavier.
+
+- Q: |
+    Why is columnar storage well suited to OLAP workloads but not OLTP?
+  A: |
+    OLAP queries typically aggregate over a few columns across millions of rows — columnar storage lets the engine read only the needed columns efficiently. OLTP needs fast full-row reads/writes for single records, which row-based storage handles better.

@@ -1,0 +1,51 @@
+deck:
+  name: 'Computer::DevOps'
+
+model:
+  name: Computer QA
+  kind: normal
+  style:
+    css: ../_model/comp-qa.css
+  templates:
+    - name: Computer QA
+      qfmt: ../_model/comp-qfmt.html
+      afmt: ../_model/comp-afmt.html
+  fields:
+    - name: Q
+      template: ../_template/Question.txt
+      index: true
+      format: markdown
+      description: Question
+    - name: A
+      template: ../_template/Answer.txt
+      format: markdown
+      description: Answer
+    - name: C
+      template: ../_template/Code.txt
+      description: Code
+    - name: N
+      template: ../_template/Notes.txt
+      format: markdown
+      description: Notes
+
+data:
+  - filename: ./linux.yml
+    tags: ['linux']
+  - filename: ./bash.yml
+    tags: ['bash']
+  - filename: ./python.yml
+    tags: ['python']
+  - filename: ./iac.yml
+    tags: ['iac']
+  - filename: ./containers.yml
+    tags: ['containers']
+  - filename: ./database.yml
+    tags: ['database']
+  - filename: ./web.yml
+    tags: ['web']
+  - filename: ./security.yml
+    tags: ['security']
+  - filename: ./devops.yml
+    tags: ['devops']
+  - filename: ./architecture.yml
+    tags: ['architecture']

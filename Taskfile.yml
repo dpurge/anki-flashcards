@@ -8,6 +8,7 @@ vars:
   BUILD_DATE:
     sh: date '+%Y-%m-%d'
   ITEMS: |
+    out/devops.apkg:dat/comp/devops/flashcard.yml
   COMMENT: |
     out/arabic.apkg:dat/lang-vocabulary/arb/flashcard.yml
     out/chinese-simplified.apkg:dat/lang-vocabulary/cmn-hans/flashcard.yml

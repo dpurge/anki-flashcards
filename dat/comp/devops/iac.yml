@@ -1,0 +1,101 @@
+- Q: |
+    In a Terraform plan, what does it mean when an attribute is marked `ForceNew` in a provider's resource schema?
+  A: |
+    Changing that attribute cannot be applied in place — Terraform must destroy the existing resource and create a new one to change it.
+
+- Q: |
+    For an AWS EC2 instance, which is more likely to force replacement: changing `instance_type`, or changing the AMI/availability zone?
+  A: |
+    `instance_type` is typically updatable in place (shows as `~` in plan). Changing the AMI or availability zone typically forces replacement (shows as `-/+` in plan) since those are structural to how/where the instance was created.
+  N: |
+    Being surprised that "changing anything" can destroy a resource is wrong — you should know this varies per attribute.
+
+- Q: |
+    In `terraform plan` output, what's the difference between the `~` and `-/+` symbols?
+  A: |
+    `~` means the resource will be updated in place. `-/+` means the resource will be destroyed and recreated.
+  N: |
+    Always review plan output for these symbols before apply — never apply without reviewing the diff.
+
+- Q: |
+    What Terraform lifecycle rule helps avoid downtime when a resource must be replaced?
+  A: |
+    `create_before_destroy` — creates the new resource first, then destroys the old one, instead of the default destroy-then-create order.
+  C: |
+    lifecycle {
+      create_before_destroy = true
+    }
+
+- Q: |
+    For a genuinely destructive infrastructure change where even `create_before_destroy` isn't enough (e.g., traffic needs to shift gradually), what pattern do you use?
+  A: |
+    Blue-green deployment: provision the new resource/environment fully, shift traffic over (e.g., via load balancer or DNS), then destroy the old one — avoiding a hard cutover window.
+  N: |
+    No mitigation strategy at all, just accepting downtime, is wrong.
+
+- Q: |
+    When refactoring Terraform resource definitions (e.g., renaming a resource block), how do you avoid Terraform destroying and recreating the underlying infrastructure unnecessarily?
+  A: |
+    `terraform state mv` — moves a resource's existing state entry to a new address so Terraform associates the real infrastructure with the renamed/refactored block instead of planning to destroy and recreate it.
+  C: |
+    terraform state mv aws_instance.old_name aws_instance.new_name
+
+- Q: |
+    Why should a team never use local Terraform state files?
+  A: |
+    Local state isn't shared or locked — concurrent applies from different team members can corrupt state or produce conflicting changes with no coordination.
+
+- Q: |
+    Name a common remote backend setup for Terraform state with locking.
+  A: |
+    AWS S3 (state storage) + DynamoDB (locking table), or Terraform Cloud, or a GCS backend with native locking support.
+
+- Q: |
+    What actually happens if two people run `terraform apply` at the same time against a remote backend with locking configured?
+  A: |
+    The state lock (held in DynamoDB, GCS, or Terraform Cloud) causes the second `apply` to fail or wait for the lock to release — it does not corrupt state, because only one process can hold the lock at a time.
+  N: |
+    Thinking "we just share the state file" with no locking mechanism is wrong.
+
+- Q: |
+    Why is the Terraform state file itself considered sensitive data?
+  A: |
+    It can contain resource attribute values in plaintext, including secrets (e.g., database passwords, generated keys) that were set via Terraform — so access control and encryption at rest for the state backend matter.
+  N: |
+    Be aware that state can leak secrets.
+
+- Q: |
+    What strategy keeps a mistaken `apply` targeting the wrong environment (e.g., staging config hitting prod) from happening?
+  A: |
+    Terraform workspaces or a directory-per-environment structure, so each environment has its own isolated state and backend configuration rather than one state shared across environments.
+
+- Q: |
+    How do you detect infrastructure drift (manual changes made outside Terraform) before it causes a surprise during the next apply?
+  A: |
+    Run `terraform plan` on a schedule in CI (even with no code changes) — any non-empty diff indicates drift between real infrastructure and the Terraform state/config.
+  N: |
+    Having no recovery/detection strategy and treating state as fragile and unattended is wrong.
+
+- Q: |
+    Beyond `terraform plan`, what static analysis tools check IaC for security misconfigurations before apply?
+  A: |
+    `checkov` and `tfsec` — they catch issues like open security groups or unencrypted storage. `tflint` additionally checks for provider-specific best-practice/syntax issues.
+  N: |
+    "I run terraform plan and read it" as the only testing strategy is wrong.
+
+- Q: |
+    How should `terraform plan` review fit into a CI/CD pipeline for IaC changes?
+  A: |
+    As a required PR check — the plan output should be automatically generated and posted to the PR so a human reviews the diff before merge/apply, not just run locally and eyeballed.
+
+- Q: |
+    What is Terratest and when is it worth using for a Terraform module?
+  A: |
+    Terratest is a Go library that spins up real infrastructure in a sandbox account, asserts on its actual behavior, then tears it down — worth using for critical, widely-shared modules (e.g., a shared VPC module), not for a one-off low-blast-radius resource.
+  N: |
+    Having no concept of testing IaC beyond `plan`, or conversely treating every change as equally deserving full integration tests, are both wrong — testing effort should scale with blast radius.
+
+- Q: |
+    What promotion path should versioned Terraform modules follow rather than applying the same unversioned code everywhere?
+  A: |
+    Dev → staging → prod, with each environment pinned to a specific module version — changes are validated in lower environments before the version bump promotes to production.

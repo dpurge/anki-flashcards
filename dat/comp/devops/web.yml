@@ -1,0 +1,83 @@
+- Q: |
+    Users behind a horizontally scaled, load-balanced web app get randomly logged out. What's the root cause?
+  A: |
+    Session data is stored in-memory, local to a single server instance. The load balancer routes a later request to a different instance that has no knowledge of that session.
+  N: |
+    Blaming "the load balancer is broken" instead of identifying session affinity as the cause is wrong.
+
+- Q: |
+    What's the quick-patch fix for random logouts caused by per-instance session storage, and what's its downside?
+  A: |
+    Sticky sessions (session affinity) — the load balancer routes a given user's requests to the same instance. Downside: it undermines even load distribution, and if that instance dies, the session is lost entirely (complicates failover).
+
+- Q: |
+    What's the more robust fix (beyond sticky sessions) for session state in a horizontally scaled app?
+  A: |
+    Externalize session state to a shared store (Redis, Memcached) so any instance can serve any request, or move to stateless auth (JWT) so no server-side session lookup is needed at all.
+  N: |
+    Only suggesting sticky sessions and stopping there, presenting it as a silver bullet, is wrong.
+
+- Q: |
+    What complexity does moving to stateless JWT auth shift to, compared to server-side sessions?
+  A: |
+    Token revocation and expiry handling — a JWT can't simply be "deleted" from a store the way a server-side session can, so you need short expiries, refresh tokens, or a revocation list to handle logout/compromise.
+
+- Q: |
+    What's the general architectural principle behind fixing the session/load-balancer problem?
+  A: |
+    Design for statelessness in horizontally scaled systems — no request should depend on state that only exists on the specific instance that handled a previous request.
+
+- Q: |
+    What's the basic sequence of events between typing a URL and a page rendering?
+  A: |
+    DNS resolution → TCP/TLS handshake → HTTP request → server processing → HTTP response → browser parses and renders the page.
+
+- Q: |
+    Name the caching layers you could add along the request path from browser to server, in order.
+  A: |
+    DNS cache → browser cache (`Cache-Control`, `ETag`) → CDN/edge cache for static assets → reverse proxy/application cache (e.g. Varnish, CloudFront, Cloudflare) → server-side application cache (e.g. Redis for query results) → database query cache.
+  N: |
+    Only naming one layer (e.g. just "browser cache" or just "CDN") is wrong — a strong answer names several.
+
+- Q: |
+    What kind of content is a good candidate for aggressive caching, and what kind is not?
+  A: |
+    Cacheable: static assets and rarely-changing API responses. Not cacheable (or only briefly): personalized or real-time data (e.g., a user's live notification count).
+  N: |
+    Treating all caching as universally beneficial, with no distinction, is wrong.
+
+- Q: |
+    Why is cache invalidation considered one of the hardest problems in caching, and what are two concrete strategies for it?
+  A: |
+    Because a cache can silently serve stale data with no obvious symptom.
+    Strategies: cache-busting via versioned/hashed filenames (for static assets) and TTL-based expiry or explicit invalidation-on-write (for dynamic data).
+  N: |
+    No mention of invalidation at all — just "add caching" — is wrong.
+
+- Q: |
+    Why is storing a JWT in `localStorage` a security risk?
+  A: |
+    `localStorage` is accessible to any JavaScript running on the page, so if the app is vulnerable to XSS (cross-site scripting), injected malicious JS can read and exfiltrate the token directly.
+
+- Q: |
+    Why does storing a JWT in an `httpOnly` cookie mitigate XSS token theft, and what risk does it introduce instead?
+  A: |
+    `httpOnly` cookies can't be read by JavaScript, so XSS can't directly steal the token. But cookies are sent automatically with every request to the domain, making the app vulnerable to CSRF (cross-site request forgery) unless mitigated.
+  N: |
+    Saying "cookies are just safer" with no XSS-vs-CSRF reasoning is wrong.
+
+- Q: |
+    Name three mitigations for CSRF when using cookie-based authentication.
+  A: |
+    - the `SameSite` cookie attribute (`Strict` or `Lax`)
+    - CSRF tokens (a per-request/per-session token the server validates)
+    - checking the `Origin`/`Referer` headers on state-changing requests
+  N: |
+    Be aware of CSRF mitigation.
+
+- Q: |
+    Is there a single "correct" place to store a JWT (localStorage vs. httpOnly cookie)?
+  A: |
+    No — it's a tradeoff between XSS risk (localStorage) and CSRF risk (cookies). The real fix is defense in depth: strong CSP headers to prevent XSS in the first place, regardless of storage choice, plus CSRF mitigations if using cookies.
+  N: |
+    Presenting one storage option as strictly correct, with no acknowledgment of the tradeoff, is wrong.
