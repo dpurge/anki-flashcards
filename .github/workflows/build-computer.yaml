@@ -1,0 +1,46 @@
+name: build-computer
+
+on:
+    workflow_dispatch:
+        inputs:
+            topic:
+                description: List of topics
+                required: true
+
+env:
+    PYTHON_VERSION: 3.12
+    UV_VERSION: latest
+
+permissions:
+  contents: write
+
+jobs:
+
+    build:
+
+        runs-on: [ubuntu-latest]
+
+        steps:
+
+        -   name: Checkout
+            uses: actions/checkout@v4
+            with:
+                fetch-depth: 0
+
+        -   name: Make tools
+            id: tools
+            uses: ./.github/actions/make-tools
+
+        -   name: DevOps topic
+            if: ${{ contains(inputs.topic, 'devops') }}
+            uses: ./.github/actions/build-apkg
+            with:
+                input-project: dat/comp/devops/flashcard.yml
+                output-apkg: out/computer-devops-${{ steps.tools.outputs.version }}.apkg
+
+        -   name: Make release
+            id: release
+            uses: ./.github/actions/make-release
+            with:
+                version: ${{ steps.tools.outputs.version }}
+                apkg-folder: out

@@ -1,12 +1,12 @@
-name: Build vocabulary
-description: Build Anki vocabulary apkg
+name: Build APKG
+description: Build Anki apkg file
 
 inputs:
   input-project:
-    description: Directory with input vocabulary
+    description: Directory with input project file
     required: true
   output-apkg:
-    description: Directory to output vocabulary 
+    description: Directory to output Anki files 
     required: true
 
 
