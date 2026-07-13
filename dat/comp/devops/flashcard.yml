@@ -49,3 +49,7 @@ data:
     tags: ['devops']
   - filename: ./architecture.yml
     tags: ['architecture']
+  - filename: ./cloud.yaml
+    tags: ['cloud']
+  - filename: ./vcs.yaml
+    tags: ['vcs']

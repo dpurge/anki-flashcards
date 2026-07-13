@@ -97,3 +97,35 @@
     What judgment call distinguishes "block the deploy" from "log and track" for a discovered CVE?
   A: |
     Block for a critical CVE with a known exploit; log-and-track for low-severity findings with no available fix — treating every CVE as equally blocking ignores the security/velocity tradeoff and causes alert fatigue.
+
+- Q: |
+    What's the difference between a liveness probe failure and a readiness probe failure in Kubernetes?
+  A: |
+    Liveness failure → kubelet kills and restarts the container. Readiness failure → the pod is removed from the Service's endpoint list (no traffic routed to it), but the container keeps running, no restart.
+
+- Q: |
+    What problem does a Kubernetes startup probe solve that a liveness probe with a long `initialDelaySeconds` doesn't?
+  A: |
+    Without a startup probe, `initialDelaySeconds` must be set for the worst-case cold start, wasting time on every normal (fast) restart — or set short, risking liveness killing a container that's still legitimately loading (e.g., a JVM warming up).
+
+- Q: |
+    How does a startup probe interact with liveness/readiness probes while it's running?
+  A: |
+    The startup probe runs first; while it's failing, liveness and readiness probes are disabled entirely. Once it succeeds once, it stops running permanently and liveness/readiness take over normally. If it never succeeds within its threshold, the container is killed.
+
+- Q: |
+    A liveness probe starts failing under load. What diagnostic sequence should you follow before concluding the app is broken?
+  A: |
+    First identify which probe type is failing (liveness vs. readiness vs. startup). Then check whether the probe endpoint itself does real work (e.g., a `/healthz` querying the DB will fail under load even if the app is fine) and whether timeout/threshold values are too aggressive. Then correlate with resource metrics (CPU throttling, memory pressure, GC pauses) before concluding the app itself is broken.
+  N: |
+    "Just increase the timeout" without this sequence is a weak answer.
+
+- Q: |
+    Why can a too-aggressive liveness probe make a load-related performance problem worse, not better?
+  A: |
+    Restarting a pod that's merely slow under load adds cold-start overhead exactly when capacity is needed most — turning a performance problem into a full outage via a restart loop.
+
+- Q: |
+    What's the difference between a Pod and a Deployment in Kubernetes?
+  A: |
+    A Pod is the smallest deployable unit — one or more containers sharing network/storage, with no built-in self-healing or scaling. A Deployment manages a set of identical Pods via a ReplicaSet, providing declarative scaling, rolling updates, and self-healing (recreating Pods that die).

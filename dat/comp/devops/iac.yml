@@ -99,3 +99,30 @@
     What promotion path should versioned Terraform modules follow rather than applying the same unversioned code everywhere?
   A: |
     Dev → staging → prod, with each environment pinned to a specific module version — changes are validated in lower environments before the version bump promotes to production.
+
+- Q: |
+    If starting a new Azure-only project today with no constraints, what's the core tradeoff between Bicep/ARM and Terraform/OpenTofu?
+  A: |
+    Bicep has zero lag on new Azure features (it's Microsoft's own IaC layer, so day-one resource support is guaranteed) and has no separate state file (declarative against Azure Resource Manager directly). Terraform/OpenTofu is multi-cloud and has a more mature plan/diff experience and module ecosystem, but its `azurerm` provider can lag brand-new Azure features and requires managing separate state.
+  N: |
+    Not mentioning state management as a differentiator is a weak answer — it's the single biggest architectural difference between the two.
+
+- Q: |
+    What category of problems does Bicep avoid entirely by having no separate state file, and what does it lose in exchange?
+  A: |
+    It avoids Terraform's state drift, state locking, and remote backend management problems entirely, since it's declarative directly against Azure Resource Manager. In exchange it loses Terraform's more mature plan/diff review experience and broader module/testing ecosystem.
+
+- Q: |
+    What's the difference between remote state locking and state isolation in Terraform?
+  A: |
+    State locking prevents concurrent writes to the *same* state file (two applies colliding). State isolation is about splitting *unrelated* infrastructure into separate state files to reduce blast radius and coupling — they solve different problems.
+
+- Q: |
+    Name two concrete implementations of Terraform remote state locking.
+  A: |
+    An Azure Storage Blob lease (holding the state file), or an AWS S3 backend plus a separate DynamoDB table for the lock (newer S3-native locking also exists).
+
+- Q: |
+    Why would a team split one large Terraform state file into multiple smaller ones for a multi-environment Landing Zone?
+  A: |
+    Blast radius reduction (one bad apply doesn't touch everything), fewer team collaboration conflicts on a shared file, better plan/apply performance on large state, and clearer locking boundaries — e.g., separate state per environment (dev/staging/prod) or per application team rather than one state covering networking + AKS + databases + IAM.

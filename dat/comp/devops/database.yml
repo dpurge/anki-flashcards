@@ -104,3 +104,34 @@
     Why is columnar storage well suited to OLAP workloads but not OLTP?
   A: |
     OLAP queries typically aggregate over a few columns across millions of rows — columnar storage lets the engine read only the needed columns efficiently. OLTP needs fast full-row reads/writes for single records, which row-based storage handles better.
+
+- Q: |
+    How do you find, per key, only the most recent row and discard older duplicates in SQL?
+  A: |
+    Use `ROW_NUMBER() OVER (PARTITION BY <key> ORDER BY <recency_col> DESC)` in a CTE, then filter `WHERE rn = 1`.
+  C: |
+    WITH ranked AS (
+      SELECT *, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY updated_at DESC) AS rn
+      FROM customers
+    )
+    SELECT * FROM ranked WHERE rn = 1;
+
+- Q: |
+    How does `PARTITION BY` differ from `GROUP BY` when used with a window function like `ROW_NUMBER()`?
+  A: |
+    `PARTITION BY` splits rows into groups for the window function's calculation without collapsing them — every original row is still returned. `GROUP BY` collapses each group into a single aggregated row.
+
+- Q: |
+    Why is `GROUP BY key HAVING COUNT(*) > 1` insufficient for a "keep only the most recent duplicate" task?
+  A: |
+    It only identifies which keys have duplicates — it doesn't return the actual row data, and gives no way to pick which specific row to keep.
+
+- Q: |
+    Why is `MAX(updated_at)` + join-back a weaker approach than `ROW_NUMBER()` for deduping to the latest row?
+  A: |
+    It requires a second join, and breaks if `updated_at` isn't unique per group — ties become ambiguous with no deterministic pick, whereas `ROW_NUMBER()` can add a tiebreaker column to `ORDER BY`.
+
+- Q: |
+    What does the `QUALIFY` clause do, and on which SQL platforms is it available?
+  A: |
+    It lets you filter on a window function result (e.g., `QUALIFY ROW_NUMBER() OVER (...) = 1`) without wrapping the query in a CTE. Available on BigQuery, Databricks, and Snowflake — not supported on PostgreSQL or MySQL.

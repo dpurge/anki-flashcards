@@ -122,3 +122,57 @@
     Why is tagging discipline a prerequisite for fast cost-spike investigation?
   A: |
     Without consistent resource tags (team, service, environment), cost tools can't attribute the spike to a specific owner or workload, turning a quick filter-by-tag lookup into a slow manual hunt.
+
+- Q: |
+    Why do CI/CD pipelines traditionally store long-lived credentials as secrets, and what's the core risk?
+  A: |
+    They authenticate to cloud platforms using a static credential (a GCP service account JSON key, an Azure client secret) stored as a CI/CD secret — the risk is leak exposure plus the ongoing operational burden of manual rotation.
+
+- Q: |
+    What does Workload Identity Federation (WIF) replace, and what does the CI/CD platform present instead of a stored secret?
+  A: |
+    It replaces the stored long-lived credential. The CI/CD platform presents a short-lived, cryptographically signed OIDC token proving its identity; the cloud platform trusts it via a pre-configured trust relationship, not a shared secret.
+
+- Q: |
+    Walk through the WIF authentication flow, step by step, for a GitHub Actions job deploying to Azure or GCP.
+  A: |
+    GitHub Actions mints a JIT OIDC token asserting "I am run X from repo Y on branch Z" → the cloud platform validates the token's signature against GitHub's public keys → checks the claims against the configured trust policy → issues a short-lived access token scoped to a specific role/service account.
+
+- Q: |
+    In WIF, why is the trust policy the actual security boundary, and what mistake defeats its purpose?
+  A: |
+    The trust policy decides which claims (repo, branch, environment) are accepted. Scoping it too broadly — trusting "any token from GitHub" instead of a specific repo+branch+environment — lets any workflow in any repo impersonate the identity, defeating the point of removing a shared secret.
+
+- Q: |
+    What extra hop does GCP's WIF require that Azure's implementation does not?
+  A: |
+    GCP requires an exchange through STS (`sts.googleapis.com`) to convert the external GitHub OIDC token into a GCP-native federated token before it can be used to impersonate a service account. Azure's App Registration validates the token and issues an Azure AD token directly, with no comparable separate exchange step.
+
+- Q: |
+    What is GCP's STS (Security Token Service) actually doing in the WIF flow?
+  A: |
+    It's a token translator. GCP IAM doesn't natively understand a GitHub-issued OIDC token, so STS validates the token against the configured Workload Identity Pool Provider (signature + claims) and returns a GCP federated access token, which is then used to impersonate a specific service account for a final, scoped access token.
+  N: |
+    This gives GCP's setup two places to misconfigure: the pool/provider trust condition, and the separate IAM binding granting the pool permission to impersonate the service account. Azure has one: the federated credential's subject claim matching.
+
+- Q: |
+    What's the difference between CI/CD-to-cloud Workload Identity Federation and AKS/GKE pod Workload Identity?
+  A: |
+    CI/CD WIF federates the pipeline runner's identity (e.g., a GitHub Actions job) to the cloud once per deploy, trusting GitHub's OIDC issuer scoped to repo/branch. Pod Workload Identity federates a running pod's identity continuously, trusting the cluster's own OIDC issuer scoped to `namespace:serviceaccount`.
+  N: |
+    Conflating the two — or being unable to say what's being trusted in each case — signals surface-level "Workload Identity" knowledge rather than having configured both.
+
+- Q: |
+    What operational gotcha can break all pod Workload Identity bindings if a self-managed cluster is rebuilt?
+  A: |
+    The cluster's own OIDC issuer URL can change on rebuild, breaking every federated binding that trusted the old issuer URL — Azure explicitly warns about this for self-managed issuer scenarios.
+
+- Q: |
+    What is a service principal (Azure) / service account (GCP), and why use one instead of a personal login for automation?
+  A: |
+    A non-human identity representing an app, script, or automated process rather than a person. It avoids tying access to a human's lifecycle, keeps accountability/audit clean, allows tight permission scoping, and avoids MFA/interactive-login requirements that conflict with automation.
+
+- Q: |
+    Why is a single shared service principal with owner-level permissions used across every pipeline in an org barely better than a shared personal login?
+  A: |
+    It has the same problems as personal-login sharing — no accountability for which pipeline did what, and overly broad permissions. The mature pattern is one service principal/service account per workload or environment, scoped narrowly, ideally with no static secret at all (tying back to WIF).

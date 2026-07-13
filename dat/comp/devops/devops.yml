@@ -101,3 +101,25 @@
     Why do DORA metrics matter to the business, not just engineering?
   A: |
     They're leading indicators connected to business impact — e.g., high MTTR directly costs revenue and customer trust during outages, not just an internal engineering concern.
+
+- Q: |
+    What's wrong with storing secrets only as CI/CD platform variables (GitHub Secrets, Azure DevOps variable groups)?
+  A: |
+    No fine-grained access audit trail comparable to a dedicated vault, secrets are often visible in plaintext to anyone with pipeline-edit access, no automatic rotation, and no safe way to share a secret across multiple pipelines without duplicating it.
+  N: |
+    HashiCorp Vault / Azure Key Vault exist as a layer on top of platform secrets specifically to address these gaps.
+
+- Q: |
+    When designing a pipeline that deploys to AKS, what's the actual deciding factor between a traditional CI push (`kubectl apply`/`helm upgrade`) and a GitOps pull model (ArgoCD) — not just "GitOps is best practice"?
+  A: |
+    ArgoCD requires cluster-side infrastructure and repo access, and adds a reconciliation delay instead of an instant push — but it gives drift correction and a clear audit trail. Push is simpler and faster for small teams but has no built-in drift detection. The deciding factor is whether you need automated drift correction/audit trail badly enough to accept the added infra and delay.
+
+- Q: |
+    What's the difference between symptom-based and cause-based alerting, and why does over-relying on cause-based alerting cause alert fatigue?
+  A: |
+    Symptom-based alerting pages on user-facing impact (error rate, latency SLOs). Cause-based alerting pages on every possible internal metric anomaly — most of which don't actually impact users — flooding on-call with noise.
+
+- Q: |
+    What is alert severity tiering, and why does it matter for fixing alert fatigue?
+  A: |
+    Routing alerts to different channels by actual urgency — page (wake someone up) vs. ticket (handle during business hours) vs. dashboard-only (no action needed) — so only genuinely urgent, user-impacting issues interrupt on-call.

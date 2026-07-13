@@ -98,3 +98,23 @@
     Systematic elimination in order: CPU → memory → disk I/O → network — using each layer's signal to rule it in/out before moving to the next, rather than a random grab-bag of commands.
   N: |
     Only knowing to "check top" and stopping there, with no further drill-down, is not sufficient.
+
+- Q: |
+    A container gets OOM-killed but `top`/`kubectl top` shows the node has plenty of free memory. What's actually happening?
+  A: |
+    The container is killed by the kernel's OOM killer for exceeding its own cgroup memory limit — completely independent of total node memory availability. Node-level free memory doesn't protect a container from its own per-cgroup ceiling.
+
+- Q: |
+    How do you confirm a container was OOM-killed due to its cgroup limit rather than node-level memory pressure?
+  A: |
+    Check `dmesg`/kernel logs for OOM killer events, and compare the container's memory limit against actual usage via `docker stats` or the cgroup files directly under `/sys/fs/cgroup/`.
+
+- Q: |
+    A process shows unremarkable CPU% in `top` but the service is still slow. What Linux-level mechanism should you check next?
+  A: |
+    CPU throttling via CFS (Completely Fair Scheduler) quotas — a container with a CPU limit can be repeatedly throttled in short bursts that don't show up clearly in top's averaged view.
+
+- Q: |
+    How do you check for CFS CPU throttling directly, and what's the equivalent Kubernetes/Prometheus signal?
+  A: |
+    Check `/sys/fs/cgroup/cpu/cpu.stat` for `nr_throttled`/`throttled_time`. In Kubernetes, the Prometheus metric `container_cpu_cfs_throttled_seconds_total` surfaces the same signal.

@@ -96,3 +96,10 @@
     No — for critical sections you still want explicit checks, e.g. `command || { echo "fail"; exit 1; }`, because `set -e`'s automatic behavior has known gaps (pipelines without `pipefail` context, conditions, subshells) and doesn't give clear failure messages on its own.
   N: |
     Treating `set -e` as sufficient on its own, with no explicit checks for critical steps, is wrong.
+
+- Q: |
+    A cleanup script for cloud resources will run unattended in CI/CD instead of interactively. What should change beyond just adding `set -euo pipefail`?
+  A: |
+    No confirmation prompts before destructive commands (nobody's there to answer them — gate destructive actions with an explicit dry-run/allowlist check instead), explicit exit-code checks rather than assuming success, and enough logging to reconstruct what happened after the fact, since no one is watching it run live.
+  N: |
+    Treating an unattended script identically to an interactive one-off is the weak answer.

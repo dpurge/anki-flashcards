@@ -95,3 +95,25 @@
     What do you do when a known-vulnerable component can't be patched immediately (e.g., EOL software)?
   A: |
     Apply compensating controls — network segmentation to limit exposure, or WAF rules to block known exploit patterns — while planning the actual remediation (upgrade/replacement).
+
+- Q: |
+    What gap does OPA (Open Policy Agent) fill that native cloud IAM (Entra, AWS IAM, GCP IAM) doesn't cover?
+  A: |
+    Native IAM governs *who* can do *what* (identity-based access). OPA (via Gatekeeper in Kubernetes, or Conftest in CI/CD) governs *what configurations are structurally allowed* — e.g., "no container may run as root," "no S3 bucket may be created without encryption," "no Terraform plan may remove a required tag." That's a policy-as-code check on resource shape/config, not identity.
+
+- Q: |
+    In a multi-tenant SaaS platform, if application code has a bug that fails to filter by tenant ID, what layers of defense-in-depth should stop that from becoming a data breach?
+  A: |
+    Database-level isolation (separate schemas/databases per tenant, or row-level security), network-level isolation (separate VPCs/subnets for high-sensitivity tenants), and IAM boundaries (separate service accounts/managed identities scoped per tenant) — so the app-layer bug isn't the only thing standing between tenants' data.
+  N: |
+    Relying on application-layer filtering alone is a single point of failure.
+
+- Q: |
+    What problem does Microsoft Entra PIM (Privileged Identity Management) solve that standing admin access creates?
+  A: |
+    Standing privileged access is a constant attack surface — a compromised admin account is dangerous 24/7, not just when actively used. PIM requires explicit time-boxed activation, often with approval and MFA re-confirmation, drastically shrinking the exploit window.
+
+- Q: |
+    What's the operational cost of PIM that makes teams resist adopting it?
+  A: |
+    It adds friction — waiting for approval, re-authenticating for routine tasks — so teams often push back or find workarounds that quietly undermine it.

@@ -88,3 +88,38 @@
     Chaos engineering (Chaos Monkey-style fault injection) to validate fault tolerance under real failure conditions, and periodically-run DR drills to confirm backup/restore and runbooks actually work end-to-end.
   N: |
     Assuming failover/DR "works" without ever testing it is a red flag.
+
+- Q: |
+    In a pipeline combining Kafka, Airflow, and Databricks/Synapse, what distinct role does each play?
+  A: |
+    Kafka (+Debezium) is the streaming layer — moving high-volume, low-latency events (via CDC from a DB's transaction log). Airflow/Composer is the orchestration layer — scheduling and managing dependencies for batch DAGs, not processing data itself. Databricks/Synapse is the compute/transformation layer — where the actual joining/aggregating/business logic runs at scale.
+
+- Q: |
+    Why is using Airflow to handle continuous/streaming data (e.g., scheduling a DAG every minute) considered an anti-pattern?
+  A: |
+    Airflow's scheduling model has inherent overhead and polling-based triggers unsuited to true low-latency needs — it's built for scheduled batch workflows, not continuous processing.
+
+- Q: |
+    What does Debezium do, specifically, and why does it avoid the need for polling or application code changes?
+  A: |
+    It performs Change Data Capture (CDC) by reading a database's transaction/write-ahead log directly and streaming every row-level insert/update/delete into Kafka as an event — without the source application needing to explicitly publish anything.
+
+- Q: |
+    When connecting Azure VNets and GCP VPCs in a cross-cloud hub-and-spoke architecture, what's the foundational step that must happen before any connectivity is built, and why?
+  A: |
+    Non-overlapping CIDR planning. If both clouds use overlapping address ranges, you cannot route between them at all — fixing it later usually means re-IPing an entire live environment, which is expensive.
+
+- Q: |
+    What's the difference between a VPN and a dedicated interconnect (ExpressRoute + Cloud Interconnect) for cross-cloud connectivity, and what should drive the choice?
+  A: |
+    VPN (Azure VPN Gateway ↔ GCP Cloud VPN) is simpler to set up but has bandwidth ceilings and encryption overhead/latency. Dedicated interconnect offers higher, more consistent bandwidth/latency but is more expensive and slower to provision (physical circuits). The choice should be driven by actual throughput needs and latency sensitivity, not a default preference.
+
+- Q: |
+    What's the "sneaky" cross-cloud failure mode where routing is correct but connections still fail?
+  A: |
+    Private DNS resolution isn't forwarded across clouds — a resource in one cloud resolves a private endpoint's name to its public IP (or fails entirely) because DNS forwarding wasn't configured between the clouds' DNS services (e.g., GCP Cloud DNS ↔ Azure Private DNS Zones).
+
+- Q: |
+    What is asymmetric routing in a hub-and-spoke design, and why does it cause connections to hang rather than fail cleanly?
+  A: |
+    Traffic goes out one path but the return traffic takes a different path — common when firewall/NVA rules aren't symmetric in both directions. Stateful firewalls silently drop the mismatched return traffic, so connections hang instead of erroring immediately.
