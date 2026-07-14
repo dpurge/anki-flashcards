@@ -1,0 +1,45 @@
+- Q: |
+    What are the three ways Rust manages heap data covered by `Box<T>`, `Rc<T>`, and `RefCell<T>`, at a high level?
+  A: |
+    `Box<T>` is single ownership of heap-allocated data. `Rc<T>` allows multiple owners via reference counting (single-threaded only). `RefCell<T>` enforces Rust's borrowing rules at runtime instead of compile time, allowing interior mutability.
+  N: |
+    `Rc<T>` and `RefCell<T>` are often combined (`Rc<RefCell<T>>`) to get shared, mutable ownership in single-threaded code.
+
+- Q: |
+    Why would you use `Box<T>` for a recursive data type like a linked list node?
+  A: |
+    A recursive type without indirection would have infinite size at compile time; `Box<T>` stores the recursive part on the heap with a fixed-size pointer in the struct, giving the type a known size.
+
+- Q: |
+    What are the three situations the book gives for reaching for `Box<T>`?
+  A: |
+    When a type's size can't be known at compile time but you need to use it somewhere requiring an exact size (e.g. a recursive type); when you have a large amount of data and want to transfer ownership of it without copying the data itself; and when you only care that a value implements some trait, not its specific concrete type (trait objects).
+
+- Q: |
+    Does wrapping a value in `Box::new(value)` add meaningful runtime overhead compared to using the value directly?
+  A: |
+    No — beyond the fact that the data now lives on the heap instead of the stack, `Box<T>` has no extra performance overhead; it also doesn't add extra capabilities beyond that heap indirection.
+  C: |
+    let b = Box::new(5);
+    println!("b = {b}");
+
+- Q: |
+    Given `enum List { Cons(i32, List), Nil }`, why does the compiler reject this with "recursive type has infinite size", and mechanically how does it arrive at that conclusion?
+  A: |
+    To size the `Cons` variant, the compiler needs the size of an `i32` plus the size of a `List` — but to find the size of `List`, it looks at `Cons` again, which needs the size of a `List` again, and so on forever. There's no base case that bottoms out at a fixed size.
+
+- Q: |
+    Once a recursive enum variant holds `Box<List>` instead of `List` directly, why does the type gain a fixed, computable size?
+  A: |
+    A `Box<T>` is just a pointer, and a pointer's size is fixed regardless of what it points to — so `Cons(i32, Box<List>)` only needs the size of an `i32` plus the size of one pointer, no matter how deeply nested the actual list data is.
+  C: |
+    enum List {
+        Cons(i32, Box<List>),
+        Nil,
+    }
+    let list = Cons(1, Box::new(Cons(2, Box::new(Cons(3, Box::new(Nil))))));
+
+- Q: |
+    Which two traits make `Box<T>` behave like a "smart pointer" rather than just a raw heap allocation?
+  A: |
+    `Deref`, which lets a `Box<T>` be used much like a reference to the `T` it points to; and `Drop`, which automatically cleans up the heap data when the `Box<T>` goes out of scope.

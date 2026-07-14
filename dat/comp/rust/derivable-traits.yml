@@ -1,0 +1,46 @@
+- Q: |
+    What does `#[derive(SomeTrait)]` actually do, and why can't every trait be derived (e.g. why can't `Display` be derived)?
+  A: |
+    It auto-generates a default implementation of that trait for your type. Only traits with a sensible, mechanical default behavior are derivable — `Display` can't be derived because there's no generic way for the compiler to know how you want a type formatted for end users; that requires a human decision.
+
+- Q: |
+    What does deriving `PartialEq` actually compare for a struct versus an enum?
+  A: |
+    For a struct, two instances are equal only if every field is equal. For an enum, a value is equal only to another value of the *same variant* with equal contents — different variants are never equal to each other.
+
+- Q: |
+    What does `Eq` add on top of `PartialEq`, and why can `f32`/`f64` derive `PartialEq` but not `Eq`?
+  A: |
+    `Eq` has no methods of its own — it's a marker asserting that every value of the type equals itself (reflexivity). Floats can't provide that guarantee because `NaN != NaN`, so `f32`/`f64` implement `PartialEq` but not `Eq`. `Eq` (plus `Hash`) is required for a type to be used as a `HashMap`/`BTreeMap` key.
+
+- Q: |
+    For a derived `PartialOrd` on a struct or enum, what determines the ordering?
+  A: |
+    For a struct, fields are compared in the order they're declared, left to right. For an enum, variants declared earlier in the definition are considered "less than" variants declared later. `PartialOrd::partial_cmp` returns `Option<Ordering>` (not always `Some`) since some values, like `NaN`, aren't comparable to anything.
+
+- Q: |
+    What's the difference between deriving `Ord` and deriving `PartialOrd`, and what does `Ord` require that `PartialOrd` doesn't?
+  A: |
+    `Ord::cmp` returns a plain `Ordering` (always a definite answer), whereas `PartialOrd::partial_cmp` returns `Option<Ordering>` (allowing "not comparable"). Deriving `Ord` requires the type to already implement `PartialOrd`, `Eq`, and `PartialEq` — it's needed for a type to be stored in a `BTreeSet<T>`, which relies on a total ordering.
+
+- Q: |
+    What's the core behavioral difference between `Clone` and `Copy`, and what must be true of a type's fields for each to be derivable?
+  A: |
+    `Clone::clone()` may run arbitrary code and perform a genuine deep copy (e.g. duplicating heap data) — derivable only if every field also implements `Clone`. `Copy` duplicates a value by copying its stack bits only, running no code at all — derivable only if every field implements `Copy`. `Copy` deliberately defines no methods, so it can't be overloaded to secretly do more than a trivial bitwise copy.
+
+- Q: |
+    Must a type that implements `Copy` also implement `Clone`?
+  A: |
+    Yes — `Copy` requires `Clone` as a supertrait, since every `Copy` operation is also a valid (trivial) `Clone` operation; the reverse isn't true, since `Clone` can be arbitrarily more expensive than a bitwise copy.
+
+- Q: |
+    What must be true about how a type's derived `Hash` implementation relates to its `PartialEq`/`Eq` implementation?
+  A: |
+    They must be consistent: two values that compare equal via `PartialEq`/`Eq` must also hash to the same value. Deriving both together on the same fields keeps this automatically true; hand-rolling one without the other risks violating it, which would break `HashMap` correctness.
+
+- Q: |
+    What does deriving `Default` provide, and what's a common way it's used alongside struct update syntax?
+  A: |
+    A `Type::default()` associated function producing a "default" instance, built by defaulting each field (requiring every field to itself implement `Default`). It's commonly combined with struct update syntax to build a mostly-default instance while overriding just a few fields.
+  C: |
+    MyStruct { field: value, ..Default::default() }

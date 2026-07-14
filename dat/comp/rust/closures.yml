@@ -1,0 +1,118 @@
+- Q: |
+    What are the syntax differences between a `fn` function and a closure in Rust?
+  A: |
+    Closures use pipes `|params|` instead of parentheses, and both parameter types, return type, and even the curly braces are optional when they can be inferred — a closure body can be a single bare expression.
+  C: |
+    fn  add_one_v1   (x: u32) -> u32 { x + 1 }
+    let add_one_v2 = |x: u32| -> u32 { x + 1 };
+    let add_one_v3 = |x|             { x + 1 };
+    let add_one_v4 = |x|               x + 1  ;
+
+- Q: |
+    Why do `fn` functions require explicit parameter/return type annotations while closures usually don't?
+  A: |
+    A function's types are part of an explicit interface exposed to callers who may be far away in the code, so annotations document that contract. A closure is typically short-lived and used in a narrow local context, so the compiler can infer its types the same way it infers most variable types.
+
+- Q: |
+    If a closure with no type annotations, `let example_closure = |x| x;`, is first called with a `String`, what happens if you then call it again with an integer?
+  A: |
+    It's a compile error. The compiler infers and locks in one concrete type per parameter/return value from the first call; calling the same closure with a different type afterward doesn't recompile it generically — it's just a type mismatch.
+  C: |
+    let example_closure = |x| x;
+    let s = example_closure(String::from("hello"));
+    let n = example_closure(5); // error: expected String, found integer
+
+- Q: |
+    What can a closure do that an ordinary `fn` function cannot?
+  A: |
+    A closure can capture values from the scope in which it's defined (its environment) — e.g. referencing a local variable without it being passed as a parameter. Functions can't capture their environment this way.
+  C: |
+    let list = vec![1, 2, 3];
+    let only_borrows = || println!("From closure: {list:?}");
+
+- Q: |
+    What are the three ways a closure can capture a variable from its environment, mirroring the three ways values can be passed to a function?
+  A: |
+    By immutable borrow (default, if the body only reads the value), by mutable borrow (if the body mutates it), or by taking ownership (forced with the `move` keyword).
+  C: |
+    let only_borrows = || println!("From closure: {list:?}");   // immutable borrow
+    let mut borrows_mutably = || list.push(7);                  // mutable borrow
+    thread::spawn(move || println!("From thread: {list:?}"));   // takes ownership
+
+- Q: |
+    What does putting `move` before a closure's parameter list do, and why is it commonly used with `thread::spawn`?
+  A: |
+    It forces the closure to take ownership of every environment value it uses, even if the body itself wouldn't strictly need ownership. It's used with `thread::spawn` because the spawned thread might outlive the current scope, so borrowing (rather than owning) the captured data could otherwise create a dangling reference.
+
+- Q: |
+    What do the three `Fn` traits — `FnOnce`, `FnMut`, `Fn` — each say about how a closure treats what it captures?
+  A: |
+    `FnOnce` applies to any closure that can be called (all closures implement at least this) — a closure that moves a captured value out of its body implements only `FnOnce`, since that value is gone after one call. `FnMut` applies to closures that may mutate captured values but don't move them out, so they can be called repeatedly. `Fn` applies to closures that neither move nor mutate captured values (or capture nothing at all), so they can be called repeatedly without changing their environment — important for calling the same closure concurrently.
+
+- Q: |
+    Why does `Option::unwrap_or_else`'s closure parameter have an `F: FnOnce() -> T` bound instead of `FnMut` or `Fn`?
+  A: |
+    `unwrap_or_else` only ever calls its closure argument once (only in the `None` case), so bounding it to `FnOnce` accurately expresses — and enforces — that constraint, while still accepting any closure that's at least callable once (including `FnMut`/`Fn` closures, since they satisfy `FnOnce` too).
+  C: |
+    impl<T> Option<T> {
+        pub fn unwrap_or_else<F: FnOnce() -> T>(self, f: F) -> T {
+            match self {
+                Some(x) => x,
+                None => f(),
+            }
+        }
+    }
+
+- Q: |
+    Why does `slice::sort_by_key` require its closure to implement `FnMut` rather than `FnOnce`?
+  A: |
+    `sort_by_key` calls the closure once per element in the slice to obtain each sort key — a closure that only implements `FnOnce` (e.g. one that moves a captured value out of its body) would fail to compile there, since it can't be called more than once.
+  C: |
+    list.sort_by_key(|r| r.width); // called once per element — needs FnMut
+
+- Q: |
+    What is the `fn` type (lowercase), and how is it different from the `Fn` trait?
+  A: |
+    `fn` is a concrete type — the type of a plain function pointer, e.g. `fn(i32) -> i32` — not a trait like `Fn`/`FnMut`/`FnOnce`. A function name coerces to this `fn` pointer type when used as a value.
+  C: |
+    fn add_one(x: i32) -> i32 { x + 1 }
+    fn do_twice(f: fn(i32) -> i32, arg: i32) -> i32 {
+        f(arg) + f(arg)
+    }
+    do_twice(add_one, 5);
+
+- Q: |
+    Can a plain function (via its `fn` pointer type) be passed anywhere a parameter expects a closure bounded by `Fn`/`FnMut`/`FnOnce`?
+  A: |
+    Yes — `fn` implements all three closure traits, so a function pointer always satisfies whichever closure trait bound a parameter uses; writing your own APIs against a generic `Fn`-family bound (rather than a concrete closure type) lets callers pass either a real closure or a plain function.
+
+- Q: |
+    When would you specifically want a parameter typed as `fn` rather than a generic closure bound, even though `fn` is more restrictive?
+  A: |
+    When interfacing with external code that has no concept of closures at all, such as calling into C — C functions can accept plain function pointers as arguments, but there's no equivalent for a Rust closure that captures its environment.
+
+- Q: |
+    Can an enum variant constructor like `Status::Value` (for `enum Status { Value(u32), Stop }`) be used as a function pointer, e.g. passed to `.map()`?
+  A: |
+    Yes — a tuple-variant constructor behaves like an ordinary function taking the variant's field(s) and producing an instance of the enum, so it can be passed anywhere a function/closure of that signature is expected.
+  C: |
+    enum Status { Value(u32), Stop }
+    let list_of_statuses: Vec<Status> = (0u32..20).map(Status::Value).collect();
+
+- Q: |
+    Why can't a function simply declare its return type as the literal closure it creates, and what's the fix?
+  A: |
+    Closures don't have a nameable, writable concrete type — each one is an anonymous compiler-generated type. Use `-> impl Fn(...) -> ...` (or the matching `FnMut`/`FnOnce`) in the return position instead, letting the compiler infer the actual hidden type while callers just see "something implementing this trait."
+  C: |
+    fn returns_closure() -> impl Fn(i32) -> i32 {
+        |x| x + 1
+    }
+
+- Q: |
+    Why does returning `impl Fn(i32) -> i32` fail to compile if two different code paths (or two different functions with the same signature) would each return a differently-behaving closure, and what fixes it?
+  A: |
+    Each distinct `impl Trait` return position resolves to one specific hidden concrete type at compile time — different closures (even with identical signatures) are different concrete types, so they can't both satisfy the same single `impl Trait` return type. The fix is to return a trait object, `Box<dyn Fn(i32) -> i32>`, which erases the concrete type behind a pointer and vtable, allowing genuinely different closures to be returned from the same function signature.
+  C: |
+    fn returns_initialized_closure(init: i32) -> Box<dyn Fn(i32) -> i32> {
+        Box::new(move |x| x + init)
+    }

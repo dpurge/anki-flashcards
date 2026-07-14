@@ -1,0 +1,207 @@
+- Q: |
+    What attribute marks a function as a test, and what command runs all tests in a project?
+  A: |
+    `#[test]` above the function; `cargo test` builds a test-runner binary and executes every annotated function, reporting pass/fail for each.
+  C: |
+    #[test]
+    fn it_works() {
+        let result = add(2, 2);
+        assert_eq!(result, 4);
+    }
+
+- Q: |
+    What are the three typical actions a test function's body performs?
+  A: |
+    Set up any needed data or state; run the code under test; assert that the results match what's expected.
+
+- Q: |
+    Mechanically, how does the test runner decide that a test has failed?
+  A: |
+    Each test runs in its own thread; if that thread panics (dies), the main test-runner thread detects it and marks the test as failed. A test with no panic is reported as passed.
+
+- Q: |
+    What does the `assert!` macro check, and what happens if the value is `false`?
+  A: |
+    It checks that its argument evaluates to `true`; if the value is `false`, it calls `panic!`, which fails the test.
+  C: |
+    assert!(larger.can_hold(&smaller));
+
+- Q: |
+    How does `assert_eq!`/`assert_ne!` differ from plain `assert!` in what it reports on failure, and what traits must the compared values implement?
+  A: |
+    `assert_eq!`/`assert_ne!` print both compared values (via debug formatting) when the assertion fails, unlike `assert!` which only reports that the condition was `false`. This requires both values' types to implement `PartialEq` (for the comparison) and `Debug` (for the failure message) — for custom types, add `#[derive(PartialEq, Debug)]`.
+  C: |
+    #[derive(PartialEq, Debug)]
+    struct Rectangle { width: u32, height: u32 }
+
+- Q: |
+    How do you attach a custom failure message to an assertion macro, and what syntax does that message use?
+  A: |
+    Add it as an extra argument after the required ones; it uses `format!`-style `{}` placeholders that can reference other values in scope.
+  C: |
+    assert!(
+        result.contains("Carol"),
+        "Greeting did not contain name, value was `{result}`"
+    );
+
+- Q: |
+    What does the `#[should_panic]` attribute do to a test, and how does `expected = "..."` refine it?
+  A: |
+    `#[should_panic]` makes the test pass only if the code inside panics (and fail if it doesn't). Adding `expected = "substring"` further requires the panic message to contain that specific text, guarding against the test passing due to an unrelated panic.
+  C: |
+    #[test]
+    #[should_panic(expected = "less than or equal to 100")]
+    fn greater_than_100() {
+        Guess::new(200);
+    }
+
+- Q: |
+    How can a test function use the `?` operator instead of panicking on failure, and what must its signature look like?
+  A: |
+    Have it return `Result<T, E>` instead of nothing — `Ok(())` marks the test as passed, and returning `Err` (which `?` does automatically on failure) marks it as failed.
+  C: |
+    #[test]
+    fn it_works() -> Result<(), String> {
+        let result = add(2, 2);
+        if result == 4 {
+            Ok(())
+        } else {
+            Err(String::from("two plus two does not equal four"))
+        }
+    }
+
+- Q: |
+    Can you combine `#[should_panic]` with a test that returns `Result<T, E>`? What's the alternative for asserting an operation fails?
+  A: |
+    No, that combination isn't supported. Instead, call the fallible operation without `?` and assert on the `Result` directly with `assert!(value.is_err())`.
+
+- Q: |
+    What does the `#[cfg(test)]` attribute do on a module, and what does `use super::*;` inside it typically provide?
+  A: |
+    `#[cfg(test)]` tells the compiler to only compile that module when running tests (e.g. via `cargo test`), excluding it from normal builds. `use super::*;` brings the parent module's items into the test module's scope so tests can call the code under test without full paths.
+  C: |
+    #[cfg(test)]
+    mod tests {
+        use super::*;
+
+        #[test]
+        fn it_works() {
+            // test code
+        }
+    }
+
+- Q: |
+    Does `cargo test` run tests in parallel or serially by default, and what constraint does that place on how tests are written?
+  A: |
+    In parallel, by default, for speed. Tests therefore must not depend on each other or on shared mutable state (e.g. the same file, working directory, or environment variable), since simultaneous access from different tests can cause spurious failures.
+
+- Q: |
+    How do you force `cargo test` to run tests one at a time instead of in parallel?
+  A: |
+    Pass `--test-threads=1` after a `--` separator.
+  C: |
+    cargo test -- --test-threads=1
+
+- Q: |
+    By default, is `println!` output from a *passing* test shown in the terminal? How do you see it anyway?
+  A: |
+    No — Rust's test harness captures and suppresses stdout from passing tests by default (only the pass/fail indicator shows); output from *failing* tests is shown alongside the failure message. Pass `--show-output` to see captured output even for passing tests.
+  C: |
+    cargo test -- --show-output
+
+- Q: |
+    How do you run only a single named test, or all tests whose name contains a given substring?
+  A: |
+    `cargo test <exact_name>` runs just that test; `cargo test <substring>` runs every test (including across modules) whose name contains that substring.
+  C: |
+    cargo test one_hundred
+    cargo test add   # runs every test with "add" in its name
+
+- Q: |
+    How do you mark a slow test so it's skipped by default, and how do you run only those skipped tests?
+  A: |
+    Add `#[ignore]` below `#[test]` to skip it during normal runs. Run `cargo test -- --ignored` to run only the ignored tests, or `cargo test -- --include-ignored` to run everything, ignored or not.
+  C: |
+    #[test]
+    #[ignore]
+    fn expensive_test() {
+        // code that takes an hour to run
+    }
+
+- Q: |
+    What does the `--` in `cargo test -- --test-threads=1` separate?
+  A: |
+    Arguments before `--` go to `cargo test` itself (e.g. filtering which tests to compile/run); arguments after `--` go to the compiled test binary (e.g. `--test-threads`, `--show-output`, `--ignored`).
+
+- Q: |
+    What is the key difference in scope and access between "unit tests" and "integration tests"?
+  A: |
+    Unit tests are small, focused tests of one module in isolation, living alongside the code in `src/`, and can access private items. Integration tests live entirely outside the library, exercise only its public API just like any external caller would, and can span multiple modules in a single test.
+
+- Q: |
+    Why does `#[cfg(test)]` on a `tests` module save compile time and binary size, compared to not having it at all?
+  A: |
+    `cfg(test)` compiles that module's code only when running `cargo test`, so a normal `cargo build` skips it entirely — test code never ends up in the shipped artifact.
+
+- Q: |
+    Can a unit test call a private (non-`pub`) function defined in the same file?
+  A: |
+    Yes — the `tests` module is just another child module, and child modules can access items in their ancestor modules regardless of privacy, so testing private functions directly is normal and supported.
+  C: |
+    fn internal_adder(left: u64, right: u64) -> u64 {
+        left + right
+    }
+
+    #[cfg(test)]
+    mod tests {
+        use super::*;
+        #[test]
+        fn internal() {
+            assert_eq!(internal_adder(2, 2), 4);
+        }
+    }
+
+- Q: |
+    Where do integration tests live, and how is each file in that location treated by the compiler?
+  A: |
+    In a `tests/` directory at the project's top level, next to `src/`. Each file inside `tests/` is compiled as its own separate crate.
+  C: |
+    adder/
+    ├── src/lib.rs
+    └── tests/
+        └── integration_test.rs
+
+- Q: |
+    Do integration test files need `#[cfg(test)]`, and why must they explicitly `use` the library crate?
+  A: |
+    No — Cargo already treats the `tests/` directory specially, compiling its files only for `cargo test` runs. Each file there is its own separate crate, so it has no automatic access to the library's items and must bring them into scope with `use`, e.g. `use adder::add_two;`.
+
+- Q: |
+    How do you share helper code (like a `setup()` function) across multiple integration test files without it being treated as its own test file?
+  A: |
+    Put it in a subdirectory of `tests/` (e.g. `tests/common/mod.rs`) rather than directly in `tests/` — files in subdirectories of `tests/` aren't compiled as separate test crates or given their own section in test output.
+  C: |
+    tests/
+    ├── common/
+    │   └── mod.rs
+    └── integration_test.rs
+
+    // in integration_test.rs:
+    mod common;
+    #[test]
+    fn it_adds_two() {
+        common::setup();
+        assert_eq!(add_two(2), 4);
+    }
+
+- Q: |
+    How do you run only the tests in one specific integration test file?
+  A: |
+    `cargo test --test <filename_without_extension>`.
+  C: |
+    cargo test --test integration_test
+
+- Q: |
+    Why can't a pure binary crate (only `src/main.rs`, no `src/lib.rs`) have integration tests in `tests/` that exercise its logic?
+  A: |
+    Only library crates expose items that other crates (including the separate crates each integration test file compiles as) can bring into scope via `use`. The fix is to move the real logic into `src/lib.rs` and have `src/main.rs` just call into it, so the logic becomes integration-testable and `main.rs` stays thin enough not to need its own tests.

@@ -1,0 +1,171 @@
+- Q: |
+    What does Rust's ownership system guarantee about data races between threads, and what tool enforces it?
+  A: |
+    Types must implement `Send` (safe to transfer between threads) and `Sync` (safe to share references between threads) to cross thread boundaries; the compiler checks this at compile time, so a whole class of data races is caught before the program runs rather than found via testing.
+
+- Q: |
+    What is the difference between `Mutex<T>` and `RwLock<T>` for shared state across threads?
+  A: |
+    `Mutex<T>` allows only one thread to access the data at a time, whether reading or writing. `RwLock<T>` allows either multiple concurrent readers or one exclusive writer, which can be more efficient for read-heavy workloads.
+
+- Q: |
+    What three kinds of problems commonly arise from concurrent/multithreaded programming?
+  A: |
+    Race conditions (threads accessing data/resources in an inconsistent order), deadlocks (two or more threads waiting on each other, so none can proceed), and bugs that only happen in certain hard-to-reproduce situations.
+
+- Q: |
+    What threading model does Rust's standard library use — one OS thread per language thread, or a green-threaded M:N model?
+  A: |
+    A 1:1 model: each Rust thread maps directly to one operating system thread. Alternative models (like green threads / M:N) are available via external crates, not the standard library.
+
+- Q: |
+    How do you spawn a new thread in Rust, and what happens to it if the main thread finishes first?
+  A: |
+    `thread::spawn(closure)` starts a new OS thread running the closure. If the main thread completes before a spawned thread finishes, all spawned threads are shut down immediately regardless of whether they'd finished their work.
+  C: |
+    thread::spawn(|| {
+        for i in 1..10 {
+            println!("hi number {i} from the spawned thread!");
+        }
+    });
+
+- Q: |
+    What does `thread::spawn` return, and how do you use it to block until that thread finishes?
+  A: |
+    It returns a `JoinHandle<T>`; calling `.join()` on it blocks the calling thread until the spawned thread completes (returning a `Result` you typically `.unwrap()`).
+  C: |
+    let handle = thread::spawn(|| { /* ... */ });
+    handle.join().unwrap();
+
+- Q: |
+    Does it matter where in `main` you call `handle.join()` relative to other code?
+  A: |
+    Yes — calling `.join()` earlier blocks subsequent code from running until that thread finishes, effectively serializing execution at that point; calling it later (e.g. after other work) lets the spawned thread run concurrently with that other work first.
+
+- Q: |
+    Why does `thread::spawn(|| { println!("{v:?}"); })` fail to compile when `v` is a `Vec` defined in the enclosing function, and how does adding `move` fix it?
+  A: |
+    The compiler can't know how long the spawned thread will run, so it can't guarantee a borrowed `v` will still be valid for the thread's whole lifetime — the thread might outlive the function that owns `v`. Adding `move` before the closure forces it to take ownership of `v` instead of borrowing it, so the data's validity no longer depends on the spawning function's own lifetime.
+  C: |
+    let v = vec![1, 2, 3];
+    let handle = thread::spawn(move || {
+        println!("Here's a vector: {v:?}");
+    });
+    handle.join().unwrap();
+
+- Q: |
+    What does "mpsc" stand for in `std::sync::mpsc::channel()`, and what does that mean about how many threads can send versus receive?
+  A: |
+    Multiple producer, single consumer — a channel can have many transmitter (`tx`) clones sending into it, but only one receiver (`rx`) reading from it.
+  C: |
+    use std::sync::mpsc;
+    let (tx, rx) = mpsc::channel();
+
+- Q: |
+    What does calling `tx.send(val)` do to `val`'s ownership, and what happens if you try to use `val` again afterward?
+  A: |
+    `send` takes ownership of the value, moving it into the channel. Using `val` again after sending it is a compile error ("borrow of moved value") — this prevents use-after-send bugs entirely at compile time rather than at runtime.
+  C: |
+    let val = String::from("hi");
+    tx.send(val).unwrap();
+    // println!("val is {val}"); // error: value moved
+
+- Q: |
+    What is the difference between `rx.recv()` and `rx.try_recv()` on a channel's receiver?
+  A: |
+    `recv()` blocks the calling thread until a value arrives (or errors once the sender is dropped/closed). `try_recv()` returns immediately with `Ok(value)` if something is already available or `Err` if not, letting the thread do other work in a loop instead of blocking.
+
+- Q: |
+    How can you process every value sent over a channel without manually calling `recv()` in a loop?
+  A: |
+    Treat the receiver itself as an iterator with a `for` loop — iteration yields each received value in turn and ends automatically once the channel closes (all transmitters dropped).
+  C: |
+    for received in rx {
+        println!("Got: {received}");
+    }
+
+- Q: |
+    How do you get multiple threads sending into the same single-consumer channel?
+  A: |
+    Clone the transmitter with `tx.clone()` before moving each clone into its own spawned thread — every clone can send independently, and all messages arrive at the one shared receiver (in whatever order the OS schedules the sending threads).
+  C: |
+    let tx1 = tx.clone();
+    thread::spawn(move || { tx1.send(val1).unwrap(); });
+    thread::spawn(move || { tx.send(val2).unwrap(); });
+
+- Q: |
+    What does calling `m.lock()` on a `Mutex<T>` return, and what must you do with the result to get at the inner value?
+  A: |
+    It returns a `LockResult<MutexGuard<T>>` — you must `.unwrap()` (or otherwise handle) the `Result` to get the `MutexGuard<T>`, which derefs to the inner value. `lock()` also blocks the current thread until the lock is available.
+  C: |
+    let m = Mutex::new(5);
+    let mut num = m.lock().unwrap();
+    *num = 6;
+
+- Q: |
+    Why can `Mutex::lock()` fail, and what does "poisoned" mean in that context?
+  A: |
+    `lock()` returns an `Err` if another thread panicked while holding the lock — the mutex is then considered "poisoned" since its protected data might be left in an inconsistent state. Calling `.unwrap()` on that `Err` propagates the panic to the calling thread too, rather than silently proceeding with possibly-corrupt data.
+
+- Q: |
+    How does `MutexGuard<T>` guarantee the lock always gets released, without the programmer having to remember to unlock it?
+  A: |
+    `MutexGuard<T>` implements `Drop`, which releases the lock automatically when the guard goes out of scope — there's no explicit "unlock" call to forget, and the type system prevents accessing the inner data without going through `lock()` first (since `Mutex<T>`, not the raw value, is what you're given).
+
+- Q: |
+    Like `RefCell<T>`, what kind of Rust pattern does `Mutex<T>` provide, and what's the key extra guarantee it adds over `RefCell<T>`?
+  A: |
+    Interior mutability — a `Mutex<T>` can be immutable itself yet still let you obtain a mutable reference to its contents. Unlike `RefCell<T>`, it's additionally safe to share across threads, at the cost of the lock/unlock overhead and the risk of deadlocks instead of `RefCell`'s panic-on-violation risk.
+
+- Q: |
+    Why can't `Rc<Mutex<T>>` be used to share a `Mutex` across multiple `thread::spawn` calls?
+  A: |
+    `Rc<T>`'s reference-count increments/decrements aren't atomic, so mutating the count from multiple threads concurrently could produce wrong counts — a subtle bug that could cause a memory leak or a use-after-free. `Rc<T>` doesn't implement `Send`, so the compiler rejects moving it into another thread's closure at compile time rather than allowing that race.
+
+- Q: |
+    What is `Arc<T>`, how does its API compare to `Rc<T>`, and what does the "A" stand for?
+  A: |
+    `Arc<T>` ("atomically reference-counted") is a thread-safe equivalent of `Rc<T>`, using atomic operations to update its count safely across threads. It has the identical API to `Rc<T>` (`Arc::new`, `Arc::clone`), so switching from `Rc<T>` to `Arc<T>` in single-threaded code that becomes multithreaded is usually just a find-and-replace.
+  C: |
+    let counter = Arc::new(Mutex::new(0));
+    for _ in 0..10 {
+        let counter = Arc::clone(&counter);
+        thread::spawn(move || {
+            *counter.lock().unwrap() += 1;
+        });
+    }
+
+- Q: |
+    If `Arc<T>` has the same API and capability as `Rc<T>` but is thread-safe, why does Rust still offer `Rc<T>` as a separate, non-atomic type?
+  A: |
+    Thread-safety guarantees (atomic operations) come with a performance cost that's wasted if data never actually crosses a thread boundary — `Rc<T>` lets single-threaded code avoid paying for a guarantee it doesn't need.
+
+- Q: |
+    What is a deadlock in the context of `Mutex<T>`, concretely?
+  A: |
+    A situation where an operation needs to acquire two (or more) locks, and two threads each hold one of the needed locks while waiting on the other — neither can proceed, since each is waiting on a lock the other is holding.
+
+- Q: |
+    Precisely, what does implementing `Send` mean for a type, and precisely what does implementing `Sync` mean?
+  A: |
+    `Send` means ownership of a value of that type can be safely transferred to another thread. `Sync` means it's safe for the type to be referenced from multiple threads simultaneously — formally, `T: Sync` iff `&T: Send` (a shared reference to it can itself be safely sent to another thread).
+
+- Q: |
+    Why doesn't `Rc<T>` implement either `Send` or `Sync`?
+  A: |
+    `Rc<T>`'s clone/drop increments and decrements its reference count without any thread-synchronization — if two threads did that concurrently (via `Send`) or even just read/cloned it concurrently (via `Sync`), the count could end up wrong, corrupting the shared bookkeeping. `Arc<T>` fixes this with atomic operations and so implements both.
+
+- Q: |
+    Why doesn't `RefCell<T>` (or the `Cell` family) implement `Sync`, even though it does implement `Send`?
+  A: |
+    `RefCell<T>`'s runtime borrow-checking (tracking active borrows to panic on violations) isn't implemented in a thread-safe way — two threads accessing the same `RefCell<T>` concurrently could corrupt that internal tracking, so it can't be safely referenced from multiple threads at once, even though transferring sole ownership of one to another thread is fine.
+
+- Q: |
+    Do `Send` and `Sync` have any methods you need to implement?
+  A: |
+    No — they're marker traits with no methods at all; they exist purely so the compiler can enforce concurrency-related invariants (what can cross a thread boundary, what can be shared across threads) at the type level.
+
+- Q: |
+    If you build a new type entirely out of fields whose types already implement `Send` and `Sync`, do you need to implement those traits yourself?
+  A: |
+    No — such a type automatically implements `Send` and `Sync` too; you only need to implement them manually (which requires `unsafe` code) when building a concurrent primitive out of pieces that aren't already `Send`/`Sync`, since you're then responsible for upholding the safety guarantees yourself.

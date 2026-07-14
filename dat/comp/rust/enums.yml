@@ -1,0 +1,154 @@
+- Q: |
+    When is an enum a better fit than a struct for modeling a value?
+  A: |
+    When a value must be exactly one of a fixed set of possibilities and never more than one at a time — e.g. an IP address is either version 4 or version 6, never both. A struct groups values that all exist together; an enum expresses mutually exclusive alternatives.
+  C: |
+    enum IpAddrKind {
+        V4,
+        V6,
+    }
+    let four = IpAddrKind::V4;
+
+- Q: |
+    How do you attach data directly to an enum variant, and what does the variant name become as a result?
+  A: |
+    Put a type in parentheses after the variant name in the enum definition; the variant name then becomes a constructor function that takes that data as an argument.
+  C: |
+    enum IpAddr {
+        V4(String),
+        V6(String),
+    }
+    let home = IpAddr::V4(String::from("127.0.0.1"));
+
+- Q: |
+    Can different variants of the same enum hold different types and amounts of data?
+  A: |
+    Yes — each variant defines its own attached data shape independently of the others.
+  C: |
+    enum IpAddr {
+        V4(u8, u8, u8, u8),
+        V6(String),
+    }
+    let home = IpAddr::V4(127, 0, 0, 1);
+    let loopback = IpAddr::V6(String::from("::1"));
+
+- Q: |
+    In `enum Message { Quit, Move { x: i32, y: i32 }, Write(String), ChangeColor(i32, i32, i32) }`, what four different shapes of variant data are shown?
+  A: |
+    `Quit` holds no data; `Move` holds named fields like a struct; `Write` holds a single unnamed value; `ChangeColor` holds multiple unnamed values (like a tuple). A single enum can mix all of these variant styles.
+
+- Q: |
+    Can an enum variant hold another enum, or a struct, as its data?
+  A: |
+    Yes — an enum variant can hold any kind of data: strings, numeric types, structs, or even another enum.
+  C: |
+    struct Ipv4Addr { /* ... */ }
+    struct Ipv6Addr { /* ... */ }
+    enum IpAddr {
+        V4(Ipv4Addr),
+        V6(Ipv6Addr),
+    }
+
+- Q: |
+    Can you define methods on an enum the same way you define them on a struct?
+  A: |
+    Yes — use an `impl` block on the enum name, and methods can take `&self` just like struct methods.
+  C: |
+    impl Message {
+        fn call(&self) {
+            // method body
+        }
+    }
+    let m = Message::Write(String::from("hello"));
+    m.call();
+
+- Q: |
+    What is the standard library's actual definition of `Option<T>`, and why is it usable as `Some`/`None` without an `Option::` prefix?
+  A: |
+    `enum Option<T> { None, Some(T) }` — a generic enum where `T` can be any type, so `Option<i32>` and `Option<char>` are distinct concrete types. `Option`, `Some`, and `None` are all included in the prelude, so they're usable directly without qualification.
+
+- Q: |
+    Why can't you write `let sum = x + y;` where `x: i8` and `y: Option<i8>`, even though `y` might currently hold an `i8`?
+  A: |
+    `Option<T>` and `T` are different types the compiler tracks separately — an `i8` is guaranteed to always have a valid value, but an `Option<i8>` might be `None`. You must explicitly convert/extract the `T` out of the `Option<T>` (e.g. via `match`, `unwrap`, or similar) before you can use it in operations that expect a plain `T`.
+  N: |
+    This is the mechanism that replaces null: the type system itself forces you to handle the "maybe absent" case before treating a value as present.
+
+- Q: |
+    In a `match` expression, when do you need curly braces `{}` around an arm's code, and how does that affect the trailing comma?
+  A: |
+    A single-expression arm needs no braces (just `pattern => expression,`). An arm with multiple statements needs `{}` around them, in which case the trailing comma after the closing brace becomes optional.
+  C: |
+    match coin {
+        Coin::Penny => 1,
+        Coin::Quarter => {
+            println!("Lucky quarter!");
+            25
+        }
+    }
+
+- Q: |
+    How does `match` let you extract the data carried by a specific enum variant, like `UsState` out of `Coin::Quarter(UsState)`?
+  A: |
+    Give the pattern a variable name in the position where the variant's data lives; that name is bound to the inner value for use in that arm's code.
+  C: |
+    match coin {
+        Coin::Quarter(state) => {
+            println!("State quarter from {state:?}!");
+            25
+        }
+    }
+
+- Q: |
+    What is the difference between a catch-all pattern that binds a variable (e.g. `other => move_player(other)`) and one using `_` (e.g. `_ => reroll()`)?
+  A: |
+    A named catch-all binds the unmatched value to that variable so the arm's code can use it. `_` matches anything but doesn't bind it to a name — use it when the arm doesn't need the value, which also avoids an unused-variable warning.
+
+- Q: |
+    If a `match` arm should intentionally do nothing for its catch-all case, what value do you put on the right of `_ =>`?
+  A: |
+    `()`, the unit value — it signals "run no code" for that arm while still satisfying `match`'s requirement that every arm produce a value.
+  C: |
+    match dice_roll {
+        3 => add_fancy_hat(),
+        7 => remove_fancy_hat(),
+        _ => (),
+    }
+
+- Q: |
+    What problem does `if let` solve compared to a `match` that only cares about one pattern?
+  A: |
+    A `match` used for a single meaningful case still requires a catch-all arm (e.g. `_ => ()`) to satisfy exhaustiveness, which is boilerplate. `if let` lets you match one pattern directly, skipping the rest, with less typing and indentation.
+  C: |
+    let config_max = Some(3u8);
+    if let Some(max) = config_max {
+        println!("The maximum is configured to be {max}");
+    }
+
+- Q: |
+    What do you give up by using `if let` instead of `match`?
+  A: |
+    Exhaustiveness checking — the compiler no longer verifies that every possible case is handled, so choosing `if let` trades that safety net for conciseness.
+
+- Q: |
+    How do you handle the "didn't match" case when using `if let`, as an alternative to `match`'s `_` arm?
+  A: |
+    Add an `else` block after the `if let` — it runs whenever the pattern doesn't match.
+  C: |
+    if let Coin::Quarter(state) = coin {
+        println!("State quarter from {state:?}!");
+    } else {
+        count += 1;
+    }
+
+- Q: |
+    What does `let PATTERN = EXPR else { ... };` (`let...else`) require its `else` block to do, and why is that useful for early returns?
+  A: |
+    If the pattern matches, the bound value is available in the surrounding scope for the rest of the function. If it doesn't match, control flows into the `else` block, which must return/diverge (e.g. `return None;`) — this keeps the main body of the function on a single "happy path" instead of nesting the rest of the logic inside a match arm.
+  C: |
+    fn describe_state_quarter(coin: Coin) -> Option<String> {
+        let Coin::Quarter(state) = coin else {
+            return None;
+        };
+        Some(format!("{state:?}"))
+    }

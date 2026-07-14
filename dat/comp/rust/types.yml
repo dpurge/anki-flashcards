@@ -1,0 +1,126 @@
+- Q: |
+    What is the difference between `String` and `&str`?
+  A: |
+    `String` is a growable, heap-allocated, owned string type. `&str` is a borrowed, immutable view into string data (either part of a `String` or a string literal).
+
+- Q: |
+    Where are string literals like `"hello"` stored, and what is their type?
+  A: |
+    They are baked into the compiled binary and have type `&'static str` — a reference valid for the entire program's runtime.
+
+- Q: |
+    What is the difference between `struct` and `enum` in Rust at a high level?
+  A: |
+    A `struct` groups related named fields together (a product type — all fields present at once); an `enum` represents a value that is one of several defined variants (a sum type — only one variant at a time).
+
+- Q: |
+    How does Rust's `Option<T>` enum replace null references?
+  A: |
+    `Option<T>` is either `Some(T)` (a value is present) or `None` (no value) — the compiler forces you to handle both cases before using the inner value, eliminating null-pointer-style bugs.
+  C: |
+    let maybe_num: Option<i32> = Some(5);
+    match maybe_num {
+        Some(n) => println!("{n}"),
+        None => println!("nothing"),
+    }
+
+- Q: |
+    What is the difference between `Result<T, E>` and `Option<T>`?
+  A: |
+    `Option<T>` models presence/absence of a value with no reason why. `Result<T, E>` models success/failure and carries an error value `E` explaining the failure.
+
+- Q: |
+    What does the `?` operator do when used on a `Result` inside a function?
+  A: |
+    If the `Result` is `Ok(v)`, it unwraps to `v`; if it's `Err(e)`, it returns early from the function with that error (converted via `From` if needed). The enclosing function must return a compatible `Result`.
+  C: |
+    fn read_file(path: &str) -> Result<String, std::io::Error> {
+        let contents = std::fs::read_to_string(path)?;
+        Ok(contents)
+    }
+
+- Q: |
+    What is the difference between `.unwrap()` and proper error handling with `match` or `?` on a `Result`?
+  A: |
+    `.unwrap()` panics (crashes the program) if the value is `Err`/`None` — fine for prototypes/tests, but a code smell in production code where errors should be handled or propagated.
+
+- Q: |
+    What does `match` guarantee that a chain of `if`/`else if` does not, when working with an enum?
+  A: |
+    Exhaustiveness — the compiler forces every variant to be handled (or an explicit `_` catch-all), so adding a new enum variant later causes a compile error anywhere it isn't handled.
+
+- Q: |
+    In Rust, what is the difference between a panic and returning an `Err`?
+  A: |
+    A panic is for unrecoverable bugs/invariant violations and unwinds (or aborts) the program, terminating that thread. Returning `Err` is for expected, recoverable failure conditions that the caller is expected to handle.
+
+- Q: |
+    What does the `std::cmp::Ordering` enum represent, and what are its three variants?
+  A: |
+    The result of comparing two values: `Ordering::Less`, `Ordering::Greater`, or `Ordering::Equal`. The `.cmp()` method returns one of these variants, which can then be matched on.
+  C: |
+    use std::cmp::Ordering;
+
+    match guess.cmp(&secret_number) {
+        Ordering::Less => println!("Too small!"),
+        Ordering::Greater => println!("Too big!"),
+        Ordering::Equal => println!("You win!"),
+    }
+
+- Q: |
+    How do you convert a `String` into a numeric type like `u32`, and how do you tell Rust which numeric type to produce?
+  A: |
+    Call `.parse()`, which returns a `Result`; the target type is specified via a type annotation on the binding since `.parse()` alone is generic over the output type.
+  C: |
+    let guess: u32 = guess.trim().parse().expect("Please type a number!");
+  N: |
+    `.trim()` should be called first to strip whitespace/newline characters the user's input may include.
+
+- Q: |
+    When matching on the `Result` from `.parse()`, what does the `_` pattern in `Err(_) => continue` mean?
+  A: |
+    `_` is a catch-all pattern that matches any value without binding it — here it matches any parse error regardless of its specific details, discarding it and continuing the loop.
+
+- Q: |
+    What problem do slices solve that returning a plain index (e.g. a `usize` marking a word boundary) doesn't?
+  A: |
+    A returned index can become invalid/meaningless if the underlying data changes after it was computed (e.g. calling `.clear()` on the `String`) — the index isn't tied to the data it describes, so nothing stops you from misusing a stale one. A slice instead borrows a reference into the data itself, so the borrow checker keeps it in sync with (or rejects code that invalidates) the data it points into.
+
+- Q: |
+    What is a Rust string slice, what type signifies it, and what range syntax creates one?
+  A: |
+    A string slice is a reference to a contiguous sequence of a `String`'s data; its type is written `&str`. You create one with range syntax `&s[starting_index..ending_index]`, where `ending_index` is one past the last included byte.
+  C: |
+    let s = String::from("hello world");
+    let hello = &s[0..5];
+    let world = &s[6..11];
+
+- Q: |
+    What are the three range-syntax shorthands for slicing a `String`, and what does each omit?
+  A: |
+    `&s[..2]` omits the start (defaults to 0); `&s[3..]` omits the end (defaults to the string's length); `&s[..]` omits both (the whole string).
+
+- Q: |
+    What happens if you try to create a string slice that cuts through the middle of a multibyte UTF-8 character?
+  A: |
+    The program panics at runtime — slice range indices must land on valid UTF-8 character boundaries.
+
+- Q: |
+    Why is a function parameter typed `&str` considered more general/idiomatic than one typed `&String`?
+  A: |
+    A `&str` parameter accepts a slice of a `String`, a full `&String` reference (via deref coercion), or a string literal directly — a `&String` parameter only accepts references to an actual `String`. Taking `&str` widens the function's usable inputs without losing any functionality.
+  C: |
+    fn first_word(s: &str) -> &str { /* ... */ }
+
+    let my_string = String::from("hello world");
+    first_word(&my_string);       // works via deref coercion
+    first_word("hello world");    // also works: literal is already &str
+
+- Q: |
+    What is an array slice, what is its type, and what does it store internally?
+  A: |
+    A reference to a contiguous part of an array, written `&[T]` (e.g. `&[i32]`). Like a string slice, it internally stores a pointer to the first element plus a length, and works the same way regardless of element type.
+  C: |
+    let a = [1, 2, 3, 4, 5];
+    let slice = &a[1..3];
+    assert_eq!(slice, &[2, 3]);

@@ -1,0 +1,230 @@
+- Q: |
+    What file extension do Rust source files use, and how should multi-word filenames be separated?
+  A: |
+    The `.rs` extension; multi-word filenames use underscores (e.g. `hello_world.rs`, not `helloworld.rs`).
+
+- Q: |
+    What is special about the `main` function in a Rust program?
+  A: |
+    It's always the first code that runs in every executable Rust program. It takes no parameters and returns nothing.
+  C: |
+    fn main() {
+        println!("Hello, world!");
+    }
+
+- Q: |
+    Why does `println!` end with a `!`, and what does that indicate?
+  A: |
+    The `!` indicates `println!` is a macro call, not a regular function call — macros don't always follow the same rules as functions.
+
+- Q: |
+    Is Rust an interpreted or ahead-of-time compiled language, and why does that matter for distributing a program?
+  A: |
+    Rust is ahead-of-time compiled — compiling and running are separate steps. Once compiled, the resulting executable can be run without Rust installed, unlike dynamic languages (Ruby, Python, JavaScript) where interpretation and execution happen together at run time.
+
+- Q: |
+    What does `rustc main.rs` produce, and how do you run the result on Linux/macOS versus Windows?
+  A: |
+    It compiles `main.rs` into a binary executable — `main` on Linux/macOS (run with `./main`), or `main.exe` on Windows (run with `.\main`).
+
+- Q: |
+    Are variables mutable or immutable by default in Rust, and how do you opt into mutability?
+  A: |
+    Immutable by default; add the `mut` keyword to allow the value to be changed after initialization.
+  C: |
+    let apples = 5;      // immutable
+    let mut bananas = 5; // mutable
+
+- Q: |
+    What is the "prelude" in Rust?
+  A: |
+    A set of items from the standard library that Rust automatically brings into scope for every program. Anything not in the prelude (e.g. `std::io`, `rand::Rng`) must be explicitly brought in with a `use` statement.
+
+- Q: |
+    What does `.expect("message")` do differently from `.unwrap()` when called on a `Result` or `Option` that is `Err`/`None`?
+  A: |
+    Both panic on failure, but `.expect()` lets you supply a custom panic message, making it easier to trace where and why the crash happened.
+  C: |
+    io::stdin()
+        .read_line(&mut guess)
+        .expect("Failed to read line");
+
+- Q: |
+    What does Rust's variable "shadowing" mean, and how does it differ from `mut`?
+  A: |
+    Shadowing lets you declare a new `let` binding that reuses an existing variable's name, which can even change its type — the old binding is hidden, not mutated. `mut` instead allows the *same* binding to be reassigned, but never changes its type.
+  C: |
+    let guess = String::from("42");
+    let guess: u32 = guess.trim().parse().expect("not a number!");
+
+- Q: |
+    What is the difference between `loop`, and the `break` and `continue` keywords inside it?
+  A: |
+    `loop` creates an infinite loop. `break` exits the loop immediately, resuming execution after it. `continue` skips the rest of the current iteration and jumps to the next one.
+  C: |
+    loop {
+        let x = get_input();
+        if x.is_err() { continue; }
+        if x == Ok(0) { break; }
+    }
+
+- Q: |
+    Why does Rust make immutability the default instead of mutability?
+  A: |
+    If one part of the code assumes a value never changes while another part changes it, that produces bugs that are hard to track down — especially when the value only changes *sometimes*. The compiler rejecting unintended mutation makes code easier to reason about, and an explicit `mut` signals to readers that a variable's value is expected to change.
+
+- Q: |
+    How does a `const` differ from an immutable variable declared with `let` (without `mut`)?
+  A: |
+    A `const` is always immutable (never allowed with `mut`), requires a mandatory type annotation, must be set to a value computable at compile time (not a runtime-computed value), can be declared in any scope including global scope, and is valid for the entire program's runtime within that scope.
+  C: |
+    const THREE_HOURS_IN_SECONDS: u32 = 60 * 60 * 3;
+  N: |
+    Naming convention: all uppercase with underscores between words.
+
+- Q: |
+    In `let x = 5; let x = x + 1; { let x = x * 2; } `, what value does `x` have inside versus after the inner block?
+  A: |
+    Inside the inner `{}` block, shadowing creates a new `x` scoped only to that block. Once the block ends, that inner shadow goes out of scope and `x` reverts to the value it had just before the block.
+
+- Q: |
+    What naming convention does idiomatic Rust use for function and variable names?
+  A: |
+    snake_case — all lowercase letters with underscores separating words.
+
+- Q: |
+    Does the order in which functions are defined in a Rust file matter, e.g. can a function be called before it's defined further down in the file?
+  A: |
+    No — Rust doesn't care where functions are defined, only that they're visible in a scope the caller can see. Order of definition within a file is irrelevant.
+
+- Q: |
+    Why must every parameter in a Rust function signature have an explicit type annotation, unlike some other languages that infer parameter types?
+  A: |
+    It's a deliberate design decision so that required types are documented right in the signature, letting the compiler give precise errors near the call site rather than requiring type inference across the whole program to figure out what was intended.
+  C: |
+    fn print_labeled_measurement(value: i32, unit_label: char) {
+        println!("The measurement is: {value}{unit_label}");
+    }
+
+- Q: |
+    What is the difference between a "statement" and an "expression" in Rust?
+  A: |
+    A statement performs an action but does not return a value (e.g. `let y = 6;`, a function definition). An expression evaluates to a value (e.g. `5 + 6`, a function call, a macro call, or a `{}` block).
+  N: |
+    Because statements don't return values, you can't write something like `let x = (let y = 6);`.
+
+- Q: |
+    Can a `{}` block itself be used as an expression that produces a value? Show how.
+  A: |
+    Yes — a block's value is the value of its last expression (with no trailing semicolon), and that value can be assigned out of the block.
+  C: |
+    let y = {
+        let x = 3;
+        x + 1
+    };
+    // y is 4
+
+- Q: |
+    Adding a semicolon to the end of `x + 1` inside a function body changes what the function returns. What changes, and why?
+  A: |
+    The semicolon turns the expression into a statement, so it no longer evaluates to a value — the function then implicitly returns `()` (unit) instead of the expression's value, which is a type error if the function's signature declares a non-unit return type.
+  C: |
+    fn plus_one(x: i32) -> i32 {
+        x + 1;  // error: expected i32, found ()
+    }
+
+- Q: |
+    How does a Rust function specify and produce its return value?
+  A: |
+    The return type is declared after `->` in the signature; the function's return value is the value of the final expression in its body (no semicolon), or you can return early with an explicit `return` statement plus a value.
+  C: |
+    fn five() -> i32 {
+        5
+    }
+
+- Q: |
+    How do you write a comment in Rust, and how do you write one that spans multiple lines?
+  A: |
+    Start it with `//` — everything after that on the line is ignored by the compiler. There's no separate block-comment syntax; a multi-line comment is just `//` repeated at the start of each line.
+  C: |
+    // So we're doing something complicated here, long enough that we need
+    // multiple lines of comments to do it!
+
+- Q: |
+    What is the idiomatic placement for a comment explaining a line of code — on the same line, or above it?
+  A: |
+    On its own line directly above the code it explains, rather than trailing at the end of the line.
+  C: |
+    // I'm feeling lucky today
+    let lucky_number = 7;
+
+- Q: |
+    What is a "raw identifier" in Rust, what syntax creates one, and why would you need one?
+  A: |
+    Prefixing a reserved keyword with `r#` lets you use it as an ordinary identifier (function/variable name) where it would otherwise be a syntax error. This matters for macro-generated code, interop with non-Rust languages where the word isn't reserved, and edition interoperability — e.g. `try` wasn't a keyword before the 2018 edition, so calling a `try` function from a 2015-edition dependency requires writing `r#try` in later-edition code.
+  C: |
+    fn r#match(needle: &str, haystack: &str) -> bool {
+        haystack.contains(needle)
+    }
+    assert!(r#match("foo", "foobar"));
+
+- Q: |
+    What type must the condition of a Rust `if` be, and how does this differ from languages like JavaScript or Ruby?
+  A: |
+    It must be a `bool` — Rust does not automatically convert other types (like integers) to a boolean, so `if number { ... }` for a non-bool `number` is a compile error. You must write an explicit comparison like `if number != 0`.
+
+- Q: |
+    In an `if`/`else if`/`else` chain, how many branches execute once a condition matches?
+  A: |
+    Only the first branch whose condition evaluates to `true` runs — Rust checks each condition in order and stops at the first match, even if a later condition would also be true.
+
+- Q: |
+    Can you assign the result of an `if` to a variable in Rust, and what constraint does that place on the branches?
+  A: |
+    Yes, since `if` is an expression: `let number = if condition { 5 } else { 6 };`. All branches must evaluate to the same type, since the variable's type must be known at compile time — `if condition { 5 } else { "six" }` is a compile error.
+
+- Q: |
+    How can a `loop` produce a value to be used after it ends, unlike `while` or `for`?
+  A: |
+    Put a value after `break` — that value becomes the result of the whole `loop` expression, which can be assigned to a variable.
+  C: |
+    let mut counter = 0;
+    let result = loop {
+        counter += 1;
+        if counter == 10 {
+            break counter * 2;
+        }
+    };
+    // result is 20
+
+- Q: |
+    When loops are nested, how do you make `break` or `continue` target an outer loop instead of the innermost one?
+  A: |
+    Label the outer loop with `'label:` before it, then use `break 'label` or `continue 'label` to target that specific loop instead of the default innermost one.
+  C: |
+    'counting_up: loop {
+        loop {
+            if count == 2 {
+                break 'counting_up;
+            }
+        }
+    }
+
+- Q: |
+    Why is a `for` loop over a collection preferred over a `while` loop with a manual index counter?
+  A: |
+    The `while`+index approach is error-prone (an off-by-one index causes a panic or skips elements) and slower (the compiler must emit a runtime bounds check on every access). `for` iterates directly over the elements, eliminating both the indexing bugs and the extra runtime check, and it keeps working correctly if the collection's length changes.
+  C: |
+    let a = [10, 20, 30, 40, 50];
+    for element in a {
+        println!("the value is: {element}");
+    }
+
+- Q: |
+    How do you iterate a range of numbers in reverse using a `for` loop?
+  A: |
+    Use a `Range` (e.g. `1..4`) and call `.rev()` on it to reverse the sequence before iterating.
+  C: |
+    for number in (1..4).rev() {
+        println!("{number}!");
+    }

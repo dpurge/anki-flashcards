@@ -1,0 +1,141 @@
+- Q: |
+    What are the two ways a Rust program can panic?
+  A: |
+    An explicit `panic!("message")` call, or an action the code takes that the language itself flags as invalid, such as indexing a vector past its length.
+  C: |
+    let v = vec![1, 2, 3];
+    v[99]; // panics: index out of bounds
+
+- Q: |
+    What is the difference between "unwinding" and "aborting" when a Rust program panics, and which is the default?
+  A: |
+    Unwinding (the default) walks back up the call stack, cleaning up (dropping) data from each function as it goes — more work, but it recovers memory properly. Aborting ends the program immediately without cleanup, relying on the OS to reclaim memory.
+
+- Q: |
+    How do you configure a release build to abort instead of unwind on panic, and why would you want to?
+  A: |
+    Set `panic = 'abort'` in the relevant Cargo profile — this produces a smaller binary, since the compiler doesn't need to generate the unwinding cleanup code.
+  C: |
+    [profile.release]
+    panic = 'abort'
+
+- Q: |
+    How do you get a backtrace when a Rust program panics, and what's required for it to be useful?
+  A: |
+    Set the `RUST_BACKTRACE=1` environment variable when running the program (`RUST_BACKTRACE=full` for more detail). Debug symbols must be present, which is the default for `cargo build`/`cargo run` without `--release`.
+  C: |
+    RUST_BACKTRACE=1 cargo run
+
+- Q: |
+    When reading a panic backtrace with many stack frames, where should you start looking to find the actual source of the bug?
+  A: |
+    Start from the top and read down until you reach a file you actually wrote — that's where the problem originated. Frames above it are code your code called; frames below are the runtime/stdlib/crate code that eventually called into yours.
+
+- Q: |
+    What is the standard library's definition of `Result<T, E>`?
+  A: |
+    `enum Result<T, E> { Ok(T), Err(E) }` — `T` is the success value's type, `E` is the error value's type.
+
+- Q: |
+    Besides `match` and `?`, what method lets you handle an `Err` with a closure inline, without nested `match` blocks?
+  A: |
+    `.unwrap_or_else(|error| { ... })` — it runs the closure (receiving the error) only if the `Result` is `Err`, letting you branch on the error (e.g. `error.kind()`) without deeply nesting `match` expressions.
+  C: |
+    let greeting_file = File::open("hello.txt").unwrap_or_else(|error| {
+        if error.kind() == ErrorKind::NotFound {
+            File::create("hello.txt").unwrap_or_else(|error| {
+                panic!("Problem creating the file: {error:?}");
+            })
+        } else {
+            panic!("Problem opening the file: {error:?}");
+        }
+    });
+
+- Q: |
+    What is the difference between `.unwrap()` and `.expect("message")` on a `Result`, and which is generally preferred in production-quality code?
+  A: |
+    Both panic on `Err`, but `.expect()` lets you supply a message explaining *why* the operation is expected to always succeed, giving much more useful context when the panic does happen. Most Rust code prefers `.expect()` with a clear message over bare `.unwrap()`.
+  C: |
+    let greeting_file = File::open("hello.txt")
+        .expect("hello.txt should be included in this project");
+
+- Q: |
+    Can the `?` operator be used on an `Option<T>`, and what does it do if the value is `None`?
+  A: |
+    Yes — inside a function returning `Option<T>`, `?` unwraps `Some(v)` to `v`, or returns `None` early from the function if the value is `None`.
+  C: |
+    fn last_char_of_first_line(text: &str) -> Option<char> {
+        text.lines().next()?.chars().last()
+    }
+
+- Q: |
+    What determines whether the `?` operator can be used inside a given function?
+  A: |
+    The function's return type must be compatible with what `?` produces on early return — i.e. it must be `Result<T, E>`, `Option<T>`, or another type implementing `FromResidual`. You can't use `?` on a `Result` inside a function that returns `()`, for example.
+
+- Q: |
+    Can `main` return a `Result`, and what determines the program's exit code if it does?
+  A: |
+    Yes. If `main` returns `Ok(())`, the process exits with code `0`; if it returns `Err(_)`, the process exits with a nonzero code.
+  C: |
+    use std::error::Error;
+    fn main() -> Result<(), Box<dyn Error>> {
+        let greeting_file = std::fs::File::open("hello.txt")?;
+        Ok(())
+    }
+
+- Q: |
+    What does the `Box<dyn Error>` type mean when used as an error type, e.g. in `Result<(), Box<dyn Error>>`?
+  A: |
+    It's a trait object that can hold any type implementing the standard `Error` trait — effectively "any kind of error" — useful as a catch-all return type when a function might propagate several different concrete error types via `?`.
+
+- Q: |
+    Why is calling `.unwrap()`/`.expect()` considered acceptable in examples, prototypes, and tests, rather than a code smell?
+  A: |
+    In examples, it's a placeholder standing in for whatever real error handling the reader's application should do. In prototypes, it marks a spot you plan to make more robust once you decide how errors should actually be handled. In tests, a panic is exactly the mechanism that marks the test as failed, so it's the correct behavior.
+
+- Q: |
+    If you're certain — by manually reasoning about the code — that a `Result`-returning call can never actually fail, what should you do instead of leaving it unhandled or writing dead error-handling code?
+  A: |
+    Call `.expect()` with a message documenting *why* you believe it can never fail, since the compiler itself can't know that guarantee — it can only see the `Result` type.
+  C: |
+    let home: IpAddr = "127.0.0.1"
+        .parse()
+        .expect("Hardcoded IP address should be valid");
+
+- Q: |
+    What three conditions (from the book's guidelines) make panicking the right response to a "bad state" (invalid/contradictory/missing data), rather than returning a `Result`?
+  A: |
+    The bad state is unexpected (not something that happens occasionally in normal operation); subsequent code needs to rely on *not* being in that bad state rather than re-checking for it at every step; and there's no good way to encode the guarantee in the type system itself.
+
+- Q: |
+    Besides "unexpected bad state," what other reason justifies panicking rather than returning a `Result`?
+  A: |
+    When continuing with invalid input could put the user or system at risk — for safety, the code should verify the values first and panic on invalid input rather than proceed.
+
+- Q: |
+    How do you tell the difference between failures that should panic versus failures that should return a `Result`?
+  A: |
+    If failure is expected to be rare/unexpected and represents a broken invariant, panic. If failure is a normal, anticipated part of the operation — e.g. a parser receiving malformed data, or an HTTP call hitting a rate limit — return a `Result` so the caller can handle it.
+
+- Q: |
+    How does wrapping a validated `i32` in a custom type like `Guess` (with a private field and a checking constructor) reduce the need for runtime range checks elsewhere in a codebase?
+  A: |
+    Once `Guess::new` panics on out-of-range input, any function that takes or returns a `Guess` (instead of a plain `i32`) can rely on that value already being valid — it doesn't need to re-check the range itself. Making the field private forces all callers to go through `Guess::new`, so a `Guess` can never exist in an unvalidated state.
+  C: |
+    pub struct Guess {
+        value: i32, // private — can't be set directly from outside
+    }
+
+    impl Guess {
+        pub fn new(value: i32) -> Guess {
+            if value < 1 || value > 100 {
+                panic!("Guess value must be between 1 and 100, got {value}.");
+            }
+            Guess { value }
+        }
+
+        pub fn value(&self) -> i32 {
+            self.value
+        }
+    }

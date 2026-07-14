@@ -1,0 +1,93 @@
+- Q: |
+    What does it mean that Rust iterators are "lazy", and what's the practical consequence of calling `v1.iter().map(|x| x + 1);` on its own with no further code?
+  A: |
+    An iterator does nothing until something actually consumes it (pulls items out via `next` or a method built on it). `v1.iter().map(|x| x + 1);` alone produces a warning and has no effect — the closure never runs because nothing consumes the resulting iterator.
+
+- Q: |
+    What is the `Iterator` trait's core method, and what must any type implement to become an iterator?
+  A: |
+    Just `fn next(&mut self) -> Option<Self::Item>`, using the trait's associated type `Item` for what it yields. It returns `Some(item)` for each element and `None` once iteration is finished; all other `Iterator` methods have default implementations built on top of `next`.
+  C: |
+    pub trait Iterator {
+        type Item;
+        fn next(&mut self) -> Option<Self::Item>;
+    }
+
+- Q: |
+    What is the difference between `.iter()`, `.iter_mut()`, and `.into_iter()` on a collection like `Vec<T>`?
+  A: |
+    `.iter()` yields immutable references (`&T`); `.iter_mut()` yields mutable references (`&mut T`); `.into_iter()` takes ownership of the collection and yields owned values (`T`), consuming the original collection in the process.
+
+- Q: |
+    Why must an iterator variable be declared `mut` to call `.next()` on it directly?
+  A: |
+    Calling `next` advances the iterator's internal position/state to track how far through the sequence it's gotten — each call "eats up" an item, so the iterator itself must be mutable to record that progress.
+  C: |
+    let mut v1_iter = v1.iter();
+    assert_eq!(v1_iter.next(), Some(&1));
+    assert_eq!(v1_iter.next(), Some(&2));
+
+- Q: |
+    What is a "consuming adaptor", and why can't you use an iterator variable after calling one on it (e.g. `.sum()`)?
+  A: |
+    A consuming adaptor calls `next` repeatedly internally and takes ownership of the iterator to produce a final value — after calling `.sum()`, the iterator itself has been consumed/moved, so the original variable is no longer usable.
+  C: |
+    let v1_iter = v1.iter();
+    let total: i32 = v1_iter.sum();
+    // v1_iter can't be used again here
+
+- Q: |
+    What is an "iterator adaptor" like `.map()`, and how must its result be consumed to actually have an effect?
+  A: |
+    An iterator adaptor transforms one iterator into another lazily, without running the transformation until something consumes the result — typically `.collect()` into a concrete collection, forcing evaluation.
+  C: |
+    let v2: Vec<_> = v1.iter().map(|x| x + 1).collect();
+    assert_eq!(v2, vec![2, 3, 4]);
+
+- Q: |
+    How can a closure passed to `.filter()` use a value from outside the closure, like a `shoe_size` parameter?
+  A: |
+    The closure captures the surrounding variable from its environment (by reference here, since it's only read), and `.filter()` keeps only the elements for which the closure returns `true`.
+  C: |
+    fn shoes_in_size(shoes: Vec<Shoe>, shoe_size: u32) -> Vec<Shoe> {
+        shoes.into_iter().filter(|s| s.size == shoe_size).collect()
+    }
+
+- Q: |
+    Why must a chain of iterator adaptors (e.g. `.filter().map()`) end with a consuming call like `.collect()` to actually produce results?
+  A: |
+    Every adaptor in the chain stays lazy, building up a description of the transformation without doing any work — only a consuming adaptor at the end actually drives the chain by pulling items through it via `next`.
+
+- Q: |
+    How does rewriting `search`'s manual `for` loop (with a `mut results` vector and `.push()`) as `contents.lines().filter(|line| line.contains(query)).collect()` change what state the function manages?
+  A: |
+    It eliminates the explicit mutable `results` vector entirely — `.filter()` lazily keeps only matching lines and `.collect()` gathers them into the final `Vec` in one expression, so there's no manually-managed mutable accumulator for the logic to get wrong.
+  C: |
+    pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
+        contents.lines().filter(|line| line.contains(query)).collect()
+    }
+
+- Q: |
+    Besides being shorter, what's a concrete future benefit of removing the mutable `results` accumulator from `search` in favor of `.filter().collect()`?
+  A: |
+    It removes a piece of mutable state that would otherwise need synchronized access if the search were ever parallelized — a version without shared mutable state is easier to adapt to run concurrently.
+
+- Q: |
+    What would change about `search`'s behavior if, instead of `.collect()`-ing into a `Vec`, it returned `impl Iterator<Item = &'a str>` directly?
+  A: |
+    Results would become available lazily as each match is found, rather than all at once after the whole input has been scanned — a caller iterating the returned iterator (e.g. in a `for` loop) could start printing/processing matches immediately instead of waiting for the full `Vec` to be built.
+
+- Q: |
+    When benchmarking a hand-written `for` loop implementation of `search` against the `.filter().collect()` iterator version, which one runs faster?
+  A: |
+    They perform about the same — the book's benchmark showed nearly identical nanoseconds-per-iteration for both versions, despite the iterator version being higher-level and more concise.
+
+- Q: |
+    What does it mean to call iterators a "zero-cost abstraction" in Rust?
+  A: |
+    Using the abstraction imposes no additional runtime overhead compared to writing the equivalent low-level code by hand — "what you don't use, you don't pay for, and what you do use, you couldn't hand-code any better" (the C++ zero-overhead principle Rust follows here too).
+
+- Q: |
+    Why do closures and iterator chains in Rust end up running as fast as manually written loops, despite looking like a higher-level, more functional style?
+  A: |
+    The compiler compiles them down to roughly the same machine code you'd get from hand-written low-level loops, applying optimizations like loop unrolling and eliminating redundant bounds checks — the abstraction exists at the source level, not at runtime.

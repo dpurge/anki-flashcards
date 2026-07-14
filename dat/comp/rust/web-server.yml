@@ -1,0 +1,182 @@
+- Q: |
+    Why does `TcpListener::bind("127.0.0.1:7878")` return a `Result`, and what does `.unwrap()` on it do?
+  A: |
+    Binding can fail for OS-level reasons (e.g. another program already listening on that port), so `bind` returns `Result<TcpListener, Error>`. `.unwrap()` terminates the program immediately if binding fails, rather than attempting to handle the error.
+  C: |
+    let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
+
+- Q: |
+    What does `listener.incoming()` produce, and why is each item itself a `Result` that needs `.unwrap()`?
+  A: |
+    An iterator of connection attempts. Each individual `stream` is `Result<TcpStream, Error>` because an incoming connection attempt can still fail for OS-specific reasons (e.g. hitting a connection limit) even though the listener itself bound successfully.
+  C: |
+    for stream in listener.incoming() {
+        let stream = stream.unwrap();
+        handle_connection(stream);
+    }
+
+- Q: |
+    How do you read just the first line (the request line) of an incoming HTTP request from a `TcpStream`?
+  A: |
+    Wrap the stream in a `BufReader`, then call `.lines()` (an iterator of `Result<String, Error>`) and take the first item, unwrapping both the iterator's `Option` and the inner `Result`.
+  C: |
+    let buf_reader = BufReader::new(&stream);
+    let request_line = buf_reader.lines().next().unwrap().unwrap();
+
+- Q: |
+    How do you read an entire HTTP request's headers (everything before the body) from a `BufReader`, given that an HTTP request's headers end at a blank line?
+  A: |
+    Iterate `.lines()`, unwrapping each `Result<String, Error>`, and use `.take_while(|line| !line.is_empty())` to collect every line up to (but not including) the first empty line — which is exactly where the header section of an HTTP request ends.
+  C: |
+    let http_request: Vec<_> = buf_reader
+        .lines()
+        .map(|result| result.unwrap())
+        .take_while(|line| !line.is_empty())
+        .collect();
+
+- Q: |
+    What is the minimal valid HTTP response you can send back over a `TcpStream`, with no body at all?
+  A: |
+    A status line followed by `\r\n\r\n` (the header section, empty here, then the blank line separating headers from body) — `"HTTP/1.1 200 OK\r\n\r\n"`.
+  C: |
+    let response = "HTTP/1.1 200 OK\r\n\r\n";
+    stream.write_all(response.as_bytes()).unwrap();
+
+- Q: |
+    How do you build an HTTP response that includes a body (e.g. an HTML file's contents) along with the required `Content-Length` header?
+  A: |
+    Read the file's contents into a `String`, compute its byte length, and format the status line, `Content-Length` header, blank line, and body together with `\r\n` line endings, then write the whole thing as bytes to the stream.
+  C: |
+    let status_line = "HTTP/1.1 200 OK";
+    let contents = fs::read_to_string("hello.html").unwrap();
+    let length = contents.len();
+    let response = format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
+    stream.write_all(response.as_bytes()).unwrap();
+
+- Q: |
+    How can the server choose between a 200 response and a 404 response based on the parsed request line?
+  A: |
+    Compare the request line string against the expected value (e.g. `"GET / HTTP/1.1"`) and select the status line and file to serve accordingly, then read whichever file was chosen.
+  C: |
+    let (status_line, filename) = if request_line == "GET / HTTP/1.1" {
+        ("HTTP/1.1 200 OK", "hello.html")
+    } else {
+        ("HTTP/1.1 404 NOT FOUND", "404.html")
+    };
+
+- Q: |
+    Why does a simple `for stream in listener.incoming() { handle_connection(stream); }` server only serve one request at a time, and what problem does that cause?
+  A: |
+    The loop body calls `handle_connection` synchronously and blocks until it finishes before looping back to accept the next connection — so a single slow request (e.g. one that sleeps or does heavy work) prevents the server from accepting or responding to any other client's request until it completes.
+
+- Q: |
+    What is the downside of the "naive" fix of calling `thread::spawn` for every single incoming connection?
+  A: |
+    There's no limit on how many threads can be created — a flood of requests (e.g. 10 million) would spawn a corresponding flood of OS threads, exhausting server resources and effectively acting as a self-inflicted denial-of-service.
+  C: |
+    for stream in listener.incoming() {
+        let stream = stream.unwrap();
+        thread::spawn(|| { handle_connection(stream); });
+    }
+
+- Q: |
+    What is a "thread pool", and how does it bound the amount of concurrent work compared to spawning a thread per request?
+  A: |
+    A fixed group of already-spawned threads that pull tasks from a shared queue, process one, then go back for another — this caps concurrency at exactly `N` (the pool size) requests processed simultaneously, regardless of how many requests actually arrive, instead of spawning unboundedly many threads.
+  C: |
+    let pool = ThreadPool::new(4);
+    for stream in listener.incoming() {
+        let stream = stream.unwrap();
+        pool.execute(|| { handle_connection(stream); });
+    }
+
+- Q: |
+    What is the `Job` type alias `type Job = Box<dyn FnOnce() + Send + 'static>;` built from, and why each of those three bounds?
+  A: |
+    `FnOnce` because each submitted job is only ever executed once by whichever worker thread picks it up; `Send` because the closure must be safely transferable from the thread that submitted it to the worker thread that will run it; `'static` because the pool can't know in advance how long a worker might hold onto the job before running it, so the closure can't borrow anything with a shorter lifetime.
+
+- Q: |
+    Why does the thread pool's shared job receiver need to be wrapped as `Arc<Mutex<Receiver<Job>>>`, given that channels are already multi-producer/single-consumer?
+  A: |
+    A channel's receiver is meant to be owned by exactly one consumer — but here multiple `Worker` threads all need to pull from the *same* receiver. `Arc` lets multiple workers share ownership of the receiver, and `Mutex` ensures only one worker at a time actually calls `.recv()` on it, since concurrent unsynchronized access to a single receiver isn't otherwise safe.
+  C: |
+    let (sender, receiver) = mpsc::channel();
+    let receiver = Arc::new(Mutex::new(receiver));
+
+- Q: |
+    What does `ThreadPool::execute` do with the closure it's given, and what are its trait bounds?
+  A: |
+    It boxes the closure as a `Job` and sends it down the channel to whichever worker thread picks it up next. Its generic parameter is bounded `F: FnOnce() + Send + 'static`, matching the `Job` type alias exactly.
+  C: |
+    pub fn execute<F>(&self, f: F)
+    where
+        F: FnOnce() + Send + 'static,
+    {
+        let job = Box::new(f);
+        self.sender.send(job).unwrap();
+    }
+
+- Q: |
+    What does each `Worker`'s spawned thread do in an infinite loop to pick up and run jobs from the shared channel?
+  A: |
+    It locks the shared `Mutex`, calls `.recv()` on the receiver to block until a job arrives, then calls the received job (a boxed closure) — repeating forever.
+  C: |
+    let thread = thread::spawn(move || loop {
+        let job = receiver.lock().unwrap().recv().unwrap();
+        job();
+    });
+
+- Q: |
+    Why does `let job = receiver.lock().unwrap().recv().unwrap();` allow other workers to receive jobs while this one executes its job, whereas a `while let Ok(job) = receiver.lock().unwrap().recv() { job(); }` loop would not?
+  A: |
+    Using a plain `let` binds the `MutexGuard` temporary only for the duration of that single statement — it's dropped (releasing the lock) as soon as `.recv()` returns, before `job()` runs. A `while let` condition keeps the temporary `MutexGuard` alive for the entire loop body, so the lock stays held while `job()` executes, blocking every other worker from receiving a new job until this one finishes.
+
+- Q: |
+    Why does implementing `Drop for ThreadPool` to call `worker.thread.join()` fail to compile if `Worker.thread` is a plain `thread::JoinHandle<()>`, and what field type change fixes it?
+  A: |
+    `.join()` takes ownership of the `JoinHandle` by value, but `Drop::drop` only gives you `&mut self` — you can't move a field out from behind a mutable reference. Changing the field to `Option<thread::JoinHandle<()>>` lets you call `.take()` to move the handle out (leaving `None` behind), which you *can* do through `&mut self`.
+  C: |
+    struct Worker {
+        id: usize,
+        thread: Option<thread::JoinHandle<()>>,
+    }
+
+- Q: |
+    Why must `ThreadPool`'s `sender` field also become `Option<mpsc::Sender<Job>>`, and what does explicitly dropping it accomplish?
+  A: |
+    Wrapping it in `Option` lets `Drop::drop` call `.take()` to move the sender out and drop it explicitly (via `drop(self.sender.take())`) before joining any worker threads. Dropping every sender closes the channel, causing every worker's blocked `.recv()` call to return `Err` instead of hanging forever — which is what lets each worker's loop actually exit so `.join()` can complete.
+  C: |
+    pub struct ThreadPool {
+        workers: Vec<Worker>,
+        sender: Option<mpsc::Sender<Job>>,
+    }
+
+- Q: |
+    How must a worker's loop change from `let job = receiver.lock().unwrap().recv().unwrap(); job();` to shut down gracefully once the channel closes?
+  A: |
+    Match on the `Result` from `.recv()` instead of unwrapping it: on `Ok(job)`, run the job as before; on `Err(_)` (meaning the channel is closed, i.e. all senders dropped), print a shutdown message and `break` out of the loop instead of panicking.
+  C: |
+    loop {
+        let message = receiver.lock().unwrap().recv();
+        match message {
+            Ok(job) => job(),
+            Err(_) => {
+                println!("Worker {id} disconnected; shutting down.");
+                break;
+            }
+        }
+    }
+
+- Q: |
+    In `ThreadPool`'s `Drop` implementation, why must dropping the sender happen *before* joining the worker threads, rather than after?
+  A: |
+    Joining a worker thread blocks until that thread's loop exits — but a worker's loop only exits once its `.recv()` call errors out, which only happens after every sender is dropped. Joining first (while the sender is still alive) would deadlock, since the workers would still be blocked waiting for a job or channel closure that hasn't happened yet.
+  C: |
+    impl Drop for ThreadPool {
+        fn drop(&mut self) {
+            drop(self.sender.take()); // 1: close the channel first
+            for worker in self.workers.drain(..) { // 2: then join each thread
+                worker.thread.join().unwrap();
+            }
+        }
+    }

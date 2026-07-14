@@ -1,0 +1,81 @@
+deck:
+  name: 'Computer::Rust'
+
+model:
+  name: Computer QA
+  kind: normal
+  style:
+    css: ../_model/comp-qa.css
+  templates:
+    - name: Computer QA
+      qfmt: ../_model/comp-qfmt.html
+      afmt: ../_model/comp-afmt.html
+  fields:
+    - name: Q
+      template: ../_template/Question.txt
+      index: true
+      format: markdown
+      description: Question
+    - name: A
+      template: ../_template/Answer.txt
+      format: markdown
+      description: Answer
+    - name: C
+      template: ../_template/Code.txt
+      description: Code
+    - name: N
+      template: ../_template/Notes.txt
+      format: markdown
+      description: Notes
+
+data:
+  - filename: ./basics.yml
+    tags: ['basics']
+  - filename: ./data-types.yml
+    tags: ['data-types']
+  - filename: ./ownership.yml
+    tags: ['ownership']
+  - filename: ./types.yml
+    tags: ['types']
+  - filename: ./structs.yml
+    tags: ['structs']
+  - filename: ./enums.yml
+    tags: ['enums']
+  - filename: ./modules.yml
+    tags: ['modules']
+  - filename: ./collections.yml
+    tags: ['collections']
+  - filename: ./error-handling.yml
+    tags: ['error-handling']
+  - filename: ./testing.yml
+    tags: ['testing']
+  - filename: ./cli-project.yml
+    tags: ['cli-project']
+  - filename: ./closures.yml
+    tags: ['closures']
+  - filename: ./iterators.yml
+    tags: ['iterators']
+  - filename: ./traits.yml
+    tags: ['traits']
+  - filename: ./memory.yml
+    tags: ['memory']
+  - filename: ./smart-pointers.yml
+    tags: ['smart-pointers']
+  - filename: ./concurrency.yml
+    tags: ['concurrency']
+  - filename: ./async.yml
+    tags: ['async']
+  - filename: ./oop.yml
+    tags: ['oop']
+  - filename: ./patterns.yml
+    tags: ['patterns']
+  - filename: ./unsafe.yml
+    tags: ['unsafe']
+  - filename: ./macros.yml
+    tags: ['macros']
+  - filename: ./web-server.yml
+    tags: ['web-server']
+  - filename: ./derivable-traits.yml
+    tags: ['derivable-traits']
+  - filename: ./tooling.yml
+    tags: ['tooling']

@@ -1,0 +1,86 @@
+- Q: |
+    What is "metaprogramming", and how does it describe what a Rust macro does that a function can't?
+  A: |
+    Metaprogramming is writing code that itself writes other code. Unlike a function, a macro can take a variable number of arguments (e.g. `println!("x")` vs `println!("x {}", y)`) and is expanded before the compiler interprets the meaning of the code — letting a macro do things like implement a trait at compile time that a runtime function call couldn't.
+
+- Q: |
+    Unlike a function, must a macro be defined or imported before the point in a file where it's called?
+  A: |
+    Yes — macros must be defined or brought into scope *before* they're invoked in a file; functions, by contrast, can be defined anywhere in a file and called from anywhere else in it regardless of order.
+
+- Q: |
+    How does a declarative macro (`macro_rules!`) decide what code to generate, at a high level?
+  A: |
+    It compares the literal source code passed to it against a set of patterns (match-arm style), and for whichever pattern matches, substitutes in the associated template code — all resolved at compile time before the rest of compilation proceeds.
+
+- Q: |
+    In a `macro_rules!` pattern like `( $( $x:expr ),* )`, what do `$`, `$x:expr`, and the trailing `*` each mean?
+  A: |
+    `$` introduces a macro-system variable (`$x`) to bind a piece of matched syntax; `:expr` constrains what `$x` can match to a valid Rust expression; `$(...),*` means "zero or more repetitions of the enclosed pattern, separated by literal commas."
+  C: |
+    #[macro_export]
+    macro_rules! vec {
+        ( $( $x:expr ),* ) => {
+            {
+                let mut temp_vec = Vec::new();
+                $( temp_vec.push($x); )*
+                temp_vec
+            }
+        };
+    }
+
+- Q: |
+    What does `#[macro_export]` do on a `macro_rules!` definition?
+  A: |
+    It makes the macro available (callable) whenever the crate defining it is brought into scope elsewhere, similar to marking an item `pub`.
+
+- Q: |
+    What fundamentally distinguishes a procedural macro from a declarative (`macro_rules!`) macro in how it decides what code to produce?
+  A: |
+    A procedural macro is a Rust function that takes a `TokenStream` (a sequence of tokens representing code) as input, operates on it programmatically, and returns another `TokenStream` as output — rather than matching the input against a fixed set of syntactic patterns the way `macro_rules!` does.
+  C: |
+    use proc_macro::TokenStream;
+    #[some_attribute]
+    pub fn some_name(input: TokenStream) -> TokenStream { /* ... */ }
+
+- Q: |
+    What special requirement must a crate meet in order to define procedural macros?
+  A: |
+    It must be its own dedicated crate with `proc-macro = true` set under `[lib]` in its `Cargo.toml` — procedural macro definitions can't live in an ordinary crate alongside regular code.
+  C: |
+    [lib]
+    proc-macro = true
+
+- Q: |
+    What are the three kinds of procedural macros, and what does each let you do?
+  A: |
+    Custom `#[derive]` macros generate additional code (e.g. a trait impl) for a struct/enum annotated with `#[derive(SomeTrait)]`. Attribute-like macros let you define entirely new custom attributes, usable on more item kinds than just structs/enums (e.g. functions). Function-like macros look like a function call syntactically (e.g. `sql!(...)`) but, unlike `macro_rules!`, are implemented as a `TokenStream`-to-`TokenStream` Rust function rather than pattern matching.
+
+- Q: |
+    In a custom derive macro's implementation, what do the `syn` and `quote` crates each do?
+  A: |
+    `syn` parses the incoming `TokenStream` (raw code as text) into a structured Rust syntax tree (e.g. a `DeriveInput`) you can inspect and manipulate. `quote` does the reverse — it turns Rust code you write (with `#variable` interpolation) back into a `TokenStream` to return as the macro's generated output.
+  C: |
+    #[proc_macro_derive(HelloMacro)]
+    pub fn hello_macro_derive(input: TokenStream) -> TokenStream {
+        let ast = syn::parse(input).unwrap();
+        impl_hello_macro(&ast)
+    }
+
+- Q: |
+    What does the built-in `stringify!` macro do, and where is it used in a typical custom-derive implementation?
+  A: |
+    It converts a Rust expression into a string literal at compile time without evaluating it. It's commonly used inside `quote!` to turn an interpolated identifier (like a struct's name) into a string for printing, e.g. `println!("... {}", stringify!(#name))`.
+
+- Q: |
+    By convention, if a crate named `foo` provides a custom derive macro, what is its companion procedural-macro crate typically named, and why are they separate?
+  A: |
+    `foo_derive`. They're separate because procedural macro crates must be their own dedicated `proc-macro = true` crate type, distinct from the regular library crate whose types/traits the derive macro is meant to support — users end up depending on both crates together.
+
+- Q: |
+    What two `TokenStream` arguments does an attribute-like macro function receive, using `#[route(GET, "/")] fn index() {}` as an example?
+  A: |
+    The first `TokenStream` is the attribute's own contents (`GET, "/"`); the second is the annotated item itself — here, the full `fn index() { ... }` definition, body included.
+  C: |
+    #[proc_macro_attribute]
+    pub fn route(attr: TokenStream, item: TokenStream) -> TokenStream { /* ... */ }

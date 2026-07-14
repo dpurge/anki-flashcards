@@ -1,0 +1,193 @@
+- Q: |
+    What are the two ways to create a `Vec<T>`, and when does each require an explicit type annotation?
+  A: |
+    `Vec::new()` creates an empty vector and needs an explicit type annotation since there's nothing to infer from. The `vec![1, 2, 3]` macro creates a vector pre-filled with values, letting Rust infer the element type from those values.
+  C: |
+    let v: Vec<i32> = Vec::new();
+    let v = vec![1, 2, 3]; // inferred as Vec<i32>
+
+- Q: |
+    What must be true of a `Vec` before you can call `.push()` on it, and why?
+  A: |
+    It must be declared with `mut` — like any variable, changing its value (adding an element) requires mutability.
+  C: |
+    let mut v = Vec::new();
+    v.push(5);
+
+- Q: |
+    What are the two ways to read an element from a `Vec` by index, and how do they differ when the index is out of bounds?
+  A: |
+    Indexing with `&v[i]` panics if `i` is out of bounds. Calling `v.get(i)` returns an `Option<&T>` — `None` instead of panicking when the index is out of range.
+  C: |
+    let v = vec![1, 2, 3, 4, 5];
+    let third: &i32 = &v[2];        // panics if out of bounds
+    let third: Option<&i32> = v.get(2); // None if out of bounds
+
+- Q: |
+    Why does holding an immutable reference to a `Vec` element and then calling `.push()` on that same vector fail to compile?
+  A: |
+    Pushing may require reallocating the vector's backing memory and copying all elements to a new location, which would leave any existing reference pointing at now-deallocated memory. The borrow checker rejects this at compile time rather than allowing a dangling reference.
+  C: |
+    let mut v = vec![1, 2, 3, 4, 5];
+    let first = &v[0];
+    v.push(6); // error: cannot borrow `v` as mutable because it's also borrowed as immutable
+
+- Q: |
+    How do you iterate over a `Vec` to mutate each element in place, and why is a dereference needed?
+  A: |
+    Iterate over `&mut v` to get a mutable reference to each element, then use `*i` to dereference it before modifying the value it points to.
+  C: |
+    let mut v = vec![100, 32, 57];
+    for i in &mut v {
+        *i += 50;
+    }
+
+- Q: |
+    How can you store values of different types in a single `Vec`, given that a `Vec<T>` normally holds only one type?
+  A: |
+    Define an enum whose variants wrap each type you need, then make a `Vec` of that enum type — this still gives Rust a single concrete element type to size and store, while each variant can carry a different kind of data.
+  C: |
+    enum SpreadsheetCell {
+        Int(i32),
+        Float(f64),
+        Text(String),
+    }
+    let row = vec![
+        SpreadsheetCell::Int(3),
+        SpreadsheetCell::Text(String::from("blue")),
+    ];
+
+- Q: |
+    What happens to a `Vec`'s elements when the vector itself goes out of scope and is dropped?
+  A: |
+    All of its elements are dropped along with it — e.g. dropping a `Vec<String>` also cleans up each `String`'s heap allocation.
+
+- Q: |
+    What is `String` implemented as internally, and what encoding does it (and `&str`) guarantee?
+  A: |
+    A wrapper around a `Vec<u8>`. Both `String` and `&str` are guaranteed to hold valid UTF-8.
+
+- Q: |
+    What are three ways to create a `String` from string data?
+  A: |
+    `String::new()` for empty; `String::from("text")`; or calling `.to_string()` on any type that implements `Display` (e.g. a `&str` literal).
+  C: |
+    let mut s = String::new();
+    let s = String::from("initial contents");
+    let s = "initial contents".to_string();
+
+- Q: |
+    What is the difference between `String`'s `push_str` and `push` methods, and does `push_str` take ownership of its argument?
+  A: |
+    `push_str` appends a `&str` slice; `push` appends a single `char`. `push_str` takes a string slice (`&str`), not ownership, so the argument remains usable afterward.
+  C: |
+    let mut s1 = String::from("foo");
+    let s2 = "bar";
+    s1.push_str(s2); // s2 still valid afterward
+    s1.push('!');    // "foobar!"
+
+- Q: |
+    When you write `let s3 = s1 + &s2;`, what method actually gets called, what does it do to `s1`, and why does `&s2` work even though `s2` is a `String` not a `&str`?
+  A: |
+    It calls `add(self, s: &str) -> String`, which takes ownership of `self` (so `s1` is moved and no longer usable) and only borrows the second argument. `&s2` (a `&String`) is accepted via deref coercion to `&str`.
+  C: |
+    let s1 = String::from("Hello, ");
+    let s2 = String::from("world!");
+    let s3 = s1 + &s2; // s1 moved, s2 still valid
+
+- Q: |
+    Why is the `format!` macro often preferred over chained `+` for combining several strings?
+  A: |
+    `format!` reads like `println!`'s format string, is far more readable for multiple pieces, and takes its arguments by reference — it doesn't take ownership of any of them, so all the originals remain usable afterward.
+  C: |
+    let s1 = String::from("tic");
+    let s2 = String::from("tac");
+    let s3 = String::from("toe");
+    let s = format!("{s1}-{s2}-{s3}"); // "tic-tac-toe"; s1/s2/s3 still valid
+
+- Q: |
+    Why does Rust not allow indexing a `String` with `s[0]`?
+  A: |
+    Because `String` is a UTF-8 byte buffer, a raw byte index doesn't reliably correspond to one character — many characters take multiple bytes, so `s[0]` would either return a meaningless byte or require an O(n) scan to find character boundaries, breaking the O(1) guarantee users expect from indexing.
+  C: |
+    let hello = String::from("Здравствуйте");
+    // hello.len() is 24, not 12 — each Cyrillic character is 2 bytes in UTF-8
+
+- Q: |
+    For the Hindi word "नमस्ते", how do its representations as bytes, Unicode scalar values (`char`s), and grapheme clusters differ in count?
+  A: |
+    18 bytes, but only 6 `char` values (some of which are combining diacritics, not standalone letters), and just 4 grapheme clusters — the number of "letters" a human would actually perceive.
+  N: |
+    The standard library doesn't provide grapheme cluster segmentation directly — that requires an external crate.
+
+- Q: |
+    How do you slice a `String` by byte range, and what happens if the range doesn't fall on a character boundary?
+  A: |
+    Use `&s[start..end]` where the indices are byte offsets. If either index falls in the middle of a multi-byte character, the program panics at runtime.
+  C: |
+    let hello = "Здравствуйте";
+    let s = &hello[0..4];  // ok: "Зд"
+    // let s = &hello[0..1]; // panics: not a char boundary
+
+- Q: |
+    What is the difference between iterating a string with `.chars()` versus `.bytes()`?
+  A: |
+    `.chars()` yields Unicode scalar values (`char`), i.e. one item per character even for multi-byte characters. `.bytes()` yields the raw underlying `u8` bytes, so a multi-byte character produces multiple items.
+  C: |
+    for c in "Зд".chars() { println!("{c}"); } // З, д
+    for b in "Зд".bytes() { println!("{b}"); } // 208, 151, 208, 180
+
+- Q: |
+    Why must `HashMap` be explicitly brought into scope with `use std::collections::HashMap;`, unlike `Vec` and `String`?
+  A: |
+    Of the three common collections, `HashMap` is used least often, so — unlike `Vec` and `String` — it isn't included in the prelude and has no dedicated construction macro.
+  C: |
+    use std::collections::HashMap;
+    let mut scores = HashMap::new();
+    scores.insert(String::from("Blue"), 10);
+
+- Q: |
+    What type does `HashMap::get(&key)` return, and how do `.copied()` and `.unwrap_or(default)` combine with it to get a plain value with a fallback?
+  A: |
+    `get` returns `Option<&V>`. `.copied()` turns that into `Option<V>` (for `Copy` types), and `.unwrap_or(default)` extracts the value or falls back to `default` if the key was absent.
+  C: |
+    let score = scores.get(&String::from("Blue")).copied().unwrap_or(0);
+
+- Q: |
+    When you insert a `String` key and value into a `HashMap`, what happens to the original variables — copied, borrowed, or moved?
+  A: |
+    Moved — the hash map takes ownership, so the original variables are no longer valid afterward. Types that implement `Copy` (like `i32`) are copied into the map instead, leaving the originals valid.
+  C: |
+    let field_name = String::from("Favorite color");
+    let field_value = String::from("Blue");
+    map.insert(field_name, field_value);
+    // field_name and field_value are no longer valid here
+
+- Q: |
+    What happens if you call `.insert()` twice with the same key but different values?
+  A: |
+    The second call overwrites the first — a `HashMap` key maps to at most one value at a time.
+
+- Q: |
+    What does the `entry(key).or_insert(default)` pattern do, and why is it preferred over manually checking with `get`/`insert`?
+  A: |
+    `entry` returns an `Entry` representing whether that key currently has a value; `or_insert` inserts `default` only if the key is absent, and either way returns a mutable reference to the (now guaranteed-present) value. It's cleaner than hand-written check-then-insert logic and works better with the borrow checker.
+  C: |
+    scores.entry(String::from("Yellow")).or_insert(50); // inserted, key was absent
+    scores.entry(String::from("Yellow")).or_insert(50); // no-op, key already present
+
+- Q: |
+    In a word-count implementation using `entry(word).or_insert(0)`, how does `*count += 1` update the map?
+  A: |
+    `or_insert(0)` returns a `&mut V` to the count for that word (inserting `0` first if it wasn't present); dereferencing with `*count` lets you mutate that value in place through the reference.
+  C: |
+    let mut map = HashMap::new();
+    for word in text.split_whitespace() {
+        let count = map.entry(word).or_insert(0);
+        *count += 1;
+    }
+
+- Q: |
+    What hashing algorithm does `HashMap` use by default, and what security/performance trade-off does that represent?
+  A: |
+    SipHash — it's not the fastest hashing algorithm available, but it provides resistance to denial-of-service attacks that try to degrade hash table performance by choosing colliding keys. A different hasher implementing `BuildHasher` can be swapped in if that trade-off isn't wanted.

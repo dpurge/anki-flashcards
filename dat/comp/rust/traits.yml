@@ -1,0 +1,277 @@
+- Q: |
+    Before you ever write your own generic function, where have you likely already used generics in Rust?
+  A: |
+    In standard library types like `Option<T>`, `Vec<T>`, `HashMap<K, V>`, and `Result<T, E>` — the `<T>`/`<K, V>` type parameters are generics, letting one definition work over many concrete types instead of duplicating the type for each one.
+
+- Q: |
+    What is a Rust "trait", and how does it compare to an interface in other languages?
+  A: |
+    A trait defines a set of methods a type must implement to share that behavior, similar to an interface — but traits can also provide default method implementations that implementors can inherit.
+
+- Q: |
+    What does it mean for a function to be "generic" in Rust, and how do trait bounds constrain it?
+  A: |
+    A generic function works over any type via a type parameter (e.g. `fn largest<T>(list: &[T]) -> T`). A trait bound (e.g. `T: PartialOrd`) restricts which types are allowed, so the compiler can prove the operations used inside the function are valid for that type.
+  C: |
+    fn largest<T: PartialOrd + Copy>(list: &[T]) -> T {
+        let mut largest = list[0];
+        for &item in list {
+            if item > largest { largest = item; }
+        }
+        largest
+    }
+
+- Q: |
+    What is the difference between a trait object (`dyn Trait`) and generics (`impl Trait` / `<T: Trait>`) for polymorphism?
+  A: |
+    Generics are resolved at compile time (monomorphization) — zero runtime cost but one compiled copy per concrete type. Trait objects (`Box<dyn Trait>`, `&dyn Trait`) use dynamic dispatch via a vtable at runtime — one shared copy of code, but with a small runtime cost, and only usable behind a pointer since size isn't known at compile time.
+
+- Q: |
+    In `struct Point<T> { x: T, y: T }`, must `x` and `y` be the same type? How would you allow them to differ?
+  A: |
+    Yes — with a single type parameter `T`, both fields are constrained to that same type. To allow `x` and `y` to differ, declare two type parameters instead: `struct Point<T, U> { x: T, y: U }`.
+  N: |
+    Using more than a few generic type parameters on one struct starts hurting readability.
+
+- Q: |
+    Why must you write `impl<T> Point<T> { ... }` — with `<T>` right after `impl` — rather than just `impl Point<T> { ... }`?
+  A: |
+    The `<T>` after `impl` declares `T` as a generic parameter for the block, which is what lets you then use `T` to refer to `Point<T>` (the generic struct) and in the method signatures — without it, `T` wouldn't be a recognized identifier.
+  C: |
+    impl<T> Point<T> {
+        fn x(&self) -> &T {
+            &self.x
+        }
+    }
+
+- Q: |
+    What does `impl Point<f32> { fn distance_from_origin(&self) -> f32 { ... } }` mean, compared to `impl<T> Point<T> { ... }`?
+  A: |
+    It defines a method that only exists on the concrete type `Point<f32>` — a `Point<i32>` or `Point<String>` instance would not have `distance_from_origin` available, even though both are instances of the same generic struct.
+
+- Q: |
+    Can a method declare its own generic type parameters that are separate from the generic parameters on the struct it's implemented for?
+  A: |
+    Yes — the struct's own type parameters are declared after `impl`, while parameters specific to one method are declared after `fn` on that method, and the two sets can be entirely independent.
+  C: |
+    struct Point<X1, Y1> { x: X1, y: Y1 }
+
+    impl<X1, Y1> Point<X1, Y1> {
+        fn mixup<X2, Y2>(self, other: Point<X2, Y2>) -> Point<X1, Y2> {
+            Point { x: self.x, y: other.y }
+        }
+    }
+
+- Q: |
+    What is "monomorphization", and concretely, what does the compiler turn `let integer = Some(5); let float = Some(5.0);` into?
+  A: |
+    Monomorphization is the compile-time process of generating a separate, concrete version of generic code for each type it's actually used with. For `Option<T>`, the compiler effectively generates distinct `Option_i32` and `Option_f64` variants behind the scenes — as if you'd hand-written each one — which is why generics impose no runtime cost.
+
+- Q: |
+    What is the "orphan rule" (coherence) that governs where you're allowed to write `impl SomeTrait for SomeType`?
+  A: |
+    You may implement a trait on a type only if the trait, the type, or both are local to your own crate. You can implement a standard-library trait on your own type, or your own trait on an external type (like `Vec<T>`) — but you cannot implement an external trait on an external type.
+
+- Q: |
+    What does giving a trait method a default implementation let implementors do, and can a default method call other methods declared in the same trait that have no default?
+  A: |
+    Implementors can either accept the default behavior with an empty `impl Trait for Type {}`, or override it by defining that method themselves. Yes — a default method can call other trait methods even if those other methods have no default implementation of their own (the implementor is required to supply those).
+  C: |
+    pub trait Summary {
+        fn summarize_author(&self) -> String;
+        fn summarize(&self) -> String {
+            format!("(Read more from {}...)", self.summarize_author())
+        }
+    }
+
+- Q: |
+    Once you've overridden a trait method's default implementation for a type, can that override still call the original default implementation?
+  A: |
+    No — it isn't possible to call a trait's default implementation from within an overriding implementation of that same method.
+
+- Q: |
+    What are the two equivalent ways to write a function parameter that accepts "any type implementing `Summary`", and which is syntax sugar for which?
+  A: |
+    `fn notify(item: &impl Summary)` (impl Trait syntax) is sugar for the full trait-bound generic form `fn notify<T: Summary>(item: &T)`. Both mean the same thing; `impl Trait` is shorter for simple cases.
+
+- Q: |
+    How do you require a generic parameter to implement more than one trait, using both the `+` shorthand and the `where` clause?
+  A: |
+    Combine bounds with `+`: `fn notify<T: Summary + Display>(item: &T)` (or `&(impl Summary + Display)`). For several parameters with several bounds each, a `where` clause keeps the signature readable instead of cramming bounds into the angle brackets.
+  C: |
+    fn some_function<T, U>(t: &T, u: &U) -> i32
+    where
+        T: Display + Clone,
+        U: Clone + Debug,
+    {
+        unimplemented!()
+    }
+
+- Q: |
+    What is the limitation of using `impl Trait` as a function's return type, e.g. `fn returns_summarizable() -> impl Summary`?
+  A: |
+    The function must return a single concrete type — you can't have different branches conditionally return different concrete types that both implement the trait, even though they'd all satisfy `impl Summary`.
+
+- Q: |
+    What is a "blanket implementation", and what standard library example implements `ToString` for any type that implements `Display`?
+  A: |
+    A blanket implementation implements a trait for every type that satisfies some trait bound, rather than for one specific type. The standard library does this with `impl<T: Display> ToString for T { ... }`, which is why any `Display`-implementing type automatically gets `.to_string()` for free.
+
+- Q: |
+    What is an "associated type" in a trait, like `Iterator`'s `type Item`, and how does it differ from making the trait itself generic (e.g. `Iterator<T>`)?
+  A: |
+    An associated type is a placeholder type tied to a single trait implementation — `type Item;` inside `trait Iterator`, set to a concrete type once per `impl`. Unlike a generic trait parameter, a type can only implement a trait with an associated type *once*, so callers never need to annotate which concrete type they mean (e.g. `Counter::next()` always returns `Option<u32>` if that's what `Counter`'s one `impl Iterator` chose) — with a generic `Iterator<T>`, a type could implement it for multiple `T`s, forcing annotations to disambiguate.
+  C: |
+    pub trait Iterator {
+        type Item;
+        fn next(&mut self) -> Option<Self::Item>;
+    }
+    impl Iterator for Counter {
+        type Item = u32;
+        fn next(&mut self) -> Option<u32> { /* ... */ }
+    }
+
+- Q: |
+    What does `trait Add<Rhs=Self> { type Output; fn add(self, rhs: Rhs) -> Self::Output; }`'s `Rhs=Self` syntax mean, and when would you override it?
+  A: |
+    It's a default generic type parameter: if you write `impl Add for Point`, `Rhs` defaults to `Self` (i.e. adding a `Point` to another `Point`). You override it by specifying a different type in angle brackets, e.g. `impl Add<Meters> for Millimeters`, to support adding two *different* types together via operator overloading.
+  C: |
+    impl Add<Meters> for Millimeters {
+        type Output = Millimeters;
+        fn add(self, other: Meters) -> Millimeters {
+            Millimeters(self.0 + (other.0 * 1000))
+        }
+    }
+
+- Q: |
+    If a type implements two different traits that both define a method with the same name (and both take `&self`), how do you call one specific trait's version instead of whatever inherent method or default resolution would otherwise apply?
+  A: |
+    Call it via the trait name directly, passing the receiver as an explicit argument: `TraitName::method(&value)`. Plain `value.method()` prefers an inherent method on the type itself over any trait method, if both exist.
+  C: |
+    trait Pilot { fn fly(&self); }
+    trait Wizard { fn fly(&self); }
+    Pilot::fly(&person);   // calls Pilot's fly
+    Wizard::fly(&person);  // calls Wizard's fly
+    person.fly();          // calls Human's own inherent fly, if one exists
+
+- Q: |
+    For an associated function with no `self` parameter (so there's no value to call `TraitName::function(&value)` on), what's the fully qualified syntax to specify which trait's implementation you mean?
+  A: |
+    `<Type as Trait>::function(args...)` — explicitly naming both the concrete type and the trait removes any ambiguity between an inherent `impl` and a trait `impl` sharing the same function name.
+  C: |
+    Dog::baby_name();             // calls the inherent impl on Dog ("Spot")
+    <Dog as Animal>::baby_name(); // calls the Animal trait impl ("puppy")
+
+- Q: |
+    What is a "supertrait", and what does `trait OutlinePrint: fmt::Display { ... }` require of any type that implements `OutlinePrint`?
+  A: |
+    A supertrait is a trait that another trait depends on — declared with `TraitName: SupertraitName`. Any type implementing `OutlinePrint` must also implement `Display` (the supertrait), since `OutlinePrint`'s default method body calls `self.to_string()`, which relies on `Display` being implemented.
+  C: |
+    trait OutlinePrint: fmt::Display {
+        fn outline_print(&self) {
+            let output = self.to_string(); // requires Display
+            // ...
+        }
+    }
+
+- Q: |
+    What is the "newtype pattern", and how does it let you implement an external trait (like `Display`) on an external type (like `Vec<String>`) despite the orphan rule?
+  A: |
+    Wrap the external type in your own tuple struct with one field (e.g. `struct Wrapper(Vec<String>)`). Since the wrapper struct is now local to your crate, the orphan rule (which blocks implementing an external trait on an external type directly) no longer applies — you implement the external trait on your local wrapper type instead.
+  C: |
+    struct Wrapper(Vec<String>);
+    impl fmt::Display for Wrapper {
+        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+            write!(f, "[{}]", self.0.join(", "))
+        }
+    }
+
+- Q: |
+    Does the newtype pattern impose a runtime performance cost, and does the wrapper automatically expose the inner type's own methods?
+  A: |
+    No runtime cost — the wrapper type is purely a compile-time construct, elided away. It does *not* automatically forward the inner type's methods; you must implement any needed methods yourself on the wrapper (or implement `Deref` to delegate to the inner value).
+
+- Q: |
+    Besides bypassing the orphan rule, what other two benefits does the newtype pattern provide, e.g. wrapping `u32` as `Millimeters`/`Meters`, or wrapping `HashMap<i32, String>` as `People`?
+  A: |
+    Type safety: distinct newtypes (`Millimeters` vs `Meters` vs plain `u32`) can't be accidentally mixed up or passed where a different unit was expected, since the compiler treats them as different types. Abstraction: a newtype can expose a curated public API different from its inner type's, hiding implementation details like `People` hiding the fact that IDs are internally tracked in a `HashMap<i32, String>`.
+
+- Q: |
+    How does a `type` alias like `type Kilometers = i32;` differ from the newtype pattern — is `Kilometers` actually a distinct type from `i32`?
+  A: |
+    No — a type alias is just a synonym for the existing type, not a new type; `Kilometers` and `i32` values can be freely mixed (e.g. added together) with no compiler error, unlike the newtype pattern's `Millimeters(u32)`, which is a genuinely distinct type.
+  C: |
+    type Kilometers = i32;
+    let x: i32 = 5;
+    let y: Kilometers = 5;
+    println!("{}", x + y); // fine — Kilometers IS i32
+
+- Q: |
+    What's the main practical reason to use a type alias like `type Thunk = Box<dyn Fn() + Send + 'static>;`, given it adds no type safety?
+  A: |
+    Reducing repetition — writing out a long, verbose type (like a boxed trait object with multiple bounds) once as an alias makes function signatures and variable declarations far more readable than repeating the full type everywhere.
+  C: |
+    type Thunk = Box<dyn Fn() + Send + 'static>;
+    fn takes_long_type(f: Thunk) { }
+    fn returns_long_type() -> Thunk { Box::new(|| ()) }
+
+- Q: |
+    How does the standard library use a type alias to simplify functions that all return the same kind of `Result`, e.g. in `std::io`?
+  A: |
+    It defines a local alias like `type Result<T> = std::result::Result<T, std::io::Error>;`, so every I/O function can just write `-> Result<T>` instead of repeating `-> std::result::Result<T, std::io::Error>` at every signature.
+  C: |
+    type Result<T> = std::result::Result<T, std::io::Error>;
+    pub trait Write {
+        fn write(&mut self, buf: &[u8]) -> Result<usize>;
+        fn flush(&mut self) -> Result<()>;
+    }
+
+- Q: |
+    What is the "never type" `!`, what is a function that returns it called, and what special coercion property does it have?
+  A: |
+    `!` is the empty type — it has no values at all, meaning a function returning it (a "diverging function," e.g. one that only `panic!`s or loops forever) never actually returns control to its caller. An expression of type `!` coerces into any other type the context requires, which is why `Err(_) => continue` type-checks inside a `match` arm expected to produce a `u32` — `continue`'s type is `!`, compatible with anything.
+  C: |
+    fn bar() -> ! {
+        panic!();
+    }
+    let guess: u32 = match guess.trim().parse() {
+        Ok(num) => num,
+        Err(_) => continue, // `!` coerces to u32
+    };
+
+- Q: |
+    What is a "dynamically sized type" (DST) like `str` or `dyn Trait`, and what is the "golden rule" for using one?
+  A: |
+    A type whose size isn't known until runtime (an "unsized type") — e.g. `str` (not `&str`) can be any number of bytes depending on the actual string. The golden rule: a DST's value must always be put behind some kind of pointer (`&str`, `Box<str>`, `Rc<str>`, `&dyn Trait`, `Box<dyn Trait>`, etc.), since the pointer itself has a known, fixed size (address + length) even though the pointee doesn't.
+  C: |
+    let s1: &str = "Hello there!";   // fine: pointer has known size
+    // let s1: str = "Hello there!"; // error: str has no fixed size
+
+- Q: |
+    What does the compiler implicitly add to every generic type parameter `T` in a function signature like `fn generic<T>(t: T)`, and how do you opt out of it for a DST?
+  A: |
+    It implicitly adds a `T: Sized` bound, since a plain-by-value parameter needs a compile-time-known size. To accept a possibly-unsized type, relax the bound with `T: ?Sized` ("may or may not be `Sized`") and take the parameter by reference (e.g. `&T`), since `?Sized` is a special syntax only available for the `Sized` trait.
+  C: |
+    fn generic<T: ?Sized>(t: &T) { /* T might be a DST like str */ }
+
+- Q: |
+    Which standard traits back the operators `+`, `-`, `*` (arithmetic), `==`/`!=`, and `<`/`<=`/`>`/`>=`?
+  A: |
+    `+` is `Add`, `-` is `Sub`, arithmetic `*` is `Mul` (division `/` is `Div`, remainder `%` is `Rem`). `==`/`!=` are backed by `PartialEq`. The ordering comparisons `<`, `<=`, `>`, `>=` are backed by `PartialOrd`.
+
+- Q: |
+    What is Rust's "turbofish" syntax, what does it look like, and when do you need it?
+  A: |
+    `::<Type>` appended to a generic function/method call to explicitly specify its type parameter(s) when the compiler can't infer them from context alone.
+  C: |
+    let n = "42".parse::<i32>().unwrap();
+
+- Q: |
+    The symbol `*` can mean three different things in Rust depending on context — what are they?
+  A: |
+    Arithmetic multiplication (via the `Mul` trait), the dereference operator on a reference/smart pointer (via the `Deref` trait), or part of a raw pointer type declaration (`*const T` / `*mut T`).
+
+- Q: |
+    The symbol `&` can mean three different things in Rust depending on context — what are they?
+  A: |
+    Creating a borrow/reference to a value (`&expr`), a reference type in a type position (`&SomeType`), or bitwise AND between two values (via the `BitAnd` trait).

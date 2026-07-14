@@ -1,0 +1,263 @@
+- Q: |
+    What is the role of `Cargo.toml` versus `Cargo.lock` in a Rust project?
+  A: |
+    `Cargo.toml` declares the project's metadata and dependency version ranges (what you want). `Cargo.lock` pins the exact resolved versions actually used (what you got), ensuring reproducible builds; it should be committed for binaries but is often not committed for libraries.
+
+- Q: |
+    What is the difference between `cargo build` and `cargo build --release`?
+  A: |
+    Plain `cargo build` produces an unoptimized debug binary with debug symbols, compiled fast, for development. `--release` enables optimizations (slower to compile, much faster runtime) for production use.
+
+- Q: |
+    What tool is the de facto standard for formatting Rust code, and what command runs it?
+  A: |
+    `rustfmt`, run via `cargo fmt`.
+
+- Q: |
+    What does `cargo clippy` do that `cargo build` does not?
+  A: |
+    `clippy` is a linter that catches common mistakes, non-idiomatic patterns, and style issues beyond what the compiler's own error/warning checks cover.
+
+- Q: |
+    What tool is used to install and manage Rust versions on Linux/macOS/Windows?
+  A: |
+    `rustup` — a command-line tool that installs the Rust compiler, Cargo, and manages toolchain versions.
+  C: |
+    curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
+
+- Q: |
+    Besides the compiler itself, what else does `rustup`'s default install give you for offline use?
+  A: |
+    A local copy of the Rust documentation, viewable via `rustup doc`.
+
+- Q: |
+    How do you check the installed Rust compiler version, and how do you update to the latest stable release?
+  A: |
+    `rustc --version` checks the version; `rustup update` updates to the latest stable release.
+
+- Q: |
+    How do you completely uninstall Rust that was installed via `rustup`?
+  A: |
+    `rustup self uninstall`
+
+- Q: |
+    On macOS/Linux, a Rust build fails with a linker error mentioning a missing `cc` or linker executable. What's the fix?
+  A: |
+    Install a C compiler, which provides the linker: on macOS, `xcode-select --install`; on Linux (e.g. Ubuntu), install the `build-essential` package (or GCC/Clang directly).
+  N: |
+    On Windows, the linker is already provided by the Visual Studio installer used to install Rust.
+
+- Q: |
+    What is Cargo, and what are its two main responsibilities?
+  A: |
+    Rust's build system and package manager — it builds your code, and it downloads and builds the libraries (crates) your code depends on.
+
+- Q: |
+    What does `cargo new hello_cargo` generate?
+  A: |
+    A new `hello_cargo` directory containing `Cargo.toml`, a `src` directory with `src/main.rs`, and (unless already inside a Git repo) a Git repository with a `.gitignore` file.
+
+- Q: |
+    Where must Rust source files live in a Cargo project, and what belongs at the top-level project directory instead?
+  A: |
+    Source code must live inside the `src` directory. The top-level directory is reserved for non-code items like README files, license info, and configuration files.
+
+- Q: |
+    What format is `Cargo.toml` written in, and what do its `[package]` and `[dependencies]` sections hold?
+  A: |
+    TOML (Tom's Obvious, Minimal Language). `[package]` holds package metadata (name, version, edition). `[dependencies]` lists the project's dependencies, called crates in Rust.
+  C: |
+    [package]
+    name = "hello_cargo"
+    version = "0.1.0"
+    edition = "2024"
+
+    [dependencies]
+
+- Q: |
+    Where does `cargo build` place the compiled executable by default, and what command builds and runs it in one step?
+  A: |
+    In `target/debug/<project_name>` (a debug build). `cargo run` compiles and runs it in a single command — and skips recompiling if source files haven't changed.
+
+- Q: |
+    What does `cargo check` do, and why would you run it instead of `cargo build` while actively writing code?
+  A: |
+    It checks that the code compiles without producing an executable — much faster than `cargo build` since it skips code generation, making it useful for continuously checking work in progress.
+
+- Q: |
+    In `Cargo.toml`, what does the dependency specifier `rand = "0.8.5"` actually mean?
+  A: |
+    It's shorthand for `^0.8.5` (caret requirement): any version at least `0.8.5` but below `0.9.0` is acceptable — i.e. any semver-compatible patch/minor update.
+
+- Q: |
+    The first time you build a project with new dependencies, what does Cargo do, and what happens on subsequent builds?
+  A: |
+    Cargo resolves versions matching each dependency's specifier and writes the exact chosen versions to `Cargo.lock`. On later builds, Cargo reuses those locked versions instead of re-resolving them, keeping builds reproducible.
+
+- Q: |
+    What are Cargo "release profiles", and which two profiles does Cargo define by default?
+  A: |
+    Named, customizable sets of compiler settings applied depending on how you build. `dev` (used by plain `cargo build`) is tuned for fast, frequent development builds; `release` (used by `cargo build --release`) is tuned for optimized, production-ready binaries.
+
+- Q: |
+    What is the default `opt-level` for the `dev` profile versus the `release` profile, and why do they differ?
+  A: |
+    `dev` defaults to `opt-level = 0` (fewer optimizations, so compiling is fast — good for frequent iteration). `release` defaults to `opt-level = 3` (more optimizations, so the compiled program runs faster — worth the longer one-time compile since the binary will run many times).
+  C: |
+    [profile.dev]
+    opt-level = 0
+
+    [profile.release]
+    opt-level = 3
+
+- Q: |
+    How do you override a release profile's default settings, e.g. to make dev builds slightly more optimized than the default?
+  A: |
+    Add a `[profile.<name>]` section to `Cargo.toml` with the settings you want to change — any field you specify overrides just that default for that profile.
+  C: |
+    [profile.dev]
+    opt-level = 1
+
+- Q: |
+    What is a Rust documentation comment (`///`), how does it differ from a regular `//` comment, and what does `cargo doc --open` do with it?
+  A: |
+    `///` (three slashes) documents the item immediately following it, supports Markdown formatting, and is meant for user-facing API documentation — unlike `//`, which is just an inline note ignored by tooling. `cargo doc --open` runs `rustdoc` to render all `///` comments into HTML docs and opens them in a browser.
+  C: |
+    /// Adds one to the number given.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let answer = my_crate::add_one(5);
+    /// assert_eq!(6, answer);
+    /// ```
+    pub fn add_one(x: i32) -> i32 {
+        x + 1
+    }
+
+- Q: |
+    What are four commonly used section headers within a documentation comment, and what does each cover?
+  A: |
+    `# Examples` — usage code; `# Panics` — scenarios where the function panics; `# Errors` — for `Result`-returning functions, what kinds of errors can occur and why; `# Safety` — for `unsafe` functions, the invariants callers must uphold.
+
+- Q: |
+    Does `cargo test` do anything with the code inside a doc comment's `# Examples` section?
+  A: |
+    Yes — it compiles and runs that example code as a "doc-test", failing the test suite if the example no longer compiles or its assertions no longer hold. This keeps documentation examples from silently drifting out of sync with the actual code.
+
+- Q: |
+    What does a `//!` comment document, as opposed to a `///` comment?
+  A: |
+    `//!` documents the item that *contains* the comment (e.g. the crate or module it's written inside), rather than an item that follows it. It's typically placed at the top of a crate root (`src/lib.rs`) to write crate-level overview documentation that appears on the docs' front page.
+  C: |
+    //! # My Crate
+    //!
+    //! `my_crate` is a collection of utilities to make performing certain
+    //! calculations more convenient.
+
+- Q: |
+    How does `pub use` let a crate expose a simpler public API than its actual internal module structure?
+  A: |
+    Re-exporting an item with `pub use` makes it accessible at the re-exported path in addition to (or instead of, from the user's perspective) its original nested location, letting users write a shorter `use` path than the crate's real internal module layout would otherwise require.
+  C: |
+    // internally nested under `kinds`, but re-exported at the crate root:
+    pub use self::kinds::PrimaryColor;
+    pub mod kinds {
+        pub enum PrimaryColor { Red, Yellow, Blue }
+    }
+    // users can write: use art::PrimaryColor;  (not art::kinds::PrimaryColor)
+
+- Q: |
+    What are the required fields in `Cargo.toml`'s `[package]` section before you can `cargo publish` a crate to crates.io?
+  A: |
+    `name` (must be globally unique on crates.io, first-come-first-served), `version` (semver), `description`, and a license — either `license` with a valid SPDX identifier (e.g. `"MIT OR Apache-2.0"`) or `license-file` pointing at a custom license file.
+  C: |
+    [package]
+    name = "guessing_game"
+    version = "0.1.0"
+    description = "A fun game where you guess what number the computer has chosen."
+    license = "MIT OR Apache-2.0"
+
+- Q: |
+    Once you run `cargo publish` and upload a version to crates.io, can you delete or overwrite that specific version later?
+  A: |
+    No — crates.io is designed as a permanent archive; a published version is permanent, so publishing a new release requires bumping `version` in `Cargo.toml` (following semver) and publishing again, rather than replacing the old one.
+
+- Q: |
+    What does `cargo yank --vers X.Y.Z` do, and what does it *not* do?
+  A: |
+    It prevents any new project from adding that version as a fresh dependency, while projects that already depend on it (with a lockfile referencing it) can continue to build against it. It does not delete the version's code or remove any secrets accidentally published in it — yanking is reversible with `cargo yank --vers X.Y.Z --undo`.
+  C: |
+    cargo yank --vers 1.0.1
+    cargo yank --vers 1.0.1 --undo
+
+- Q: |
+    What is a Cargo "workspace", and what does its root `Cargo.toml` contain instead of a `[package]` section?
+  A: |
+    A set of packages that share one `Cargo.lock` file and one `target` output directory, letting multiple related crates be developed and built together. The root `Cargo.toml` has a `[workspace]` section listing `members`, rather than describing a single package itself.
+  C: |
+    [workspace]
+    resolver = "3"
+    members = ["adder", "add_one"]
+
+- Q: |
+    Why does a workspace share a single `Cargo.lock` and a single `target/` directory across all its member crates, instead of each crate having its own?
+  A: |
+    One `Cargo.lock` ensures every crate in the workspace resolves to the same version of any shared dependency, keeping them mutually compatible. One shared `target/` directory means a crate compiled as a dependency of another workspace member doesn't need to be recompiled redundantly for each member that uses it.
+
+- Q: |
+    If one crate in a workspace wants to use another crate in the same workspace, does Cargo wire that up automatically?
+  A: |
+    No — Cargo doesn't assume workspace crates depend on each other; you must add an explicit path dependency in the dependent crate's own `Cargo.toml`.
+  C: |
+    [dependencies]
+    add_one = { path = "../add_one" }
+
+- Q: |
+    In a workspace with multiple binary crates, how do you run just one specific one?
+  A: |
+    `cargo run -p <package_name>`.
+  C: |
+    cargo run -p adder
+
+- Q: |
+    If crate A in a workspace declares `rand` as a dependency, can crate B in the same workspace use `rand` without also declaring it in its own `Cargo.toml`?
+  A: |
+    No — each crate must declare its own dependencies in its own `Cargo.toml`, even within a workspace; the shared `Cargo.lock` only guarantees that if multiple crates *do* depend on `rand` with compatible version requirements, they'll all resolve to the same actual version.
+
+- Q: |
+    How do you run tests for just one crate in a workspace, versus running tests for the whole workspace?
+  A: |
+    Plain `cargo test` runs tests across every crate in the workspace; `cargo test -p <package_name>` scopes it to just that one crate.
+
+- Q: |
+    Does `cargo publish` publish every crate in a workspace at once?
+  A: |
+    No — each crate in a workspace must be published individually, using `cargo publish -p <package_name>` to target one at a time.
+
+- Q: |
+    What does `cargo install <crate-name>` do, and what requirement must a crate meet to be installable this way?
+  A: |
+    It downloads, compiles, and installs a runnable binary from crates.io for local command-line use. The crate must have a binary target — a `src/main.rs` (or another file designated as a binary) — since library-only crates aren't runnable on their own and can't be installed this way.
+  C: |
+    cargo install ripgrep
+
+- Q: |
+    Where does `cargo install` place installed binaries by default, and what must be true of that location for the installed program to actually run from the shell?
+  A: |
+    `$HOME/.cargo/bin` by default (assuming a standard rustup install); that directory must be on your `$PATH` for the installed executable to be runnable by name.
+
+- Q: |
+    How does Cargo let itself be extended with custom subcommands, without any changes to Cargo itself?
+  A: |
+    Any binary on your `$PATH` named `cargo-something` is automatically discoverable as the custom subcommand `cargo something` (no `cargo-` prefix when invoking it), and it also shows up in `cargo --list`. Such extensions can be installed the normal way with `cargo install`.
+
+- Q: |
+    What does `cargo fix` do, and what specific migration task can `cargo fix --edition` perform?
+  A: |
+    `cargo fix` automatically applies compiler-suggested fixes for warnings that have a clear, mechanical solution (e.g. removing an unnecessary `mut`). `cargo fix --edition` specifically applies the changes needed to transition a project's code to a newer Rust edition.
+
+- Q: |
+    What is `rust-analyzer`, and what underlying protocol does it use to provide IDE features across different editors?
+  A: |
+    The Rust community's recommended tool for IDE integration — it implements the Language Server Protocol (LSP), a standard specification for communication between a language server and any editor/IDE client, providing features like autocompletion, jump-to-definition, and inline error display across whichever LSP-compatible editor you use.

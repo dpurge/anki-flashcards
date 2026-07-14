@@ -1,0 +1,114 @@
+- Q: |
+    By the Gang of Four's definition of an "object" (something that packages data with the procedures/methods that operate on it), does Rust have objects?
+  A: |
+    Yes, in effect — structs and enums hold data, and `impl` blocks attach methods to them, giving the same data-plus-behavior packaging an object provides, even though Rust doesn't call them "objects."
+
+- Q: |
+    How does Rust achieve encapsulation (hiding an object's implementation details from its users)?
+  A: |
+    Via the `pub` keyword: fields, methods, functions, and modules are private by default, and only what's explicitly marked `pub` is exposed — e.g. a struct's internal fields can stay private while a curated set of `pub` methods controls all access to them.
+
+- Q: |
+    Can a Rust struct inherit another struct's fields and method implementations the way subclasses inherit from a parent class?
+  A: |
+    No — Rust has no built-in struct-to-struct inheritance mechanism (short of using a macro to hand-generate similar code).
+
+- Q: |
+    What are Rust's two partial alternatives to classical inheritance — one for reusing code, one for runtime polymorphism?
+  A: |
+    For code reuse: a trait's default method implementations, which any implementing type gets automatically without writing that code itself. For polymorphism, in place of subclass-based dynamic dispatch: trait objects.
+
+- Q: |
+    What does "polymorphism" mean in general, and what specific mechanism does Rust use to achieve it instead of class inheritance?
+  A: |
+    Polymorphism means code that can operate over data of multiple types. Rust uses generics constrained by trait bounds — sometimes called "bounded parametric polymorphism" — letting one function/type work over any type satisfying the required trait(s), plus trait objects for runtime-dispatched polymorphism.
+
+- Q: |
+    What downside of classical inheritance does the book cite as a reason Rust favors composition/traits over an inheritance model?
+  A: |
+    Inheritance risks sharing more code than a subclass actually needs (since it inherits everything from its parent by default), which can make a program's design less flexible than more targeted mechanisms like trait implementations.
+
+- Q: |
+    Why can't `struct Screen<T: Draw> { components: Vec<T> }` hold a mix of different concrete `Draw`-implementing types (e.g. some `Button`s and some `TextField`s) in the same `Vec`?
+  A: |
+    A generic type parameter like `T` gets substituted with exactly one concrete type per instantiation — so a `Screen<T>` instance is locked to holding a `Vec` of all `Button`s or all `TextField`s, never a mix. Trait objects are needed to hold genuinely heterogeneous types together.
+  C: |
+    pub struct Screen<T: Draw> {
+        pub components: Vec<T>, // must all be the SAME concrete T
+    }
+
+- Q: |
+    What two things does a trait object conceptually bundle together, and what syntax creates one?
+  A: |
+    A pointer to an instance of some type, plus a table (vtable) for looking up that trait's methods on that specific type at runtime. You create one by pairing a pointer type (a reference or `Box<T>`) with the `dyn` keyword and the trait name.
+  C: |
+    pub struct Screen {
+        pub components: Vec<Box<dyn Draw>>,
+    }
+
+- Q: |
+    Does the compiler still check that every value put into a `Vec<Box<dyn Draw>>` actually implements `Draw`?
+  A: |
+    Yes — Rust's type system enforces at compile time that anything placed where a trait object is expected implements that trait, even though the concrete types aren't all known in advance. Trying to box a type that doesn't implement the trait (e.g. `Box::new(String::from("Hi"))` into a `Vec<Box<dyn Draw>>`) is a compile error, not a runtime failure.
+
+- Q: |
+    How does using trait objects in Rust compare to "duck typing" in dynamically typed languages, and what's the key safety difference?
+  A: |
+    Both focus only on what a value can do (which methods/messages it responds to) rather than its concrete type — similar to duck typing's "if it walks like a duck and quacks like a duck." The difference is Rust verifies this at compile time via the trait system, so you never get a runtime "method not found" error the way you might with true dynamic duck typing.
+
+- Q: |
+    Why does calling a method through a trait object incur a runtime cost that calling it through a generic parameter doesn't?
+  A: |
+    Generics use monomorphization, producing a separate concrete-typed copy of the code per type at compile time (static dispatch) — the exact function to call is known and can even be inlined. Trait objects instead use dynamic dispatch: the compiler doesn't know the concrete type in advance, so at runtime the trait object's vtable pointer is used to look up which implementation to call, and that lookup also blocks the compiler from inlining the call.
+
+- Q: |
+    What is the "state pattern", and what's its main advantage for handling business-rule changes?
+  A: |
+    A design where a value's possible internal states are represented by distinct state objects, and the value's behavior changes based on which state object it currently holds. When rules change, you only need to update the code inside the relevant state object — the code that owns the value, and the code that uses it, don't need to change.
+
+- Q: |
+    In the classic OOP state-pattern implementation, why do `State` trait methods like `request_review` take `self: Box<Self>` instead of `&self` or `&mut self`?
+  A: |
+    `self: Box<Self>` means the method can only be called on a `Box` holding that state type, and it takes ownership of that box — consuming the old state value entirely so it can be transformed into (replaced by) a new state, rather than just being read or mutated in place.
+  C: |
+    trait State {
+        fn request_review(self: Box<Self>) -> Box<dyn State>;
+    }
+
+- Q: |
+    Why does `Post`'s `state` field need to be `Option<Box<dyn State>>` rather than just `Box<dyn State>`, and how does `.take()` factor in?
+  A: |
+    Transitioning state means consuming the old boxed state by value (via `self: Box<Self>`) and replacing it with a new one — but a struct field can't be briefly "empty" while that swap happens. `Option::take()` solves this: it removes the `Some(state)` value from the field (leaving `None` behind momentarily) so it can be passed by value into `request_review`/`approve`, with the returned new state immediately put back with `Some(...)`.
+  C: |
+    pub fn request_review(&mut self) {
+        if let Some(s) = self.state.take() {
+            self.state = Some(s.request_review())
+        }
+    }
+
+- Q: |
+    What are the downsides the book cites for the classic trait-object-based state pattern implementation?
+  A: |
+    Some states end up coupled to each other because each state's implementation must know which state to transition to next; and some logic gets duplicated across the different state structs' implementations of the `State` trait.
+
+- Q: |
+    In the alternative type-based encoding of the blog-post state machine (`DraftPost`, `PendingReviewPost`, `Post` as separate structs), how do `request_review`/`approve` prevent lingering invalid-state instances?
+  A: |
+    Each transition method takes `self` by value (consuming/owning the current-state struct) and returns a different struct type representing the next state — e.g. `DraftPost::request_review(self) -> PendingReviewPost`. Since the old value is consumed, there's no way to keep using a `DraftPost` after calling `request_review` on it; the compiler enforces that the caller must rebind to the new type.
+  C: |
+    impl DraftPost {
+        pub fn request_review(self) -> PendingReviewPost {
+            PendingReviewPost { content: self.content }
+        }
+    }
+    let post = post.request_review(); // post's type has changed
+
+- Q: |
+    In that type-based approach, how does the code prevent calling `.content()` on a post that hasn't been published yet?
+  A: |
+    `content()` is only defined as a method on `Post` (the published-state struct), not on `DraftPost` or `PendingReviewPost` — so trying to call it on an unpublished post is a compile error rather than a runtime bug (e.g. returning an empty string for an unready post), catching the mistake before it reaches production.
+
+- Q: |
+    What's the key trade-off between the classic trait-object state pattern and the type-per-state alternative for this blog-post example?
+  A: |
+    The trait-object version keeps state transitions fully encapsulated inside `Post`'s implementation (truer to the classic OOP state pattern), while the type-per-state version requires the caller to rebind the variable at each transition (`let post = post.request_review();`) — but in exchange, invalid states/transitions become impossible to represent at all, caught by the compiler rather than only at runtime.

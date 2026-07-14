@@ -1,0 +1,260 @@
+- Q: |
+    What is a "future" in Rust, and what is "polling"?
+  A: |
+    A value that may not be ready yet but will become ready at some point — it implements the `Future` trait, which tracks its progress and what "ready" means. Checking whether a future's value is available yet is called polling.
+
+- Q: |
+    What does marking a function `async fn` actually compile down to?
+  A: |
+    A regular (non-async) function whose body is an `async` block, and whose return type is `impl Future<Output = T>` for whatever `T` the function conceptually returns — the function itself doesn't run any of its body until the returned future is awaited/polled.
+  C: |
+    async fn page_title(url: &str) -> Option<String> {
+        let text = trpl::get(url).await.text().await;
+        Html::parse(&text).select_first("title").map(|t| t.inner_html())
+    }
+    // roughly equivalent to:
+    fn page_title(url: &str) -> impl Future<Output = Option<String>> {
+        async move { /* same body */ }
+    }
+
+- Q: |
+    Is `await` a prefix keyword (like in JavaScript/C#) or a postfix keyword in Rust?
+  A: |
+    Postfix — it goes after the expression it applies to, e.g. `some_future.await`, not `await some_future`.
+  C: |
+    let response_text = trpl::get(url).await.text().await;
+
+- Q: |
+    Where in Rust code are you allowed to use `.await`?
+  A: |
+    Only inside an `async` block or `async fn` — you can't await a future from ordinary synchronous code.
+
+- Q: |
+    Do Rust futures do any work on their own once created, or do they need something else to drive them?
+  A: |
+    Futures are lazy — creating one does nothing by itself; it only makes progress when it's awaited (or otherwise polled by a runtime).
+
+- Q: |
+    Why can't Rust's `main` function be declared `async fn main()`?
+  A: |
+    Running async code requires a runtime to drive/poll futures to completion, and Rust doesn't bundle one into the language or standard library — `main` itself can't be async because there'd be nothing yet to execute it. Instead, `main` stays a normal function and calls into a runtime's entry point (e.g. `trpl::block_on` / `tokio`'s equivalent) to run an async block.
+  C: |
+    fn main() {
+        trpl::block_on(async {
+            let title = page_title(url).await;
+        })
+    }
+
+- Q: |
+    Why does Rust not ship a built-in async runtime the way some other languages do?
+  A: |
+    Different use cases have very different runtime tradeoffs (e.g. embedded vs. web servers), so Rust leaves the runtime as a pluggable choice — multiple runtime crates exist (e.g. `tokio`, the most widely used, especially for web applications; `futures`, where the `Future` trait itself originated).
+
+- Q: |
+    What does the compiler generate behind the scenes for an `async fn` to let it pause and resume at each `.await` point?
+  A: |
+    An invisible state machine (conceptually similar to an enum with one variant per await point) that tracks which stage of the function has been reached and what data needs to be carried across each suspension, handing control back to the runtime at every await point until progress can resume.
+
+- Q: |
+    What does racing two futures with something like `trpl::select(fut1, fut2).await` return, and what does each variant represent?
+  A: |
+    An `Either<A, B>` value — `Either::Left(a)` if the first future finished first (with its output), `Either::Right(b)` if the second finished first. Whichever future doesn't win the race is dropped/cancelled.
+  C: |
+    enum Either<A, B> { Left(A), Right(B) }
+
+    match trpl::select(title_fut_1, title_fut_2).await {
+        Either::Left(left) => left,
+        Either::Right(right) => right,
+    };
+
+- Q: |
+    How is `trpl::spawn_task` analogous to `thread::spawn`, and what happens to a spawned task if the runtime (`main`/`trpl::block_on`) finishes first?
+  A: |
+    Like `thread::spawn`, it starts an independent unit of concurrent work and returns a handle you can `.await` to wait for it to finish. Also like OS threads, a spawned task is shut down if the runtime driving it (e.g. `block_on` in `main`) returns before the task completes.
+  C: |
+    let handle = trpl::spawn_task(async {
+        trpl::sleep(Duration::from_millis(500)).await;
+    });
+    handle.await.unwrap();
+
+- Q: |
+    In an async message-passing channel from `trpl::channel()`, does `tx.send(val)` need to be awaited? Does `rx.recv()`?
+  A: |
+    No — `tx.send()` is non-blocking on this unbounded channel and returns immediately without `.await`. `rx.recv()` does need `.await`, since it must wait for a value to arrive (or for the channel to close).
+  C: |
+    let (tx, mut rx) = trpl::channel();
+    tx.send(val).unwrap();          // no await
+    let received = rx.recv().await; // await required
+
+- Q: |
+    How does an async channel "close", and how does a `while let` loop reading from it know to stop?
+  A: |
+    The channel closes when every transmitter (`tx`) has been dropped. Once closed, `rx.recv().await` returns `None` instead of `Some(value)`, so a `while let Some(value) = rx.recv().await { ... }` loop naturally exits.
+  C: |
+    while let Some(value) = rx.recv().await {
+        println!("received '{value}'");
+    }
+
+- Q: |
+    Within a single async block containing multiple `.await` points, do those awaited operations run concurrently with each other?
+  A: |
+    No — code within one async block still executes sequentially, in the same order its `.await`s appear in the source; getting real interleaving requires splitting the work into separate async blocks/futures and running them together (e.g. via `trpl::join`).
+
+- Q: |
+    How do you run two separate async blocks concurrently and wait for both to finish?
+  A: |
+    Build each as its own future, then pass them to `trpl::join(fut1, fut2).await` (for exactly two) or the `trpl::join!(...)` macro (for an arbitrary compile-time-known number).
+  C: |
+    let fut1 = async { /* ... */ };
+    let fut2 = async { /* ... */ };
+    trpl::join(fut1, fut2).await;
+
+- Q: |
+    Why does an async block that captures and uses `tx` (e.g. to send values then let the block end) typically need `async move` rather than a plain `async` block?
+  A: |
+    Without `move`, the block would borrow `tx` rather than own it, so `tx` wouldn't be dropped when the block finishes — meaning the channel never closes, and a receiver looping on `rx.recv().await` would hang forever waiting for a `None` that never comes. `async move` forces the block to own (and thus properly drop) `tx`.
+
+- Q: |
+    Is `trpl::join`'s scheduling "fair" between the futures it's given, and what does that guarantee about output ordering across repeated runs?
+  A: |
+    Yes — it polls each future equally often, alternating between them, never letting one race far ahead of another that's also ready. This makes output ordering deterministic and identical across runs, unlike the nondeterministic interleaving you get from real OS threads.
+
+- Q: |
+    What is the main resource-usage tradeoff between spawning many async tasks versus spawning many OS threads?
+  A: |
+    Async tasks are much lighter weight, so you can have vastly more of them running "concurrently" than you could with OS threads — but on a single-threaded async runtime, that concurrency is only interleaving (cooperative multitasking on one core), not true parallelism, unlike OS threads which the operating system can genuinely run in parallel across cores.
+
+- Q: |
+    When exactly does an async block hand control back to the runtime, and what does that imply about code between two await points?
+  A: |
+    Only at an `.await` point — everything between await points runs synchronously, uninterrupted. This means a long-running computation with no `.await` inside it will block every other future on that runtime from making progress, even if they'd otherwise be ready to run.
+
+- Q: |
+    What does `trpl::yield_now().await` do, and why might it be preferable to `trpl::sleep(Duration::from_millis(0)).await` for just handing control back to the runtime?
+  A: |
+    It yields control to the runtime without actually pausing for any timed duration. `sleep` is bound by the OS/runtime timer's granularity (e.g. often at least ~1ms even if you request 0), so `yield_now` hands back control faster when you don't actually need a delay, just a cooperative pause.
+
+- Q: |
+    How would you implement a generic `async fn timeout<F: Future>(future_to_try: F, max_time: Duration) -> Result<F::Output, Duration>` using `trpl::select`?
+  A: |
+    Race the given future against `trpl::sleep(max_time)` with `trpl::select`; if the real future wins (`Either::Left`), return `Ok(output)`; if the sleep wins (`Either::Right`), return `Err(max_time)` to signal a timeout.
+  C: |
+    match trpl::select(future_to_try, trpl::sleep(max_time)).await {
+        Either::Left(output) => Ok(output),
+        Either::Right(_) => Err(max_time),
+    }
+
+- Q: |
+    Unlike `trpl::join`, is `trpl::select` fair between the two futures it's given? Why does the `timeout` implementation pass `future_to_try` first?
+  A: |
+    No — `trpl::select` always polls its arguments in the order given, rather than alternating fairly. Passing `future_to_try` first gives the real work a chance to complete before the timer is even checked, which matters for a timeout implementation (you don't want the sleep's own scheduling to unfairly beat a future that was actually ready).
+
+- Q: |
+    What is a `Stream`, and how is it different from an `Iterator`?
+  A: |
+    A stream is an asynchronous series of items that arrive over time — conceptually the async counterpart of `Iterator`. Both yield items one at a time, but an `Iterator`'s `next()` is synchronous, while a stream's equivalent must be awaited (`.next().await`), since the next item may not be ready yet.
+
+- Q: |
+    What does the `Stream` trait combine, at a low level, and what method plays the role `Iterator::next` plays for iterators?
+  A: |
+    It effectively combines `Iterator` and `Future` — its low-level method, `poll_next`, is polled like a future but yields a sequence of values like an iterator's `next`.
+
+- Q: |
+    How do you turn a plain synchronous iterator into a stream?
+  A: |
+    `trpl::stream_from_iter(iter)`.
+  C: |
+    let iter = values.iter().map(|n| n * 2);
+    let mut stream = trpl::stream_from_iter(iter);
+
+- Q: |
+    Why do you need to `use trpl::StreamExt;` before calling `.next()` on a stream, when `Stream` itself is already in scope?
+  A: |
+    `StreamExt` ("stream extension") is a separate trait that layers a higher-level, ergonomic API (including `.next()` and other combinator methods) on top of the low-level `Stream` trait — this "Ext trait" pattern is common in Rust for adding convenience methods without bloating the core trait itself.
+
+- Q: |
+    How do you consume every item from a stream one at a time?
+  A: |
+    A `while let` loop calling `.next().await` on the stream, similar to iterating a synchronous iterator with `next()`.
+  C: |
+    while let Some(value) = stream.next().await {
+        println!("The value was: {value}");
+    }
+
+- Q: |
+    What is the actual definition of the `Future` trait, and what do the two `Poll` variants mean?
+  A: |
+    `trait Future { type Output; fn poll(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Self::Output>; }`. `Poll::Ready(value)` means the future has finished and produced its output; `Poll::Pending` means it isn't done yet and must be polled again later.
+  C: |
+    pub enum Poll<T> {
+        Ready(T),
+        Pending,
+    }
+
+- Q: |
+    What does `.await` actually desugar into, in terms of the `Future` trait?
+  A: |
+    A loop that repeatedly calls `.poll()` on the future: if it returns `Pending`, control is handed back to the runtime (which reschedules polling for later, e.g. once a waker fires); if it returns `Ready(value)`, the loop exits with that value.
+
+- Q: |
+    Is it safe to call `.poll()` again on a future after it has already returned `Poll::Ready`?
+  A: |
+    No — for most futures, polling again after completion will panic; a future is expected to be polled to completion exactly once (which is exactly what `.await`'s generated loop does — it stops as soon as it sees `Ready`).
+
+- Q: |
+    Why do async blocks' compiler-generated futures need to be `Pin`ned, rather than freely movable like most values?
+  A: |
+    Compiling an async block produces an anonymous struct/state-machine that can hold internal references to its own other fields (it's self-referential). Moving such a struct in memory would leave those internal pointers referencing the old, now-invalid location. `Pin` guarantees the pointee won't move, so those internal references stay valid.
+
+- Q: |
+    What does the `Unpin` marker trait mean, and why do types like `String`/`Vec`/most primitives implement it automatically?
+  A: |
+    `Unpin` says it's safe to move a type even while it's behind a `Pin`, because it has no internal self-references that moving would break. `Unpin` is the default/normal case — auto-implemented for essentially everything except the self-referential state machines async blocks generate (those are `!Unpin`).
+
+- Q: |
+    Why can't you put several different async blocks' futures directly into one `Vec<F>`, even if they all have the same `Output` type?
+  A: |
+    Each async block compiles to its own unique, anonymous compiler-generated struct type — two async blocks with identical-looking bodies and outputs still produce two distinct concrete types, just like two hand-written structs would, so they can't share one homogeneous `Vec<F>` without going through a trait object or being pinned individually (e.g. via the `pin!` macro and `Pin<&mut dyn Future<Output = T>>`).
+  C: |
+    let futures: Vec<Pin<&mut dyn Future<Output = ()>>> = vec![pin!(fut1), pin!(fut2)];
+    trpl::join_all(futures).await;
+
+- Q: |
+    What is `poll_next`'s actual signature on the `Stream` trait, and how do the outer `Poll` and inner `Option` each contribute meaning?
+  A: |
+    `fn poll_next(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Option<Self::Item>>`. The outer `Poll` (`Ready`/`Pending`) signals readiness the way a future does; the inner `Option` (`Some(item)`/`None`) signals whether there's another item or the stream is exhausted, the way an iterator's `next()` does.
+
+- Q: |
+    Why does implementing `Stream` for a custom type give you `StreamExt`'s methods (like `.next()`) for free, without implementing them yourself?
+  A: |
+    `StreamExt` is defined as a blanket extension trait over any `Stream`, providing higher-level methods (like an `async fn next(&mut self) -> Option<Self::Item>`) built entirely on top of `poll_next` — so any type that implements the low-level `Stream` trait automatically gets `StreamExt`'s convenience API too.
+
+- Q: |
+    As a rule of thumb, when is spawning OS threads a better fit than async tasks, and when is async a better fit?
+  A: |
+    Threads suit highly parallelizable, CPU-bound work — independent chunks of computation that can each run to completion on their own core. Async suits highly concurrent, I/O-bound work — many operations (like messages arriving from many sources at unpredictable times) that spend most of their time waiting rather than computing.
+
+- Q: |
+    How is an async "task" similar to a thread, and how is it different in terms of what manages it?
+  A: |
+    A task behaves like a lightweight thread — an independent unit of concurrent work — but instead of being scheduled by the operating system, it's scheduled by library-level code: the async runtime's executor. This is why many more tasks can exist concurrently than OS threads would allow, since tasks don't carry the OS thread's memory/scheduling overhead.
+
+- Q: |
+    Why might a real program combine threads and async rather than choosing strictly one or the other?
+  A: |
+    Some work (e.g. video encoding) is compute-bound and best run on a dedicated OS thread, while coordinating results back to the rest of the program (e.g. notifying a UI) fits naturally as async message-passing — dedicating a thread to the heavy computation and using an async channel to hand off completion notifications combines both models' strengths.
+  C: |
+    thread::spawn(move || {
+        // CPU-bound work, sends results over an async channel
+        tx.send(result).unwrap();
+    });
+    trpl::block_on(async {
+        while let Some(message) = rx.recv().await {
+            println!("{message}");
+        }
+    });
+
+- Q: |
+    What is the hierarchy of concurrency units in Rust's async model, from most to least granular?
+  A: |
+    Futures are the most granular unit — a future may itself be composed of a tree of other futures. An executor (part of the runtime) manages tasks, and each task in turn manages one or more futures.

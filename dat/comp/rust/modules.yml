@@ -1,0 +1,196 @@
+- Q: |
+    What is a "crate" in Rust, and what are the two kinds?
+  A: |
+    The smallest unit of code the compiler considers at once — even a single file passed to `rustc` is a crate. A **binary crate** compiles to an executable and must have a `main` function. A **library crate** has no `main` and defines functionality meant to be shared/reused by other crates (e.g. the `rand` crate).
+  N: |
+    Rustaceans often say "crate" to mean specifically a library crate, using it interchangeably with "library."
+
+- Q: |
+    What is the "crate root"?
+  A: |
+    The source file the Rust compiler starts compiling from, which forms the root module of the crate.
+
+- Q: |
+    What is a "package" in Rust, and how does it relate to crates?
+  A: |
+    A package is a bundle of one or more crates that provides some functionality, described by a `Cargo.toml` file. A package must contain at least one crate.
+
+- Q: |
+    How many library crates can a single package contain, versus how many binary crates?
+  A: |
+    At most one library crate, but as many binary crates as you like.
+
+- Q: |
+    By Cargo convention, which file is the crate root of a package's binary crate, and which file signals the package also has a library crate?
+  A: |
+    `src/main.rs` is the crate root of a binary crate sharing the package's name. `src/lib.rs`, if present, is the crate root of the package's (single) library crate.
+
+- Q: |
+    How do you add additional binary crates to a package beyond the one in `src/main.rs`?
+  A: |
+    Add more files to the `src/bin` directory — each file there becomes its own separate binary crate.
+
+- Q: |
+    What two things do modules let you control in a Rust crate?
+  A: |
+    How code is organized (grouping related functionality for readability and reuse), and privacy (code within a module is private by default, so modules also gate what's visible from outside them).
+
+- Q: |
+    Given `mod front_of_house { mod hosting { ... } mod serving { ... } }`, what is the relationship between `hosting` and `serving`?
+  A: |
+    They are siblings — both are direct children of the same parent module, `front_of_house`.
+  C: |
+    mod front_of_house {
+        mod hosting {
+            fn add_to_waitlist() {}
+        }
+        mod serving {
+            fn take_order() {}
+        }
+    }
+
+- Q: |
+    What is the implicit root of every crate's module tree, and how do you write a path starting from it?
+  A: |
+    An implicit module named `crate`. A fully-qualified path starts with `crate::`, e.g. `crate::front_of_house::hosting::add_to_waitlist`.
+
+- Q: |
+    When you declare `mod garden;` in a crate root, where can the compiler find that module's code (three possible locations)?
+  A: |
+    Inline in curly braces replacing the semicolon, in `src/garden.rs`, or in `src/garden/mod.rs`.
+
+- Q: |
+    When you declare a submodule like `mod vegetables;` inside a non-root file (e.g. `src/garden.rs`), where does the compiler look for its code?
+  A: |
+    Inline in curly braces right after the declaration, in `src/garden/vegetables.rs`, or in `src/garden/vegetables/mod.rs` — i.e. nested under the parent module's own directory.
+
+- Q: |
+    By default, can code in one module access items defined in a different module?
+  A: |
+    No — items are private by default. A module must be declared `pub mod` to be visible from outside its parent, and individual items inside it need their own `pub` to be visible too.
+
+- Q: |
+    What does the `use` keyword do, and how does it change how you refer to a deeply-nested item?
+  A: |
+    It creates a shortcut binding for a path, so after `use crate::garden::vegetables::Asparagus;` you can write just `Asparagus` instead of the full path everywhere it's used.
+
+- Q: |
+    What is the difference between an absolute and a relative path when referring to an item in the module tree, and which does the Rust community generally prefer?
+  A: |
+    An absolute path starts from the crate root (literal `crate` for the current crate, or the crate name for an external one); a relative path starts from the current module using `self`, `super`, or an identifier in scope. Absolute paths are generally preferred, since item definitions and their call sites are more likely to be moved independently of each other.
+  C: |
+    crate::front_of_house::hosting::add_to_waitlist(); // absolute
+    front_of_house::hosting::add_to_waitlist();        // relative
+
+- Q: |
+    Can code in a parent module use private items defined in one of its child modules?
+  A: |
+    No — visibility only flows downward: a child module can use private items from its ancestor modules, but a parent can never see a child's private items.
+
+- Q: |
+    If you mark a module `pub mod hosting`, does that automatically make everything inside `hosting` public too?
+  A: |
+    No — marking the module `pub` only makes the module itself visible from outside; each item inside it (functions, structs, etc.) still needs its own `pub` to be accessible.
+
+- Q: |
+    When you make a `struct` public with `pub struct Breakfast { ... }`, are its fields automatically public too?
+  A: |
+    No — each field needs its own `pub` to be accessible from outside; an unmarked field stays private even inside a `pub` struct.
+  C: |
+    pub struct Breakfast {
+        pub toast: String,
+        seasonal_fruit: String, // still private
+    }
+
+- Q: |
+    When you make an `enum` public with `pub enum Appetizer { ... }`, are its variants automatically public too?
+  A: |
+    Yes — unlike struct fields, all variants of a `pub` enum are public by default, since an enum with private variants would be nearly useless to callers.
+
+- Q: |
+    What does the `super` keyword do in a path, and when is it useful?
+  A: |
+    It refers to the current module's parent, similar to `..` in a filesystem path — useful for calling a sibling/parent-level item, and it makes rearranging the module tree easier when a module is closely tied to its parent.
+  C: |
+    fn deliver_order() {}
+    mod back_of_house {
+        fn fix_incorrect_order() {
+            super::deliver_order();
+        }
+    }
+
+- Q: |
+    When bringing a function into scope with `use`, is it idiomatic to import the function itself or its parent module?
+  A: |
+    Import the parent module, then call the function through it. This keeps the call site short while still making clear at the call site that the function isn't defined locally.
+  C: |
+    use crate::front_of_house::hosting;
+    hosting::add_to_waitlist(); // idiomatic
+
+    // vs. importing the function directly (not idiomatic):
+    // use crate::front_of_house::hosting::add_to_waitlist;
+    // add_to_waitlist();
+
+- Q: |
+    When bringing a struct, enum, or other item (not a function) into scope with `use`, what's the idiomatic convention — full path including the item name, or just the parent module?
+  A: |
+    Specify the full path including the item's own name.
+  C: |
+    use std::collections::HashMap;
+    let mut map = HashMap::new();
+
+- Q: |
+    If two items with the same name (e.g. `Result`) need to be imported from different modules (`std::fmt` and `std::io`), what are the two ways to resolve the naming conflict?
+  A: |
+    Either `use` each parent module and qualify the name at each use site (`fmt::Result`, `io::Result`), or `use` the items directly but rename one with `as`.
+  C: |
+    use std::fmt::Result;
+    use std::io::Result as IoResult;
+
+- Q: |
+    What does `pub use` do differently from a plain `use`, and when is it useful?
+  A: |
+    A plain `use` only makes the imported name usable within its own scope — it stays private to outside callers. `pub use` re-exports the name so external code can use it as if it had been defined in that scope. This is useful when your internal module structure differs from how callers conceptually think about your API.
+  C: |
+    pub use crate::front_of_house::hosting;
+    // external callers can now write: restaurant::hosting::add_to_waitlist()
+
+- Q: |
+    What two steps are needed to use an external crate like `rand` in your project?
+  A: |
+    List it as a dependency in `Cargo.toml` (e.g. `rand = "0.8.5"`), then bring the items you need into scope with `use` (e.g. `use rand::Rng;`).
+
+- Q: |
+    How do nested paths clean up multiple `use` statements that share a common prefix, and what does adding `self` inside the braces do?
+  A: |
+    `use std::{cmp::Ordering, io};` combines two imports sharing the `std::` prefix into one line. Adding `self` (e.g. `use std::io::{self, Write};`) brings in both the module itself (`std::io`) and the named sub-item (`std::io::Write`) together.
+
+- Q: |
+    What does `mod front_of_house;` (with a semicolon, no body) tell the compiler to do?
+  A: |
+    Load that module's code from an external file — by convention `src/front_of_house.rs` — instead of defining the module body inline.
+
+- Q: |
+    Is `mod` in Rust equivalent to an "include" directive from other languages, textually pasting a file's contents wherever it's mentioned?
+  A: |
+    No — a file is loaded into the module tree only once, at the single `mod` declaration that establishes where it lives in the tree. Everywhere else in the project refers to that code via its path, not via a repeated `mod`/include statement.
+
+- Q: |
+    When a module declared in its own file has a child submodule, where does the compiler expect to find the child's file?
+  A: |
+    Inside a directory named after the parent module, e.g. a submodule `hosting` of `front_of_house` (itself in `src/front_of_house.rs`) lives at `src/front_of_house/hosting.rs`.
+
+- Q: |
+    What are the two supported file-layout styles for a module with submodules, and which is preferred?
+  A: |
+    The modern style uses `src/front_of_house.rs` plus `src/front_of_house/hosting.rs`. The older style instead uses `src/front_of_house/mod.rs` plus `src/front_of_house/hosting/mod.rs`. The modern (non-`mod.rs`) style is preferred — the older style's downside is ending up with many identically-named `mod.rs` files, which is confusing with multiple open in an editor at once.
+
+- Q: |
+    What happens if you use both the modern and older file-layout style for the very same module (e.g. having both `src/front_of_house.rs` and `src/front_of_house/mod.rs`)?
+  A: |
+    It's a compiler error. Mixing styles across *different* modules in the same project is allowed, though it can be confusing to navigate.
+
+- Q: |
+    What does the glob operator `use std::collections::*;` do, and why should it be used cautiously?
+  A: |
+    It brings all public items from a path into scope at once. It's discouraged in most code because it makes it harder to tell which names are in scope and where they came from — though it's commonly used to pull everything from a module under test into a `tests` module.

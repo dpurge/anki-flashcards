@@ -1,0 +1,233 @@
+- Q: |
+    What are the three ownership rules in Rust?
+  A: |
+    Each value has one owner; there is only one owner at a time; when the owner goes out of scope, the value is dropped.
+
+- Q: |
+    What happens when you assign a `String` to another variable in Rust — `let s2 = s1;`?
+  A: |
+    The value is **moved**, not copied: `s1` is no longer valid, and using it afterward is a compile error.
+  C: |
+    let s1 = String::from("hi");
+    let s2 = s1;
+    // println!("{}", s1); // error: value moved
+
+- Q: |
+    Why does `let x = 5; let y = x;` NOT invalidate `x`, unlike moving a `String`?
+  A: |
+    Simple stack-only types like integers implement the `Copy` trait, so assignment copies the value instead of moving it.
+  N: |
+    A type can't implement both `Copy` and `Drop`.
+
+- Q: |
+    What is a Rust reference, and what symbol creates one?
+  A: |
+    A reference (`&value`) lets you access a value without taking ownership of it — borrowing instead of moving.
+  C: |
+    let s = String::from("hi");
+    let len = calculate_length(&s);
+    // s is still valid here
+
+- Q: |
+    What is the core borrowing rule about mutable references?
+  A: |
+    At any given time, you can have either exactly one mutable reference OR any number of immutable references to a value, but not both.
+  N: |
+    This rule is enforced at compile time and prevents data races.
+
+- Q: |
+    What is a "dangling reference", and how does Rust prevent it at compile time?
+  A: |
+    A reference to memory that's been freed. The borrow checker rejects code where a reference could outlive the data it points to, via lifetime analysis.
+
+- Q: |
+    What does the `'a` syntax in a function signature like `fn f<'a>(x: &'a str) -> &'a str` mean?
+  A: |
+    It's a lifetime annotation stating that the returned reference is valid for at least as long as the input reference `x` — it doesn't change how long anything actually lives, it just describes the relationship to the borrow checker.
+
+- Q: |
+    Why does ownership matter specifically for heap-allocated data, and not so much for stack-only data?
+  A: |
+    Heap data has unknown/dynamic size, so Rust must track which code is using it, avoid duplicating it needlessly, and clean it up once nobody needs it — ownership is the mechanism that automates that tracking and cleanup. Stack data is fixed-size and cheap to copy, so none of that bookkeeping is needed.
+
+- Q: |
+    What automatically happens to a heap-allocated value like a `String` when its owning variable goes out of scope?
+  A: |
+    Rust automatically calls `drop` at the closing curly brace of the scope, freeing the heap memory — no manual deallocation call is needed.
+
+- Q: |
+    Why does moving a `String` (rather than doing a shallow copy of the pointer/length/capacity) prevent a specific memory bug?
+  A: |
+    A shallow copy would leave two variables (`s1` and `s2`) both pointing at the same heap memory; when both went out of scope, each would try to free that memory, causing a **double free**. By invalidating `s1` on move, Rust ensures only one variable will ever call `drop` on that memory.
+
+- Q: |
+    How do you make an explicit deep copy of a `String`'s heap data instead of moving it?
+  A: |
+    Call `.clone()` — this duplicates the heap data itself, so both variables remain valid and independent.
+  C: |
+    let s1 = String::from("hello");
+    let s2 = s1.clone();
+    println!("s1 = {s1}, s2 = {s2}");
+  N: |
+    Seeing a `.clone()` call is a signal that potentially expensive, arbitrary code is running — unlike a plain `Copy`, which is always cheap.
+
+- Q: |
+    Besides simple integers, what other kinds of types implement `Copy`?
+  A: |
+    All other stack-only scalar types — `bool`, all floating-point types, `char` — plus tuples whose elements are themselves all `Copy` (e.g. `(i32, i32)`, but not `(i32, String)`).
+
+- Q: |
+    When you pass a `String` into a function versus passing an `i32`, what happens to the original variable in each case?
+  A: |
+    Passing a `String` moves it into the function — the original variable is no longer valid afterward. Passing an `i32` copies it (since `i32` implements `Copy`) — the original variable remains valid and usable after the call.
+  C: |
+    let s = String::from("hello");
+    takes_ownership(s); // s is moved, invalid after this line
+
+    let x = 5;
+    makes_copy(x); // x is copied, still valid after this line
+
+- Q: |
+    When a function returns a value, what happens to ownership of that value?
+  A: |
+    Ownership moves out of the function to whatever variable receives the return value — the same move semantics as an assignment.
+  C: |
+    fn gives_ownership() -> String {
+        let some_string = String::from("yours");
+        some_string // moved out to the caller
+    }
+
+- Q: |
+    Why is creating a reference called "borrowing"?
+  A: |
+    Because you get access to a value without taking ownership of it — like borrowing something from its owner, you don't get to keep it, and you can't do whatever you want with it (e.g. you can't modify it unless explicitly allowed).
+
+- Q: |
+    Given `fn change(s: &String) { s.push_str(", world"); }`, why does this fail to compile even though `s` is a valid reference?
+  A: |
+    References are immutable by default, just like variables — an ordinary `&String` reference cannot be used to mutate the data it points to, regardless of whether the underlying variable was declared `mut`.
+
+- Q: |
+    What syntax lets a function mutate data through a reference, and what must be true of the variable being referenced?
+  A: |
+    Use `&mut` to create a mutable reference (e.g. `&mut s` passed to a parameter typed `&mut String`); the original variable must itself be declared `mut`.
+  C: |
+    let mut s = String::from("hello");
+    change(&mut s);
+
+    fn change(some_string: &mut String) {
+        some_string.push_str(", world");
+    }
+
+- Q: |
+    What three conditions together define a "data race", which Rust's borrowing rules prevent at compile time?
+  A: |
+    Two or more pointers access the same data at the same time; at least one of them is writing to the data; and there's no mechanism synchronizing access between them.
+
+- Q: |
+    Does Rust forbid ever having two mutable references to the same value in a program, or just at the same time?
+  A: |
+    Just at the same time — two mutable references are fine as long as their scopes don't overlap, e.g. if the first goes out of scope (or is last used) before the second is created.
+  C: |
+    let mut s = String::from("hello");
+    {
+        let r1 = &mut s;
+    } // r1's scope ends here
+    let r2 = &mut s; // OK
+
+- Q: |
+    A reference's scope is defined by lexical `{}` blocks alone — true or false, and what determines it instead?
+  A: |
+    False. A reference's scope runs from where it's introduced through its *last use*, not necessarily to the end of its enclosing block — this is why immutable references can be created, used, and then a mutable reference created afterward in the same block, as long as the immutable ones aren't used again after that point.
+  C: |
+    let mut s = String::from("hello");
+    let r1 = &s;
+    let r2 = &s;
+    println!("{r1} and {r2}"); // r1, r2 last used here
+    let r3 = &mut s; // OK: r1/r2's scope already ended
+
+- Q: |
+    Why does `fn dangle() -> &String { let s = String::from("hello"); &s }` fail to compile?
+  A: |
+    `s` is dropped when `dangle` returns, so the returned reference would point at freed memory (a dangling reference). The borrow checker rejects this with a "missing lifetime specifier" error; the fix is to return the owned `String` itself (`s`) rather than a reference to it, transferring ownership out instead.
+
+- Q: |
+    Does every reference in Rust have a lifetime, and do you usually have to write it explicitly?
+  A: |
+    Yes, every reference has a lifetime — the scope for which it's valid — but most are implicit and inferred by the compiler, the same way most types are inferred. Explicit annotations are only required when a reference's lifetime could relate to other lifetimes in more than one possible way.
+
+- Q: |
+    Why does `fn longest(x: &str, y: &str) -> &str { if x.len() > y.len() { x } else { y } }` fail to compile without lifetime annotations?
+  A: |
+    The function can return a reference to either `x` or `y` depending on a runtime condition, so the compiler can't statically determine which parameter's lifetime the return value's lifetime should match — it needs an explicit annotation stating that relationship.
+
+- Q: |
+    In `fn longest<'a>(x: &'a str, y: &'a str) -> &'a str`, what does giving `x`, `y`, and the return type the same lifetime `'a` actually guarantee?
+  A: |
+    That the returned reference will be valid for no longer than the *shorter* of the two input references' lifetimes — i.e. the smaller of however long `x` and `y` individually remain valid.
+  C: |
+    fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
+        if x.len() > y.len() { x } else { y }
+    }
+
+- Q: |
+    Lifetime annotations look like they control how long a value lives. What do they actually do instead?
+  A: |
+    They don't change how long any reference lives — they only describe the relationships between multiple references' lifetimes to the compiler, similar to how a type annotation describes (but doesn't create) a value's type. They're part of the function's contract, not a runtime mechanism.
+
+- Q: |
+    If a function's return type is annotated `-> 'a` matching an input parameter, but the function actually returns a reference to a value created inside the function body, what happens?
+  A: |
+    It's a compile error — the local value is dropped when the function returns, so the returned reference would dangle regardless of the annotation. The fix is to return an owned type (e.g. `String` instead of `&str`) so the caller takes ownership and is responsible for it, rather than trying to return a reference at all.
+
+- Q: |
+    What does putting a lifetime parameter on a struct, like `struct ImportantExcerpt<'a> { part: &'a str }`, guarantee about instances of that struct?
+  A: |
+    An instance of `ImportantExcerpt` cannot outlive the reference stored in its `part` field — the struct's own lifetime is tied to (bounded by) the lifetime of the data it borrows.
+
+- Q: |
+    What do Rust's lifetime elision rules do, and what is elision rule 1 specifically?
+  A: |
+    They let the compiler infer lifetimes automatically in common patterns so you don't have to write them explicitly. Rule 1: every reference parameter gets its own inferred lifetime (e.g. `fn foo(x: &i32, y: &i32)` becomes `fn foo<'a, 'b>(x: &'a i32, y: &'b i32)` internally).
+
+- Q: |
+    Under lifetime elision rule 2, when does a function's return-reference lifetime get automatically inferred, and to what?
+  A: |
+    If there is exactly one input lifetime parameter, that same lifetime is automatically assigned to every output reference — e.g. `fn foo(x: &i32) -> &i32` is treated as `fn foo<'a>(x: &'a i32) -> &'a i32`.
+
+- Q: |
+    Under lifetime elision rule 3, what happens to a method's output lifetime when one of its parameters is `&self` or `&mut self`?
+  A: |
+    The lifetime of `self` is automatically assigned to all output references, even if there are other reference parameters — this is why most methods returning a reference tied to `self` don't need explicit lifetime annotations.
+  C: |
+    impl<'a> ImportantExcerpt<'a> {
+        fn announce_and_return_part(&self, announcement: &str) -> &str {
+            println!("Attention please: {announcement}");
+            self.part
+        }
+    }
+
+- Q: |
+    What does the `'static` lifetime mean, and why do all string literals have it?
+  A: |
+    `'static` means the reference is valid for the entire duration of the program. String literals have it because their text is embedded directly in the compiled binary, which is always available for the program's whole run.
+  C: |
+    let s: &'static str = "I have a static lifetime.";
+
+- Q: |
+    If the compiler suggests adding `'static` to fix a lifetime error, is that usually the right fix?
+  A: |
+    Usually not — a `'static` suggestion is typically a symptom of trying to create a dangling reference or a lifetime mismatch elsewhere. The right fix is almost always to resolve that underlying problem, not to force the reference to claim it lives for the whole program.
+
+- Q: |
+    Can a single function signature combine a generic type parameter, a trait bound, and a lifetime parameter together, and where are they declared?
+  A: |
+    Yes — since a lifetime is itself a kind of generic parameter, it's declared in the same angle-bracket list as the type parameter, after the function name.
+  C: |
+    fn longest_with_an_announcement<'a, T>(x: &'a str, y: &'a str, ann: T) -> &'a str
+    where
+        T: Display,
+    {
+        println!("Announcement! {ann}");
+        if x.len() > y.len() { x } else { y }
+    }

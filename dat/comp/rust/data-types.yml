@@ -1,0 +1,63 @@
+- Q: |
+    What is the difference between Rust's scalar and compound types?
+  A: |
+    A scalar type represents a single value (integers, floats, booleans, chars). A compound type groups multiple values into one type (tuples, arrays).
+
+- Q: |
+    What integer types does Rust provide, and which is the default when no type is specified?
+  A: |
+    Signed `i8`/`i16`/`i32`/`i64`/`i128`/`isize` and unsigned `u8`/`u16`/`u32`/`u64`/`u128`/`usize`, where the number is the bit width and `isize`/`usize` depend on the target architecture's pointer size. `i32` is the default integer type.
+
+- Q: |
+    What happens to integer overflow in a Rust debug build versus a release (`--release`) build?
+  A: |
+    In debug builds, Rust inserts overflow checks that cause a runtime `panic`. In release builds, those checks are omitted and the value silently wraps using two's complement (e.g. `256` becomes `0` for a `u8`).
+
+- Q: |
+    What do the `wrapping_*`, `checked_*`, `overflowing_*`, and `saturating_*` integer methods each do on overflow?
+  A: |
+    `wrapping_*` wraps around in all build modes. `checked_*` returns `None` instead of the wrapped value. `overflowing_*` returns a tuple of the value and a `bool` indicating whether overflow occurred. `saturating_*` clamps the result to the type's min/max value.
+
+- Q: |
+    What are Rust's floating-point types, and which is the default?
+  A: |
+    `f32` (32-bit) and `f64` (64-bit), both signed and IEEE-754 compliant. `f64` is the default — on modern CPUs it's roughly as fast as `f32` but more precise.
+
+- Q: |
+    How many bytes does a `bool` take up in Rust, and what are its two values?
+  A: |
+    1 byte; the two values are `true` and `false`.
+
+- Q: |
+    How many bytes does a Rust `char` take up, and what does it represent?
+  A: |
+    4 bytes — it represents a Unicode scalar value, so it can hold far more than ASCII (e.g. accented letters, CJK characters, emoji), unlike a single byte in many other languages.
+  C: |
+    let heart_eyed_cat = '😻';
+
+- Q: |
+    What is a Rust tuple, and how do you access its elements two different ways?
+  A: |
+    A fixed-length collection that can hold values of different types. You can destructure it into named bindings, or access an element directly by its zero-based index with dot notation.
+  C: |
+    let tup: (i32, f64, u8) = (500, 6.4, 1);
+    let (x, y, z) = tup;      // destructuring
+    let five_hundred = tup.0; // index access
+
+- Q: |
+    What is the "unit" value in Rust, written `()`, and when do you encounter it?
+  A: |
+    An empty tuple representing "no meaningful value" — it's the implicit return type of expressions/functions that don't return anything.
+
+- Q: |
+    How does a Rust array differ from a tuple, and how does it differ from a `Vec`?
+  A: |
+    Like a tuple, an array has a fixed length, but unlike a tuple every element must be the same type. Unlike a `Vec`, an array's length is fixed at compile time and it's allocated on the stack; use a `Vec` instead when the number of elements may change at runtime.
+  C: |
+    let a: [i32; 5] = [1, 2, 3, 4, 5];
+    let b = [3; 5]; // [3, 3, 3, 3, 3]
+
+- Q: |
+    What happens when you index a Rust array out of bounds, e.g. `a[10]` on a 5-element array?
+  A: |
+    It compiles successfully but panics at runtime with an "index out of bounds" error — Rust checks array bounds at runtime, which is part of how it prevents invalid memory access even when the compiler can't catch the mistake statically.

@@ -1,0 +1,230 @@
+- Q: |
+    How do you get a program's command-line arguments in Rust, and why must you `.collect()` them into a type annotation like `Vec<String>`?
+  A: |
+    `std::env::args()` returns an iterator over the arguments; `.collect()` gathers it into a concrete collection. A type annotation is needed because `collect` can build many different collection types, and Rust can't infer which one you want from context alone.
+  C: |
+    use std::env;
+    let args: Vec<String> = env::args().collect();
+
+- Q: |
+    Why would you use `std::env::args_os()` instead of `std::env::args()`?
+  A: |
+    `env::args()` panics if any command-line argument contains invalid Unicode, since it yields `String`s. `env::args_os()` instead yields `OsString`s, which can hold any argument the OS provides regardless of Unicode validity.
+
+- Q: |
+    In the `Vec<String>` produced by `env::args().collect()`, what does `args[0]` always contain?
+  A: |
+    The name/path of the running binary itself (e.g. `"target/debug/minigrep"`) — actual user-supplied arguments start at index 1.
+
+- Q: |
+    What is the risk of extracting arguments with direct indexing like `&args[1]` and `&args[2]`, before any argument-count validation is added?
+  A: |
+    It panics at runtime if the user supplies fewer arguments than expected, since indexing out of bounds always panics — proper argument-count checking needs to be added for a robust CLI.
+  C: |
+    let query = &args[1];
+    let file_path = &args[2];
+
+- Q: |
+    What function reads an entire file into a `String`, and what does it return on failure?
+  A: |
+    `std::fs::read_to_string(path)` — it returns `std::io::Result<String>`, so a missing file or read error produces an `Err` rather than panicking directly; callers typically handle it with `.expect(...)` during early development or proper error handling later.
+  C: |
+    use std::fs;
+    let contents = fs::read_to_string(file_path)
+        .expect("Should have been able to read the file");
+
+- Q: |
+    Why is it recommended to refactor a growing `main` function (e.g. one juggling both argument parsing and file reading) sooner rather than later?
+  A: |
+    `main` accumulating multiple unrelated responsibilities makes it harder to reason about and maintain; refactoring is easier while the code is still small, so splitting concerns out (like moving argument parsing into its own function/struct) early avoids a much bigger untangling job later.
+
+- Q: |
+    For a binary project with growing logic, what's the recommended split between `main.rs` and `lib.rs`, and why does that make testing easier?
+  A: |
+    Move the program's real logic into `lib.rs`, keeping `main.rs` responsible only for: parsing command-line arguments, setting up configuration, calling a `run` function from the library, and handling any error `run` returns. Because you can't call/test `main` directly, moving logic into `lib.rs` makes it callable — and therefore testable — from ordinary tests.
+
+- Q: |
+    Why does the book rename the `Config`-constructing function from `new` to `build`, changing its return type to `Result<Config, &'static str>`?
+  A: |
+    `new` conventionally is not expected to fail, but parsing CLI arguments can fail (e.g. too few given). Returning a `Result` instead of panicking inside the constructor lets the caller (`main`) decide how to present the error to the user, without the raw `thread 'main' panicked...` noise a `panic!` would produce.
+  C: |
+    impl Config {
+        fn build(args: &[String]) -> Result<Config, &'static str> {
+            if args.len() < 3 {
+                return Err("not enough arguments");
+            }
+            Ok(Config { query: args[1].clone(), file_path: args[2].clone() })
+        }
+    }
+
+- Q: |
+    How does `Config::build(&args).unwrap_or_else(|err| { ... process::exit(1); })` handle a build failure, and what does `process::exit(1)` do?
+  A: |
+    On `Ok`, `unwrap_or_else` returns the inner `Config` directly. On `Err`, it runs the closure with the error value instead of panicking — here printing a message and calling `process::exit(1)`, which terminates the process immediately with a nonzero exit code (signaling failure to the OS/shell) without unwinding.
+  C: |
+    let config = Config::build(&args).unwrap_or_else(|err| {
+        println!("Problem parsing arguments: {err}");
+        process::exit(1);
+    });
+
+- Q: |
+    Why does the extracted `run` function return `Result<(), Box<dyn Error>>` instead of a concrete error type?
+  A: |
+    `Box<dyn Error>` is a trait object that can hold any error type implementing `Error`, giving flexibility to propagate different concrete error types (e.g. from `fs::read_to_string` via `?`) from one function without committing to a single error type.
+  C: |
+    fn run(config: Config) -> Result<(), Box<dyn Error>> {
+        let contents = fs::read_to_string(config.file_path)?;
+        println!("With text:\n{contents}");
+        Ok(())
+    }
+
+- Q: |
+    Why does the code call `run(config)` with `if let Err(e) = run(config) { ... }` rather than `.unwrap_or_else(...)`, unlike how `Config::build`'s result is handled?
+  A: |
+    `run` returns `Result<(), Box<dyn Error>>` — its success value is just `()`, so there's nothing useful to unwrap. `if let Err(e) = ...` only reacts to the failure case, which is all that's needed here; `unwrap_or_else` would be handling a success value nobody wants.
+  C: |
+    if let Err(e) = run(config) {
+        println!("Application error: {e}");
+        process::exit(1);
+    }
+
+- Q: |
+    How does a binary crate (`main.rs`) call a function defined in its own project's library crate (`lib.rs`), e.g. a public `search` function?
+  A: |
+    Bring it into scope with `use <crate_name>::search;`, the same as importing from any external crate — the binary and library crates in one package are still separate crates that need explicit `use` between them.
+  C: |
+    // src/lib.rs
+    pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> { /* ... */ }
+
+    // src/main.rs
+    use minigrep::search;
+
+- Q: |
+    The book uses `args[1].clone()` and `args[2].clone()` to build a `Config`, even though cloning has a runtime cost. Why is that considered an acceptable trade-off here?
+  A: |
+    Many Rustaceans avoid `.clone()` as an ownership-problem shortcut due to its cost, but here the strings being cloned (a query and a file path) are small and cloned only once — trading a negligible amount of performance for simpler ownership is a reasonable choice to make forward progress, rather than fighting the borrow checker with references at this stage.
+
+- Q: |
+    What are the four steps of the test-driven development (TDD) cycle described here?
+  A: |
+    Write a test that fails, and run it to confirm it fails for the reason you expect; write or modify just enough code to make the new test pass; refactor the code you just added while keeping tests passing; repeat from step 1.
+
+- Q: |
+    In `pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str>`, why is the lifetime `'a` tied to `contents` rather than `query`?
+  A: |
+    The returned string slices are lines borrowed out of `contents`, not `query` — the lifetime annotation tells the compiler which argument the return value's validity depends on. Without any annotation, the compiler can't tell whether the returned slices borrow from `query` or `contents` and rejects the code with "missing lifetime specifier".
+  C: |
+    pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
+        unimplemented!();
+    }
+
+- Q: |
+    How does the `search` function find and collect matching lines from `contents`, using `.lines()`, `.contains()`, and `push()`?
+  A: |
+    Iterate over each line via `contents.lines()`; for each line, check `line.contains(query)`; if true, push that line (a `&str` slice into `contents`) onto a `results: Vec<&str>`; return `results` at the end.
+  C: |
+    pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
+        let mut results = Vec::new();
+        for line in contents.lines() {
+            if line.contains(query) {
+                results.push(line);
+            }
+        }
+        results
+    }
+
+- Q: |
+    How does `search_case_insensitive` compare a query against each line regardless of case, and is `to_lowercase()` a perfectly accurate way to do this?
+  A: |
+    It lowercases both the query and each line (via `.to_lowercase()`) before calling `.contains()` on them. `to_lowercase()` handles basic Unicode case folding but isn't 100% accurate for every language/script.
+  C: |
+    pub fn search_case_insensitive<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
+        let query = query.to_lowercase();
+        let mut results = Vec::new();
+        for line in contents.lines() {
+            if line.to_lowercase().contains(&query) {
+                results.push(line);
+            }
+        }
+        results
+    }
+
+- Q: |
+    After calling `let query = query.to_lowercase();`, why must you write `&query` when passing it to `.contains()`?
+  A: |
+    `.to_lowercase()` allocates and returns a new owned `String` (it can't just reference the original data, since casing can change a string's byte length). `.contains()` expects a `&str`, so the owned `String` must be borrowed with `&` to match that signature.
+
+- Q: |
+    How do you check whether an environment variable like `IGNORE_CASE` is set at all, without caring about its actual value?
+  A: |
+    Call `env::var("IGNORE_CASE").is_ok()` — `env::var` returns `Ok(value)` if the variable is set (to any value) or `Err` if it's unset; `.is_ok()` just checks which case occurred without needing `unwrap`/`expect`, since an unset variable is a perfectly valid, expected outcome here.
+  C: |
+    let ignore_case = env::var("IGNORE_CASE").is_ok();
+
+- Q: |
+    Given a `Config` with an `ignore_case: bool` field, how would `run()` choose between `search` and `search_case_insensitive`?
+  A: |
+    A simple `if`/`else` on the flag, selecting which function to call and binding its result the same way either branch.
+  C: |
+    let results = if config.ignore_case {
+        search_case_insensitive(&config.query, &contents)
+    } else {
+        search(&config.query, &contents)
+    };
+
+- Q: |
+    How do you set an environment variable for just one run of a program on Linux/macOS versus PowerShell?
+  A: |
+    On Linux/macOS, prefix the command: `IGNORE_CASE=1 cargo run -- to poem.txt`. In PowerShell, set it as a separate statement first: `$Env:IGNORE_CASE=1; cargo run -- to poem.txt` (remove it afterward with `Remove-Item Env:IGNORE_CASE`).
+
+- Q: |
+    Why should a CLI program's error messages go to standard error (stderr) rather than standard output (stdout)?
+  A: |
+    So that redirecting stdout to a file (e.g. to save successful results) doesn't also silently swallow error messages — stderr still displays on screen even when stdout is redirected, letting users see errors while capturing normal output to a file.
+
+- Q: |
+    How can you tell whether a program is incorrectly sending error messages to stdout instead of stderr?
+  A: |
+    Redirect stdout to a file with `>` (e.g. `cargo run > output.txt`) and trigger an error condition — if the error message ends up written into the file instead of appearing on screen, it's going to stdout rather than stderr.
+
+- Q: |
+    What macro prints to standard error instead of standard output, and how does it differ in usage from `println!`?
+  A: |
+    `eprintln!` — it's used exactly like `println!` (same format-string syntax), but writes to stderr instead of stdout.
+  C: |
+    eprintln!("Problem parsing arguments: {err}");
+
+- Q: |
+    After switching error-reporting calls in `main` from `println!` to `eprintln!`, what happens when you run the program with `cargo run > output.txt` and it hits an argument error?
+  A: |
+    The error message displays on screen as normal, while `output.txt` stays empty — since the error went to stderr, which redirecting stdout with `>` doesn't capture.
+
+- Q: |
+    How does changing `Config::build` to take `impl Iterator<Item = String>` instead of `&[String]` let it avoid calling `.clone()` on the query and file path?
+  A: |
+    Taking the iterator by value gives `build` ownership of each `String` as it's pulled out via `.next()`, so the values can be moved directly into the `Config` struct instead of being cloned out of a borrowed slice.
+  C: |
+    fn build(mut args: impl Iterator<Item = String>) -> Result<Config, &'static str> {
+        args.next(); // skip program name
+        let query = match args.next() {
+            Some(arg) => arg,
+            None => return Err("Didn't get a query string"),
+        };
+        let file_path = match args.next() {
+            Some(arg) => arg,
+            None => return Err("Didn't get a file path"),
+        };
+        Ok(Config { query, file_path, ignore_case: false })
+    }
+
+- Q: |
+    Once `Config::build` accepts an iterator directly, how does `main` pass arguments to it differently than before?
+  A: |
+    It passes `env::args()` straight through, without first collecting it into a `Vec<String>` — `Config::build(env::args())` instead of `Config::build(&args)` after a separate `.collect()`.
+  C: |
+    let config = Config::build(env::args()).unwrap_or_else(|err| { /* ... */ });
+
+- Q: |
+    Inside `Config::build`, why does the first line call `args.next();` and discard its result before extracting the query?
+  A: |
+    The first item `env::args()` yields is always the program's own name, not a user argument — calling `next()` once consumes and discards it so the following `next()` calls line up with the actual query and file path arguments.

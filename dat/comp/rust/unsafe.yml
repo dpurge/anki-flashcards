@@ -1,0 +1,118 @@
+- Q: |
+    What are the five capabilities ("superpowers") that `unsafe` unlocks, which safe Rust doesn't allow?
+  A: |
+    Dereferencing a raw pointer; calling an unsafe function or method; accessing or modifying a mutable `static` variable; implementing an unsafe trait; and accessing fields of a `union`.
+
+- Q: |
+    Does writing `unsafe { ... }` turn off Rust's borrow checker or other safety checks inside the block?
+  A: |
+    No — references used inside an `unsafe` block are still checked normally. `unsafe` only grants access to the five specific extra capabilities the compiler otherwise forbids; everything else about Rust's safety checking still applies.
+
+- Q: |
+    Does code inside an `unsafe` block necessarily have memory-safety bugs?
+  A: |
+    No — `unsafe` doesn't mean the code is dangerous or broken; it means the *programmer*, not the compiler, is responsible for upholding memory safety for the specific operations `unsafe` unlocks.
+
+- Q: |
+    What can you do with a raw pointer (`*const T` / `*mut T`) outside an `unsafe` block, and what requires `unsafe`?
+  A: |
+    Creating raw pointers (e.g. with `&raw const num` / `&raw mut num`) is allowed in safe code; dereferencing them (`*r1`) requires an `unsafe` block.
+  C: |
+    let mut num = 5;
+    let r1 = &raw const num;
+    let r2 = &raw mut num;
+    unsafe {
+        println!("{}", *r1);
+        println!("{}", *r2);
+    }
+
+- Q: |
+    What four guarantees do references/smart pointers give you that raw pointers explicitly do NOT?
+  A: |
+    Raw pointers may coexist as multiple mutable pointers (or mutable + immutable) to the same location, ignoring the usual borrowing rules; aren't guaranteed to point at valid memory; are allowed to be null; and have no automatic cleanup (no `Drop`).
+
+- Q: |
+    What does marking a function `unsafe fn` communicate, and what must the caller do to invoke it?
+  A: |
+    It signals the function has preconditions/requirements the compiler can't verify on its own — the caller is responsible for upholding them. Calling it requires wrapping the call in an `unsafe` block.
+  C: |
+    unsafe fn dangerous() {}
+    unsafe { dangerous(); }
+
+- Q: |
+    What does it mean to build a "safe abstraction" around unsafe code, as in a `split_at_mut` implementation using `slice::from_raw_parts_mut`?
+  A: |
+    The function's own signature and external API stay completely safe (ordinary `&mut [T]` in, `(&mut [T], &mut [T])` out) while the implementation internally uses `unsafe` (e.g. to produce two non-overlapping mutable slices from one pointer) — callers never need `unsafe` themselves because the function's author has already verified the internal unsafe operations are sound for any valid input.
+  C: |
+    fn split_at_mut(values: &mut [i32], mid: usize) -> (&mut [i32], &mut [i32]) {
+        let len = values.len();
+        let ptr = values.as_mut_ptr();
+        assert!(mid <= len);
+        unsafe {
+            (
+                slice::from_raw_parts_mut(ptr, mid),
+                slice::from_raw_parts_mut(ptr.add(mid), len - mid),
+            )
+        }
+    }
+
+- Q: |
+    How do you declare and call a foreign (e.g. C) function from Rust via FFI?
+  A: |
+    Declare it inside an `unsafe extern "C" { ... }` block, then call it inside an `unsafe` block (since the compiler can't verify the foreign function's safety).
+  C: |
+    unsafe extern "C" {
+        fn abs(input: i32) -> i32;
+    }
+    unsafe {
+        println!("{}", abs(-3));
+    }
+
+- Q: |
+    What does marking an FFI function declaration `safe fn` inside an `unsafe extern` block do, and what caution does the book raise about it?
+  A: |
+    It lets callers invoke that specific foreign function without wrapping the call in `unsafe`. But marking it `safe` doesn't make the underlying foreign code actually safe — it's a promise the programmer is making to the compiler, not a guarantee the compiler verifies.
+  C: |
+    unsafe extern "C" {
+        safe fn abs(input: i32) -> i32;
+    }
+    fn main() {
+        println!("{}", abs(-3)); // no unsafe needed here
+    }
+
+- Q: |
+    What is the key difference between a `const` and an immutable `static` variable in Rust?
+  A: |
+    A `static` value has a fixed, single address in memory that every use of it accesses — a `const` is inlined at each usage site and has no guaranteed single memory location.
+  C: |
+    static HELLO_WORLD: &str = "Hello, world!";
+
+- Q: |
+    Why is accessing or modifying a mutable `static` variable (`static mut`) unsafe, even though modifying a regular `mut` variable isn't?
+  A: |
+    A mutable static is effectively global, shared, mutable state accessible from anywhere — including from multiple threads at once — so mutating it risks a data race the compiler can't rule out on its own; `unsafe` puts the burden of proving there's no such race on the programmer.
+  C: |
+    static mut COUNTER: u32 = 0;
+    unsafe fn add_to_count(inc: u32) {
+        unsafe { COUNTER += inc; }
+    }
+
+- Q: |
+    What does declaring `unsafe trait Foo { ... }` mean, as opposed to a normal trait?
+  A: |
+    It signals the trait itself carries some invariant that the compiler can't verify is upheld — so implementing it (`unsafe impl Foo for SomeType`) is an assertion by the programmer that their implementation actually satisfies that invariant, since the compiler can't check it automatically.
+
+- Q: |
+    What is the idiomatic commenting convention for documenting why an unsafe operation or function is actually sound?
+  A: |
+    A comment starting with `// SAFETY:` explaining exactly what the caller (or the surrounding code) must guarantee for the unsafe operation to be valid — making the reasoning behind the unsafe usage explicit and reviewable.
+
+- Q: |
+    What two general best practices does the book give for using `unsafe` responsibly?
+  A: |
+    Keep `unsafe` blocks as small as possible (isolating exactly the operations that need it), and wrap unsafe code inside a safe abstraction/API wherever feasible so most of the codebase — and its callers — never has to reason about `unsafe` directly.
+
+- Q: |
+    What is Miri, and how does it complement the compile-time borrow checker for catching unsafe-code bugs?
+  A: |
+    Miri is a dynamic (runtime) analysis tool — run via `cargo +nightly miri run`/`test` — that catches certain unsafe-code UB while the program actually executes, unlike the borrow checker's static (compile-time) analysis. Because it's dynamic, it only catches problems in code paths that actually run during that execution, so Miri not flagging a bug doesn't prove the code is free of one.

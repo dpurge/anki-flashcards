@@ -1,0 +1,166 @@
+- Q: |
+    Why are named-field structs more flexible than tuples for grouping related data?
+  A: |
+    Struct fields have names, so you don't have to remember or rely on positional order to know what each value means — accessing `user1.email` is clearer and less error-prone than remembering that a tuple's second element is the email.
+  C: |
+    struct User {
+        active: bool,
+        username: String,
+        email: String,
+        sign_in_count: u64,
+    }
+
+- Q: |
+    When creating a struct instance, must the fields be listed in the same order as the struct definition?
+  A: |
+    No — you specify `key: value` pairs, so fields can be given in any order as long as every field is provided.
+
+- Q: |
+    Can you mark just one field of a struct instance as mutable while leaving the others immutable?
+  A: |
+    No — Rust doesn't allow per-field mutability. If any field needs to change, the entire instance must be declared with `mut`.
+
+- Q: |
+    What is "field init shorthand" in a struct-constructing function, and when can you use it?
+  A: |
+    When a function parameter's name exactly matches a struct field's name, you can write just the name once instead of `field: field`.
+  C: |
+    fn build_user(email: String, username: String) -> User {
+        User {
+            active: true,
+            username, // shorthand for username: username
+            email,    // shorthand for email: email
+            sign_in_count: 1,
+        }
+    }
+
+- Q: |
+    What does struct update syntax (`..user1`) do, and why must it come last in the field list?
+  A: |
+    It fills in any fields not explicitly specified with the corresponding values from an existing instance (`user1`). It must come last because it applies to "the remaining fields" not already given a value.
+  C: |
+    let user2 = User {
+        email: String::from("another@example.com"),
+        ..user1
+    };
+
+- Q: |
+    After `let user2 = User { email: ..., ..user1 };`, why can `user1` no longer be used if `User` has a `String` field like `username`?
+  A: |
+    Struct update syntax behaves like assignment, which moves non-`Copy` fields: `username` (a `String`) moves out of `user1` into `user2`. Fields that implement `Copy` (like `bool`, `u64`) are copied instead, so only the moved fields make `user1` unusable — but if a `String` field moved, that invalidates `user1` as a whole.
+
+- Q: |
+    What is a tuple struct, and how does it differ from a plain tuple?
+  A: |
+    A tuple struct has a struct name but unnamed, positional fields (just types). Unlike a plain tuple, it's its own distinct type — a function expecting one tuple struct won't accept a different tuple struct even if both wrap the exact same field types.
+  C: |
+    struct Color(i32, i32, i32);
+    struct Point(i32, i32, i32);
+
+    let black = Color(0, 0, 0);
+    let origin = Point(0, 0, 0); // Point, not interchangeable with Color
+
+- Q: |
+    How do you access or destructure a tuple struct's fields?
+  A: |
+    Access by index with dot notation (`origin.0`), or destructure with the struct's name as if it were a pattern.
+  C: |
+    let Point(x, y, z) = origin;
+
+- Q: |
+    What is a "unit-like struct", how is it declared, and what is it useful for?
+  A: |
+    A struct with no fields at all, behaving like the unit type `()`. Declared with just the struct keyword, a name, and a semicolon — no `{}` or `()`. Useful when you need to implement a trait on some type but don't need to store any data in it.
+  C: |
+    struct AlwaysEqual;
+    let subject = AlwaysEqual;
+
+- Q: |
+    Why do struct definitions typically use owned types like `String` rather than reference types like `&str` for their fields?
+  A: |
+    So each struct instance owns all of its data, keeping it valid for as long as the struct itself exists. Storing a reference instead requires giving it a lifetime annotation (e.g. `username: &'a str`) so the compiler can ensure the referenced data outlives the struct — without one, `&str` fields are a compile error (`missing lifetime specifier`).
+
+- Q: |
+    Why is grouping two related values (like a rectangle's width and height) into a struct better than passing them as a tuple parameter?
+  A: |
+    A tuple has no field names, so code using it must index into positions (`dimensions.0`, `dimensions.1`), which doesn't say what each value means and makes it easy to mix them up. A struct gives each value a name (`rectangle.width`, `rectangle.height`), making the relationship and meaning explicit.
+
+- Q: |
+    Why does a function that only reads a struct's fields (like computing a rectangle's area) take `&Rectangle` instead of `Rectangle`?
+  A: |
+    Taking a reference borrows the struct instead of taking ownership, so the caller (e.g. `main`) retains ownership and can keep using the struct afterward. Accessing fields through a borrowed reference doesn't move the field values out, which is why borrowing structs into functions is common.
+
+- Q: |
+    Why does `println!("{rect1}")` fail to compile for a plain struct, and what fixes it?
+  A: |
+    Structs don't implement the `Display` trait by default, so there's no defined way to format them as user-facing text. Adding `#[derive(Debug)]` above the struct definition lets you print it instead via the `Debug` format specifier `{:?}` (or pretty-printed with `{:#?}`).
+  C: |
+    #[derive(Debug)]
+    struct Rectangle {
+        width: u32,
+        height: u32,
+    }
+
+    println!("rect1 is {rect1:?}");
+    // rect1 is Rectangle { width: 30, height: 50 }
+
+- Q: |
+    How does the `dbg!` macro differ from `println!` in terms of output stream, ownership, and what it prints?
+  A: |
+    `dbg!` prints to stderr (not stdout), takes ownership of the expression passed to it and then returns that same value back (so it can be used inline without disrupting the surrounding expression), and includes the source file and line number in its output — useful for quick debugging without cluttering a program's normal (stdout) output.
+  C: |
+    let rect1 = Rectangle {
+        width: dbg!(30 * scale), // prints "[src/main.rs:10:16] 30 * scale = 60", still assigns 60
+        height: 50,
+    };
+    dbg!(&rect1); // pass a reference to avoid taking ownership of rect1 itself
+
+- Q: |
+    Where are a struct's methods defined, and what does `Self` refer to inside that block?
+  A: |
+    Inside an `impl <StructName> { ... }` block — everything in it is associated with that type. Within the block, `Self` is an alias for the type the `impl` block is for.
+  C: |
+    impl Rectangle {
+        fn area(&self) -> u32 {
+            self.width * self.height
+        }
+    }
+
+- Q: |
+    What are the three forms a method's first parameter can take, and what does each mean?
+  A: |
+    `&self` (shorthand for `self: &Self`) borrows the instance immutably for read-only access; `&mut self` borrows it mutably to read and modify it; plain `self` takes ownership of the instance, which is rare and used mainly when a method consumes/transforms the instance into something else.
+
+- Q: |
+    A struct has both a field `width` and a method `fn width(&self) -> bool`. How does Rust distinguish `rect1.width` from `rect1.width()`?
+  A: |
+    `rect1.width` (no parentheses) accesses the field; `rect1.width()` (with parentheses) calls the method. A method sharing a field's name that just returns the field's value is conventionally called a getter.
+
+- Q: |
+    When you write `object.method()`, does Rust require you to manually add `&`, `&mut`, or `*` to match the method's `self` type?
+  A: |
+    No — Rust automatically applies the right form of referencing/dereferencing on the receiver to match the method signature, which is a key part of what makes method calls ergonomic despite Rust's ownership/borrowing rules.
+  C: |
+    p1.distance(&p2);     // Rust automatically borrows p1
+    (&p1).distance(&p2);  // equivalent, written explicitly
+
+- Q: |
+    What is an "associated function", and how does it differ from a method?
+  A: |
+    An associated function is any function defined inside an `impl` block; a method is specifically an associated function whose first parameter is some form of `self`. Associated functions without a `self` parameter don't operate on an existing instance and are often used as constructors.
+  C: |
+    impl Rectangle {
+        fn square(size: u32) -> Self {
+            Self { width: size, height: size }
+        }
+    }
+
+- Q: |
+    What syntax do you use to call an associated function that doesn't take `self`, such as a constructor?
+  A: |
+    The `::` syntax on the type name, e.g. `Rectangle::square(3)` or `String::from("hello")` — the same `::` syntax also used for module namespacing.
+
+- Q: |
+    Can a single struct have more than one `impl` block?
+  A: |
+    Yes — a struct can have multiple `impl` blocks with methods split across them; this is valid even when there's no technical requirement to separate them.

@@ -1,0 +1,205 @@
+- Q: |
+    What is a `let` statement's actual general form, and how does `let (x, y, z) = (1, 2, 3);` fit that form?
+  A: |
+    `let PATTERN = EXPRESSION;` — a plain variable name is itself the simplest pattern (binding the whole value), while `(x, y, z)` is a tuple pattern that destructures the right-hand tuple into three separate bindings at once.
+
+- Q: |
+    What happens if a tuple pattern in a `let` has a different number of elements than the tuple it's destructuring?
+  A: |
+    It's a compile error — the pattern's element count must match the value's; use `_` to ignore one element or `..` to ignore a variable-length remainder if you don't need every value.
+
+- Q: |
+    Unlike `match`, does an `if let` (or `if let ... else if let ... else`) chain need to be exhaustive?
+  A: |
+    No — `if let` only tests one specific pattern per branch and doesn't require covering every possibility; an absent final `else` simply means nothing happens if no branch matched, which the compiler allows (unlike a non-exhaustive `match`).
+
+- Q: |
+    In `if let Ok(age) = age { if age > 30 { ... } }`, why must the `age > 30` check happen inside a nested block rather than combined into one condition like `if let Ok(age) = age && age > 30`?
+  A: |
+    The `age` bound by `if let Ok(age) = age` is a new shadowed variable only valid inside that `if let`'s block — Rust doesn't support combining a pattern-binding condition and a further expression on that binding into a single `&&`-joined condition, so the follow-up check needs its own nested `if`.
+
+- Q: |
+    What does a `while let` loop do, and what's a typical use for it?
+  A: |
+    It keeps running the loop body for as long as the given pattern keeps matching the expression each iteration — e.g. repeatedly receiving from a channel until it returns something other than `Ok`.
+  C: |
+    while let Ok(value) = rx.recv() {
+        println!("{value}");
+    }
+
+- Q: |
+    In a `for` loop like `for (index, value) in v.iter().enumerate()`, what is the "pattern" and what does it destructure?
+  A: |
+    `(index, value)` is a tuple pattern that destructures each `(usize, &T)` pair `enumerate()` yields on every iteration, binding the two parts to separate names in one step.
+  C: |
+    let v = vec!['a', 'b', 'c'];
+    for (index, value) in v.iter().enumerate() {
+        println!("{value} is at index {index}");
+    }
+
+- Q: |
+    Can a function parameter itself be a destructuring pattern, rather than just a plain variable name?
+  A: |
+    Yes — a parameter can destructure a tuple (or struct) directly in the function signature, binding its parts to separate names without a separate `let` inside the body. Closures support the same syntax.
+  C: |
+    fn print_coordinates(&(x, y): &(i32, i32)) {
+        println!("Current location: ({x}, {y})");
+    }
+    print_coordinates(&(3, 5));
+
+- Q: |
+    What is the difference between an "irrefutable" pattern and a "refutable" pattern?
+  A: |
+    An irrefutable pattern matches any possible value it could be given — it can never fail (e.g. `x` in `let x = 5;`). A refutable pattern can fail to match for some possible input value (e.g. `Some(x)` in `if let Some(x) = a_value`, which fails to match if `a_value` is `None`).
+
+- Q: |
+    Why must `let` statements, function parameters, and `for` loops use only irrefutable patterns?
+  A: |
+    Those constructs have no built-in way to handle a non-match — there's no fallback branch, so the program couldn't do anything meaningful if the pattern failed. Requiring irrefutability there guarantees the binding always succeeds.
+
+- Q: |
+    Why does `let Some(x) = some_option_value;` fail to compile when `some_option_value` is an `Option<i32>`?
+  A: |
+    `Some(x)` is a refutable pattern — it doesn't cover the `None` case — but plain `let` requires an irrefutable pattern, since there's no fallback for when it doesn't match. The compiler suggests `let...else` as the fix.
+  C: |
+    let Some(x) = some_option_value; // error[E0005]: refutable pattern in local binding
+
+- Q: |
+    How does `let...else` let you use a refutable pattern in a binding position, unlike plain `let`?
+  A: |
+    It pairs the refutable pattern with a mandatory `else` block that runs (and must diverge, e.g. `return`/`continue`/`panic!`) when the pattern doesn't match — so the binding is still guaranteed to succeed by the time code after it runs, satisfying the same guarantee plain `let` requires.
+  C: |
+    let Some(x) = some_option_value else {
+        return;
+    };
+
+- Q: |
+    What happens if you use an irrefutable pattern (one that can never fail) with `if let` or in a `let...else`'s pattern position?
+  A: |
+    The compiler warns that the pattern will always match, making the `if let`'s implicit "didn't match" case (or the `let...else`'s `else` block) dead code that can never run — since `if let`/`while let`/`let...else` exist specifically to handle possible non-matches.
+  C: |
+    let x = 5 else { return; }; // warning: irrefutable `let...else` pattern, else clause is useless
+
+- Q: |
+    In a `match` expression, which arms are allowed to use refutable patterns, and which arm must use an irrefutable one?
+  A: |
+    All arms except the last may use refutable patterns (since a later arm can still catch what an earlier one misses); the final arm should use an irrefutable pattern (or `_`) to guarantee the whole `match` covers every remaining possibility.
+
+- Q: |
+    Given `let y = 10; match x { Some(y) => ... }`, does the `y` inside `Some(y)` refer to the outer `y`, or is it something else?
+  A: |
+    It's a brand-new binding that shadows the outer `y` for the duration of that match arm — `Some(y)` matches any `Some(_)` and binds its inner value to this new, arm-local `y`, regardless of what the outer `y` held. The outer `y` is unaffected and still has its original value after the `match` ends.
+
+- Q: |
+    What does the `|` operator do inside a match pattern, and what does `1..=5` mean, including which types it's restricted to?
+  A: |
+    `|` matches if the value matches any of the listed alternatives, e.g. `1 | 2 => ...`. `1..=5` is an inclusive range pattern matching any value from 1 through 5 — range patterns are only allowed for numeric types and `char`, not arbitrary types.
+  C: |
+    match x {
+        1 | 2 => println!("one or two"),
+        1..=5 => println!("one through five"),
+        'a'..='j' => println!("early ASCII letter"),
+        _ => println!("other"),
+    }
+
+- Q: |
+    How do you destructure a struct in a pattern, both renaming fields to different variable names and using field-name shorthand?
+  A: |
+    `Point { x: a, y: b }` binds the `x`/`y` fields to new names `a`/`b`. `Point { x, y }` is shorthand for `Point { x: x, y: y }` when you want variables with the same names as the fields.
+  C: |
+    let p = Point { x: 0, y: 7 };
+    let Point { x: a, y: b } = p; // renamed
+    let Point { x, y } = p;       // shorthand
+
+- Q: |
+    Can you mix destructuring with matching against literal values in the same struct pattern, e.g. to detect "on the x axis"?
+  A: |
+    Yes — a field can be destructured into a binding in one part of the pattern while another field is matched against a literal in the same pattern.
+  C: |
+    match p {
+        Point { x, y: 0 } => println!("On the x axis at {x}"),
+        Point { x: 0, y } => println!("On the y axis at {y}"),
+        Point { x, y } => println!("On neither axis: ({x}, {y})"),
+    }
+
+- Q: |
+    How does destructuring an enum variant's pattern shape relate to how that variant actually stores its data?
+  A: |
+    The pattern must mirror the variant's storage shape — no fields for a unit variant, `{ x, y }` for a struct-style variant, `(text)` for a single-value tuple variant, `(r, g, b)` for a multi-value tuple variant — and patterns can nest arbitrarily deep to destructure enums stored inside other enums.
+  C: |
+    match msg {
+        Message::Quit => println!("no data"),
+        Message::Move { x, y } => println!("{x}, {y}"),
+        Message::Write(text) => println!("{text}"),
+        Message::ChangeColor(Color::Rgb(r, g, b)) => println!("{r} {g} {b}"),
+        _ => (),
+    }
+
+- Q: |
+    What is the difference in ownership behavior between a pattern using `_` versus one using a name like `_x` to ignore a value?
+  A: |
+    `_` never binds the value at all, so ownership is untouched — the original variable stays usable afterward. `_x` (an underscore-prefixed name) still binds the value, taking ownership of it just like any other name would (just without triggering an "unused variable" warning) — so if the matched value isn't `Copy`, the original is moved and can no longer be used.
+  C: |
+    let s = Some(String::from("Hello!"));
+    if let Some(_s) = s { /* s was MOVED into _s */ }
+    // println!("{s:?}"); // error
+
+    let s2 = Some(String::from("Hello!"));
+    if let Some(_) = s2 { /* s2 was never bound/moved */ }
+    println!("{s2:?}"); // OK
+
+- Q: |
+    How do you ignore all the remaining fields of a struct or elements of a tuple you don't care about, without listing `_` for each one?
+  A: |
+    Use `..` once in the pattern to stand in for all remaining unmentioned parts.
+  C: |
+    match origin {
+        Point { x, .. } => println!("x is {x}"),
+    }
+    match numbers {
+        (first, .., last) => println!("{first}, {last}"),
+    }
+
+- Q: |
+    Why does `match numbers { (.., second, ..) => ... }` fail to compile?
+  A: |
+    `..` can only appear once per tuple pattern — using it twice would be ambiguous about how many elements each `..` should absorb, so the compiler rejects it outright.
+
+- Q: |
+    What is a "match guard", and how does it interact with exhaustiveness checking?
+  A: |
+    An extra `if condition` appended after a pattern in a match arm — the arm only matches if both the pattern matches *and* the guard evaluates to `true`. Because guard conditions are arbitrary runtime expressions, the compiler can't verify exhaustiveness through them, so match guards don't count toward exhaustiveness checking.
+  C: |
+    match num {
+        Some(x) if x % 2 == 0 => println!("even"),
+        Some(x) => println!("odd"),
+        None => (),
+    }
+
+- Q: |
+    How can a match guard be used to compare a matched value against an outer variable without shadowing it, unlike a plain pattern binding would?
+  A: |
+    Match the inner value into a new name via the pattern (e.g. `Some(n)`), then reference the outer variable directly inside the guard condition — since the guard is just an `if` expression, it can read the outer variable without any shadowing conflict.
+  C: |
+    let x = Some(5);
+    let y = 10;
+    match x {
+        Some(n) if n == y => println!("Matched, n = {n}"), // y here is the outer y
+        _ => println!("Default case"),
+    }
+
+- Q: |
+    When a match guard is attached to an arm with multiple `|`-separated patterns, like `4 | 5 | 6 if y => ...`, does the guard apply to just the last pattern or to all of them?
+  A: |
+    It applies to the whole group — the guard is evaluated only if the value matches any of `4`, `5`, or `6`, and then the guard condition must also hold; it's `(4 | 5 | 6) if y`, not `4 | 5 | (6 if y)`.
+
+- Q: |
+    What does the `@` operator do in a pattern like `id @ 3..=7`, and how is it different from just writing `3..=7` alone?
+  A: |
+    `@` binds the matched value to a name (`id`) while simultaneously testing it against the range/pattern on the right — so you get both the range check and access to the actual matched value in the arm's code, which a bare `3..=7` (with no `@`) wouldn't give you (you couldn't reference the matched value by name in that arm).
+  C: |
+    match msg {
+        Message::Hello { id: id @ 3..=7 } => println!("in range: {id}"),
+        Message::Hello { id: 10..=12 } => println!("in another range, but id not accessible"),
+        Message::Hello { id } => println!("other id: {id}"),
+    }
