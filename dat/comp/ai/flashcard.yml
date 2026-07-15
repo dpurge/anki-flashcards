@@ -1,0 +1,55 @@
+deck:
+  name: 'Computer::AI'
+
+model:
+  name: Computer QA
+  kind: normal
+  style:
+    css: ../_model/comp-qa.css
+  templates:
+    - name: Computer QA
+      qfmt: ../_model/comp-qfmt.html
+      afmt: ../_model/comp-afmt.html
+  fields:
+    - name: Q
+      template: ../_template/Question.txt
+      index: true
+      format: markdown
+      description: Question
+    - name: A
+      template: ../_template/Answer.txt
+      format: markdown
+      description: Answer
+    - name: C
+      template: ../_template/Code.txt
+      description: Code
+    - name: N
+      template: ../_template/Notes.txt
+      format: markdown
+      description: Notes
+
+data:
+  - filename: ./harness-engineering.yml
+    tags: ['harness-engineering']
+  - filename: ./harness-subsystems.yml
+    tags: ['harness-subsystems']
+  - filename: ./repo-as-system-of-record.yml
+    tags: ['repo-as-system-of-record']
+  - filename: ./instruction-file-design.yml
+    tags: ['instruction-file-design']
+  - filename: ./session-continuity.yml
+    tags: ['session-continuity']
+  - filename: ./initialization-phase.yml
+    tags: ['initialization-phase']
+  - filename: ./task-scoping-wip.yml
+    tags: ['task-scoping-wip']
+  - filename: ./feature-lists.yml
+    tags: ['feature-lists']
+  - filename: ./termination-criteria.yml
+    tags: ['termination-criteria']
+  - filename: ./e2e-testing.yml
+    tags: ['e2e-testing']
+  - filename: ./observability.yml
+    tags: ['observability']
+  - filename: ./clean-state-handoff.yml
+    tags: ['clean-state-handoff']

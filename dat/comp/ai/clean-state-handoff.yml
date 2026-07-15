@@ -1,0 +1,79 @@
+- Q: |
+    Why does "entropy growth" occur by default in agent-maintained repositories?
+  A: |
+    Per Lehman's laws of software evolution, systems under continuous change inevitably grow more complex unless actively managed. Agents also tend to copy existing repo patterns — even suboptimal ones — so the first messy addition seems acceptable and each subsequent one makes cleanup feel less urgent, compounding technical debt exponentially.
+
+- Q: |
+    What three-part solution framework did OpenAI use to counter entropy growth?
+  A: |
+    1) Encode "golden rules" into the repository as mechanically checkable, concrete guidelines. 2) Establish periodic cleanup workflows (background agent tasks scanning for deviations). 3) Capture human taste once and enforce it continuously by translating review comments and bugs into documentation or tooling.
+
+- Q: |
+    List the five non-negotiable dimensions of "clean state" at the end of an agent session.
+  A: |
+    1) Build passes, 2) tests pass, 3) progress recorded, 4) no stale artifacts, 5) startup path available.
+
+- Q: |
+    Why must "build passes" and "tests pass" be verified in CI rather than just locally?
+  A: |
+    To ensure the next session doesn't start by fixing build errors or by tracking down regressions in existing functionality that a purely local check might have missed — CI is the objective, repo-level source of truth.
+
+- Q: |
+    What does "progress recorded" require as a clean-state dimension, and what efficiency gain does it produce?
+  A: |
+    Machine-readable artifacts explicitly noting completed subtasks (with passing criteria), in-progress subtasks (with current state), and not-yet-started subtasks. Good progress records can reduce the next session's startup time by 60-80%.
+
+- Q: |
+    What counts as a "stale artifact" that must be cleaned up before ending a session?
+  A: |
+    Debug logs, temporary files, commented-out code, and leftover TODO markers — anything that increases cognitive load for the next session without providing current value.
+
+- Q: |
+    What is "Session Integrity" and what database concept is it analogous to?
+  A: |
+    The principle that a session must either fully commit with a clean state or roll back to the last consistent state — no middle ground — analogous to database transaction atomicity.
+
+- Q: |
+    What is a "Quality Document" in the context of harness maintenance?
+  A: |
+    An active, continuously-updated artifact that scores each module (not a one-time assessment) across dimensions like verification-passing status, agent understandability, test stability, architecture boundary compliance, and code convention adherence — often expressed as letter grades (A, B, C).
+
+- Q: |
+    Describe the "Dual-Mode Cleanup Strategy."
+  A: |
+    Immediate cleanup at the end of every session (reference-counting style: clean temporary artifacts from this session, update the feature list, verify build/tests) plus periodic cleanup, e.g. weekly (tracing-style: a comprehensive system scan for structural issues, updating quality documents, running benchmark tests).
+
+- Q: |
+    Why does the "clean up later" approach fail?
+  A: |
+    "Clean up later" effectively means never cleaning up: the next agent session doesn't know what was intentional vs. temporary, focuses on its own objectives rather than prior cleanup, and layers new chaos on top of existing chaos — creating a positive feedback loop of entropy growth.
+
+- Q: |
+    In the 12-week project comparison, how did build pass rate, test pass rate, and startup time differ at week 12 with vs. without a cleanup strategy?
+  A: |
+    Without cleanup: build 68%, tests 61%, startup 60+ minutes. With cleanup: build 97%, tests 95%, startup 9 minutes — a 29-point build gap, 34-point test gap, and roughly 85% startup time reduction.
+
+- Q: |
+    What is the "Harness Simplification Practice" and why is it needed as models improve?
+  A: |
+    Every harness component exists because the model couldn't reliably do something on its own; as models improve, some of those assumptions become outdated overhead. Practice: monthly, disable one harness component, run benchmark tasks, and assess impact — remove the component if results don't degrade, restore or replace it if they do.
+
+- Q: |
+    In Anthropic's case study on harness simplification, what component became unnecessary when moving from Sonnet 4.5 to Opus 4.6, and why?
+  A: |
+    A sprint-splitting mechanism built for Sonnet 4.5 became unnecessary overhead once Opus 4.6 shipped, because the stronger model could work continuously for 2+ hours without drift. Notably, the evaluator component still provided value at capability boundaries — the answer isn't a fixed yes/no but depends on task difficulty relative to model capability.
+
+- Q: |
+    What does "idempotent cleanup" mean, and give an example pattern.
+  A: |
+    Cleanup scripts that produce identical results no matter how many times they're run, safe to re-run without side effects. Example: `rm -f /tmp/debug-*.log` (the -f flag avoids errors if the files are already gone) or `git checkout -- .env.local` to restore a known state.
+
+- Q: |
+    What is the "High-Throughput Merge Philosophy," and what is the key criterion for when it applies?
+  A: |
+    When agent output (e.g. 3.5+ PRs/day) far exceeds human review capacity, minimizing blocking merge gates becomes the correct strategy — short-lived PRs, resolving test flakiness by re-running rather than blocking, and fast merge-then-fix over slow confirmation. It only applies when the average cost of fixing a bug is lower than the average cost of waiting for human review; it's irresponsible in low-throughput contexts.
+
+- Q: |
+    In the Electron app 12-week case study, what were the concrete stale-artifact and cost/benefit numbers?
+  A: |
+    Without a cleanup strategy: week 12 had 103 stale artifacts. With a cleanup strategy: week 12 had 11 stale artifacts. The trade-off was about 5 extra minutes of cleanup per session in exchange for dozens of hours saved over the 12 weeks.

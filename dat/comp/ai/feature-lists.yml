@@ -1,0 +1,81 @@
+- Q: |
+    What is the "Done Definition Gap" and why is "mostly done" a problematic status?
+  A: |
+    Agents cannot autonomously determine project completion without external specification. "Mostly done" is not machine-interpretable — it lacks clarity on which tests passed, contains no behavioral acceptance criteria, and identifies no blocking factors.
+
+- Q: |
+    What does it mean to call feature lists "harness primitives" rather than memos?
+  A: |
+    A memo is a document for humans that can be written down and disregarded. A harness primitive is a foundational executable structure that other harness components (scheduler, verifier, handoff reporter, progress tracker) directly depend upon and cannot bypass.
+
+- Q: |
+    What three mandatory elements must every feature list item contain?
+  A: |
+    1) Behavior description (what to implement), 2) verification command (executable, not subjective, to determine completion), 3) current state (position in the state machine). Missing any element makes the feature spec incomplete.
+
+- Q: |
+    What are the four states in the Feature State Machine model?
+  A: |
+    not_started (unbegun), active (in progress), blocked (awaiting dependencies), passing (verification command executed successfully).
+
+- Q: |
+    What is the rule governing transition from "active" to "passing" in the feature state machine?
+  A: |
+    The only way a feature moves from active to passing is by its verification command executing successfully — and this transition is irreversible.
+
+- Q: |
+    What is "pass-state gating"?
+  A: |
+    A mechanism where an agent can submit a verification request but cannot self-authorize the transition to "passing" — the harness itself executes the verification command and makes the transition decision, preventing agents from falsely declaring completion.
+
+- Q: |
+    What analogy explains why feature lists are "primitives" rather than "documents"?
+  A: |
+    Database trigger constraints are enforced by the database engine itself, unlike application-layer checks that depend on code correctness. Feature lists function like database-level constraints — agents cannot circumvent them, unlike a document they could just disregard.
+
+- Q: |
+    List the four harness components that depend on the feature list as a primitive.
+  A: |
+    1) Scheduler (reads feature states to pick the next not_started item), 2) verifier (executes verification commands, gates state transitions), 3) handoff reporter (generates session summaries from the feature list), 4) progress tracker (calculates state distribution and project health metrics).
+
+- Q: |
+    What five fields does a minimal feature list entry require?
+  A: |
+    A unique identifier, a behavioral specification, an executable verification command, a current state value, and an evidence reference (e.g. commit hash or test output location).
+  C: |
+    curl -X POST http://localhost:3000/api/cart/items -H 'Content-Type: application/json' -d '{"product_id":1,"quantity":2}' | jq .status == 201
+
+- Q: |
+    How should feature granularity be calibrated, and give an example each of too broad, too narrow, and optimal.
+  A: |
+    Optimal scope is "completable in one session." Too broad: "Implement shopping cart" (won't finish in one session). Too narrow: "Create Cart name field" (unsustainable per-field overhead). Optimal: "User can add items to cart" (achievable and meaningful).
+
+- Q: |
+    What is the "Single Source of Truth" principle for feature lists?
+  A: |
+    All scope information must derive from one feature list. Contradictory requirements scattered across conversation history, TODO comments, or implicit assumptions violate this principle and create divergence.
+
+- Q: |
+    What is "back-pressure" in the feature-list framework, and what does zero pressure signify?
+  A: |
+    The number of features that haven't passed yet is the pressure the harness exerts on the agent, driving it toward completion. Zero pressure means the project is complete.
+
+- Q: |
+    In the e-commerce case study, compare inference time and outcomes for a "memo" progress note vs. a structured feature list.
+  A: |
+    Memo approach: a note like "did user auth and product list, shopping cart mostly done but has bugs" took a new session ~20 minutes to interpret and led to feature re-implementation. Structured approach: a feature list showing F01-F05 passing, F06 active, F07-F10 not_started let a new session resume in ~3 minutes with seamless continuation from F06.
+
+- Q: |
+    What completion-rate improvement did structured feature lists show over free-form progress tracking?
+  A: |
+    Projects using structured feature lists showed a 45% higher feature completion rate than free-form tracking, with zero duplicate implementations.
+
+- Q: |
+    What is "artifact externalization"?
+  A: |
+    Moving project artifacts — code, features, state — into machine-readable repository files rather than leaving them only in conversation text.
+
+- Q: |
+    What theoretical/practical references ground the feature-list-as-primitive approach?
+  A: |
+    Anthropic's "Building Effective Agents" (identifies feature lists as a core data structure), OpenAI's "externalizing artifacts" principle, Bertrand Meyer's Design by Contract, and Google's test pyramid / behavioral specification practices.

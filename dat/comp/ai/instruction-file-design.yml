@@ -1,0 +1,74 @@
+- Q: |
+    What is the "giant instruction file trap"?
+  A: |
+    A pattern where an instruction file like AGENTS.md grows uncontrollably (50 → 300 → 450 → 600+ lines) as every agent mistake prompts adding one more rule, while agent performance paradoxically gets worse as the file grows.
+
+- Q: |
+    What is "context budget exhaustion" caused by a bloated instruction file?
+  A: |
+    A large instruction file can consume 10-20K tokens of a 200K context window before the agent even starts. Combined with dozens of source files, tool output, and conversation history, this leaves too little budget for actual problem-solving.
+
+- Q: |
+    What is the "Lost in the Middle" effect?
+  A: |
+    LLMs use information placed in the middle of long texts significantly less effectively than information at the beginning or end (Liu et al., 2023). A critical constraint buried at line 300 of a 600-line file is nearly certain to be ignored, regardless of its importance.
+
+- Q: |
+    What is "priority conflict" in a bloated instruction file?
+  A: |
+    Hard constraints (e.g. "never use eval()"), design guidelines (e.g. "prefer functional style"), and historical lessons (e.g. "watch for WebSocket memory leaks") all appear in the same visual format, so the agent can't tell red-line rules from mere suggestions and picks among them randomly.
+
+- Q: |
+    What is "maintenance decay" in instruction files?
+  A: |
+    Outdated instructions rarely get deleted (deletion feels risky) while new instructions feel cheap to add (creation feels low-risk), so files only grow and their signal-to-noise ratio steadily declines. This also causes contradiction accumulation, e.g. "use TypeScript strict mode" vs. "some legacy files use any."
+
+- Q: |
+    What is "Instruction Signal-to-Noise Ratio (SNR)"?
+  A: |
+    The proportion of an instruction file's content that is actually relevant to the current task. Example: processing 50 lines of deployment instructions while doing a simple bug fix is low SNR.
+
+- Q: |
+    What is the purpose and ideal size of an "Entry File" like AGENTS.md?
+  A: |
+    To act as a routing document that guides the agent toward detailed documentation rather than containing everything itself — ideally 50-200 lines, functioning as a router, not an encyclopedia.
+
+- Q: |
+    What is the "Reveal on Demand" principle?
+  A: |
+    A progressive-disclosure principle: give the agent overview information first, and detailed information only when needed — like good UI design that doesn't dump all options on the user at once.
+
+- Q: |
+    What four sections should an entry file (AGENTS.md) contain?
+  A: |
+    1) Project overview (1-2 sentences), 2) first-run commands (e.g. make setup && make test), 3) global hard constraints (max ~15 non-negotiable rules), 4) topic document links, each with a one-line description and applicability condition.
+
+- Q: |
+    What are "Topic Documents" and how should they be organized?
+  A: |
+    Subject-organized documents of 50-150 lines each, placed in a docs/ directory or alongside relevant modules, that the agent reads only when needed. Analogous to packing cubes for luggage — underwear in one cube, toiletries in another — rather than one giant suitcase pile.
+
+- Q: |
+    What is "code-based documentation" as an alternative to instruction files?
+  A: |
+    Placing information directly in the code itself — type definitions, interface comments, config file explanations — so the agent naturally encounters it while reading the relevant code, eliminating duplication in separate instruction files.
+
+- Q: |
+    What three pieces of metadata should every instruction in a harness document carry?
+  A: |
+    1) Source — why was this rule added? 2) Applicability condition — when is this rule needed? 3) Expiry condition — when can this rule be removed?
+
+- Q: |
+    What is the recommended "positional strategy" for a rule that must stay in the entry file?
+  A: |
+    Place it at the very top or very bottom of the file, never in the middle — leveraging the lost-in-the-middle effect in reverse. Better still, move it into a topic document for on-demand loading instead.
+
+- Q: |
+    What do OpenAI and Anthropic both recommend about entry-file design?
+  A: |
+    OpenAI: entry files should be "short and routing-oriented." Anthropic: control information for long-running agents should be "concise and high-priority." Both converge on avoiding monolithic instruction files.
+
+- Q: |
+    In the SaaS team refactoring case study, what changed and what were the results?
+  A: |
+    A 600-line AGENTS.md mixing tech versions, coding standards, historical notes, API guides, deployment steps, and preferences was trimmed to 80 lines (overview, commands, 15 hard constraints), with three new topic docs created: docs/api-patterns.md (120 lines), docs/database-rules.md (60 lines), docs/testing-standards.md (80 lines). Historical notes were converted to test cases or deleted. Result: task success rate rose from 45% to 72%, and compliance with a previously buried security constraint rose from 60% to 95% after moving it out of the middle of the file.

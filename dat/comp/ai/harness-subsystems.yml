@@ -1,0 +1,89 @@
+- Q: |
+    What does "the repo IS the spec" mean in harness engineering?
+  A: |
+    All necessary context for an agent must reside within the repository itself — through instruction files, verification commands, and organized directory structure. What the agent cannot access effectively does not exist for practical purposes.
+
+- Q: |
+    Name the five subsystems of the harness framework.
+  A: |
+    1. Instruction subsystem
+    2. Tool subsystem
+    3. Environment subsystem
+    4. State subsystem
+    5. Feedback subsystem
+
+- Q: |
+    What belongs in the Instruction subsystem of a harness, and roughly how long should it be?
+  A: |
+    An AGENTS.md or CLAUDE.md file with project overview/purpose, tech stack with versions, initial setup commands, non-negotiable constraints, and links to deeper docs. It should be roughly 100 lines, pushing longer content into a docs/ directory.
+  N: |
+    Philosophy: "Give a map, not a manual" — provide directory structure rather than encyclopedic detail.
+
+- Q: |
+    What is the goal of the Tool subsystem in a harness?
+  A: |
+    Grant the agent sufficient tool access (shell, package managers, etc.) under the principle of least privilege — enough to verify its own work (testing, linting, type checking) without excessive restriction.
+
+- Q: |
+    What makes the Environment subsystem of a harness effective?
+  A: |
+    Making environment state self-describing: locking dependencies (pyproject.toml, package.json), pinning runtime versions (.nvmrc, .python-version), and ensuring reproducibility via Docker or devcontainers.
+
+- Q: |
+    What is the purpose of the State subsystem, and what file commonly implements it?
+  A: |
+    Tracking progress across long-running or multi-session tasks so context isn't lost. A PROGRESS.md file records completed work, in-progress items, and blockers — updated before a session ends and read at the start of the next.
+
+- Q: |
+    Why is the Feedback subsystem considered the highest-ROI subsystem to build?
+  A: |
+    Because explicitly listing verification commands (tests, type checking, linting, a combined check) is low effort but gives the agent objective, executable ways to confirm its work is correct — directly closing the verification gap.
+  C: |
+    Tests: pytest tests/ -x
+    Type checking: mypy src/ --strict
+    Linting: ruff check src/
+    Comprehensive: make check
+
+- Q: |
+    What is the "Gulf of Execution" for an AI agent?
+  A: |
+    A failure mode where the agent doesn't know how to operate the available tools to accomplish its goal.
+
+- Q: |
+    What is the "Gulf of Evaluation" for an AI agent?
+  A: |
+    A failure mode where the agent is uncertain whether its actions actually succeeded — it lacks reliable feedback to judge the outcome.
+
+- Q: |
+    What is the harness design philosophy of "constraints vs. micromanagement"?
+  A: |
+    Use executable rules to constrain agent behavior (enforce invariants) rather than enumerating step-by-step instructions for every task. Philosophy: "enforce invariants, don't micromanage implementation."
+
+- Q: |
+    What is "harness rot"?
+  A: |
+    The tendency of harness components (docs, scripts, conventions) to degrade over time like technical debt, requiring regular auditing and maintenance to stay accurate and useful.
+
+- Q: |
+    What is the "controlled variable exclusion test" for measuring a harness subsystem's value?
+  A: |
+    Remove harness subsystems one at a time while keeping the model fixed, and measure the resulting performance drop. The subsystem whose removal causes the largest drop has the highest current marginal contribution.
+  N: |
+    Caveat: ablation results identify valuable components but can't alone determine bottlenecks — that requires failure attribution (unclear instructions? insufficient context? unreproducible environment? missing feedback? broken state management?).
+
+- Q: |
+    In the TypeScript/React frontend case study (~20,000 lines), what were the success rates across the four harness stages?
+  A: |
+    Stage 1 (README only): 20%. Stage 2 (added AGENTS.md with versions/conventions): 60%. Stage 3 (added verification commands): 80%. Stage 4 (added progress file templates): 80-100%.
+  N: |
+    The model was held constant throughout — all improvement came from harness engineering, not model upgrades.
+
+- Q: |
+    Why is AutoGPT used as a cautionary example in harness engineering?
+  A: |
+    It lacks structured state management and precise feedback mechanisms, which causes context accumulation and looping behavior rather than reliable task completion.
+
+- Q: |
+    Contrast how Claude Code, Cursor, and Codex handle harness subsystems.
+  A: |
+    Claude Code reads CLAUDE.md, executes shell commands, and maintains session history/runs tests. Cursor uses .cursorrules but has weak cross-session state management. Codex uses git worktrees for isolation and a local observability stack, performing better when given AGENTS.md and explicit verification commands.

@@ -1,0 +1,86 @@
+- Q: |
+    What is "overreach" in agent task execution?
+  A: |
+    Activating more tasks in a single session than optimal — quantifiably, having multiple features in progress with zero passing end-to-end verifications.
+
+- Q: |
+    What is "under-finish" in agent task execution?
+  A: |
+    When the ratio of tasks passing end-to-end verification to all activated tasks falls below an acceptable threshold — e.g. code being written without any passing tests.
+
+- Q: |
+    Why is agent overreach considered "a harness problem, not a model problem"?
+  A: |
+    Because the tendency to activate multiple tasks at once instead of finishing one at a time stems from how instructions structure the agent's work, not from a lack of model capability.
+
+- Q: |
+    What is a "WIP Limit" and what value is recommended as the safe default for agent harnesses?
+  A: |
+    A Work-in-Progress limit, borrowed from Kanban methodology, constrains the number of simultaneous in-flight tasks. WIP=1 is recommended as the safe default for agent harnesses.
+
+- Q: |
+    What is "Completion Evidence"?
+  A: |
+    The verifiable condition a task must satisfy to move from "in progress" to "done" — an objective, executable check (e.g. a passing test), as opposed to a subjective assessment like "code looks fine."
+
+- Q: |
+    What is a "Scope Surface" in the context of agent task management?
+  A: |
+    A directed acyclic graph where nodes represent work units and edges represent dependencies, with each node limited to four states: not_started, active, blocked, passing.
+
+- Q: |
+    What is "Verified Completion Rate (VCR)" and how is it calculated?
+  A: |
+    A metric for monitoring task execution quality, calculated as verified tasks divided by activated tasks.
+
+- Q: |
+    Explain the "attention mathematics" model of why agents overreach.
+  A: |
+    Attention is modeled as a finite resource C distributed across k simultaneously activated tasks, giving each task C/k reasoning resources. When C/k drops below the minimum threshold needed to complete a task, none of the tasks complete successfully.
+
+- Q: |
+    How does Little's Law apply to agent task scoping?
+  A: |
+    Little's Law states L = lambda × W, where L is work-in-progress quantity and W is lead time per task. Increasing L (more simultaneous work) necessarily increases W (completion time per feature), which increases the probability of failure.
+
+- Q: |
+    What completion-rate difference did Anthropic find between a "small next step" (WIP=1-equivalent) strategy and broad prompts?
+  A: |
+    Agents using a "small next step" strategy showed a 37% higher task completion rate than agents using broad prompts.
+
+- Q: |
+    What is the "code volume paradox" observed in agent behavior?
+  A: |
+    The number of lines of code an agent generates is weakly negatively correlated with actual feature completion — more code written correlates with fewer features completed.
+
+- Q: |
+    In the real-world unconstrained-vs-WIP=1 comparison, what were the results?
+  A: |
+    Unconstrained mode: 5 simultaneous features, 800 lines across 12 files, 20% end-to-end pass rate. WIP=1 mode: one feature per session, 200 lines across 4 files, 100% pass rate.
+
+- Q: |
+    Describe the vicious cycle linking overreach and under-finish.
+  A: |
+    Overreach dilutes attention across too many tasks → diluted attention causes under-finish → half-finished code increases system complexity → increased complexity drives overreach on the next task, repeating the cycle.
+
+- Q: |
+    List the four core strategies for implementing task boundaries in an agent harness.
+  A: |
+    1) Enforce a WIP=1 constraint, 2) define explicit completion evidence for every task, 3) externalize the scope surface as a machine-readable file, 4) continuously monitor VCR and block new task activation when VCR < 1.0.
+
+- Q: |
+    Why must the "scope surface" be externalized as a repository file rather than kept only in conversation?
+  A: |
+    A machine-readable file (JSON or Markdown) recording all task states enables session continuity and prevents context loss across sessions, rather than relying on transient conversation memory.
+
+- Q: |
+    What does Steve McConnell's observation about scope creep add to the case for WIP limits, and how do agents differ from humans here?
+  A: |
+    McConnell documented that scope creep is the leading cause of project failure in human project management. Agents lack the intuitive scope awareness that human developers develop through experience, making explicit WIP constraints even more necessary for agents than for humans.
+
+- Q: |
+    In the final project comparison, what completion rates and code volumes did WIP=1 versus unconstrained mode achieve?
+  A: |
+    WIP=1 achieved an 87.5% completion rate versus 37.5% for unconstrained mode, while using fewer total lines of code (1200 vs 800... note: unconstrained used less code but completed far less) — WIP=1 maintained higher code quality and verification rates despite the mode difference.
+  N: |
+    As stated in the source: final comparison reports 1200 vs 800 total lines with WIP=1 substantially more complete and verified — the volume relationship inverts from the single-feature comparison because it aggregates a full multi-feature project.

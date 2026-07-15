@@ -1,0 +1,74 @@
+- Q: |
+    Why can't larger context windows alone solve the problem of long-running task continuity?
+  A: |
+    Context windows are finite, and the parallel cognitive work an agent does — code generation, codebase analysis, decision tracking, tool output processing — grows faster than window sizes expand. Even at 1M tokens, complex tasks would still exhaust the window.
+
+- Q: |
+    What information does context compaction typically lose, and why does that matter?
+  A: |
+    Compaction preserves the "what" (final code output) but discards the "why" (design reasoning, rejected alternatives, deliberate trade-offs), causing subsequent sessions to miss the context needed to make consistent decisions.
+
+- Q: |
+    What is "context anxiety," and does it affect all models equally?
+  A: |
+    A phenomenon where an agent approaching its context limit rushes to finish — skipping verification, choosing quick solutions over optimal ones, ending tasks prematurely. Severity is model-dependent: Anthropic found Sonnet 4.5 shows severe context anxiety while Opus 4.5 shows greatly diminished behavior, meaning harness design must be model-specific.
+
+- Q: |
+    What is "rebuild cost" and what is a good target value for it?
+  A: |
+    The time a new session needs to reach a functional working state after resuming a long-running task. A good harness compresses this from roughly 15 minutes down to about 3 minutes.
+
+- Q: |
+    What is "semantic drift" across agent sessions?
+  A: |
+    A growing gap between the agent's understanding of project goals/architecture and the actual codebase state. Small divergences at each session boundary compound, and silent architectural decisions can end up contradicting earlier sessions because the decision context was lost.
+
+- Q: |
+    Compare the "compaction" and "context reset" strategies for managing long-running agent tasks.
+  A: |
+    Compaction summarizes conversation history within one session, preserving continuity but losing the "why" and not eliminating context anxiety. Context reset opens a new session from persisted artifacts, eliminating context anxiety with a clean mental state, but is entirely dependent on the completeness of those artifacts — an incomplete handoff causes misdirection.
+
+- Q: |
+    What is PROGRESS.md and what sections should it contain?
+  A: |
+    A state persistence file giving a current-state snapshot. Sections: Current State (latest commit hash, test pass rate, lint status), Completed (checkboxes of finished items), In Progress (partially-done features with completion %), Known Issues (specific bugs/ambiguities/blockers), and Next Steps (prioritized immediate actions).
+
+- Q: |
+    What is DECISIONS.md and what should each entry contain?
+  A: |
+    A chronological decision log preserving the reasoning that compaction typically loses. Each entry has: the decision statement, its rationale, rejected alternatives, and relevant constraints — e.g. "Use Redis for user preferences caching — high read frequency justifies in-memory storage; rejected a Postgres materialized view due to high change frequency making it costly to maintain."
+
+- Q: |
+    Why are git commits considered a state-persistence tool for long-running agent tasks?
+  A: |
+    They are free, automatic, version-controlled snapshots of state. Best practice is to commit after each atomic work unit with an explanatory message describing what was done and why, allowing reverts if a later session discovers issues.
+
+- Q: |
+    What are the "clock-in" and "clock-out" routines for an agent session?
+  A: |
+    Clock-in (session start): read PROGRESS.md, consult DECISIONS.md, run verification (e.g. make check), then begin from the "Next Steps" section. Clock-out (session end): update PROGRESS.md, run verification again, and commit completed work with explanatory messages.
+
+- Q: |
+    When is structured state persistence mandatory versus optional for an agent task?
+  A: |
+    Short tasks (under ~30 minutes and under ~60% of the context window) can complete within a single session with minimal persistence needed. Long tasks spanning multiple sessions or approaching context limits require mandatory structured artifacts: progress files, decision logs, verification records, and git checkpoints.
+
+- Q: |
+    In the 12-feature blog system case study, what were the outcomes with vs. without state persistence files?
+  A: |
+    Without persistence: by session 5, only 7 of 12 features (58%) were complete, 3 had hidden correctness issues, and the hidden defect rate was 43%. With persistence: by session 5, all 12 features (100%) were complete and verified, rebuild cost per session dropped ~78% (about 15 min to ~3 min), and the hidden defect rate fell to 8%.
+
+- Q: |
+    What is "decision re-making without context" as a continuity failure mode?
+  A: |
+    A previous session analyzed multiple architectural approaches and chose one with detailed reasoning, but a new session lacking that analysis chooses a different option based on incomplete information — producing contradictory solutions to the same problem.
+
+- Q: |
+    What is "verification gap accumulation" as a continuity failure mode?
+  A: |
+    Previous sessions' test results (what passed/failed and why) go unrecorded, so each new session must re-run all verification from scratch, repeatedly wasting context on identical diagnostic work.
+
+- Q: |
+    What four fields belong in a minimal session handoff template?
+  A: |
+    Repo state/commit hash, runtime state/test pass rate, blockers, and next actions.

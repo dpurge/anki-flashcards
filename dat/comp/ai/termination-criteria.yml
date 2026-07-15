@@ -1,0 +1,69 @@
+- Q: |
+    What did Guo et al.'s 2017 ICML paper establish, and how does this apply to coding agents?
+  A: |
+    It established that modern neural networks are systematically overconfident — reported confidence significantly exceeds actual accuracy. Applied to coding agents: they judge task completion on local code-level signals while ignoring global, system-level correctness requirements.
+
+- Q: |
+    What is "Confidence Calibration Bias" in AI coding agents?
+  A: |
+    A systematic gap between an agent's self-reported completion confidence and its actual completion quality. The bias is significantly positive (overconfident) especially for complex, multi-file tasks.
+
+- Q: |
+    What are "Termination Criteria" in a harness, and what do they shift completion judgment away from?
+  A: |
+    Clear, executable judgment conditions defined in the harness that determine when a task is done. They shift "done" from subjective agent judgment to objective determination based on verification results.
+
+- Q: |
+    What is the "Verification-Validation Dual Gate"?
+  A: |
+    Two sequential checkpoints that both must pass before completion: (1) verification confirms the code correctly implements the specified behavior, (2) validation confirms system-level behavior meets end-to-end requirements.
+
+- Q: |
+    What is the "Completion Priority Constraint"?
+  A: |
+    A hierarchy requiring functional correctness first, then performance, then style — no refactoring is permitted until core functionality passes verification.
+
+- Q: |
+    Describe the "slippery slope pattern" that leads to premature completion declarations.
+  A: |
+    Code appears syntactically correct → logic seems reasonable → static analysis shows no obvious errors → the agent skips comprehensive execution verification → only partial testing occurs (unit tests, skipping integration) → "code looks fine" becomes accepted as "feature complete." Information loss accumulates at each step from spec to implementation to runtime behavior.
+
+- Q: |
+    Why is unit test passage not the same as task completion? Name the three failure types that unit tests miss.
+  A: |
+    Unit testing isolates units and mocks dependencies, so it cannot detect cross-component issues. Three failure types: 1) Interface mismatch (components expect incompatible data formats, but isolated mocks let both sides pass), 2) state propagation errors (e.g. a DB migration changes schema while an ORM cache holds old schema entries — fresh mocks never reveal this), 3) environment dependency (code works in mocks but fails in real environments due to config, latency, or service unavailability).
+
+- Q: |
+    Why does "refactoring while we're at it" (before core functionality is verified) corrupt completion judgment?
+  A: |
+    It shifts the boundary between verified and unverified code and can silently break previously-correct paths — echoing Knuth's principle that "premature optimization is the root of all evil."
+
+- Q: |
+    What did Anthropic's 2026 research find about agents self-evaluating their own work, and what is the recommended fix?
+  A: |
+    Agents systematically give overly positive self-assessments even when human observers judge the quality as substandard, especially on subjective tasks like design aesthetics. The fix isn't to improve the same model's objectivity — since the model that generated the work is biased toward rating it well — but to separate the worker role from the checker role entirely.
+
+- Q: |
+    In the Anthropic "2D retro game editor" comparison, how did a single bare agent compare to a three-agent (planner + generator + evaluator) architecture?
+  A: |
+    Single agent: 20 minutes, $9, core features not working (entities unresponsive). Three-agent architecture: 6 hours, $200, fully playable — the evaluator agent used Playwright click-testing to discover failures that the generating agent's self-assessment had missed.
+
+- Q: |
+    What are the three layers of the "Termination Validation Architecture"?
+  A: |
+    Layer 1: Syntax and static analysis (lowest cost, mandatory baseline). Layer 2: Runtime behavior verification (test execution, app startup, critical path validation — code is executable, not just written). Layer 3: System-level confirmation (end-to-end testing, integration validation, user scenario simulation — code is functionally correct, not just executable).
+
+- Q: |
+    What is the "Actionable Error Feedback Pattern" from OpenAI's Codex, and give an example.
+  A: |
+    Error messages given to agents should include repair instructions, not just failure notification. Instead of "Test failed," provide something like: "Test failed: POST /api/reset-password returned 500. Verify email service config exists in environment variables. Template should be at templates/reset-email.html."
+
+- Q: |
+    What runtime signals should a harness capture to judge task completion?
+  A: |
+    Successful application startup reaching a ready state, successful execution of the critical feature path, correctness of database writes/file operations/side effects, and confirmation that temporary resources were cleaned up.
+
+- Q: |
+    In the password-reset case study, what did the agent's premature completion declaration miss?
+  A: |
+    It modified the DB schema, wrote the API endpoint, added an email template, ran unit tests (all passing), and declared completion — without ever executing the actual end-to-end reset flow. Hidden omissions: the full reset flow was never run, a database migration had failed mid-execution leaving the schema inconsistent, and the email service configuration was missing in the target environment. Harness-driven full-flow verification caught all of this within the same session, saving an estimated 5-10x in post-hoc correction costs.

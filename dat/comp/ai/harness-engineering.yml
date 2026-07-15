@@ -1,0 +1,111 @@
+- Q: |
+    What is a "harness" in the context of AI coding agents?
+  A: |
+    Everything outside the model itself — instructions, tools, environment, state management, and verification feedback. If it's not model weights, it's harness.
+
+- Q: |
+    What is the "capability gap" in AI coding agents?
+  A: |
+    The distance between a model's benchmark performance (e.g. 50-60% pass rate on SWE-bench Verified) and its actual success rate on real-world tasks with vague specs, missing test infrastructure, or implicit business rules.
+
+- Q: |
+    What is a "harness-induced failure"?
+  A: |
+    A failure where the model has sufficient capability to succeed, but structural defects in the execution environment (the harness) cause the task to fail anyway.
+
+- Q: |
+    What is the central diagnostic principle when an agent task fails?
+  A: |
+    "When things fail, don't swap the model first — check the harness." If the model succeeds on similar well-structured tasks, assume the problem is in the harness, not the model.
+
+- Q: |
+    What is the "verification gap"?
+  A: |
+    The discrepancy between an agent's confidence that a task is complete and whether it is actually correct.
+
+- Q: |
+    What is "context anxiety" in an AI agent?
+  A: |
+    A phenomenon where an agent rushes to declare completion as its context window runs low, skipping verification and choosing suboptimal solutions.
+
+- Q: |
+    What are the four steps of the "diagnostic loop" for improving a harness?
+  A: |
+    Execute → observe failure → attribute the failure to a specific harness layer → fix that layer → re-execute.
+
+- Q: |
+    What is a "Definition of Done" in harness engineering?
+  A: |
+    An explicit, command-verifiable set of conditions for task completion, such as tests passing, linting being clean, and type checks passing — not a subjective judgment call by the agent.
+
+- Q: |
+    List the five core failure modes that make AI coding agents fail on real-world tasks.
+  A: |
+    1. Vague requirements
+    2. Implicit conventions
+    3. Incomplete environment setup
+    4. No verification methods
+    5. Cross-session state loss
+
+- Q: |
+    Why do vague requirements cause agent failures?
+  A: |
+    Agents cannot comply with instructions they cannot interpret. A request like "add a search feature" lacks critical specification details, so the agent guesses — and incorrect guesses require rework costing multiples of the effort upfront clarity would have taken.
+
+- Q: |
+    Why are "implicit conventions" a failure mode for agents?
+  A: |
+    Undocumented architectural patterns (e.g. a specific SQLAlchemy version's syntax, OAuth requirements, API patterns) are invisible to the agent, which has no access to team knowledge that exists only in conversations or institutional memory.
+
+- Q: |
+    How does incomplete environment setup cause agent failure?
+  A: |
+    Missing dependencies, wrong tool versions, or incomplete dev configuration force the agent to spend its context window troubleshooting the environment instead of working on the actual task.
+
+- Q: |
+    Why does the absence of verification methods lead to agent failure?
+  A: |
+    Without tests, linting, or executable verification commands, the agent must declare completion based on subjective self-assessment rather than objective criteria, which triggers "context anxiety" and false completions.
+
+- Q: |
+    Why does cross-session state loss hurt agent reliability?
+  A: |
+    Discoveries made in a previous session are inaccessible to a new session, so the agent re-explores the project structure repeatedly. Tasks exceeding roughly 30 minutes show a sharp increase in failure rate without persisted state.
+  N: |
+    This motivates practices like maintaining a progress/state file (e.g. claude-progress.md) across sessions.
+
+- Q: |
+    In the Anthropic "2D retro game editor" experiment, what differed between the two runs and what was the result?
+  A: |
+    Same prompt and same model (Opus 4.5) were used for both runs. The bare run with no harness support took 20 minutes, cost $9, and failed. The run with a full harness took 6 hours, cost $200, and produced a fully playable game.
+  N: |
+    Demonstrates that execution infrastructure (the harness) can matter more than model selection alone.
+
+- Q: |
+    What is AGENTS.md and why is it recommended as an immediate first step?
+  A: |
+    A repository-root file documenting the tech stack and versions, architectural conventions/patterns, and verification/testing commands, so agents can access this context without guessing.
+  N: |
+    Claim: "One AGENTS.md file might be more effective than upgrading to a more expensive model."
+
+- Q: |
+    In the FastAPI team case study, what changed between the initial and improved approach, and what was the outcome?
+  A: |
+    Initial approach: a single-sentence instruction ("add user preferences endpoints under /api/v2/users") led to 40% of context spent on repo exploration, deprecated SQLAlchemy syntax, and undiscovered runtime errors. Improved approach: adding an AGENTS.md, explicit verification commands, and architecture decision records led the same model to succeed consistently across three independent runs with 60% improved context efficiency.
+
+- Q: |
+    What pattern did the OpenAI "million-line" experiment reveal about avoiding agent failures?
+  A: |
+    Three engineers used a Codex agent on an empty repo for five months to produce ~1 million lines of production code by breaking objectives into small components (design → code → review → test) and composing them sequentially. Failures never stemmed from insufficient model effort, but from asking "what capability is the agent missing that could be supplied understandably and executably?"
+
+- Q: |
+    Give an example of a concrete, command-verifiable "Definition of Done" for a new API endpoint task.
+  A: |
+    A spec such as: new endpoint GET /api/search?q=xxx supports pagination (default 20 items), results include highlighted snippets, all new code passes pytest, and type checking passes (mypy --strict).
+  C: |
+    Completion criteria:
+    - New endpoint GET /api/search?q=xxx
+    - Supports pagination, default 20 items
+    - Results include highlighted snippets
+    - All new code passes pytest
+    - Type checking passes (mypy --strict)

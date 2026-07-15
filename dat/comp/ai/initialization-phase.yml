@@ -1,0 +1,86 @@
+- Q: |
+    Why must initialization and implementation be treated as separate phases of agent work?
+  A: |
+    Initialization and implementation are two fundamentally different kinds of work that must be separated. Mixing them causes agents to spend disproportionate time on infrastructure discovery instead of feature delivery.
+
+- Q: |
+    What is the "Initialization Phase" and what is its output?
+  A: |
+    A distinct first lifecycle stage where the agent establishes project prerequisites without implementing business features. Its output is infrastructure, not code.
+
+- Q: |
+    What are the four conditions of the "Startup Readiness Checklist"?
+  A: |
+    Can start (dependencies, environment), can test (verified test framework), can see progress (tracking documentation), and can pick up next steps (task breakdown).
+
+- Q: |
+    What does "Always Ready to Hand Off" mean for a repository?
+  A: |
+    A repository state where a fresh agent session can continue the work using only the repo's contents, requiring no verbal explanation from a human.
+
+- Q: |
+    What is the core efficiency metric for measuring initialization effectiveness?
+  A: |
+    "Time from start to first passing test."
+
+- Q: |
+    Why does mixing initialization and implementation create competing optimization targets?
+  A: |
+    Implementation optimizes for the quantity and quality of verified features, while initialization optimizes for the reliability and efficiency of subsequent implementation. When mixed, agents naturally prioritize visible code over infrastructure work.
+
+- Q: |
+    What typically happens to effort allocation when initialization and implementation are mixed into one phase?
+  A: |
+    Agents allocate roughly 80% of effort to features and only 20% to infrastructure — test frameworks get configured but not verified, lint rules get established but stay loose, and no progress documentation gets created.
+
+- Q: |
+    What are "implicit assumption landmines"?
+  A: |
+    Undocumented initialization decisions — such as test framework choice, directory organization, or dependency management approach — that create contradictions across later sessions because they were never written down.
+
+- Q: |
+    What quantitative benefit did projects with a dedicated initialization phase show in cited research?
+  A: |
+    31% higher feature completion rates in multi-session scenarios compared to mixed approaches, with the initialization investment recovered within 3-4 subsequent sessions.
+
+- Q: |
+    List the five infrastructure components of the initialization checklist.
+  A: |
+    1) Runnable environment, 2) verifiable test framework, 3) startup readiness documentation, 4) task breakdown, 5) git checkpoint.
+
+- Q: |
+    What must a "verifiable test framework" satisfy during initialization?
+  A: |
+    At least one example test passes, and the framework is properly configured — this is proof of functionality, not just presence of configuration files.
+
+- Q: |
+    What must "startup readiness documentation" include?
+  A: |
+    Clear startup commands (setup, dev, test, full verification), a current state summary, and an explanation of the directory structure.
+
+- Q: |
+    What does the "task breakdown" component of initialization require?
+  A: |
+    An ordered task list with clear acceptance criteria per task, with at least 3 tasks documented.
+
+- Q: |
+    Why does a "from-template" approach outperform a "from-scratch" approach to initialization?
+  A: |
+    A from-scratch approach requires the agent to infer structure from an empty directory, which is significantly less efficient. A from-template approach (e.g. create-react-app, a FastAPI template) provides preset infrastructure, eliminating the need to infer standard initialization decisions.
+
+- Q: |
+    What five conditions must ALL be met for initialization to be considered complete?
+  A: |
+    Setup commands execute from a clean state, at least one passing test exists, a fresh agent can answer operational questions from the repo alone, a task breakdown file with documented tasks exists, and all changes are committed.
+  N: |
+    Initialization completeness is measured by infrastructure reliability, not by "code written."
+
+- Q: |
+    In the real-world comparison, how did rebuild time differ between mixed and dedicated-initialization approaches, and what was the overall efficiency gain?
+  A: |
+    With a mixed approach, session 2 needed roughly 20 minutes to infer project structure before productive work could start. With dedicated initialization, session 2 rebuild time was under 3 minutes. Across multi-session cycles, dedicated initialization showed about 60% more total efficiency.
+
+- Q: |
+    What is the best indicator of initialization quality?
+  A: |
+    The proportion of subsequent sessions that can successfully execute tasks without relying on implicit knowledge.

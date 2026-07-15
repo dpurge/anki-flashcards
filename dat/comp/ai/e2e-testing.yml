@@ -1,0 +1,63 @@
+- Q: |
+    Why is end-to-end testing the only way to prove the absence of system-level defects?
+  A: |
+    Only end-to-end testing can prove the absence of system-level defects. Unit tests create systematic blind spots for component-interaction problems that only surface during full system execution.
+
+- Q: |
+    List the four categories of defects that unit tests systematically miss.
+  A: |
+    1) Interface mismatch, 2) state propagation errors, 3) resource lifecycle issues, 4) environment dependency.
+
+- Q: |
+    What is a "resource lifecycle issue" as a category of defect only E2E testing catches?
+  A: |
+    Problems with file handles, database connections, and network sockets managed across multiple components — resource contention and leaks that only appear under full-system load, not in isolated unit tests.
+
+- Q: |
+    Beyond catching defects, how does end-to-end testing change agent coding behavior during implementation?
+  A: |
+    It shifts agents toward considering component interactions during implementation, respecting architectural boundaries, and handling error paths and exception scenarios — rather than just making isolated units pass.
+
+- Q: |
+    Describe OpenAI's "Layered Domain Architecture" model.
+  A: |
+    Domains are divided into fixed layers with strictly forward dependencies: Types → Config → Repo → Service → Runtime → UI. The enforcement principle is "enforce invariants; don't micromanage implementation" — e.g. require data be parsed at boundaries, but don't prescribe which library to use.
+
+- Q: |
+    What three-part structure should an agent-facing error message have?
+  A: |
+    1) What went wrong (specific location/code), 2) why (which architectural principle was violated), 3) how to fix (concrete action steps).
+  C: |
+    ERROR: Found direct import of 'fs' in src/renderer/App.tsx:12.
+    WHY: Renderer process lacks Node.js API access for security.
+    FIX: Move file operations to src/preload/file-ops.ts and call via window.api.readFile()
+
+- Q: |
+    What is the "Testing Adequacy Gradient"?
+  A: |
+    A hierarchy of detection capability across the test pyramid: unit tests detect isolated function correctness, integration tests detect two-component interactions, and end-to-end tests detect all component-boundary defects plus environment-dependent failures.
+
+- Q: |
+    In the Electron file-export case study, how many of the 5 boundary defects were caught by E2E tests versus unit tests, and what was the time trade-off?
+  A: |
+    5 of 5 boundary defects (interface mismatch, state propagation via IPC, resource leak, permission issues, error propagation) were caught by E2E tests; 0 of 5 were caught by unit tests. The time cost rose from about 2 seconds to about 15 seconds, considered acceptable in agent workflows.
+
+- Q: |
+    What is "Review Feedback Promotion"?
+  A: |
+    A process converting recurring code review comments into automated checks: identify a recurring issue category, convert it to an executable rule, integrate it into harness validation, and deploy it automatically so it's enforced going forward without manual review.
+
+- Q: |
+    Describe the three-level "Validation Hierarchy Framework."
+  A: |
+    Level 1: unit tests (must pass). Level 2: integration tests (must pass). Level 3: E2E tests (must pass for cross-component changes). Skipping any required level means the task is not complete.
+
+- Q: |
+    What does "Architectural Boundary Enforcement" mean as a harness implementation principle?
+  A: |
+    Converting written architectural rules into automated, mechanically-enforced checks (e.g. via linting) rather than leaving them as documentation an agent might ignore.
+
+- Q: |
+    What is meant by "automatic harness strengthening" as an implementation principle?
+  A: |
+    Each newly discovered defect category should become a permanent defense mechanism in the harness (e.g. a new automated check), so the same class of defect can't recur silently in future sessions.

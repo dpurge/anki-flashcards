@@ -1,0 +1,99 @@
+- Q: |
+    What three information sources can an AI coding agent actually access?
+  A: |
+    System prompts/task descriptions, repository file contents, and tool execution output. It cannot access Slack history, Jira tickets, Confluence pages, or knowledge that only exists in team members' minds.
+
+- Q: |
+    What does the "repo as spec" principle state?
+  A: |
+    Information that doesn't exist in the repo doesn't exist for the agent — the code repository is the highest-authority specification document for AI operations.
+
+- Q: |
+    What is the "knowledge visibility gap"?
+  A: |
+    The proportion of total project knowledge that is NOT stored in the repository. It's calculated by identifying all implicit knowledge in people's heads, measuring what actually exists in the repo, and taking the difference. It directly correlates with agent failure rate.
+
+- Q: |
+    What is the "Fresh Session Test" and what five questions does it check?
+  A: |
+    A methodology where you open a brand-new agent session with only the repository contents and test whether it can answer: 1) What is this project? 2) How is it organized? 3) How do I run it? 4) How do I verify it? 5) What's the current progress? Any unanswered question is a blank spot on the map.
+
+- Q: |
+    What is "discovery cost" in the context of repository documentation?
+  A: |
+    The context budget an agent consumes locating a single key piece of information. Hidden or deeply nested information raises discovery cost and reduces the budget left for actual task execution — critical information should be placed where the agent encounters it first.
+
+- Q: |
+    What is "knowledge decay rate" and why is stale documentation worse than no documentation?
+  A: |
+    The proportion of repository documentation that becomes stale per unit time. Out-of-date documentation is more dangerous than missing documentation because it actively sends agents in the wrong direction while appearing correct.
+
+- Q: |
+    List the four design principles for effective agent-facing documentation.
+  A: |
+    1. Knowledge proximity
+    2. Standardized entry file
+    3. Minimal yet complete
+    4. Knowledge-code binding
+
+- Q: |
+    What is the "Knowledge Proximity" principle?
+  A: |
+    Documentation should live adjacent to its corresponding code (e.g. API auth rules live next to the API code, not in a global doc). Each module directory should have short docs on its responsibilities, interfaces, and special constraints, so the module itself acts as a natural index.
+
+- Q: |
+    What is the "Standardized Entry File" principle, and what three questions must it answer?
+  A: |
+    Use AGENTS.md or CLAUDE.md as the agent's landing page, answering "What is this project," "How do I run it," and "How do I verify it." Optimal length is about 50-100 lines.
+
+- Q: |
+    What is the "Minimal Yet Complete" documentation principle?
+  A: |
+    Every knowledge entry must have a clear practical use case — remove rules that don't affect agent decision quality — while every Fresh Session Test question must still have an answer. Balance is ongoing, avoiding both excess and insufficiency.
+
+- Q: |
+    What is the "Knowledge-Code Binding" principle?
+  A: |
+    Documentation must be updated alongside code changes, placed in the corresponding module directories, so that modifying code naturally prompts a documentation review. CI can enforce documentation-update checks after code changes.
+
+- Q: |
+    How does the ACID "Atomicity" principle apply to agent state management?
+  A: |
+    Each logical operation (e.g. "add endpoint + update tests") should be one git commit, executed all-or-nothing. If an operation fails midway, use git stash to roll back rather than leaving a partial state.
+
+- Q: |
+    How does the ACID "Consistency" principle apply to agent state management?
+  A: |
+    Define verification predicates for a "consistent state" (all tests pass, zero lint errors), run them after each operation, and never commit an inconsistent intermediate state — the system must be verifiably correct after every operation.
+
+- Q: |
+    How does the ACID "Isolation" principle apply to agent state management?
+  A: |
+    Prevent race conditions in concurrent multi-agent scenarios by giving each agent a separate progress file or git branch — concurrent writes to the same file are a common failure source, so state files should be designed to avoid conflicts.
+
+- Q: |
+    How does the ACID "Durability" principle apply to agent state management?
+  A: |
+    Critical project knowledge must be git-tracked; only temporary state may stay in session memory. Any knowledge that must survive across sessions has to be written to files — information existing only in people's heads doesn't count.
+
+- Q: |
+    In the 30-microservice e-commerce case study, what caused 70% of agent tasks to need human intervention, and what fixed it?
+  A: |
+    Architecture decisions were scattered across outdated Confluence pages, unsearchable Slack threads, senior engineers' heads, and sporadic code comments, so agents violated implicit constraints. The fix: a root AGENTS.md, an ARCHITECTURE.md per microservice, a centralized CONSTRAINTS.md with explicit "MUST/MUST NOT" language, and a PROGRESS.md per service.
+
+- Q: |
+    What is a recommended baseline repository structure for making a repo agent-friendly?
+  A: |
+    An AGENTS.md entry point at the root, per-module ARCHITECTURE.md/CONSTRAINTS.md files inside src/ subdirectories, a root PROGRESS.md for status tracking, and a Makefile exposing standardized commands (setup, test, lint, check).
+  C: |
+    project/
+    ├── AGENTS.md              # overview, run commands, hard constraints
+    ├── src/
+    │   ├── api/
+    │   │   ├── ARCHITECTURE.md
+    │   │   └── ...
+    │   ├── db/
+    │   │   ├── CONSTRAINTS.md
+    │   │   └── ...
+    ├── PROGRESS.md
+    └── Makefile
