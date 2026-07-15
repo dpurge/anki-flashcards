@@ -6,7 +6,7 @@
 - Q: |
     What is special about the `main` function in a Rust program?
   A: |
-    It's always the first code that runs in every executable Rust program. It takes no parameters and returns nothing.
+    It's always the first code that runs in every executable Rust program.
   C: |
     fn main() {
         println!("Hello, world!");
