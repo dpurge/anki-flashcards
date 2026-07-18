@@ -1,0 +1,51 @@
+- Q: |
+    What are Claude's per-request image limits (count and size)?
+  A: |
+    Up to 100 images per request, each up to 5MB.
+
+- Q: |
+    What are the maximum image dimensions Claude accepts, and how do they differ for single vs multiple images in one request?
+  A: |
+    Single image: max height/width of 8000px. Multiple images in the same request: max height/width of 2000px.
+
+- Q: |
+    How is an image's token cost calculated for Claude?
+  A: |
+    tokens = (width in pixels × height in pixels) / 750.
+
+- Q: |
+    In what two forms can an image be supplied to Claude in a message?
+  A: |
+    Base64-encoded data, or a URL pointing to the image.
+
+- Q: |
+    What is the single most important factor for getting accurate results from Claude's vision capabilities?
+  A: |
+    Good prompt engineering — simple prompts often produce poor results even with clear images. Detailed guidelines, step-by-step analysis instructions, and examples dramatically improve accuracy (e.g. correctly counting objects in an image).
+
+- Q: |
+    How do you enable citations for a PDF document sent to Claude?
+  A: |
+    Add a `"title"` field (the name shown in citations) and a `"citations": {"enabled": true}` field to the document content block.
+  C: |
+    {
+      "type": "document",
+      "source": {"type": "base64", "media_type": "application/pdf", "data": file_bytes},
+      "title": "earth.pdf",
+      "citations": {"enabled": true}
+    }
+
+- Q: |
+    What five pieces of information does each citation Claude returns typically contain, for a PDF source?
+  A: |
+    `cited_text` (the exact referenced text), `document_index` (which document, if multiple), `document_title`, `start_page_number`, and `end_page_number`.
+
+- Q: |
+    How do citation locations differ when the cited source is a plain-text document instead of a PDF?
+  A: |
+    You get `CitationCharLocation` objects with character positions within the text (rather than page numbers), letting you highlight the exact referenced sentences/paragraphs.
+
+- Q: |
+    Name two situations where enabling citations on Claude's document responses is particularly valuable.
+  A: |
+    When users need to verify information accuracy, and when working with sensitive/important documents where transparency about sources builds trust.

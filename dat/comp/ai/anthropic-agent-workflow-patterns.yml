@@ -1,0 +1,89 @@
+- Q: |
+    What is the core distinction between a "workflow" and an "agent" when building with Claude?
+  A: |
+    A workflow is a predetermined series of calls to Claude following known steps to solve a specific problem; an agent is given a goal and a set of tools and is expected to figure out how to reach the goal itself.
+
+- Q: |
+    When should you choose a workflow over an agent, and vice versa?
+  A: |
+    Choose a workflow when you can picture the exact steps Claude should take (or your UX constrains users to specific tasks); choose an agent when you're not sure exactly what task or parameters you'll be giving Claude ahead of time.
+
+- Q: |
+    What are the main benefits of workflows compared to agents?
+  A: |
+    Higher accuracy (Claude focuses on one subtask at a time), easier to evaluate/test since each step is known, and more predictable/reliable execution.
+
+- Q: |
+    What are the main downsides of workflows compared to agents?
+  A: |
+    Less flexible — built for specific known task types — and a more constrained user experience, since the flow's exact inputs must be known in advance.
+
+- Q: |
+    What are the main benefits of agents compared to workflows?
+  A: |
+    A more flexible user experience, the ability to combine tools in unexpected ways to handle a wide variety of tasks, and the ability to formulate their own inputs or ask the user for more input as needed.
+
+- Q: |
+    What are the main downsides of agents compared to workflows?
+  A: |
+    A lower successful task-completion rate, and they're more challenging to instrument, test, and evaluate since the exact sequence of steps isn't known in advance.
+
+- Q: |
+    What is the general engineering recommendation for choosing between workflows and agents in production?
+  A: |
+    Default to implementing workflows wherever possible for their predictability and reliability, and only resort to agents when the task genuinely requires that flexibility.
+
+- Q: |
+    Describe the Evaluator-Optimizer workflow pattern.
+  A: |
+    A Producer generates an output from input; a Grader evaluates that output against criteria. If rejected, feedback goes back to the Producer for another attempt, repeating until the Grader accepts the output.
+
+- Q: |
+    Describe the Parallelization workflow pattern and its three steps.
+  A: |
+    Split one complex task into multiple specialized, independent sub-tasks, run them simultaneously (in parallel), then aggregate all the individual results together in one final step.
+
+- Q: |
+    Why don't the sub-tasks in a parallelization workflow need to be identical to each other?
+  A: |
+    Each sub-task can have its own specialized prompt, different tools, or a unique approach tailored to its specific purpose — they just need to be independent enough to run concurrently.
+
+- Q: |
+    Name three benefits of the parallelization workflow pattern.
+  A: |
+    Focused attention (Claude handles one analysis at a time), easier independent prompt optimization per sub-task, and faster overall execution since sub-tasks run concurrently (also: better scalability for adding new sub-task types).
+
+- Q: |
+    Describe the Chaining workflow pattern.
+  A: |
+    Break one large task into smaller sequential subtasks handled by separate, focused Claude requests — optionally running non-LLM processing between steps — instead of trying to accomplish everything in a single complex prompt.
+
+- Q: |
+    When is a chaining workflow particularly useful?
+  A: |
+    When a task has many constraints and Claude isn't consistently following all of them, or when you want to validate/process outputs between steps while keeping each request focused on one aspect of the task.
+
+- Q: |
+    Describe the Routing workflow pattern and its four steps.
+  A: |
+    1) User provides input, 2) a router (usually Claude) categorizes the request, 3) the input is forwarded to exactly one specialized processing pipeline, 4) that pipeline handles it with its own prompts/tools/workflow.
+
+- Q: |
+    What conditions make a routing workflow the right choice?
+  A: |
+    The application handles distinctly different request types needing different processing, and you can clearly define a manageable number (roughly 3-10) of meaningful categories.
+
+- Q: |
+    What is the key design principle for choosing which tools to give an agent, versus a workflow step?
+  A: |
+    Favor reasonably abstract, generic, combinable tools (e.g. bash, read, write, edit, grep, glob, webfetch) over narrow, hyper-specialized ones — this lets Claude creatively combine them in ways you didn't anticipate.
+
+- Q: |
+    What is "environment inspection" in agent design, and why does it matter?
+  A: |
+    Giving the agent the ability to observe the results of its own actions (e.g. reading a file before editing it, checking a generated video's captions/screenshots) — without it, the agent is acting blind and can't verify or self-correct its work.
+
+- Q: |
+    What general principle should guide every action an agent takes, according to the environment-inspection concept?
+  A: |
+    Every action should be followed by some form of verification or inspection to confirm the desired outcome was actually achieved, rather than assuming success.

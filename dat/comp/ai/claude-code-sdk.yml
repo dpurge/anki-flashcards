@@ -1,0 +1,33 @@
+- Q: |
+    What is the Claude Code SDK?
+  A: |
+    A way to run Claude Code programmatically from your own applications and scripts — available for TypeScript, Python, and via the CLI — giving the same tools and functionality as the terminal version, for use in automation and integration workflows.
+
+- Q: |
+    What permission level does the Claude Code SDK use by default, and what does that allow?
+  A: |
+    Read-only by default — it can read files, search directories, and grep, but cannot write, edit, or create files.
+
+- Q: |
+    How do you grant the Claude Code SDK write/edit permissions for a specific query?
+  A: |
+    Pass an `allowedTools` option in the query's options (e.g. `allowedTools: ["Edit"]`), or configure permissions project-wide in the `.claude` settings file.
+  C: |
+    import { query } from "@anthropic-ai/claude-code";
+
+    for await (const message of query({
+      prompt: "Look for duplicate queries in the ./src/queries dir",
+      options: { allowedTools: ["Edit"] }
+    })) {
+      console.log(JSON.stringify(message, null, 2));
+    }
+
+- Q: |
+    When running a Claude Code SDK query in the same directory as an existing Claude Code project, what settings does it inherit?
+  A: |
+    All settings from Claude Code instances in that same directory (e.g. permissions configuration).
+
+- Q: |
+    Name three practical use cases for the Claude Code SDK.
+  A: |
+    Git hooks that automatically review code changes, build scripts that analyze or optimize code, and code-quality checks in CI/CD pipelines (also useful for automated documentation generation and maintenance helper commands).

@@ -1,0 +1,26 @@
+- Q: |
+    How do you create a custom slash command in Claude Code?
+  A: |
+    Create a `commands` directory inside the project's `.claude` folder, then add a markdown file named after the desired command (e.g. `audit.md` creates `/audit`). Restart Claude Code afterward for it to recognize the new command.
+
+- Q: |
+    How do custom Claude Code commands accept parameters?
+  A: |
+    Via the `$ARGUMENTS` placeholder inside the command's markdown file — it's replaced with whatever string you type after the command name when invoking it.
+  C: |
+    Write comprehensive tests for: $ARGUMENTS
+
+    Testing conventions:
+    * Use Vitest with React Testing Library
+    * Place test files in a __tests__ directory next to the source file
+    * Name test files as [filename].test.ts(x)
+
+- Q: |
+    For a custom command file like `write_tests.md` using `$ARGUMENTS`, do the arguments have to be file paths?
+  A: |
+    No — arguments can be any string; they're commonly a file path, but can be any context/direction you want to pass to Claude for the task.
+
+- Q: |
+    What must you do after creating or editing a custom Claude Code command file before it becomes available?
+  A: |
+    Restart Claude Code — new or changed command files are not picked up in an already-running session.

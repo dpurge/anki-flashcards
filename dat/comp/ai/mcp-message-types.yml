@@ -1,0 +1,34 @@
+- Q: |
+    What format does all MCP client-server communication use?
+  A: |
+    JSON messages.
+
+- Q: |
+    Where is the authoritative, complete list of MCP message types defined, and in what language is it written?
+  A: |
+    In the official MCP specification repository on GitHub (separate from any SDK repos), written in TypeScript — used purely to describe data structures/types clearly, not as code that gets executed.
+
+- Q: |
+    What are the two main categories of MCP messages?
+  A: |
+    Request-Result messages (paired: a request always expects a matching result back) and Notification messages (one-way, informing about an event with no response expected).
+
+- Q: |
+    Give four examples of MCP Request-Result message pairs.
+  A: |
+    Call Tool Request → Call Tool Result, List Prompts Request → List Prompts Result, Read Resource Request → Read Resource Result, Initialize Request → Initialize Result.
+
+- Q: |
+    Give four examples of MCP Notification messages.
+  A: |
+    Progress Notification, Logging Message Notification, Tool List Changed Notification, Resource Updated Notification.
+
+- Q: |
+    How does the MCP specification distinguish "client messages" from "server messages"?
+  A: |
+    Client messages are requests/notifications clients send to servers (e.g. tool calls); server messages are requests/notifications servers send to clients (e.g. sampling requests, progress updates).
+
+- Q: |
+    What is the key architectural insight about MCP being a "bidirectional protocol," and why does it matter for transport choice?
+  A: |
+    Both clients and servers can initiate communication — servers aren't limited to just responding. This matters because some transports (e.g. streamable HTTP) have limitations on which message directions they can support, so the transport must be chosen with this bidirectionality in mind.

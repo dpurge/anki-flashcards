@@ -1,0 +1,43 @@
+- Q: |
+    What three steps does a coding assistant follow when handling a task like fixing a bug from an error message?
+  A: |
+    1) Gather context — understand the error and which files/parts of the codebase are relevant. 2) Formulate a plan — decide how to fix it and how to verify the fix. 3) Take action — implement the change and run commands.
+
+- Q: |
+    Why do the "gather context" and "take action" steps require a coding assistant to interact with the outside world?
+  A: |
+    Because they involve reading files, fetching documentation, running commands, or editing code — actions outside of simply generating text, requiring the assistant to affect or read from the real environment.
+
+- Q: |
+    Mechanically, how does a coding assistant give a language model the ability to "read files" or "run commands" when the model only generates text?
+  A: |
+    It appends hidden instructions to the user's message teaching the model a formatted way to request an action (e.g. "respond with 'ReadFile: name of file'"); the assistant then parses that formatted response and actually performs the action.
+
+- Q: |
+    Name three benefits that strong tool-use ability gives an AI coding assistant like Claude Code.
+  A: |
+    1) It can tackle harder, multi-step tasks, combining tools and even using ones it hasn't seen before. 2) It's an extensible platform — new tools can be added and the model adapts to use them. 3) Better security — it can navigate a codebase without full indexing, often avoiding sending the entire codebase to external servers.
+
+- Q: |
+    How can Claude Code navigate and understand a codebase without indexing it first?
+  A: |
+    Its strong tool use lets it read files directly from the file system on demand as it works, rather than requiring the whole codebase to be pre-indexed or uploaded to an external server.
+
+- Q: |
+    What are the installation commands for Claude Code on macOS via Homebrew, and via curl on macOS/Linux/WSL?
+  A: |
+    Homebrew: `brew install --cask claude-code`. Curl (macOS/Linux/WSL): `curl -fsSL https://claude.ai/install.sh | bash`.
+  C: |
+    brew install --cask claude-code
+    # or
+    curl -fsSL https://claude.ai/install.sh | bash
+
+- Q: |
+    After installing Claude Code, what happens the first time you run the `claude` command?
+  A: |
+    You are prompted to authenticate.
+
+- Q: |
+    Why use git worktrees when running multiple Claude Code instances against the same repository?
+  A: |
+    Each worktree gives an isolated working directory checked out to its own branch, letting separate Claude Code instances work on different features (e.g. `.trees/feature_a`) in parallel without stepping on each other's uncommitted changes.

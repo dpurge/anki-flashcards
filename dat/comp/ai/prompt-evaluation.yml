@@ -1,0 +1,56 @@
+- Q: |
+    What are the five steps of a typical prompt-evaluation workflow?
+  A: |
+    1) Draft a prompt, 2) create an eval dataset, 3) feed the dataset through Claude, 4) feed Claude's outputs through a grader, 5) change the prompt and repeat.
+
+- Q: |
+    In a 1-10 prompt-eval scoring scale, what do a score of 10 and a score of 4 typically represent?
+  A: |
+    10 = a perfect answer with no room for improvement; 4 = an adequate answer that still has clear room for improvement. Lower scores indicate poor responses.
+
+- Q: |
+    What are the three main approaches to grading a model's output in a prompt evaluation?
+  A: |
+    Code graders (programmatic checks), model graders (another AI model assesses quality), and human graders (people manually review and score).
+
+- Q: |
+    What kinds of checks are code graders well suited for?
+  A: |
+    Checking output length, verifying presence/absence of certain words, syntax validation (e.g. parsing JSON/Python/regex output), and readability scoring.
+
+- Q: |
+    What qualities are model graders well suited for evaluating that code graders generally aren't?
+  A: |
+    More subjective qualities — response quality, instruction-following, completeness, helpfulness, and safety.
+
+- Q: |
+    What is the main downside of human grading, despite it being the most flexible grading approach?
+  A: |
+    It's time-consuming and tedious, making it hard to scale across many test cases.
+
+- Q: |
+    In a model-grader prompt, what four fields are commonly requested from the grading model, and in what order?
+  A: |
+    "strengths" (array), "weaknesses" (array), "reasoning" (string), then "score" (number) — in that order, so the model reasons about strengths and weaknesses before committing to a numeric score.
+
+- Q: |
+    How can code-based syntax validation be implemented for JSON, Python, or regex outputs?
+  A: |
+    Try to parse the output with the relevant library (`json.loads`, `ast.parse`, `re.compile`) inside a try/except; return a passing score on success and a failing score if a parse/syntax error is raised.
+  C: |
+    def validate_json(text):
+        try:
+            json.loads(text.strip())
+            return 10
+        except json.JSONDecodeError:
+            return 0
+
+- Q: |
+    How can you combine a model grader's score with a code-based syntax grader's score into one overall score for a test case?
+  A: |
+    Compute both scores independently, then average them: `score = (model_score + syntax_score) / 2`.
+
+- Q: |
+    What three fields does each result typically contain after running an evaluation dataset through an eval loop?
+  A: |
+    `output` (Claude's full response), `test_case` (the original task), and `score` (the evaluation score) — often alongside `reasoning` when using a model grader.

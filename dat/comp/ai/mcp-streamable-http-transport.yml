@@ -1,0 +1,64 @@
+- Q: |
+    What capability does the streamable HTTP transport give MCP that stdio doesn't?
+  A: |
+    It lets clients connect to a remotely hosted MCP server over an HTTP connection, rather than requiring client and server to run as a subprocess pair on the same machine — enabling public/remote MCP servers.
+
+- Q: |
+    Why is plain HTTP fundamentally awkward for full MCP communication?
+  A: |
+    HTTP is built around clients easily initiating requests to servers with known responses; servers cannot easily initiate requests to clients (clients have no known, reachable URL), which breaks any MCP feature that requires the server to talk first.
+
+- Q: |
+    Which MCP message types are difficult to support over plain HTTP, since they require the server to initiate communication?
+  A: |
+    Server-initiated requests (Create Message / sampling requests, List Roots requests) and notifications (Progress, Logging, Initialized, Cancelled).
+
+- Q: |
+    What core mechanism does StreamableHTTP use to work around HTTP's client-initiates-only limitation?
+  A: |
+    Server-Sent Events (SSE) — a long-lived HTTP response the client opens via a GET request, which the server can then use to stream messages to the client at any later time.
+
+- Q: |
+    What is the `mcp-session-id`, and when is it established?
+  A: |
+    A session identifier returned by the server in the Initialize Result during the handshake; the client includes it in its Initialized Notification and in all subsequent requests so the server can associate them with that client.
+
+- Q: |
+    Why does a StreamableHTTP tool call typically involve two separate SSE connections?
+  A: |
+    A Primary SSE Connection stays open indefinitely for server-initiated requests; a Tool-Specific SSE Connection is created per tool call and automatically closes once that tool's result is sent.
+
+- Q: |
+    Over StreamableHTTP's dual SSE connections, which connection carries progress notifications, and which carries logging messages and tool results?
+  A: |
+    Progress notifications go through the Primary SSE connection; logging messages and tool results go through the Tool-Specific SSE connection created for that call.
+
+- Q: |
+    What do the `stateless_http` and `json_response` configuration flags do in a StreamableHTTP MCP server, and what is their default?
+  A: |
+    `stateless_http` controls connection state management; `json_response` controls whether responses stream or return as one final JSON blob. Both default to `false`.
+
+- Q: |
+    What functionality breaks when `stateless_http=True` is set on a StreamableHTTP server?
+  A: |
+    Clients no longer get session IDs (can't be tracked individually), the GET SSE pathway (server-to-client requests) becomes unavailable, so sampling, progress reports, and subscription/update notifications all stop working. In exchange, the client no longer needs to perform the initial handshake.
+
+- Q: |
+    What functionality breaks when `json_response=True` is set on a StreamableHTTP server?
+  A: |
+    Streaming is disabled for POST responses — instead of intermediate SSE messages (progress, logs) as a tool runs, the client only receives the single final tool result as plain JSON.
+
+- Q: |
+    Why does enabling `stateless_http=True` matter for horizontally scaled deployments behind a load balancer?
+  A: |
+    Without it, a client's GET SSE connection and its POST tool-call requests might land on different server instances behind the load balancer, requiring complex coordination between instances (e.g. for sampling); stateless mode removes this coordination problem entirely by dropping server-to-client communication.
+
+- Q: |
+    When should you choose `stateless_http=True` for a StreamableHTTP MCP server?
+  A: |
+    When you need horizontal scaling with load balancers, don't need server-to-client communication, and your tools don't require AI-model sampling — trading away progress/logging/subscriptions/sampling for simpler, stateless scaling.
+
+- Q: |
+    Why should you test with the same transport you plan to use in production, rather than developing only against stdio and deploying with HTTP?
+  A: |
+    Behavior differs meaningfully between stateful and stateless HTTP modes (progress, logging, sampling, and server-initiated requests can silently stop working) — testing with the production transport catches these issues before deployment instead of after.

@@ -1,0 +1,109 @@
+- Q: |
+    What four things does effective subagent design come down to?
+  A: |
+    Writing good descriptions, defining an output format, reporting obstacles, and limiting tool access.
+
+- Q: |
+    Where do a subagent's name and description get used, and why does this matter for tuning when it's triggered?
+  A: |
+    They're included in the main agent's system prompt for every available subagent, which is how the main agent decides which subagent to launch and when — so tweaking the name/description is how you control automatic triggering.
+
+- Q: |
+    Besides controlling *when* a subagent is launched, what second role does its description field play?
+  A: |
+    The main agent uses the description as guidance when writing the input prompt that kicks off the subagent's task — so the description also shapes *what* the subagent is told to do.
+
+- Q: |
+    How does adding "You must tell the agent precisely which files you want it to review" to a code-review subagent's description change its behavior?
+  A: |
+    The main agent's launching prompt becomes much more specific — it will list the actual files to review, instead of writing a vague instruction like "use git diff to find the current changes."
+
+- Q: |
+    What is the single most important improvement you can make to a subagent's system prompt, according to subagent design best practices?
+  A: |
+    Defining a structured output format.
+
+- Q: |
+    What two problems does defining a structured output format in a subagent's system prompt solve?
+  A: |
+    It creates a natural stopping point (the subagent knows it's done once every section is filled in), and it prevents the subagent from running far longer than necessary since it no longer has to guess when enough research has been done.
+
+- Q: |
+    List the six sections of a well-structured code-review subagent output format.
+  A: |
+    Summary, Critical Issues, Major Issues, Minor Issues, Recommendations, and Approval Status.
+
+- Q: |
+    Why should a subagent's output format include an explicit "Obstacles Encountered" section?
+  A: |
+    So workarounds, environment quirks, and special command flags discovered during the task get reported back — without it, the main thread has to rediscover the same solutions itself, wasting time and tokens.
+
+- Q: |
+    Name four kinds of details that should be surfaced in a subagent's "Obstacles Encountered" output section.
+  A: |
+    Setup issues or environment quirks, workarounds discovered during the task, commands that needed special flags/configuration, and dependencies or imports that caused problems.
+
+- Q: |
+    What tool access is appropriate for a research/read-only subagent, and why?
+  A: |
+    Only Glob, Grep, and Read — so it cannot accidentally modify any files while exploring.
+
+- Q: |
+    What tool access is appropriate for a code-reviewer subagent?
+  A: |
+    Bash access (to run `git diff` and see what changed), but not Edit or Write — it should analyze changes, not make them.
+
+- Q: |
+    What tool access is appropriate for a styling/code-modification subagent, and why?
+  A: |
+    Edit and Write access, because its actual job is to change the code — unlike a reviewer or research subagent.
+
+- Q: |
+    List the four characteristics shared by effective subagents.
+  A: |
+    Specific descriptions (steering when it's launched and what it's told to do), structured output (a defined format so it knows when it's done), obstacle reporting (a dedicated output section for workarounds/quirks), and limited tool access (only the tools it actually needs).
+
+- Q: |
+    What single question should you ask to decide whether a task is a good fit for a subagent?
+  A: |
+    Does the intermediate work matter? If you just need the final result, delegate to a subagent; if you need to see and react to what happens along the way, keep it in the main thread.
+
+- Q: |
+    Why does investigating how authentication works in an unfamiliar codebase make a good subagent task?
+  A: |
+    The main thread only needs the final answer (e.g. where a JWT gets validated) — it doesn't need to see every file the subagent read or every function call it traced through along the way.
+
+- Q: |
+    Why does a code-review subagent often give better feedback than asking the main thread (which wrote the code) to review its own work?
+  A: |
+    Claude reviews code more effectively when it's presented as authored by someone else; the main thread, having been involved in writing the code, has trouble seeing it with fresh eyes, while a reviewer subagent sees only the diff in a separate context.
+
+- Q: |
+    Beyond fresh-eyes review, what additional benefit does putting code review in a separate subagent give a team?
+  A: |
+    Project-specific review standards can be encoded directly in the subagent's system prompt, ensuring consistent review criteria are applied every time, across the team.
+
+- Q: |
+    Why might a copywriting or styling task benefit from a custom subagent system prompt rather than Claude Code's default one?
+  A: |
+    Claude Code's default system prompt favors concise, code-focused responses, which is wrong for tasks like landing-page copy (needs tone/audience/voice instructions) or CSS styling (needs design-system files like color variables and spacing conventions loaded into context).
+
+- Q: |
+    Why do subagent prompts that claim expertise (e.g. "you are a Python expert") rarely help?
+  A: |
+    Claude already has that knowledge; an "expert" framing adds no capability the main thread doesn't already have, so the subagent overhead isn't justified.
+
+- Q: |
+    Why do sequential subagent pipelines (e.g. reproduce-bug → debug → fix, as three separate subagents) tend to fail?
+  A: |
+    They work only when each step is truly independent; bug fixing almost always requires each step to build on discoveries from the previous one, and that information gets lost in the handoff between separate subagent contexts.
+
+- Q: |
+    Why does using a subagent to run tests tend to hurt rather than help?
+  A: |
+    A subagent that just reports "tests failed" hides the full output needed to diagnose the failure, forcing you to write extra debug scripts to recover details you'd have seen directly — testing has shown this pattern performs worse than running tests directly.
+
+- Q: |
+    List three good use cases and three anti-patterns for Claude Code subagents.
+  A: |
+    Good: research/exploration, code reviews, tasks needing a custom system prompt. Avoid: "expert" personas with no added capability, multi-step pipelines where each step depends on the last, and running tests where full output is needed for debugging.

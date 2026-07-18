@@ -1,0 +1,51 @@
+- Q: |
+    What is MCP "sampling," at a high level?
+  A: |
+    A mechanism letting an MCP server access a language model like Claude through its connected client, by asking the client to make the LLM call on the server's behalf instead of calling Claude directly itself.
+
+- Q: |
+    What are the two options for letting an MCP server use Claude, and what does sampling replace?
+  A: |
+    Option 1: give the server its own API key and implement all Claude integration/auth/cost handling itself. Option 2 (sampling): the server asks the already-connected client to make the LLM call for it — sampling is the mechanism for option 2.
+
+- Q: |
+    What are the six steps of the MCP sampling flow?
+  A: |
+    1) Server completes its own work (e.g. fetching data), 2) server builds a prompt requesting text generation, 3) server sends a sampling request to the client, 4) client calls Claude with that prompt, 5) client returns the generated text to the server, 6) server uses that text in its response.
+
+- Q: |
+    Name four benefits of using sampling instead of giving an MCP server its own direct LLM access.
+  A: |
+    Reduces server complexity (no LLM integration code needed), shifts the cost burden to the client (client pays for tokens), removes the need for the server to hold API keys/credentials, and avoids a public server racking up unbounded AI costs for every user.
+
+- Q: |
+    Why is sampling especially important for publicly accessible MCP servers?
+  A: |
+    Without it, the server operator would bear the AI cost for every user's request; sampling makes each client responsible for paying for its own AI usage while still using the server's functionality.
+
+- Q: |
+    On the server side, what SDK function do you call inside a tool to request an LLM completion via sampling?
+  A: |
+    `ctx.session.create_message(...)`, passing a list of `SamplingMessage`s, a `max_tokens` limit, and optionally a `system_prompt`.
+  C: |
+    result = await ctx.session.create_message(
+        messages=[SamplingMessage(role="user", content=TextContent(type="text", text=prompt))],
+        max_tokens=4000,
+        system_prompt="You are a helpful research assistant",
+    )
+    if result.content.type == "text":
+        return result.content.text
+
+- Q: |
+    On the client side, what must you implement and register to support sampling requests from a server?
+  A: |
+    A sampling callback function (which calls Claude, e.g. via the Anthropic SDK, and returns a `CreateMessageResult`), passed to the client session as `sampling_callback` when the `ClientSession` is created.
+  C: |
+    async def sampling_callback(context, params):
+        text = await chat(params.messages)
+        return CreateMessageResult(role="assistant", model=model, content=TextContent(type="text", text=text))
+
+- Q: |
+    Where does the "AI integration complexity" actually end up when a server uses sampling instead of calling Claude directly?
+  A: |
+    It moves to the client, which typically already has the necessary connection and credentials to call Claude in place.

@@ -1,0 +1,229 @@
+- Q: |
+    What problem does the Model Context Protocol (MCP) solve?
+  A: |
+    It removes the manual bottleneck of copy-pasting data from external systems (repos, tickets, configs) into a chat interface so an AI model can reason about them — giving the AI direct, autonomous access to real-time data sources instead.
+
+- Q: |
+    What analogy is commonly used to explain what MCP is?
+  A: |
+    MCP is like USB-C for AI integrations — a single standardized protocol that lets any compatible host talk to any capability server, instead of building a custom one-off adapter for every data source.
+
+- Q: |
+    What are the three core roles in an MCP architecture?
+  A: |
+    Host (the AI application the user interacts with, e.g. Claude Desktop), Client (code inside the host that discovers servers, opens connections, and translates protocol messages), and Server (the separate process, built by the developer, that exposes capabilities).
+
+- Q: |
+    In MCP, what is the difference between the "client" and the "server"?
+  A: |
+    The client lives inside the host application and handles server discovery, connection setup, and protocol message translation. The server is a separate process the developer writes that actually exposes tools/resources/prompts to be called.
+
+- Q: |
+    What are the two main MCP transport mechanisms, and when is each used?
+  A: |
+    stdio (subprocess communication over stdin/stdout, no network overhead) for local development and desktop-app integrations; HTTP with Server-Sent Events (SSE) for remote servers, cloud deployments, or servers shared across a team.
+
+- Q: |
+    What are the three capability types an MCP server can expose?
+  A: |
+    Tools (actions with side effects or dynamic data fetches, e.g. "read this file"), Resources (structured, relatively static knowledge the LLM can reference, e.g. a list of open PRs), and Prompts (reusable instruction templates for standardized workflows).
+
+- Q: |
+    How do MCP Tools differ from MCP Resources?
+  A: |
+    Tools perform actions or fetch dynamic data and can have side effects (e.g. create a ticket). Resources expose relatively static, structured knowledge for the LLM to reference (e.g. a config file's contents) without invoking an action.
+
+- Q: |
+    What message protocol does MCP communication use, and what is the typical message sequence?
+  A: |
+    JSON-RPC 2.0. Typical sequence: initialize handshake → client requests the list of available tools → client invokes a specific tool with parameters → server executes the handler → server returns a structured result to the LLM.
+
+- Q: |
+    What is FastMCP?
+  A: |
+    A framework in the official MCP SDK for building MCP servers with minimal boilerplate — a working server can be just a few lines of Python creating a `FastMCP` app instance and calling `.run()`.
+
+- Q: |
+    How do you register a function as an MCP tool using FastMCP, and why does its docstring matter?
+  A: |
+    Decorate the handler function with `@app.tool()`. Its docstring becomes part of the schema sent to the LLM, so it must clearly and precisely describe the tool's purpose and parameters for correct invocation.
+  C: |
+    from mcp.server.fastmcp import FastMCP
+    app = FastMCP("github-reader")
+
+    @app.tool()
+    def read_github_file(repo: str, path: str) -> str:
+        """Read a file's contents from a GitHub repository."""
+        ...
+
+    if __name__ == "__main__":
+        app.run()
+
+- Q: |
+    How can an MCP server expose a dynamic resource without turning it into a tool-style call?
+  A: |
+    Use a URI template for the resource (e.g. `github://prs/{repo}`), letting the server extract parameters from the URI itself rather than requiring an explicit tool invocation with arguments.
+
+- Q: |
+    What is the recommended error-handling philosophy for MCP tool handlers, and why?
+  A: |
+    "Return errors, don't raise them" — return failures as readable text strings instead of letting exceptions propagate, because unhandled exceptions cause protocol-level failures that confuse the LLM or crash the conversation.
+
+- Q: |
+    Why should secrets and internal endpoints never appear in MCP tool descriptions or hardcoded in server code?
+  A: |
+    Tool descriptions and parameters are visible to the LLM, so any sensitive information written there (credentials, internal URLs) is effectively exposed to the model. Secrets should instead be injected via environment variables set in the server's config.
+
+- Q: |
+    Why does an MCP server need its own rate limiting even though it wraps an external API?
+  A: |
+    An LLM agent can loop and call a tool many times in rapid succession, which can blow through the external API's own quota; a simple mechanism like a deque-based per-minute limiter throttles calls before that happens.
+
+- Q: |
+    Why use structured (JSON) logging in an MCP server rather than plain text logs?
+  A: |
+    MCP servers often run inside multi-step agent loops, so logs need to be machine-readable to support systematic, automated debugging of what happened across a long chain of tool calls.
+
+- Q: |
+    What tool is recommended for testing an MCP server locally before wiring it into Claude Desktop?
+  A: |
+    The MCP Inspector, a browser-based tool (run via `npx @modelcontextprotocol/inspector`) that lets you see raw request/response traffic to and from the server.
+
+- Q: |
+    Where does Claude Desktop's MCP server config file live on macOS and Windows, and what must you do after editing it?
+  A: |
+    macOS: `~/Library/Application Support/Claude/`; Windows: `%APPDATA%\Claude\`. The file is `claude_desktop_config.json`, and you must restart Claude Desktop for config changes to take effect.
+
+- Q: |
+    What does a Claude Desktop MCP server config entry need to specify?
+  A: |
+    The absolute file path to the server script, the command/interpreter used to run it, and any environment variables the server needs (e.g. API tokens).
+
+- Q: |
+    Why should an MCP server expose few, focused tools rather than a large tool collection?
+  A: |
+    LLMs reason more reliably about a small set of well-described, focused capabilities than about an extensive tool collection, where overlapping or numerous options degrade tool-selection accuracy.
+
+- Q: |
+    Why add an optional "max lines" (or similar size-limiting) parameter to a data-fetching MCP tool?
+  A: |
+    Without a cap, a tool can return a response large enough to exhaust the LLM's context window; letting the caller bound the result size prevents that.
+
+- Q: |
+    Why append a version number to an MCP server's identifier when its schema changes?
+  A: |
+    Hosts can cache server/tool schemas; reusing the same server name after a breaking schema change can cause stale cached schemas to mismatch the server's actual behavior. Versioning the name avoids that caching mismatch.
+
+- Q: |
+    When should an MCP server move from stdio transport to HTTP/SSE transport?
+  A: |
+    stdio is sufficient for personal tools used only through a desktop app; move to HTTP/SSE once the server needs to be shared across a team or run as an always-on background service.
+
+- Q: |
+    What terminal command adds the Playwright MCP server to Claude Code, and what does it do?
+  A: |
+    `claude mcp add playwright npx @playwright/mcp@latest`, run outside Claude Code (in a regular terminal). It names the server "playwright" and provides the command that starts it locally on your machine.
+  C: |
+    claude mcp add playwright npx @playwright/mcp@latest
+
+- Q: |
+    What capability does the Playwright MCP server give Claude Code?
+  A: |
+    Control of a real web browser, enabling browser-driven web development and testing workflows (e.g. taking snapshots, clicking elements).
+
+- Q: |
+    How do you stop Claude Code from asking for permission every time it uses an MCP server's tools?
+  A: |
+    Add the server's name — prefixed with `mcp__` — to the `allow` array in `.claude/settings.local.json`'s permissions config (e.g. `"mcp__playwright"`).
+  C: |
+    {
+      "permissions": {
+        "allow": ["mcp__playwright"],
+        "deny": []
+      }
+    }
+
+- Q: |
+    How does using an MCP Server differ from calling an external service's API directly?
+  A: |
+    An MCP Server already provides pre-built tool schemas and functions for that service; calling the API directly means you write those tool definitions and all the integration code yourself.
+
+- Q: |
+    Are MCP Servers and "tool use" the same thing?
+  A: |
+    No — they're complementary but different. Tool use is the mechanism by which Claude calls tools; MCP is about who builds and maintains the tool implementations (a specialized server, instead of you).
+
+- Q: |
+    What does it mean that MCP is "transport agnostic"?
+  A: |
+    The MCP client and server can communicate over multiple mechanisms — most commonly local stdin/stdout on the same machine, but also HTTP, WebSockets, or other network protocols.
+
+- Q: |
+    What are the two core request/result message pairs an MCP client exchanges with a server?
+  A: |
+    `ListToolsRequest`/`ListToolsResult` (asks what tools the server provides) and `CallToolRequest`/`CallToolResult` (invokes a specific tool with arguments and gets the result).
+
+- Q: |
+    In a real-world MCP project, do you typically implement both an MCP client and an MCP server?
+  A: |
+    No — typically just one: an MCP server to expose your own service's capabilities to AI models, or an MCP client to connect to existing MCP servers built by others.
+
+- Q: |
+    Using the Python MCP SDK's FastMCP, how do `Field()` defaults in a tool function's parameters help Claude?
+  A: |
+    They attach a description to each parameter, which becomes part of the tool schema Claude sees — helping it understand what value to supply and why, without you hand-writing the JSON schema.
+  C: |
+    @mcp.tool(name="add_ints", description="Add two integers together")
+    def tool_fn(
+        a=Field(description="First number to add"),
+        b=Field(description="Second number to add"),
+    ) -> int:
+        return a + b
+
+- Q: |
+    How do you start the MCP Inspector for a Python MCP server built with the SDK, and what is it for?
+  A: |
+    Run `mcp dev mcp_server.py` (or `uv run mcp dev mcp_server.py`); it opens a local browser-based tool for testing individual tools/resources/prompts with real inputs, without needing a full client application.
+
+- Q: |
+    What is an MCP "resource," and what is it analogous to in a typical web server?
+  A: |
+    A read-only data endpoint exposed by an MCP server, analogous to a GET request handler — used for fetching data (any type: text, JSON, binary) rather than performing an action.
+
+- Q: |
+    What is the difference between a "direct" and a "templated" MCP resource?
+  A: |
+    A direct resource has a static URI with no parameters (e.g. `"docs://documents"`); a templated resource embeds parameters in its URI (e.g. `"docs://documents/{doc_id}"`) that the SDK parses and passes to your function as keyword arguments.
+  C: |
+    @mcp.resource("docs://documents", mime_type="application/json")
+    def list_docs() -> list[str]:
+        return list(docs.keys())
+
+    @mcp.resource("docs://documents/{doc_id}", mime_type="text/plain")
+    def fetch_doc(doc_id: str) -> str:
+        return docs[doc_id]
+
+- Q: |
+    Why are MCP resources well suited to implementing "@"-mention autocomplete features in a chat app?
+  A: |
+    A direct resource can list all available items for autocomplete, and a templated resource can fetch a specific item's contents by ID — letting content be injected directly into the prompt, without Claude needing to call a tool to fetch it.
+
+- Q: |
+    What is an MCP "prompt," and what does it return?
+  A: |
+    A pre-built, reusable instruction template defined on the server; when a client requests it (optionally with arguments interpolated in), the server returns a ready-to-send list of user/assistant messages.
+
+- Q: |
+    According to the "MCP review" model/app/user-controlled framing, who controls each of the three MCP primitives?
+  A: |
+    Tools — Model-controlled (Claude decides when to call them). Resources — App-controlled (your application code decides when to fetch them). Prompts — User-controlled (triggered by explicit user action, e.g. a slash command).
+
+- Q: |
+    When should you reach for an MCP resource instead of a tool?
+  A: |
+    When the goal is getting data into your app for UI or context purposes (e.g. autocomplete lists, injecting content before sending to Claude) rather than letting Claude decide dynamically whether to fetch something.
+
+- Q: |
+    When should you reach for an MCP prompt instead of a plain user-typed message?
+  A: |
+    When you want to offer users a predefined, well-tested workflow they can trigger on demand (e.g. via a slash command) instead of relying on them to write an effective prompt themselves.

@@ -1,0 +1,42 @@
+- Q: |
+    What is an MCP "transport," and what role does it play relative to MCP's JSON messages?
+  A: |
+    The communication channel that actually transmits the JSON messages between client and server — e.g. stdio, HTTP, or WebSockets. MCP defines the message content; the transport defines how those messages physically move.
+
+- Q: |
+    How does the stdio transport work, and what is its one hard requirement?
+  A: |
+    The client launches the MCP server as a subprocess; the client writes messages to the server's stdin, and the server writes responses to stdout. It only works when client and server run on the same machine.
+
+- Q: |
+    How can you test an MCP server built with the stdio transport without writing a separate client?
+  A: |
+    Run the server directly (e.g. `uv run server.py`) and paste JSON messages straight into the terminal — since the server reads from stdin and writes to stdout, you see its responses immediately.
+  C: |
+    if __name__ == "__main__":
+        mcp.run(transport="stdio")
+
+- Q: |
+    What are the three messages in the mandatory MCP connection handshake, and in what order do they occur?
+  A: |
+    1) Initialize Request (client sends first), 2) Initialize Result (server responds with its capabilities), 3) Initialized Notification (client confirms; no response expected).
+
+- Q: |
+    Can other MCP requests (like tool calls) be sent before the Initialize/Initialized handshake completes?
+  A: |
+    No — the three-message handshake must complete first; only afterward can other requests like tool calls or prompt listings be sent.
+
+- Q: |
+    What are the four communication scenarios any MCP transport must support, given that MCP is bidirectional?
+  A: |
+    Client→Server request, Server→Client response, Server→Client request, and Client→Server response — over stdio, all four just map onto writes to stdin (client-originated) or stdout (server-originated).
+
+- Q: |
+    Why is stdio transport described as the "ideal case" or baseline for understanding full MCP communication?
+  A: |
+    Because it supports seamless bidirectional communication — either party can write to its output stream at any time — unlike other transports (e.g. HTTP) where the server cannot always freely initiate requests to the client.
+
+- Q: |
+    When is stdio transport the right choice, and when should you consider a different transport instead?
+  A: |
+    Stdio is ideal for local development, testing, and desktop-app integrations; when client and server must run on different machines for production deployment, a network-capable transport (like streamable HTTP) is needed instead.

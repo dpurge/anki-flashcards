@@ -1,0 +1,45 @@
+- Q: |
+    What built-in tool does Claude support that lets it view, edit, create, and undo edits to files without you implementing the tool's logic yourself?
+  A: |
+    The text editor tool (`str_replace_editor`).
+
+- Q: |
+    What capabilities does Claude's built-in text editor tool provide?
+  A: |
+    Viewing a file or directory's contents (including specific line ranges), replacing text in a file, creating new files, inserting text at specific lines, and undoing recent edits.
+
+- Q: |
+    Even though the text editor tool's schema is built into Claude, what do you still need to provide?
+  A: |
+    The actual implementation of the file operations, plus a small schema stub identifying the tool type/name — the exact type string depends on the Claude model version (e.g. `"text_editor_20250124"` for Claude 3.7 Sonnet vs `"text_editor_20241022"` for Claude 3.5 Sonnet).
+
+- Q: |
+    What does Claude do with the small text-editor schema stub you provide?
+  A: |
+    Automatically expands it internally into the full, detailed tool specification covering all supported parameters and operations.
+
+- Q: |
+    What is different about implementing Claude's built-in web search tool compared to a custom tool?
+  A: |
+    You don't implement any search logic yourself — Claude handles the entire search process; you only supply a small schema object to enable it.
+  C: |
+    web_search_schema = {
+        "type": "web_search_20250305",
+        "name": "web_search",
+        "max_uses": 5
+    }
+
+- Q: |
+    What does the `max_uses` field do in a web search tool schema, and why is it needed?
+  A: |
+    Limits how many searches Claude can perform for one request, since Claude may run follow-up searches based on initial results — this caps excessive API/search usage.
+
+- Q: |
+    How do you restrict Claude's built-in web search tool to specific trusted domains?
+  A: |
+    Add an `allowed_domains` field to the web search tool schema, e.g. `"allowed_domains": ["nih.gov"]`.
+
+- Q: |
+    Name the five block types that can appear in a response using Claude's web search tool.
+  A: |
+    TextBlock (Claude's explanation), ServerToolUseBlock (the exact search query used), WebSearchToolResultBlock (the results container), WebSearchResultBlock (individual results with titles/URLs), and CitationsWebSearchResultLocation (specific citations supporting Claude's statements).

@@ -1,0 +1,17 @@
+- Q: |
+    What is the "computer use" tool schema type for Claude, and what parameters does it require?
+  A: |
+    A versioned type like `"computer_20250124"` with `name: "computer"`, plus `display_width_px`, `display_height_px`, and `display_number`, describing the virtual screen Claude will control.
+  C: |
+    {
+      "type": "computer_20250124",
+      "name": "computer",
+      "display_width_px": 1024,
+      "display_height_px": 768,
+      "display_number": 1
+    }
+
+- Q: |
+    Where does Claude's "computer use" tool typically run, and why?
+  A: |
+    Inside a container (e.g. via Docker), so that Claude's interactions with a virtual desktop/screen are sandboxed and isolated from the host machine.

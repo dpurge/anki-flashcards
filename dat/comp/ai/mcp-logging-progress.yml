@@ -1,0 +1,43 @@
+- Q: |
+    What user experience problem do MCP logging and progress notifications solve?
+  A: |
+    Without them, users see nothing while a long-running tool call executes, leaving them unsure whether the operation is working or has stalled; with them, users get real-time status messages and progress updates during execution.
+
+- Q: |
+    In the Python MCP SDK, how does a tool function gain the ability to send logging/progress notifications?
+  A: |
+    Through the `Context` argument automatically provided to tool functions — it exposes methods to communicate back to the client during execution.
+
+- Q: |
+    What are the two key `Context` methods used for logging and progress notifications inside an MCP tool?
+  A: |
+    `context.info()` — sends a log message to the client. `context.report_progress(current, total)` — updates progress with current and total values.
+  C: |
+    @mcp.tool(name="research", description="Research a given topic")
+    async def research(topic: str, *, context: Context):
+        await context.info("About to do research...")
+        await context.report_progress(20, 100)
+        sources = await do_research(topic)
+        await context.info("Writing report...")
+        await context.report_progress(70, 100)
+        return await generate_report(sources)
+
+- Q: |
+    On the client side, what two separate callbacks handle MCP logging and progress notifications, and where is each registered?
+  A: |
+    A logging callback (registered as `logging_callback` when creating the `ClientSession`) and a progress callback (passed as `progress_callback` to an individual `session.call_tool()` call).
+
+- Q: |
+    Who decides how MCP logging/progress notifications actually get displayed to the user?
+  A: |
+    The client application — the server just emits the messages/progress updates; it's entirely up to the client to decide how (or whether) to present them.
+
+- Q: |
+    Give an example of how logging/progress notifications might be presented differently across application types.
+  A: |
+    CLI apps can simply print messages/progress to the terminal; web apps can push updates via WebSockets/SSE/polling; desktop apps can update progress bars and status displays in the UI.
+
+- Q: |
+    Are implementing MCP logging and progress notifications required for a working tool?
+  A: |
+    No — they're entirely optional UX enhancements; a client can ignore them completely, show only some types, or present them however fits the application, without affecting the tool's core functionality.

@@ -1,0 +1,88 @@
+- Q: |
+    What are Claude Code hooks?
+  A: |
+    Commands that run automatically before or after Claude calls a tool, letting you insert your own logic into the tool-execution flow — e.g. auto-formatting after edits, running tests on file change, or blocking access to specific files.
+
+- Q: |
+    What are the two core Claude Code hook types, and when does each fire?
+  A: |
+    `PreToolUse` — runs before a tool is executed. `PostToolUse` — runs after a tool has been executed.
+
+- Q: |
+    Why can a PostToolUse hook not block the tool call it's attached to?
+  A: |
+    Because the tool has already executed by the time a PostToolUse hook runs; it can only trigger follow-up actions or give Claude feedback, not prevent what already happened.
+
+- Q: |
+    Where can Claude Code hooks be configured, and what is the scope of each location?
+  A: |
+    `~/.claude/settings.json` (global, all projects), `.claude/settings.json` (project, shared with the team), `.claude/settings.local.json` (project, personal, not committed).
+
+- Q: |
+    In a Claude Code hook config, what does the `matcher` field control?
+  A: |
+    Which tool name(s) trigger the hook — a single tool name, or multiple joined with `|` as an OR (e.g. `"Write|Edit|MultiEdit"`).
+  C: |
+    "PreToolUse": [
+      {
+        "matcher": "Read",
+        "hooks": [{ "type": "command", "command": "node /home/hooks/read_hook.ts" }]
+      }
+    ]
+
+- Q: |
+    What input does a Claude Code hook command receive, and how?
+  A: |
+    JSON describing the tool call — session_id, transcript_path, hook_event_name, tool_name, tool_input, and (for PostToolUse) tool_response — piped to the command via standard input.
+
+- Q: |
+    What do exit codes 0 and 2 mean for a PreToolUse hook command, and what happens with code 2?
+  A: |
+    0 allows the tool call to proceed. 2 blocks it (PreToolUse only); anything the command writes to stderr alongside exit code 2 is sent to Claude as the reason the operation was blocked.
+
+- Q: |
+    Besides PreToolUse and PostToolUse, name four other Claude Code hook event types.
+  A: |
+    Notification, Stop, SubagentStop, PreCompact (also UserPromptSubmit, SessionStart, SessionEnd).
+
+- Q: |
+    When does a Claude Code Notification hook fire?
+  A: |
+    When Claude Code needs permission to use a tool, or after it has been idle for 60 seconds.
+
+- Q: |
+    Why should Claude Code hook scripts be referenced by absolute path rather than relative path?
+  A: |
+    To mitigate path interception and binary-planting attacks — but absolute paths differ per developer's machine, which complicates sharing settings files across a team.
+
+- Q: |
+    How can a team share a settings.json containing absolute hook paths despite each developer having the project in a different directory?
+  A: |
+    Use a `settings.example.json` with a `$PWD` placeholder in the script paths; a setup script (run e.g. via `npm run setup`) replaces `$PWD` with the real absolute path and writes the result out as `settings.local.json`.
+
+- Q: |
+    How can you inspect the exact JSON payload a Claude Code hook of a given type will receive, before writing real hook logic?
+  A: |
+    Add a temporary hook with matcher `"*"` whose command pipes stdin through `jq . > post-log.json`, capturing the real payload to a file for inspection.
+  C: |
+    "PostToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [{ "type": "command", "command": "jq . > post-log.json" }]
+      }
+    ]
+
+- Q: |
+    What real-world problem does a TypeScript type-checking PostToolUse hook solve?
+  A: |
+    Claude often updates a function's signature but misses updating some of its call sites elsewhere in the project; running `tsc --noEmit` after every file edit and feeding any errors back to Claude prompts it to immediately fix the missed call sites.
+
+- Q: |
+    What problem does a "query duplication prevention" hook address, and how does it work?
+  A: |
+    Claude sometimes reimplements an existing database query instead of reusing it. The hook triggers on edits to the queries directory, launches a second Claude Code instance to review the change against existing queries for duplicates, and feeds any findings back to the original instance to prompt cleanup.
+
+- Q: |
+    What is the main cost trade-off of a hook that spawns a second Claude Code instance for review, like the query-duplication hook?
+  A: |
+    Extra time and API usage for every triggered edit — such hooks are best scoped to only the most critical directories to limit overhead.

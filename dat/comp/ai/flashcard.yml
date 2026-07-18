@@ -53,3 +53,55 @@ data:
     tags: ['observability']
   - filename: ./clean-state-handoff.yml
     tags: ['clean-state-handoff']
+  - filename: ./mcp-servers.yml
+    tags: ['mcp-servers']
+  - filename: ./claude-code-fundamentals.yml
+    tags: ['claude-code-fundamentals']
+  - filename: ./claude-code-context-management.yml
+    tags: ['claude-code-context-management']
+  - filename: ./claude-code-custom-commands.yml
+    tags: ['claude-code-custom-commands']
+  - filename: ./claude-code-github-actions.yml
+    tags: ['claude-code-github-actions']
+  - filename: ./claude-code-hooks.yml
+    tags: ['claude-code-hooks']
+  - filename: ./claude-code-sdk.yml
+    tags: ['claude-code-sdk']
+  - filename: ./claude-api-vertex-basics.yml
+    tags: ['claude-api-vertex-basics']
+  - filename: ./prompt-evaluation.yml
+    tags: ['prompt-evaluation']
+  - filename: ./tool-use-fundamentals.yml
+    tags: ['tool-use-fundamentals']
+  - filename: ./claude-built-in-tools.yml
+    tags: ['claude-built-in-tools']
+  - filename: ./rag-chunking.yml
+    tags: ['rag-chunking']
+  - filename: ./rag-retrieval-and-reranking.yml
+    tags: ['rag-retrieval-and-reranking']
+  - filename: ./claude-extended-thinking.yml
+    tags: ['claude-extended-thinking']
+  - filename: ./claude-vision-documents-citations.yml
+    tags: ['claude-vision-documents-citations']
+  - filename: ./prompt-caching.yml
+    tags: ['prompt-caching']
+  - filename: ./anthropic-computer-use.yml
+    tags: ['anthropic-computer-use']
+  - filename: ./anthropic-agent-workflow-patterns.yml
+    tags: ['anthropic-agent-workflow-patterns']
+  - filename: ./claude-code-subagents-basics.yml
+    tags: ['claude-code-subagents-basics']
+  - filename: ./claude-code-subagents-design.yml
+    tags: ['claude-code-subagents-design']
+  - filename: ./mcp-sampling.yml
+    tags: ['mcp-sampling']
+  - filename: ./mcp-logging-progress.yml
+    tags: ['mcp-logging-progress']
+  - filename: ./mcp-roots.yml
+    tags: ['mcp-roots']
+  - filename: ./mcp-message-types.yml
+    tags: ['mcp-message-types']
+  - filename: ./mcp-stdio-transport.yml
+    tags: ['mcp-stdio-transport']
+  - filename: ./mcp-streamable-http-transport.yml
+    tags: ['mcp-streamable-http-transport']

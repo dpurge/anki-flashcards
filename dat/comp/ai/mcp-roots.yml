@@ -1,0 +1,34 @@
+- Q: |
+    What are MCP "roots," at a high level?
+  A: |
+    A mechanism for granting an MCP server access to specific files/folders on the local machine — both a permission boundary and a way for Claude to discover where files actually live without the user typing full paths.
+
+- Q: |
+    What problem do roots solve when a user asks Claude to act on a file by name only (e.g. "convert biking.mp4 to mov")?
+  A: |
+    Claude has no way to search the entire file system for that filename on its own; without roots, the user would have to type out the full path themselves, which isn't user-friendly.
+
+- Q: |
+    What are the three steps Claude takes to locate a file using roots, once a user references it by name?
+  A: |
+    1) Call `list_roots` to see which directories it's allowed to access, 2) call `read_dir` on those accessible directories to find the matching file, 3) call the actual tool (e.g. the conversion tool) with the full path once found.
+
+- Q: |
+    What happens if Claude tries to access a file outside the approved roots?
+  A: |
+    It gets an error, and can inform the user that the file isn't accessible from the current server configuration.
+
+- Q: |
+    Does the MCP SDK automatically enforce root restrictions?
+  A: |
+    No — you must implement the enforcement yourself, typically via a helper function that checks whether a requested path falls within an approved root before performing any file operation.
+
+- Q: |
+    What does a typical `is_path_allowed()` helper function do to enforce root restrictions?
+  A: |
+    Takes a requested file path, gets the list of approved roots, checks whether that path falls within one of those roots, and returns true/false — called before any tool performs a file operation.
+
+- Q: |
+    Name the four key benefits of using roots in an MCP server.
+  A: |
+    User-friendly (no full paths required), focused search (Claude only looks in approved directories, faster discovery), security (prevents access outside approved areas), and flexibility (roots can be provided via tools or injected directly into prompts).

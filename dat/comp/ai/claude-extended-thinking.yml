@@ -1,0 +1,42 @@
+- Q: |
+    What's the recommended order of operations before enabling extended thinking for a prompt?
+  A: |
+    First write and test the prompt without extended thinking and run evaluations to measure accuracy; only enable extended thinking if results still aren't meeting your standards after prompt-optimization efforts.
+
+- Q: |
+    What two distinct content blocks appear in an assistant message when extended thinking is enabled?
+  A: |
+    A thinking block (Claude's reasoning process) and a text block (the final response).
+
+- Q: |
+    What is the purpose of the cryptographic signature attached to each thinking block?
+  A: |
+    It verifies the thinking text hasn't been modified/tampered with when that message is included again in later conversation turns.
+
+- Q: |
+    What is a "redacted thinking block," and why does it occur?
+  A: |
+    A block returned instead of raw thinking text when Claude's internal reasoning gets flagged by internal safety systems; the actual thinking text is still present but in encrypted form.
+
+- Q: |
+    Why should you still include a redacted thinking block in future conversation turns even though you can't read its contents?
+  A: |
+    So Claude doesn't lose the context of its previous reasoning — omitting it would break continuity even though the content itself is unreadable to you.
+
+- Q: |
+    What is the minimum allowed "thinking budget" for extended thinking, and what constraint applies to `max_tokens`?
+  A: |
+    Minimum thinking budget is 1024 tokens; `max_tokens` must exceed the thinking budget (e.g. if the budget is 1024, `max_tokens` must be at least 1025).
+
+- Q: |
+    What does the thinking budget parameter actually control?
+  A: |
+    The maximum number of tokens Claude is allowed to spend on its internal reasoning process before producing the final response.
+  C: |
+    if thinking:
+        params["thinking"] = {"type": "enabled", "budget": thinking_budget}
+
+- Q: |
+    How can you deliberately trigger a redacted thinking response during development, to test your app's handling of it?
+  A: |
+    Include the special trigger string `TRIGGER_REDACTED_THINKING_46C9A13E193C177646C7398A98432ECCCE4C1253D5E2D82641AC0E52CC2876CB` in your message.

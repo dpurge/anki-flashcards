@@ -1,0 +1,94 @@
+- Q: |
+    What is a text embedding?
+  A: |
+    A numerical (vector) representation of the meaning contained in a piece of text, allowing computers to compare meaning mathematically.
+
+- Q: |
+    Can Claude generate text embeddings directly?
+  A: |
+    No — embeddings require a separate specialized embedding model (e.g. Vertex AI's `text-embedding-005`), not the Claude chat model itself.
+
+- Q: |
+    In the RAG flow, what happens to embeddings before they're stored in a vector database?
+  A: |
+    They're normalized — scaled so each vector has a magnitude of 1.0 — typically handled automatically by the embedding API.
+
+- Q: |
+    How does a vector database measure similarity between two embeddings, and what do values of 1.0, 0.0, and -1.0 mean?
+  A: |
+    It computes cosine similarity (the cosine of the angle between vectors). 1.0 = same direction/very similar, 0.0 = perpendicular/unrelated, -1.0 = opposite/very different.
+
+- Q: |
+    What is "cosine distance," and how does it relate to cosine similarity?
+  A: |
+    cosine distance = 1 − cosine similarity, which flips the scale so smaller numbers mean more similar (0.0 = very similar, 1.0 = perpendicular, 2.0 = completely opposite).
+
+- Q: |
+    Why is it necessary to store the original chunk text alongside its embedding in a vector database, rather than just the embedding?
+  A: |
+    Embeddings are just arrays of numbers with no direct meaning to humans — the original text is needed to understand what was actually retrieved and to use it when generating the final response.
+
+- Q: |
+    Why might pure semantic (embedding-based) search fail to find a chunk containing a specific, exact search term?
+  A: |
+    Semantic search matches on meaning rather than exact wording, so a chunk can be semantically similar to the query yet lack the specific term the user actually needs — a limitation exact-term (lexical) search doesn't have.
+
+- Q: |
+    What is BM25, and what problem does it solve in a RAG pipeline?
+  A: |
+    A lexical (keyword) search algorithm; it solves the exact-term-matching gap left by semantic search by finding chunks containing the specific, rarer terms from the query.
+
+- Q: |
+    What are the four key steps of the BM25 algorithm?
+  A: |
+    1) Tokenize the query into individual terms, 2) count how often each term appears across all documents, 3) weight terms by rarity (rarer terms score higher), 4) return the chunks containing the most instances of the highest-weighted terms.
+
+- Q: |
+    What is the "hybrid search" approach in RAG, and why use it?
+  A: |
+    Running semantic search and BM25 lexical search in parallel and merging their results, combining meaning-based matching with exact-term matching for better retrieval coverage than either alone.
+
+- Q: |
+    Why can't you simply add together a vector search's cosine similarity score and a BM25 lexical search's relevance score to merge results?
+  A: |
+    The two scoring systems are on different, incompatible scales — a cosine similarity and a BM25 relevance score are not directly comparable numbers.
+
+- Q: |
+    What is Reciprocal Rank Fusion (RRF), and what does it operate on instead of raw scores?
+  A: |
+    A technique for merging results from different search methods using each result's rank position (not its raw score) in each individual result list: `RRF_score(d) = Σ(1 / (k + rank_i(d)))`, summed across all search methods.
+
+- Q: |
+    In the Reciprocal Rank Fusion formula, what role does the constant `k` play?
+  A: |
+    It dampens the influence of rank differences — a typical value is 60, though smaller values (e.g. 1) make the effect of rank position more pronounced.
+
+- Q: |
+    What consistent interface makes it easy to combine a semantic (vector) index and a BM25 index inside one `Retriever` class?
+  A: |
+    Both implement the same `add_document()` and `search()` methods, so the `Retriever` can forward calls to any number of underlying indexes and merge their results uniformly — including future index types.
+
+- Q: |
+    What is "reranking" in a RAG pipeline, and where does it fit relative to hybrid search?
+  A: |
+    An extra step after hybrid search runs and merges its vector/BM25 results — the merged candidates are passed to an LLM (e.g. Claude) with a reranking prompt that selects and reorders the top-k most relevant documents.
+
+- Q: |
+    What are the main trade-offs of adding an LLM reranking step to RAG retrieval?
+  A: |
+    Improved accuracy (the LLM understands context/intent better than similarity scores alone), at the cost of increased latency (an extra LLM call) and added cost (each search now requires an API call).
+
+- Q: |
+    What is "contextual retrieval," and what problem does it solve?
+  A: |
+    A preprocessing step where each chunk is sent to Claude along with its source document, and Claude generates a short snippet situating that chunk within the larger document; the resulting contextualized chunk (context + original text) is indexed, helping retrieval succeed even when a chunk alone lacks the context needed to know it's relevant.
+
+- Q: |
+    When a source document is too large to fit in Claude's context window for contextual retrieval, what reduced context can you provide instead of the whole document?
+  A: |
+    A few chunks from the start of the document (often containing summaries/abstracts) plus the chunks immediately preceding the one being contextualized.
+
+- Q: |
+    For which kinds of documents is contextual retrieval most valuable?
+  A: |
+    Documents with complex internal relationships between sections, where chunks reference concepts defined elsewhere — e.g. technical documents, reports, or academic papers where structure matters for accurate retrieval.

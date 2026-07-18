@@ -1,0 +1,72 @@
+- Q: |
+    What problem does Claude's prompt caching feature solve?
+  A: |
+    It avoids redoing the same preprocessing work (tokenizing, embedding, contextualizing input) on every request by saving that work to a cache and reusing it when the same content appears again, making responses faster and cheaper.
+
+- Q: |
+    What preprocessing steps does Claude normally perform on input before generating output?
+  A: |
+    Tokenizing the prompt, creating embeddings for each token, and adding context based on surrounding text — only after that does it generate output text.
+
+- Q: |
+    How long does a Claude prompt cache entry live?
+  A: |
+    5 minutes.
+
+- Q: |
+    What is required for a follow-up request to actually hit the cache?
+  A: |
+    The cached content (everything up to and including the cache breakpoint) must be byte-for-byte identical to what was originally cached — even a single character change invalidates it.
+
+- Q: |
+    How do you mark a point in a message for caching, and why can't you do this with the shorthand string form of a message?
+  A: |
+    Add a `"cache_control": {"type": "ephemeral"}` field to a content block; this requires the longhand array-of-blocks form for `content`, since the shorthand plain-string form has nowhere to attach the field.
+  C: |
+    user_message = {
+      "role": "user",
+      "content": [
+        {"type": "text", "text": "...", "cache_control": {"type": "ephemeral"}}
+      ]
+    }
+
+- Q: |
+    Besides message text blocks, what other two parts of a request are common — and often the most valuable — places to add cache breakpoints?
+  A: |
+    System prompts and tool definitions — they rarely change between requests, making them ideal, high-value caching targets.
+
+- Q: |
+    How many cache breakpoints can a single request have at most?
+  A: |
+    Four.
+
+- Q: |
+    What is the minimum content length required for a block to be eligible for caching?
+  A: |
+    1024 tokens (summed across the blocks being cached).
+
+- Q: |
+    In what order are tools, system prompt, and messages joined together when sent to Claude, and why does this matter for caching?
+  A: |
+    Tools, then system prompt, then messages — a breakpoint placed on the last tool only caches everything up through the tools, not the system prompt or messages that follow it, so breakpoint placement determines exactly what gets cached.
+
+- Q: |
+    How do you add a cache breakpoint to a list of tool schemas without mutating the original tool definitions?
+  A: |
+    Make a shallow copy of the tools list and of the last tool's dict, add `"cache_control": {"type": "ephemeral"}` to the copied last tool, and use the copied list in the request — leaving the original tool objects unmodified.
+  C: |
+    tools_clone = tools.copy()
+    last_tool = tools_clone[-1].copy()
+    last_tool["cache_control"] = {"type": "ephemeral"}
+    tools_clone[-1] = last_tool
+    params["tools"] = tools_clone
+
+- Q: |
+    What do the usage fields `cache_creation_input_tokens` and `cache_read_input_tokens` represent?
+  A: |
+    `cache_creation_input_tokens` = tokens written to the cache on the request that first creates it; `cache_read_input_tokens` = tokens read from an existing cache entry on a subsequent matching request.
+
+- Q: |
+    Can a single request show both `cache_creation_input_tokens` and `cache_read_input_tokens`?
+  A: |
+    Yes — e.g. if tool schemas stay the same (read from cache) but the system prompt changes (written fresh to cache), both appear in the same response's usage.

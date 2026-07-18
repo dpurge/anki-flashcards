@@ -1,0 +1,81 @@
+- Q: |
+    What are the four steps of the tool-use interaction pattern with Claude?
+  A: |
+    1) Initial request — you send a question plus tool schemas, 2) Tool request — Claude decides it needs more info and asks for a specific tool call, 3) Data retrieval — your code executes the tool to fetch the data, 4) Final response — you send the tool's result back to Claude, which generates a complete answer using it.
+
+- Q: |
+    Name four key benefits tool use gives Claude.
+  A: |
+    Real-time information access, integration with external systems (databases/APIs), dynamic up-to-date responses, and structured interaction — Claude knows exactly what information it needs and how to request it.
+
+- Q: |
+    What fields make up a tool schema (`ToolParam`) passed to the Messages API?
+  A: |
+    `name`, `description`, and `input_schema` — a JSON Schema object defining `properties` (with types/descriptions) and which fields are `required`.
+
+- Q: |
+    What two block types typically appear in an assistant message when Claude decides to use a tool?
+  A: |
+    A Text block (human-readable explanation of what Claude is about to do) and a ToolUse block (the tool name, an ID, and input parameters to call it with).
+
+- Q: |
+    What four pieces of information does a ToolUse content block include?
+  A: |
+    An ID for tracking the call, the function name to call, input parameters formatted per the JSON schema, and the type designation `"tool_use"`.
+
+- Q: |
+    What fields must a `tool_result` content block include when you send a tool's output back to Claude?
+  A: |
+    `tool_use_id` (must match the originating ToolUse block's ID), `content` (the tool's output, as a string), and `is_error` (true if the tool call failed).
+  C: |
+    {
+      "type": "tool_result",
+      "tool_use_id": tool_request.id,
+      "content": json.dumps(tool_output),
+      "is_error": False
+    }
+
+- Q: |
+    Why must a follow-up request that includes a `tool_result` also re-include the original tool schema(s)?
+  A: |
+    Because Claude needs the schema again to correctly interpret the tool references already present in the conversation history.
+
+- Q: |
+    How does your code detect that Claude wants to call a tool rather than that it has finished responding?
+  A: |
+    Check the response's `stop_reason` field — it equals `"tool_use"` when Claude wants to call a tool, and something else when it's done.
+
+- Q: |
+    How do you handle a response where Claude requests multiple tools at once?
+  A: |
+    Filter `response.content` for all blocks with `type == "tool_use"`, run each one, and build one `tool_result` block per request (matching each result's `tool_use_id` to its originating request) before sending them all back together.
+
+- Q: |
+    How should a `tool_result` block differ when a tool call raises an exception versus when it succeeds?
+  A: |
+    On success: `content` is the tool's output and `is_error` is `False`. On failure: `content` is an error description (e.g. `f"Error: {e}"`) and `is_error` is `True` — Claude still receives a tool_result either way, just flagged as an error.
+
+- Q: |
+    What is a "batch tool" in Claude tool use, and what problem does it solve?
+  A: |
+    A special tool whose schema accepts a list of other tool invocations to run at once; it's a workaround that encourages Claude to bundle multiple independent tool calls into a single response instead of calling them one at a time, improving parallelization.
+
+- Q: |
+    How do you force Claude to use a specific tool rather than deciding on its own, and why is this useful for structured output?
+  A: |
+    Set `tool_choice` to `{"type": "tool", "name": "TOOL_NAME"}`; combined with a schema describing your desired output fields, this guarantees Claude returns exactly that structured data via the tool's input, rather than relying on free-form text formatting.
+
+- Q: |
+    What are the three possible values (types) for the `tool_choice` parameter, and what does each mean?
+  A: |
+    `{"type": "auto"}` — model decides whether to use a tool (default). `{"type": "any"}` — model must use some tool, but picks which. `{"type": "tool", "name": "X"}` — model must use the specifically named tool.
+
+- Q: |
+    When extracting structured data from Claude via a forced tool call, where do you find the structured result?
+  A: |
+    In the tool_use content block's `.input` field of the response (e.g. `response.content[0].input`) — it already matches your schema's shape, with no further parsing needed.
+
+- Q: |
+    What's the main trade-off between prompt-based structured output (prefill + stop sequence) and tool-based structured output (forced `tool_choice`)?
+  A: |
+    Prompt-based is simpler to set up but less reliable; tool-based is more reliable/guaranteed to match your schema, at the cost of the extra complexity of defining and forcing a tool.

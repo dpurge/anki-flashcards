@@ -1,0 +1,91 @@
+- Q: |
+    How do you enable Claude models for use via Google Cloud Vertex AI?
+  A: |
+    In the Vertex AI console, open Model Garden, search for "Anthropic", and enable the desired models.
+
+- Q: |
+    What `gcloud` commands set up local authentication for using Vertex AI from a workstation?
+  A: |
+    `gcloud init`, `gcloud auth login`, `gcloud config set project YOUR_PROJECT_ID`, and `gcloud auth application-default login`.
+  C: |
+    gcloud init
+    gcloud auth login
+    gcloud config set project YOUR_PROJECT_ID
+    gcloud auth application-default login
+
+- Q: |
+    What Python package do you install to use Claude via Vertex AI through the Anthropic SDK?
+  A: |
+    `pip install "anthropic[vertex]"`
+
+- Q: |
+    How do you instantiate an Anthropic client for use with Vertex AI, and what does it require?
+  A: |
+    `AnthropicVertex(region=..., project_id=...)` — requires a GCP region (or `"global"`) and your Vertex project ID.
+  C: |
+    from anthropic import AnthropicVertex
+    client = AnthropicVertex(region="global", project_id="your-project-id")
+
+- Q: |
+    What state must you track manually to hold a multi-turn conversation with the Messages API?
+  A: |
+    A running list of message dicts (each with a `role` of "user" or "assistant" and `content` text) — you append both the user's message and Claude's response to it after every turn, and send the whole list with each new request.
+
+- Q: |
+    How do you give Claude a system prompt with the Messages API?
+  A: |
+    Pass a top-level `system` parameter (a string) alongside `messages` in the `messages.create()` call.
+
+- Q: |
+    What temperature range is recommended for factual responses, coding assistance, data extraction, or content moderation?
+  A: |
+    Low temperature, 0.0-0.3.
+
+- Q: |
+    What temperature range is recommended for summarization, educational content, problem-solving, or constrained creative writing?
+  A: |
+    Medium temperature, 0.4-0.7.
+
+- Q: |
+    What temperature range is recommended for brainstorming, creative writing, marketing content, or joke generation?
+  A: |
+    High temperature, 0.8-1.0.
+
+- Q: |
+    List the six streaming event types the Messages API sends when `stream=True`.
+  A: |
+    MessageStart, ContentBlockStart, ContentBlockDelta, ContentBlockStop, MessageDelta, MessageStop.
+
+- Q: |
+    Which streaming event type contains the actual generated text chunks you'd display to a user?
+  A: |
+    ContentBlockDelta.
+
+- Q: |
+    What does `client.messages.stream(...)` used as a context manager give you, for simplified streaming?
+  A: |
+    A `stream.text_stream` you can iterate over for incremental text chunks, and a `stream.get_final_message()` call to retrieve the complete final message once streaming finishes.
+  C: |
+    with client.messages.stream(model=model, max_tokens=1000, messages=messages) as stream:
+        for text in stream.text_stream:
+            print(text, end="")
+        final_message = stream.get_final_message()
+
+- Q: |
+    What is a "prefilled assistant message," and what is it used for?
+  A: |
+    Adding a partial assistant message (e.g. `"Coffee is better because"`) to the conversation before calling the API, so Claude's response continues directly from that exact starting point — used to steer output content or format.
+
+- Q: |
+    How do `stop_sequences` work in the Messages API?
+  A: |
+    You pass a list of strings; generation halts as soon as any of them is produced, letting you cut off output at a controlled point (e.g. stopping at `"5"` when asking Claude to count from 1 to 10).
+
+- Q: |
+    How can you combine a prefilled assistant message and a stop sequence to reliably extract structured JSON from Claude's response?
+  A: |
+    Prefill the assistant message with `` ```json `` and set `stop_sequences=["```"]`, so Claude's reply starts directly as JSON and stops right before the closing fence — the result can then be parsed with `json.loads()` directly.
+  C: |
+    add_assistant_message(messages, "```json")
+    text = chat(messages, stop_sequences=["```"])
+    parsed_json = json.loads(text.strip())

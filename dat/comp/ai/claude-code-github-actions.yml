@@ -1,0 +1,54 @@
+- Q: |
+    What command sets up Claude Code's official GitHub integration, and what does it do?
+  A: |
+    `/install-github-app`, run inside Claude. It installs the Claude Code GitHub app, adds your API key, and generates a pull request containing the workflow files.
+
+- Q: |
+    What are the two default GitHub Actions workflows added by Claude Code's GitHub integration?
+  A: |
+    The Mention Action (triggered by @claude in an issue or PR) and the Pull Request Action (automatic review posted on every new PR).
+
+- Q: |
+    What does Claude do when mentioned with `@claude` in a GitHub issue or pull request?
+  A: |
+    Analyzes the request and creates a task plan, executes the task with full access to the codebase, and responds with results directly in the issue or PR.
+
+- Q: |
+    What does the Pull Request Action do automatically whenever a PR is created?
+  A: |
+    Claude reviews the proposed changes, analyzes the impact of the modifications, and posts a detailed report as a comment on the pull request.
+
+- Q: |
+    In a GitHub Actions workflow, how must MCP server tool permissions be granted, compared to local Claude Code use?
+  A: |
+    Unlike local development (where you can allow an entire server, e.g. `mcp__playwright`), in GitHub Actions each individual tool from an MCP server must be explicitly listed in `allowed_tools` (e.g. `mcp__playwright__browser_snapshot`, `mcp__playwright__browser_click`).
+
+- Q: |
+    What YAML key configures an MCP server for Claude when it runs inside a GitHub Actions workflow?
+  A: |
+    `mcp_config` — an inline JSON block under `mcpServers` specifying the command and args used to start the server.
+  C: |
+    mcp_config: |
+      {
+        "mcpServers": {
+          "playwright": {
+            "command": "npx",
+            "args": ["@playwright/mcp@latest", "--allowed-origins", "localhost:3000;cdn.tailwindcss.com;esm.sh"]
+          }
+        }
+      }
+
+- Q: |
+    What is `custom_instructions` used for in Claude's GitHub Actions workflow configuration?
+  A: |
+    Giving Claude project-specific context it needs before acting — e.g. that the dev server is already running at a given URL, where its logs are written, or which CLI to use for database queries.
+
+- Q: |
+    What steps do you add to a Claude GitHub Actions workflow to prepare the environment before Claude runs?
+  A: |
+    A "Project Setup" step running the project's setup and any background/daemon commands it needs (e.g. installing dependencies and starting a dev server) before Claude's task execution begins.
+  C: |
+    - name: Project Setup
+      run: |
+        npm run setup
+        npm run dev:daemon

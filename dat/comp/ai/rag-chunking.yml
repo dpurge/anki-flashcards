@@ -1,0 +1,53 @@
+- Q: |
+    What are the three core reasons you can't just paste an entire large document into a Claude prompt?
+  A: |
+    There's a hard length limit on how much text Claude can process, Claude becomes less effective/accurate with very long prompts, and larger prompts cost more money and take longer to process.
+
+- Q: |
+    What is the basic idea behind Retrieval Augmented Generation (RAG)?
+  A: |
+    Break a document into smaller chunks during a preprocessing step, then at query time find and include only the chunks relevant to the user's question, instead of the whole document.
+
+- Q: |
+    Name the three key components/steps of a RAG pipeline.
+  A: |
+    Document preprocessing and chunking, a search mechanism to find relevant chunks, and intelligent selection of which chunks to actually include in the prompt.
+
+- Q: |
+    Why does chunking strategy matter so much for RAG quality?
+  A: |
+    A poor chunking strategy can insert irrelevant context into prompts, causing the model to give wrong answers — chunk boundaries directly determine what "relevant" context looks like at retrieval time.
+
+- Q: |
+    What are the three primary approaches to chunking text for RAG?
+  A: |
+    Size-based (fixed-length strings), structure-based (split on document structure like headers/paragraphs/sections), and semantic-based (group related sentences using NLP techniques).
+
+- Q: |
+    What does "chunk overlap" mean in size-based chunking, and why include it?
+  A: |
+    The number of characters/units repeated between consecutive chunks, so a chunk boundary doesn't cut a relevant idea in half — the next chunk starts slightly before the previous one actually ended.
+  C: |
+    def chunk_by_char(text, chunk_size=150, chunk_overlap=20):
+        chunks = []
+        start_idx = 0
+        while start_idx < len(text):
+            end_idx = min(start_idx + chunk_size, len(text))
+            chunks.append(text[start_idx:end_idx])
+            start_idx = end_idx - chunk_overlap if end_idx < len(text) else len(text)
+        return chunks
+
+- Q: |
+    Why is semantic-based chunking considered the most sophisticated but least commonly needed chunking approach?
+  A: |
+    It analyzes meaning and relationships between sentences (via NLP) to group related content, producing the highest-quality chunks — but it's computationally expensive and more complex to implement than size- or structure-based chunking, which work well enough for most applications.
+
+- Q: |
+    Which chunking strategy works best for documents with a consistent, predictable structure (e.g. headers/sections)?
+  A: |
+    Structure-based chunking, since splitting on structural markers gives the cleanest, most coherent chunks.
+
+- Q: |
+    Which chunking strategy is the safest default when you don't know a document's format in advance, or when chunking code/technical content?
+  A: |
+    Character/size-based chunking.

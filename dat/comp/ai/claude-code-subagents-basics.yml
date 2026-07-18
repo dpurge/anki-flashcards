@@ -1,0 +1,110 @@
+- Q: |
+    What is a Claude Code subagent, at a high level?
+  A: |
+    A specialized assistant that Claude Code can delegate a task to — it runs in its own separate conversation context window, does its work there, and returns only a summary to the main thread.
+
+- Q: |
+    Why does a growing main context window become a problem during a long Claude Code session?
+  A: |
+    Every tool call, file read, and search result gets stored in that finite context; once it fills up, Claude starts losing track of earlier parts of the conversation.
+
+- Q: |
+    What two things does a subagent receive when it's launched?
+  A: |
+    A custom system prompt (from its configuration file, defining its role/behavior) and a task description written by the parent agent based on what the user asked for.
+
+- Q: |
+    What happens to a subagent's own conversation (its file reads, searches, tool calls) once it finishes its task?
+  A: |
+    Only a summary is returned to the main conversation; the entire subagent conversation is then discarded and never clutters the main context.
+
+- Q: |
+    What is the main trade-off of using a subagent instead of doing the work directly in the main thread?
+  A: |
+    You keep the main context clean and get just the answer, but you lose visibility into how the subagent actually reached its conclusion.
+
+- Q: |
+    Name the three built-in Claude Code subagents and what each is for.
+  A: |
+    General purpose — multi-step tasks needing both exploration and action. Explore — fast searching/navigation of a codebase. Plan — research and analysis of the codebase during plan mode, before a plan is presented.
+
+- Q: |
+    What are the three main benefits subagents give you, according to their key takeaways?
+  A: |
+    They break work into focused pieces, they keep the main context window clean by isolating intermediate work, and they bring back just a concise summary of what's needed.
+
+- Q: |
+    What command opens the interface for creating and managing Claude Code subagents?
+  A: |
+    `/agents`.
+
+- Q: |
+    When creating a subagent, what are the two scope options, and what does each mean?
+  A: |
+    Project-level — available only in the current project. User-level — shared across all projects on your machine.
+
+- Q: |
+    What is the recommended way to write a new subagent's configuration, rather than writing it by hand?
+  A: |
+    Describe what you want the subagent to do and let Claude generate the name, description, and system prompt for you.
+
+- Q: |
+    What are the five tool categories you can customize access to when creating a subagent?
+  A: |
+    Read-only tools, Edit tools, Execution tools, MCP tools, and Other tools.
+
+- Q: |
+    Why might a code-reviewer subagent still need execution (Bash) tools even though it shouldn't have edit tools?
+  A: |
+    So it can more easily identify pending changes (e.g. run `git diff`) — reviewing requires seeing what changed, not modifying anything.
+
+- Q: |
+    What are the four model options when configuring a subagent, and what is each best for?
+  A: |
+    Haiku — fast, lightweight tasks. Sonnet — a good middle ground of speed and depth. Opus — complex analysis. Inherit — uses whatever model the main conversation is running.
+
+- Q: |
+    Where is a Claude Code subagent's configuration typically saved, and in what format?
+  A: |
+    Typically at `.claude/agents/your-agent-name.md` — a markdown file with YAML frontmatter plus a system-prompt body.
+  C: |
+    ---
+    name: code-quality-reviewer
+    description: Use this agent when you need to review recently written or modified code for quality, security, and best practice compliance.
+    tools: Bash, Glob, Grep, Read, WebFetch, WebSearch
+    model: sonnet
+    color: purple
+    ---
+
+    You are an expert code reviewer specializing in quality assurance, security best practices, and
+    adherence to project standards...
+
+- Q: |
+    What are the five YAML frontmatter fields in a subagent config file, and what does each control?
+  A: |
+    `name` — unique identifier used to reference it (e.g. `@agent code-quality-reviewer`). `description` — controls when Claude decides to delegate to it. `tools` — which tools it can access. `model` — sonnet/opus/haiku/inherit. `color` — its UI identification color.
+
+- Q: |
+    Why must a subagent's `description` field be written as a single line?
+  A: |
+    Because it's a YAML frontmatter field with no native multi-line support in this context — if you need line breaks within it, you must use escaped newline characters (`\n`).
+
+- Q: |
+    What does the body of a subagent's markdown config file (below the YAML frontmatter) represent?
+  A: |
+    The subagent's system prompt — instructions for what it should focus on, how it should analyze things, and how it should report findings back to the main agent.
+
+- Q: |
+    How do you make Claude delegate to a subagent automatically, without the user explicitly asking for it?
+  A: |
+    Include the word "proactively" in the subagent's description field (e.g. "Proactively suggest running this agent after major code changes...").
+
+- Q: |
+    What technique, beyond the word "proactively," helps Claude know when to delegate to a custom subagent?
+  A: |
+    Adding concrete example conversations/scenarios to the description field — the more specific the examples, the better Claude gets at recognizing when delegation is appropriate.
+
+- Q: |
+    If Claude isn't invoking your custom subagent when expected, what's the first thing to check and fix?
+  A: |
+    The subagent's `description` field — add more specific examples and trigger scenarios so Claude can recognize when to delegate to it.
