@@ -1,5 +1,5 @@
 deck:
-  name: 'Computer::AI'
+  name: 'Computer::Language Models'
 
 model:
   name: Computer QA

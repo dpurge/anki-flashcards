@@ -32,13 +32,16 @@
   A: |
     Immutable by default; add the `mut` keyword to allow the value to be changed after initialization.
   C: |
-    let apples = 5;      // immutable
-    let mut bananas = 5; // mutable
+    // immutable
+    let apples = 5;
+    // mutable
+    let mut bananas = 5;
 
 - Q: |
     What is the "prelude" in Rust?
   A: |
-    A set of items from the standard library that Rust automatically brings into scope for every program. Anything not in the prelude (e.g. `std::io`, `rand::Rng`) must be explicitly brought in with a `use` statement.
+    A set of items from the standard library that Rust automatically brings into scope for every program.
+    Anything not in the prelude (e.g. `std::io`, `rand::Rng`) must be explicitly brought in with a `use` statement.
 
 - Q: |
     What does `.expect("message")` do differently from `.unwrap()` when called on a `Result` or `Option` that is `Err`/`None`?
@@ -46,8 +49,8 @@
     Both panic on failure, but `.expect()` lets you supply a custom panic message, making it easier to trace where and why the crash happened.
   C: |
     io::stdin()
-        .read_line(&mut guess)
-        .expect("Failed to read line");
+      .read_line(&mut guess)
+      .expect("Failed to read line");
 
 - Q: |
     What does Rust's variable "shadowing" mean, and how does it differ from `mut`?
@@ -63,9 +66,9 @@
     `loop` creates an infinite loop. `break` exits the loop immediately, resuming execution after it. `continue` skips the rest of the current iteration and jumps to the next one.
   C: |
     loop {
-        let x = get_input();
-        if x.is_err() { continue; }
-        if x == Ok(0) { break; }
+      let x = get_input();
+      if x.is_err() { continue; }
+      if x == Ok(0) { break; }
     }
 
 - Q: |
@@ -85,7 +88,8 @@
 - Q: |
     In `let x = 5; let x = x + 1; { let x = x * 2; } `, what value does `x` have inside versus after the inner block?
   A: |
-    Inside the inner `{}` block, shadowing creates a new `x` scoped only to that block. Once the block ends, that inner shadow goes out of scope and `x` reverts to the value it had just before the block.
+    Inside the inner `{}` block, shadowing creates a new `x` scoped only to that block.
+    Once the block ends, that inner shadow goes out of scope and `x` reverts to the value it had just before the block.
 
 - Q: |
     What naming convention does idiomatic Rust use for function and variable names?
@@ -95,7 +99,8 @@
 - Q: |
     Does the order in which functions are defined in a Rust file matter, e.g. can a function be called before it's defined further down in the file?
   A: |
-    No — Rust doesn't care where functions are defined, only that they're visible in a scope the caller can see. Order of definition within a file is irrelevant.
+    No — Rust doesn't care where functions are defined, only that they're visible in a scope the caller can see.
+    Order of definition within a file is irrelevant.
 
 - Q: |
     Why must every parameter in a Rust function signature have an explicit type annotation, unlike some other languages that infer parameter types?
@@ -109,7 +114,8 @@
 - Q: |
     What is the difference between a "statement" and an "expression" in Rust?
   A: |
-    A statement performs an action but does not return a value (e.g. `let y = 6;`, a function definition). An expression evaluates to a value (e.g. `5 + 6`, a function call, a macro call, or a `{}` block).
+    A statement performs an action but does not return a value (e.g. `let y = 6;`, a function definition).
+    An expression evaluates to a value (e.g. `5 + 6`, a function call, a macro call, or a `{}` block).
   N: |
     Because statements don't return values, you can't write something like `let x = (let y = 6);`.
 
@@ -125,7 +131,8 @@
     // y is 4
 
 - Q: |
-    Adding a semicolon to the end of `x + 1` inside a function body changes what the function returns. What changes, and why?
+    Adding a semicolon to the end of `x + 1` inside a function body changes what the function returns.
+    What changes, and why?
   A: |
     The semicolon turns the expression into a statement, so it no longer evaluates to a value — the function then implicitly returns `()` (unit) instead of the expression's value, which is a type error if the function's signature declares a non-unit return type.
   C: |

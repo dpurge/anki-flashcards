@@ -38,6 +38,20 @@ jobs:
                 input-project: dat/comp/devops/flashcard.yml
                 output-apkg: out/computer-devops-${{ steps.tools.outputs.version }}.apkg
 
+        -   name: Language models topic
+            if: ${{ contains(inputs.topic, 'language-models') }}
+            uses: ./.github/actions/build-apkg
+            with:
+                input-project: dat/comp/language-models/flashcard.yml
+                output-apkg: out/computer-language-models-${{ steps.tools.outputs.version }}.apkg
+
+        -   name: Rust programming topic
+            if: ${{ contains(inputs.topic, 'rust') }}
+            uses: ./.github/actions/build-apkg
+            with:
+                input-project: dat/comp/rust/flashcard.yml
+                output-apkg: out/computer-rust-${{ steps.tools.outputs.version }}.apkg
+
         -   name: Make release
             id: release
             uses: ./.github/actions/make-release
