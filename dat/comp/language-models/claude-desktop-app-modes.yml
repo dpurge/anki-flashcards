@@ -1,0 +1,109 @@
+- Q: |
+    What are the three modes in the Claude desktop app, and what is each broadly designed for?
+  A: |
+    Chat (quick questions and back-and-forth conversation), Cowork (agentic work across tools/sources toward a goal), and Code (building software).
+
+- Q: |
+    What do Cowork and Code have in common under the hood?
+  A: |
+    Both run on the same engine — Claude Code underneath — running locally on your machine, capable of independent work, spinning up sub-agents, and sustaining long tasks.
+
+- Q: |
+    What native-app features does Chat in the Claude desktop app add on top of the claude.ai experience?
+  A: |
+    Quick entry, screenshots and window sharing, dictation, and desktop connectors.
+
+- Q: |
+    How do you trigger Quick entry in the Claude desktop app, and what does it do?
+  A: |
+    Double-tap the Option key (Mac) to pull up Claude in a compact, always-on-top window over whatever you're working on, without leaving your current app.
+
+- Q: |
+    What is Cowork designed for, in contrast to Chat?
+  A: |
+    Work that takes real effort — pulling information from many sources, making sense of it, and producing a finished deliverable — versus Chat's quicker back-and-forth exchanges.
+
+- Q: |
+    Before starting a Cowork task, what does Claude typically do first?
+  A: |
+    It asks a short set of questions to pin down scope, format, and constraints, then builds a plan you can review in the sidebar as it works.
+
+- Q: |
+    What is "Folder access" in Cowork?
+  A: |
+    Pointing Claude to a folder on your computer so it reads what's there, figures out what's relevant, and saves finished work back to that same folder.
+
+- Q: |
+    What are Scheduled tasks in Cowork, and what happens if your computer was off when one was due?
+  A: |
+    Recurring work you define with a schedule (e.g. a daily briefing or morning inbox triage) that Claude runs automatically while the app is open; if the computer/app was closed when due, Claude catches up when you're back.
+
+- Q: |
+    What are Subagents in Cowork?
+  A: |
+    Background workers Claude spins up to handle parts of a complex task in parallel — breaking the task into subtasks, assigning each to a subagent with its own context, and coordinating the results into one deliverable.
+
+- Q: |
+    What is Dispatch in Cowork, and what does it require?
+  A: |
+    A persistent conversation thread that lets you continue Cowork conversations from your phone, handing Claude tasks that use everything on your computer; requires both desktop and mobile apps, with the computer awake and the desktop app open.
+
+- Q: |
+    How do Cowork Projects differ from Projects on claude.ai?
+  A: |
+    They work similarly (dedicated workspace with its own files, context, instructions, and memory) but Cowork projects live locally on your desktop and are built around tasks run through Cowork.
+
+- Q: |
+    What is Browser use in Cowork, and what does it enable?
+  A: |
+    Connecting Claude in Chrome so Claude can navigate websites, interact with pages, and pull findings directly into its task — e.g. checking competitor pricing across many sites without an API.
+
+- Q: |
+    What priority order does Computer use in Cowork follow when deciding how to interact with something, and what's its availability?
+  A: |
+    Connectors first, then Chrome, then direct screen interaction (clicking/typing/opening apps) as the last resort; it's in research preview on Pro and Max plans, macOS only.
+
+- Q: |
+    What are Plugins in Cowork?
+  A: |
+    Add-ons that give Claude capabilities it doesn't have on its own, such as pulling live financial data, searching a company's internal knowledge base, or working within a specific compliance framework.
+
+- Q: |
+    What is Cowork's "protected environment," and what can Claude access within it?
+  A: |
+    A contained space on your computer where Claude can read, create, and edit files only within the folders you've explicitly shared — it can't access anything outside them.
+
+- Q: |
+    What plans is Cowork available on?
+  A: |
+    Pro, Max, Team, and Enterprise.
+
+- Q: |
+    In the Code tab, what is the difference between working Local versus Remote?
+  A: |
+    Local: you select a folder on your computer and Claude works directly with those files, with access to local tools and a previewable dev server. Remote: you connect a GitHub repository and Claude works in a cloud environment, with sessions that continue even after you close the app.
+
+- Q: |
+    What are the three interaction modes in the Code tab, and how do they differ in autonomy?
+  A: |
+    Ask (Claude proposes every change and waits for approval via a visual diff), Code (Claude applies file changes automatically but checks before running terminal commands), and Plan (Claude outlines its full approach in a plan viewer before touching anything).
+
+- Q: |
+    How does the file/system access of the Code tab differ from Cowork's?
+  A: |
+    Cowork is limited to a contained workspace scoped to shared folders, while Code runs directly in your project with full access to your file system, terminal, and development tools.
+
+- Q: |
+    What tools does the Code tab use to show and track changes as Claude works?
+  A: |
+    Visual diffs show what changed, a built-in terminal shows commands as they run, and git tracks every version so you can roll back.
+
+- Q: |
+    What plans is the Code tab available on?
+  A: |
+    Pro, Max, Team, and Enterprise.
+
+- Q: |
+    In the comparison of Chat vs. Cowork vs. Code, which tools/extensions are unique to Cowork and which are unique to Code?
+  A: |
+    Cowork uniquely adds Plugins and Computer Use (on top of Connectors, Skills, and Claude in Chrome, shared with Chat). Code uniquely adds Plugins and Hooks (on top of Connectors, Skills, and Claude in Chrome) but not Computer Use.

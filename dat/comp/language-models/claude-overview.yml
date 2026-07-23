@@ -1,0 +1,64 @@
+- Q: |
+    What is Constitutional AI, in the context of how Claude is trained?
+  A: |
+    A training approach that aligns Claude with human values and helps it operate transparently, guiding it to avoid toxic/discriminatory outputs and to avoid helping with illegal or unethical activities.
+
+- Q: |
+    What three qualities is Claude designed to embody at a high level?
+  A: |
+    Helpful, harmless, and honest.
+
+- Q: |
+    Why is Claude described as "more than a chatbot"?
+  A: |
+    It reliably handles a wide variety of conversational and text-processing tasks — summarization, search, creative/collaborative writing, Q&A, coding, and more — acting as a thought partner for complex problems rather than just answering simple questions.
+
+- Q: |
+    What does it mean for Claude to be "steerable," and why does this matter?
+  A: |
+    Claude can take direction on personality, tone, and behavior. This makes it less likely to produce harmful outputs, easier to converse with, and lets users get their desired output with less effort.
+
+- Q: |
+    Across which plan types do Claude conversations, projects, memory, and preferences sync?
+  A: |
+    All plan types — Free, Pro, Max, Team, and Enterprise — when signed in, across web, desktop, and mobile apps.
+
+- Q: |
+    What large-context capability supports Claude's research and analysis use case?
+  A: |
+    A large context window that can ingest 200K+ tokens (roughly 500+ pages of text), with up to 1M tokens available on Pro, Max, Team, and Enterprise plans on supported models.
+
+- Q: |
+    What are Claude's two response modes on recent hybrid Opus and Sonnet models?
+  A: |
+    Near-instant responses, and extended thinking, which works through problems step-by-step for deeper reasoning on tasks requiring careful analysis.
+
+- Q: |
+    What is "Learning mode" in Claude, and how does it differ from normal Q&A?
+  A: |
+    A Claude experience that guides the user's reasoning process rather than directly providing answers, aimed at developing critical thinking skills.
+
+- Q: |
+    What is Claude.ai, and what is it best suited for?
+  A: |
+    The primary web (plus mobile/desktop app) interface for interacting with Claude — ideal for conversations, writing assistance, research, analysis, and creating files.
+
+- Q: |
+    What is Claude Code, and who is it primarily designed for?
+  A: |
+    An agentic coding tool designed for developers (though usable for general desktop file manipulation) that can directly edit files, run commands, and create commits.
+
+- Q: |
+    How does @Claude work inside Slack?
+  A: |
+    It brings Claude into Slack via the AI assistant header in any channel/conversation or by tagging @Claude in threads; when Slack is connected, Claude can search the workspace's channels, DMs, and shared files for context.
+
+- Q: |
+    What is Claude Design used for?
+  A: |
+    A dedicated space for turning ideas — described in text, or started from a sketch/screenshot — into working, interactive interface prototypes that can be refined and handed off to a team.
+
+- Q: |
+    How does Claude for Microsoft 365 integrate with Office apps?
+  A: |
+    It adds Claude as a sidebar inside Excel, PowerPoint, Word, and Outlook, letting users analyze, draft, and edit within the open document and carry context between apps.

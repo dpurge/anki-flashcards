@@ -1,0 +1,84 @@
+- Q: |
+    Name three specific situations where you'd reach for Claude Code rather than another Claude surface.
+  A: |
+    Building a feature by describing it in plain English and having Claude write code/run tests/commit; debugging by pasting an error message for Claude to trace through the codebase; or navigating an unfamiliar codebase by asking how parts fit together.
+
+- Q: |
+    How can @Claude in Slack hand off a coding task directly from a conversation?
+  A: |
+    Tag @Claude in a bug report or feature discussion thread, and it can spin up a Claude Code session using the surrounding thread context.
+
+- Q: |
+    What does @Claude help with during meeting preparation?
+  A: |
+    Pulling together relevant conversations and shared documents from the Slack workspace ahead of a meeting.
+
+- Q: |
+    What inputs can you start from when creating a UI prototype in Claude Design?
+  A: |
+    A written brief, a sketch, or a reference screenshot — no code required.
+
+- Q: |
+    Why might a team specifically use Claude Design over a generic AI image/mockup tool?
+  A: |
+    Claude Design can build a prototype that uses the team's design system, so the handoff matches what engineering will actually build.
+
+- Q: |
+    What kinds of spreadsheet errors can Claude for Excel help trace and fix?
+  A: |
+    #REF!, #VALUE!, and circular reference errors — tracing them to their source and suggesting fixes.
+
+- Q: |
+    When updating assumptions/inputs in a financial model via Claude for Excel, what does it try to preserve?
+  A: |
+    Formula dependencies and relationships across the workbook.
+
+- Q: |
+    What does Claude for PowerPoint preserve while drafting or restructuring a deck?
+  A: |
+    The existing template and brand styling.
+
+- Q: |
+    Name two restructuring tasks Claude for PowerPoint can do to an existing deck.
+  A: |
+    Reordering sections, and splitting dense slides or merging overlapping ones.
+
+- Q: |
+    How does Claude for Word interact with a document's existing review workflow?
+  A: |
+    It can work with tracked changes and comments in place, helping you respond to reviewer feedback without leaving the document.
+
+- Q: |
+    What makes Claude for Word drafts more trustworthy when connected sources are used?
+  A: |
+    The draft is grounded in the connected source material, so claims in the document trace back to where they came from.
+
+- Q: |
+    What is the availability status of Claude for Outlook, and how is it installed relative to the other Microsoft 365 add-ins?
+  A: |
+    It's currently in beta and is installed separately from the other Microsoft 365 add-ins.
+
+- Q: |
+    What can Claude for Outlook do with a long email thread?
+  A: |
+    Turn it into a clear summary or a set of next steps, and draft replies using context from related threads and your calendar.
+
+- Q: |
+    What is Claude in Chrome, and what can it do beyond just answering questions?
+  A: |
+    A browser extension adding Claude as a sidebar in Chrome; it can observe what you're working on and take actions directly within the browser (e.g. filling forms, navigating multi-step workflows).
+
+- Q: |
+    What is the current availability status of Claude in Chrome, and what precaution does Anthropic recommend?
+  A: |
+    It's in public beta; Anthropic recommends using it for low-risk tasks on trusted websites.
+
+- Q: |
+    How does Claude in Chrome protect against risky actions, and which website categories are blocked by default?
+  A: |
+    It asks for permission before high-risk actions like purchasing or sharing personal data; financial services and adult content sites are blocked by default.
+
+- Q: |
+    Where does Claude Cowork run, and what is it best suited for per the tool-comparison summary?
+  A: |
+    Desktop (and mobile via Dispatch); best for complex, multi-step tasks like research briefs, document creation, file organization, and data analysis.

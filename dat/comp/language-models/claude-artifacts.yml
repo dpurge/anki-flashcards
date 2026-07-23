@@ -1,0 +1,64 @@
+- Q: |
+    What is an artifact in Claude.ai?
+  A: |
+    A standalone, interactive output Claude creates in a dedicated window alongside the conversation — e.g. a working website, chart, or downloadable document — rather than a long block of text/code buried in the chat.
+
+- Q: |
+    What criteria does content typically need to meet for Claude to automatically create an artifact?
+  A: |
+    It's significant and self-contained (typically over 15 lines), something you're likely to edit/iterate/reuse, complex content that stands on its own without the surrounding conversation, and something you'll want to reference or use later.
+
+- Q: |
+    Name the six common artifact types Claude can create.
+  A: |
+    Documents (markdown/plain text), code snippets, HTML pages, SVG images, Mermaid diagrams, and React components.
+
+- Q: |
+    What makes React component artifacts different from a mockup?
+  A: |
+    They include actual logic and respond to user input — real functionality like calculators, dashboards, games, or data visualizations, not just a static design.
+
+- Q: |
+    Why aren't Word documents, Excel spreadsheets, PowerPoint presentations, and PDFs created as artifacts?
+  A: |
+    Claude creates these through a separate file-creation capability, not the artifact system, and returns them as downloadable files instead.
+
+- Q: |
+    What can you say if Claude doesn't automatically create an artifact when you expected one?
+  A: |
+    Explicitly ask, e.g. "Create this as an artifact" or "Show me this in an artifact."
+
+- Q: |
+    What two views can you toggle between in an artifact window?
+  A: |
+    A preview (how it looks/renders) and the underlying code.
+
+- Q: |
+    Who can share an artifact internally within an organization, and what's required to access it?
+  A: |
+    Team and Enterprise (Claude for Work) users; the shared artifact stays within the organization and requires team authentication to access.
+
+- Q: |
+    Which user plans can publish an artifact publicly?
+  A: |
+    Free, Pro, and Max users.
+
+- Q: |
+    When you publish an artifact publicly, what happens to your underlying chat, and what can others do with the published artifact?
+  A: |
+    Only the selected version becomes public — your chat remains private. Anyone can view and interact with it without a Claude account, and others can "remix" it by opening it in their own conversation to modify and build upon it.
+
+- Q: |
+    Are published artifacts discoverable via search engines?
+  A: |
+    No — published artifacts are not indexed by search engines, so they won't appear in Google results, though the link itself is publicly accessible to anyone who has it.
+
+- Q: |
+    Why does describing the intended end user of an artifact (e.g. "for new employees" vs. "for the engineering team") help Claude?
+  A: |
+    It helps Claude make appropriate design choices, since different audiences call for different levels of detail, tone, or complexity.
+
+- Q: |
+    What's the recommended approach when refining an artifact — one big request or several small ones?
+  A: |
+    Iterate incrementally, asking Claude to add one feature or make one change at a time, making it easier to identify what's working and catch issues early.

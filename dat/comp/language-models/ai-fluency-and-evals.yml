@@ -1,0 +1,39 @@
+- Q: |
+    What is AI Fluency?
+  A: |
+    The ability to collaborate effectively with AI tools — not just knowing which buttons to click, but developing the judgment to use AI well across different situations.
+
+- Q: |
+    In the 4D Framework for AI Fluency, what does Delegation cover?
+  A: |
+    Deciding what work should be done by humans versus AI and how to distribute tasks between them, based on understanding your goals and AI's capabilities.
+
+- Q: |
+    In the 4D Framework for AI Fluency, what does Description cover?
+  A: |
+    Effectively communicating with AI systems — clearly defining outputs, guiding AI processes, and specifying desired AI behaviors and interactions.
+
+- Q: |
+    In the 4D Framework for AI Fluency, what does Discernment cover?
+  A: |
+    Thoughtfully and critically evaluating AI outputs, processes, and behaviors — assessing quality, accuracy, and appropriateness, and identifying areas for improvement.
+
+- Q: |
+    In the 4D Framework for AI Fluency, what does Diligence cover?
+  A: |
+    Using AI responsibly and ethically — making thoughtful choices about AI systems, maintaining transparency, and taking accountability for AI-assisted work.
+
+- Q: |
+    Which of the 4D Framework competencies is exercised when troubleshooting a bad Claude response (e.g. diagnosing why the tone or format was wrong)?
+  A: |
+    Discernment and Diligence — critically evaluating what went wrong and taking responsible ownership of refining the output.
+
+- Q: |
+    What is the purpose of running a personal "eval" on Claude for a recurring work task?
+  A: |
+    To develop intuition for how well Claude performs on tasks that matter to you specifically — understanding where it adds the most value, where it needs more context, and building confidence in its outputs for recurring tasks.
+
+- Q: |
+    What are the four steps of the simple, no-infrastructure eval approach for evaluating Claude on your own workflow?
+  A: |
+    1) Gather 5-10 real examples of a task you do regularly. 2) Create test prompts that would generate similar outputs, including natural context. 3) Compare Claude's outputs to your examples (key information, tone/style, gaps). 4) Refine your approach based on what you learn.

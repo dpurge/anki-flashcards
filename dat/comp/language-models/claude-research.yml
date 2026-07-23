@@ -1,0 +1,64 @@
+- Q: |
+    What does Claude's Research feature do differently from a single web search?
+  A: |
+    It operates agentically — conducting multiple searches that build on each other, exploring different angles automatically, and determining what to investigate next based on what it has already found.
+
+- Q: |
+    Roughly how long does a Research report typically take, and how long can complex investigations take?
+  A: |
+    Most reports complete in 5 to 15 minutes; more complex investigations may take up to 45 minutes.
+
+- Q: |
+    What Claude capability is automatically enabled alongside Research, and why?
+  A: |
+    Extended thinking — it lets Claude plan its approach thoughtfully and break a complex request into manageable pieces before/while gathering information.
+
+- Q: |
+    What accompanies every claim in a Research report, and why does it matter?
+  A: |
+    Citations linking back to the source — making it easy to verify Claude's findings and dig deeper if needed.
+
+- Q: |
+    Give three example use cases where Research is the right tool.
+  A: |
+    Market/competitive analysis, planning complex projects (e.g. an offsite or launch), and synthesizing information across email/calendar/documents for a briefing.
+
+- Q: |
+    When should you use plain web search instead of Research?
+  A: |
+    When you need a quick, specific fact from one or two sources and speed matters more than comprehensiveness.
+
+- Q: |
+    When should you use extended thinking instead of Research?
+  A: |
+    When you need deep reasoning on a problem that doesn't require gathering external information — e.g. math, code debugging, or logical analysis.
+
+- Q: |
+    When should you use Enterprise Search instead of Research?
+  A: |
+    When the answer needs to draw from your organization's internal knowledge (documents, Slack, emails, meeting notes) rather than the public web — e.g. company-specific policies or past decisions.
+
+- Q: |
+    What are the four steps of how Research works internally?
+  A: |
+    1) Claude plans its approach (extended thinking activates). 2) Claude conducts multiple searches that build on each other. 3) Claude synthesizes findings from the web and connected integrations into a report. 4) Claude provides citations for every claim.
+
+- Q: |
+    What must be enabled for Research to function, and where do you enable it?
+  A: |
+    Web search must be enabled — toggled from the same "+" menu used to select Research.
+
+- Q: |
+    How do you enable and start a Research task in the chat interface?
+  A: |
+    Click the "+" button in the lower left of the chat, select Research from the menu, then enter your prompt and submit.
+
+- Q: |
+    Why is it worth investing extra time crafting a Research prompt, and what's one way to make it more effective?
+  A: |
+    Research runs can take 5-45 minutes, so a better prompt pays off; specifying the sections/structure you want (e.g. "compare location, amenities, catering, and pricing") lets Claude organize its findings around that structure.
+
+- Q: |
+    How can you make Research run "internal-only," searching just your connected tools instead of the public web?
+  A: |
+    Turn off web search while keeping Research/connected integrations enabled, so Claude searches only sources like Slack and Docs.

@@ -1,0 +1,84 @@
+- Q: |
+    What are Skills in Claude, at a high level?
+  A: |
+    Folders of instructions, scripts, and resources that Claude loads dynamically to improve performance on specialized tasks — "expertise packages" that teach Claude how to complete a specific task the same way every time.
+
+- Q: |
+    Which existing Claude capability is powered by Skills running behind the scenes?
+  A: |
+    File creation for Excel spreadsheets, PowerPoint presentations, Word documents, and PDFs.
+
+- Q: |
+    What is the difference between Anthropic Skills and Custom Skills?
+  A: |
+    Anthropic Skills are created/maintained by Anthropic (e.g. document creation for Excel, Word, PowerPoint, PDF) and are invoked automatically for all paid users. Custom Skills are created by you or your organization for specialized workflows and domain-specific tasks.
+
+- Q: |
+    What underlying capability must be enabled for Skills to function, and why?
+  A: |
+    Code execution and file creation — Skills require Claude's secure sandboxed computing environment to run.
+
+- Q: |
+    Which plans have Skills available as a feature preview?
+  A: |
+    Pro, Max, Team, and Enterprise.
+
+- Q: |
+    For Enterprise plans, who must enable Code execution and Skills before individual members can access them?
+  A: |
+    Organization Owners, in Admin settings.
+
+- Q: |
+    Do you need to manually pick which Skill to use in a prompt?
+  A: |
+    No — Claude handles skill selection automatically based on your request; you'll see the Skill mentioned in Claude's chain of thought as it works.
+
+- Q: |
+    What must you toggle on to let Claude access external data sources when working with uploaded files via Skills?
+  A: |
+    "Allow limited network access."
+
+- Q: |
+    In Chat, when Claude edits an uploaded slide/spreadsheet/document file using Skills, does it modify the original file in place?
+  A: |
+    No — in Chat, Claude creates a new version of the document rather than editing the original in place.
+
+- Q: |
+    What security precaution should you take before using a custom Skill from an external source?
+  A: |
+    Only install custom Skills from trusted sources, and review the Skill's contents before use to understand what it does, since Skills can include executable code.
+
+- Q: |
+    Are custom Skills you upload shared with others in your organization by default?
+  A: |
+    No — custom Skills you upload are private to your individual account.
+
+- Q: |
+    What is the easiest way to create a custom Skill, and does it require writing code?
+  A: |
+    Through conversation with Claude itself — you describe what you want, Claude interviews you about the workflow, and it handles the technical file structure for you without requiring you to write code.
+
+- Q: |
+    What materials can help Claude build a better custom Skill during the creation conversation?
+  A: |
+    Reference materials like templates, style guides, brand assets, or examples of work you're proud of.
+
+- Q: |
+    Where do you find and manage your custom and built-in Skills?
+  A: |
+    The "Customize" tab in the left sidebar.
+
+- Q: |
+    How do you update or improve an existing custom Skill?
+  A: |
+    Ask Claude to edit the skill in conversation, and it updates the underlying files for you.
+
+- Q: |
+    What is the core distinction between Projects and Skills?
+  A: |
+    Projects store knowledge (the "what" — reference materials Claude draws on across chats in that project); Skills define processes (the "how" — the specific steps/methodology Claude executes for a repeatable task).
+
+- Q: |
+    How can Skills and Projects complement each other?
+  A: |
+    A skill can reference knowledge stored in a project — e.g. a "customer call prep" skill pulling from customer profiles uploaded to a project's knowledge base; the project supplies the information, the skill supplies the process.

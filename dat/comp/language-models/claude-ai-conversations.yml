@@ -1,0 +1,73 @@
+- Q: |
+    What tone/style is recommended when writing prompts for Claude?
+  A: |
+    Speak to Claude like you would a coworker — naturally, concisely, and conversationally.
+
+- Q: |
+    What are the three things to consider before writing a prompt to Claude, per the "setting the stage / defining the task / specifying rules" approach?
+  A: |
+    Setting the stage (your role, objectives, and relevant context), defining the task (the specific action you want Claude to take), and specifying rules (style, tone, and examples to follow).
+  N: |
+    "Setting the stage" = role/objectives/context. "Defining the task" = the action (write, analyze, build, etc.). "Specifying rules" = format, tone, examples.
+
+- Q: |
+    What four core competencies does the 4D Framework for AI Fluency identify for effective AI collaboration?
+  A: |
+    Delegation, Description, Discernment, and Diligence.
+  N: |
+    Developed by Professor Rick Dakan (Ringling College of Art and Design) and Professor Joseph Feller (University College Cork).
+
+- Q: |
+    What file types can Claude analyze when uploaded, and what kinds of content within them?
+  A: |
+    PDF, DOCX, CSV, TXT, and common image formats (PNG, JPEG) — Claude can analyze both text and visual elements like images, charts, and graphics within documents.
+
+- Q: |
+    Where do you set personal preferences so Claude considers them in every conversation?
+  A: |
+    Settings > General > "What personal preferences should Claude consider?"
+
+- Q: |
+    Name three ways to redirect Claude's response if its first answer isn't what you wanted.
+  A: |
+    Ask a follow-up question for more detail/clarification, give explicit feedback on what to change (e.g. tone), or redirect/restart by clarifying what you actually meant.
+
+- Q: |
+    How can you refine a prompt you already sent to Claude, instead of sending a brand-new message?
+  A: |
+    Click the pencil icon on your message to edit and resubmit it.
+
+- Q: |
+    What is Claude's Memory feature, and what does it store?
+  A: |
+    A feature that automatically saves key context from your conversations — your role, preferences, past decisions, and working style — so you don't have to repeat it in new chats; it syncs across devices and can be reviewed, edited, or deleted in Settings.
+
+- Q: |
+    What are Styles in Claude, and how do they differ from Memory?
+  A: |
+    Styles let you customize how Claude communicates (e.g. concise, formal, explanatory presets, or a fully custom description), applying automatically across all conversations — unlike Memory, which stores context/facts rather than communication style.
+
+- Q: |
+    If Claude's response is too generic, what's usually wrong with the prompt, and how do you fix it?
+  A: |
+    The prompt didn't include enough context about the specific situation. Fix it by adding details about audience, role, or constraints (e.g. naming the client, the situation, and the tone needed) instead of a bare instruction.
+
+- Q: |
+    If Claude didn't follow the format you wanted, what's the underlying issue and the fix?
+  A: |
+    Claude understood the content you wanted but not how you wanted it presented. Fix it by showing an example of the format or describing the structure explicitly (e.g. "use bullet points with bold headers").
+
+- Q: |
+    What should you do if Claude gives confident-sounding information that turns out to be wrong?
+  A: |
+    For high-stakes work, verify key facts independently, ask Claude to cite sources or state its confidence level, and enable web search to ground responses in current information.
+
+- Q: |
+    What's the fix when Claude's tone doesn't match what you need?
+  A: |
+    Describe the desired tone in plain language (e.g. "make this more conversational" or "sound authoritative and formal"), and provide a writing example in that style if possible.
+
+- Q: |
+    What is the "iteration mindset" for working with Claude?
+  A: |
+    Treating your first prompt as the start of a conversation rather than a one-shot request — reviewing first drafts as starting points, giving specific (not vague) feedback, and knowing when to start a fresh chat instead of trying to redirect a derailed one.

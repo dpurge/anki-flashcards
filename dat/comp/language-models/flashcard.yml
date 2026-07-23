@@ -29,6 +29,30 @@ model:
       description: Notes
 
 data:
+  - filename: ./claude-overview.yml
+    tags: ['claude-overview']
+  - filename: ./claude-ai-conversations.yml
+    tags: ['claude-ai-conversations']
+  - filename: ./ai-fluency-and-evals.yml
+    tags: ['ai-fluency-and-evals']
+  - filename: ./claude-desktop-app-modes.yml
+    tags: ['claude-desktop-app-modes']
+  - filename: ./claude-projects.yml
+    tags: ['claude-projects']
+  - filename: ./claude-artifacts.yml
+    tags: ['claude-artifacts']
+  - filename: ./claude-skills.yml
+    tags: ['claude-skills']
+  - filename: ./claude-connectors.yml
+    tags: ['claude-connectors']
+  - filename: ./claude-enterprise-search.yml
+    tags: ['claude-enterprise-search']
+  - filename: ./claude-research.yml
+    tags: ['claude-research']
+  - filename: ./claude-use-cases-by-role.yml
+    tags: ['claude-use-cases-by-role']
+  - filename: ./claude-other-surfaces.yml
+    tags: ['claude-other-surfaces']
   - filename: ./harness-engineering.yml
     tags: ['harness-engineering']
   - filename: ./harness-subsystems.yml

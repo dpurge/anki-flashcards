@@ -1,0 +1,54 @@
+- Q: |
+    What are connectors, in terms of what they give Claude access to?
+  A: |
+    They give Claude access to the same tools, data, and context you use daily — letting it search files, retrieve documents, analyze data, create content, update records, and execute tasks across connected applications, instead of starting every conversation from scratch.
+
+- Q: |
+    What protocol powers Claude's connectors, and what analogy describes it?
+  A: |
+    The Model Context Protocol (MCP) — described as "USB-C for AI," a universal open standard letting Claude connect to many different applications through one consistent interface.
+
+- Q: |
+    Why does MCP being an open standard matter for the connector ecosystem?
+  A: |
+    Developers can build connectors for any tool, and those connectors work seamlessly with Claude, rather than each integration needing a custom one-off approach.
+
+- Q: |
+    What are the two types of connectors, and how do they differ?
+  A: |
+    Web connectors link Claude to cloud services (e.g. Google Drive, Notion, Slack, Asana); desktop extensions run locally on your computer through the Claude Desktop app, giving access to local files and native applications.
+
+- Q: |
+    Where does Anthropic maintain its directory of recommended connectors?
+  A: |
+    claude.ai/directory, organized into "Web" and "Desktop extensions" tabs — also reachable via the "+" button in a chat window, then "Connectors."
+
+- Q: |
+    What are the steps to set up a web connector?
+  A: |
+    Find the connector in the directory, click Connect, authenticate via the service's login page, review and grant the requested permissions, then test with a simple request like "Can you access my [tool name]?"
+
+- Q: |
+    What app is required to install a desktop extension, and where do you find them within it?
+  A: |
+    The Claude Desktop app; browse and install them under Settings > Extensions.
+
+- Q: |
+    Give an example of something a desktop extension can do that a web connector cannot.
+  A: |
+    Give Claude local file access, browser control for automated web tasks, or native application integration (e.g. with Figma) — capabilities tied to running on your own machine.
+
+- Q: |
+    What determines exactly what a connected service Claude can access?
+  A: |
+    Scoped, revocable permissions — you can toggle individual permissions on/off within each application's menu, and Claude only sees data you personally have access to (e.g. connecting your own email doesn't expose your CEO's inbox).
+
+- Q: |
+    How can you revoke Claude's access to a connected service?
+  A: |
+    Disconnect it through Claude's settings, or through the third-party service's own security settings.
+
+- Q: |
+    What security caution applies to connectors the same way it applies to Skills?
+  A: |
+    Only install connectors (including custom-built ones) from trusted sources.

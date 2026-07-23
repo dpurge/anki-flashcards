@@ -1,0 +1,79 @@
+- Q: |
+    What is a Project in Claude.ai?
+  A: |
+    A self-contained workspace with its own memory, chat histories, knowledge base, and customized instructions — a dedicated environment for a specific work stream.
+
+- Q: |
+    What kind of work is a good fit for creating a Project, rather than a one-off chat?
+  A: |
+    Ongoing work with reference materials you'll reuse repeatedly, consistent requirements for how Claude should respond, or team collaboration needs where multiple people share the same foundation.
+
+- Q: |
+    What does "project knowledge" let you avoid doing repeatedly across chats?
+  A: |
+    Re-uploading the same reference documents each time — Claude references the uploaded knowledge base across every chat within that project.
+
+- Q: |
+    What is a Project's "description" field used for, and does Claude see it?
+  A: |
+    It helps you and teammates understand the project's purpose; Claude does not see this description directly.
+
+- Q: |
+    What are the two visibility options when creating a project?
+  A: |
+    Keep it private, or share with your organization (for Claude for Work users).
+
+- Q: |
+    What do Project instructions do, and what scope do they apply to?
+  A: |
+    They tell Claude how to behave — context, process, tone/style, and specific requirements — and apply to every conversation within that project, working alongside any user preferences and styles.
+
+- Q: |
+    Give an example of using project instructions to automate a workflow.
+  A: |
+    "When I upload a meeting transcript, create a structured summary using this template" — instructing Claude to take a specific action automatically whenever certain content is added.
+
+- Q: |
+    What file types can be uploaded to a project's knowledge base, and what other source can be linked directly?
+  A: |
+    PDF, DOCX, CSV, TXT, HTML, and more; Google Drive can also be connected to link documents directly.
+
+- Q: |
+    Why does Claude recommend descriptive file names (e.g. "Q4-2024-Brand-Guidelines.pdf" over "document1.pdf") for project knowledge?
+  A: |
+    Claude uses file names (and proximity/grouping of related files) to understand and retrieve the right information and relationships between documents.
+
+- Q: |
+    What is Retrieval Augmented Generation (RAG) mode in the context of Claude Projects, and when does it activate?
+  A: |
+    A mode where, instead of loading all project content into memory at once, Claude intelligently searches and retrieves only the most relevant information to answer a question; it activates seamlessly when project knowledge approaches the context window limit.
+
+- Q: |
+    By how much does RAG mode expand a project's effective knowledge-base capacity?
+  A: |
+    Up to 10x, while maintaining response quality.
+
+- Q: |
+    What are the three permission levels when sharing a project on Claude for Work (Team/Enterprise)?
+  A: |
+    Can view (read-only access with discussion rights), Can edit (full collaboration — modify instructions, update knowledge, manage members), and Owner (controls everything, including who sees the project).
+
+- Q: |
+    What are the two ways to share a project with others on Claude for Work?
+  A: |
+    Add individual members by name/email (or bulk-paste a list of emails), or share with "Everyone at [your organization]" to make it discoverable in the Team tab.
+
+- Q: |
+    Where do teammates find a project that was shared with them?
+  A: |
+    In their "Shared with me" tab (they also get an email notification when shared).
+
+- Q: |
+    What best practice does Claude recommend for starting a new project's scope?
+  A: |
+    Start focused on a specific use case rather than one project for everything, then expand by adding more content as you go.
+
+- Q: |
+    How can you help Claude focus its search within a project when asking a question?
+  A: |
+    Reference a specific document by name in your question, e.g. "Based on our Q3 report, what were the top customer concerns?"

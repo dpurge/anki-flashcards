@@ -1,0 +1,49 @@
+- Q: |
+    What is Enterprise Search, and how is it best thought of relative to Projects?
+  A: |
+    A dedicated "Ask {Your Org Name}" sidebar option for finding and synthesizing knowledge across a company's tools/data — like a pre-built Project for the entire organization, with the company's knowledge base already loaded.
+
+- Q: |
+    Which plans is Enterprise Search available on, and who must enable it?
+  A: |
+    Team and Enterprise plans, and it must be enabled by a workspace admin (Owner).
+
+- Q: |
+    How does Enterprise Search differ from a regular chat that simply has connectors enabled?
+  A: |
+    Enterprise Search is specifically designed for information gathering, using custom instructions configured by the Anthropic team, rather than general-purpose conversation.
+
+- Q: |
+    When you ask Enterprise Search a question, what does Claude do with the connected tools?
+  A: |
+    It searches across all connected tools (e.g. SharePoint, Slack, Gmail, Google Drive) and synthesizes the information into a unified response, always citing its sources.
+
+- Q: |
+    What are the two steps of the Enterprise Search setup process, and who performs each?
+  A: |
+    First, an admin (Owner) configures it for the organization; then individual users authenticate with their own personal accounts to each connected service.
+
+- Q: |
+    What two connector categories must an admin choose during Enterprise Search setup, and which category is optional?
+  A: |
+    Documents (e.g. Google Drive, SharePoint) and Chat (e.g. Slack, Microsoft Teams) are required; Email is recommended but optional.
+
+- Q: |
+    What does customizing the "project name" during Enterprise Search admin setup control?
+  A: |
+    What appears as "Ask [Name]" in every organization member's sidebar.
+
+- Q: |
+    After an admin completes setup, what must individual users still do before they can search organizational knowledge?
+  A: |
+    Follow the guided onboarding flow and authenticate with each connected service they want to search (e.g. Slack, Google, Microsoft 365).
+
+- Q: |
+    How does enabling more connectors affect Enterprise Search results?
+  A: |
+    The more connectors a user enables, the more comprehensive their search results will be.
+
+- Q: |
+    Does Enterprise Search let a user see data they wouldn't normally have access to?
+  A: |
+    No — it only shows what the user already has permission to access in the original connected tool; conversations remain private and connected data isn't indexed or stored separately.
